@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Keypoint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KeypointController extends Controller
 {
@@ -13,7 +13,26 @@ class KeypointController extends Controller
      */
     public function index()
     {
-        //
+        // Fetch data from tb_formkp with corrected table/column names based on schema
+        $keypoints = DB::table('tb_formkp')
+            ->select(
+                'id_formkp',
+                'tgl_komisioning',
+                'nama_lbs as nama_keypoint',
+                DB::raw("CONCAT(id_gi, ' - ', nama_peny) as gi_penyulang"),
+                DB::raw("CONCAT(
+                    COALESCE((SELECT nama_merklbs FROM tb_merklbs WHERE id_merkrtu = tb_formkp.id_merkrtu LIMIT 1), 'Unknown'),
+                    ' - ',
+                    COALESCE((SELECT nama_modem FROM tb_modem WHERE id_modem = tb_formkp.id_modem LIMIT 1), 'Unknown')
+                ) as merk_modem_rtu"),
+                'ketkp as keterangan',
+                'nama_user as master',
+                'lastupdate'
+            )
+            ->get();
+
+        // Pass data to the view
+        return view('pages.keypoint.index', compact('keypoints'));
     }
 
     /**
@@ -21,7 +40,7 @@ class KeypointController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.keypoint.add');
     }
 
     /**
@@ -29,9 +48,17 @@ class KeypointController extends Controller
      */
     public function store(Request $request)
     {
-        $cbOpen = $request->input('cb_open_type') === 'normal' ? 'normal' : $request->input('cb_open_options', []);
-        // Process data (e.g., save to database)
-        return redirect()->route('keypoint.add')->with('success', 'Data saved successfully!');
+        $validated = $request->validate([
+            'tgl_komisioning' => 'required|date',
+            'nama_lbs' => 'required|string|max:50',
+            'id_merkrtu' => 'required|integer',
+            'id_modem' => 'required|integer',
+            // Add other validation rules as needed
+        ]);
+
+        DB::table('tb_formkp')->insert($validated);
+
+        return redirect()->route('keypoint.index')->with('success', 'Keypoint created successfully!');
     }
 
     /**
@@ -39,7 +66,8 @@ class KeypointController extends Controller
      */
     public function show(Keypoint $keypoint)
     {
-        //
+        $keypoint = DB::table('tb_formkp')->where('id_formkp', $keypoint->id_formkp)->first();
+        return view('pages.keypoint.show', compact('keypoint'));
     }
 
     /**
@@ -47,7 +75,8 @@ class KeypointController extends Controller
      */
     public function edit(Keypoint $keypoint)
     {
-        //
+        $keypoint = DB::table('tb_formkp')->where('id_formkp', $keypoint->id_formkp)->first();
+        return view('pages.keypoint.edit', compact('keypoint'));
     }
 
     /**
@@ -55,7 +84,15 @@ class KeypointController extends Controller
      */
     public function update(Request $request, Keypoint $keypoint)
     {
-        //
+        $validated = $request->validate([
+            'tgl_komisioning' => 'required|date',
+            'nama_lbs' => 'required|string|max:50',
+            // Add other validation rules as needed
+        ]);
+
+        DB::table('tb_formkp')->where('id_formkp', $keypoint->id_formkp)->update($validated);
+
+        return redirect()->route('keypoint.index')->with('success', 'Keypoint updated successfully!');
     }
 
     /**
@@ -63,6 +100,16 @@ class KeypointController extends Controller
      */
     public function destroy(Keypoint $keypoint)
     {
-        //
+        DB::table('tb_formkp')->where('id_formkp', $keypoint->id_formkp)->delete();
+        return redirect()->route('keypoint.index')->with('success', 'Keypoint deleted successfully!');
+    }
+
+    /**
+     * Display notes for the specified resource.
+     */
+    public function note(Keypoint $keypoint)
+    {
+        $keypoint = DB::table('tb_formkp')->where('id_formkp', $keypoint->id_formkp)->first();
+        return view('pages.keypoint.note', compact('keypoint'));
     }
 }

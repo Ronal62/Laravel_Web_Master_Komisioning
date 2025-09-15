@@ -41,11 +41,11 @@
                         <p>Forms</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse @if(Route::is('keypoint') || Route::is('feeder-inc') || Route::is('absen')) show @endif"
+                    <div class="collapse @if(Route::is('keypoint.create') || Route::is('feeder-inc') || Route::is('absen')) show @endif"
                         id="forms">
                         <ul class="nav nav-collapse">
-                            <li class="@if(Route::is('keypoint')) active @endif">
-                                <a href="{{ route('keypoint') }}"><span class="sub-item">Keypoint</span></a>
+                            <li class="@if(Route::is('keypoint.create')) active @endif">
+                                <a href="{{ route('keypoint.create') }}"><span class="sub-item">Keypoint Form</span></a>
                             </li>
                             <li class="@if(Route::is('feeder-inc')) active @endif">
                                 <a href="{{ route('feeder-inc') }}"><span class="sub-item">Feeder & Inc</span></a>

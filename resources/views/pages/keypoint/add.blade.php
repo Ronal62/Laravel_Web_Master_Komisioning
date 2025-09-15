@@ -30,7 +30,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Nav Pills Without Border (Vertical Tabs)</h4>
+                    <h4 class="card-title">Tambah Data Keypoint</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -162,10 +162,10 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="comment_formdata">Comment</label>
+                                                <label for="comment_formdata">Keterangan</label>
                                                 <textarea class="form-control" id="comment_formdata"
                                                     name="comment_formdata" rows="5"
-                                                    placeholder="Enter your comment"></textarea>
+                                                    placeholder="Masukkan keterangan Anda"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -174,6 +174,7 @@
                                         aria-labelledby="v-pills-formtelestatus-tab-nobd">
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <!-- CB Open -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
@@ -204,12 +205,18 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- CB Close -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
@@ -240,16 +247,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- CB 2 Open -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">CB 2 Open</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -276,16 +289,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- CB 2 Close -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">CB 2 Close</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -312,16 +331,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Local -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">Local</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -348,16 +373,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Remote -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">Remote</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -384,16 +415,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Door Open -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">Door Open</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -420,16 +457,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Door Close -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">Door Close</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -456,16 +499,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- ACF Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">ACF Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -492,16 +541,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- ACF Failed -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">ACF Failed</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -528,16 +583,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- DCD Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">DCD Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -564,16 +625,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- DCD Failed -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">DCD Failed</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -600,16 +667,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- DCF Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">DCF Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -636,16 +709,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- DCF Failed -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">DCF Failed</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -672,16 +751,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- HLT OFF -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">HLT OFF</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -708,16 +793,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- HLT ON -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">HLT ON</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -744,16 +835,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- SF6 Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">SF6 Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -780,16 +877,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- SF6 Failed -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">SF6 Failed</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -816,16 +919,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- FIR Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">FIR Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -852,16 +961,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- FIR Failed -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">FIR Failed</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -888,16 +1003,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- FIS Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">FIS Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -924,16 +1045,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- FIS Failed -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">FIS Failed</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -960,16 +1087,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- FIT Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">FIT Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -996,16 +1129,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- FIT Failed -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">FIT Failed</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -1032,16 +1171,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- FIN Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">FIN Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -1068,16 +1213,22 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- FIN Failed -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">FIN Failed</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
@@ -1104,24 +1255,25 @@
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="5"
                                                                         class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
                                                                     <span class="selectgroup-button">Tidak Uji</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- COMF Normal -->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
+                                                            <label class="form-label t-bold">COMF Normal</label>
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="item" value="1"
-                                                                        class="selectgroup-input" id="selectAll" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="item" value="2"
                                                                         class="selectgroup-input" />
@@ -1133,19 +1285,47 @@
                                                                     <span class="selectgroup-button">NOK</span>
                                                                 </label>
                                                                 <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="item" value="4"
+                                                                    <input type="checkbox" name="item" value="6"
                                                                         class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="item" value="5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
+                                                                    <span class="selectgroup-button">Tidak Ada</span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- LRUFNormal -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label class="form-label t-bold">LRUFNormal</label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="selectgroup w-100">
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="2"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">OK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="3"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">NOK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">Tidak Ada</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment_formdata">Keterangan</label>
+                                                <textarea class="form-control" id="comment_formdata"
+                                                    name="comment_formdata" rows="5"
+                                                    placeholder="Masukkan keterangan Anda"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1154,19 +1334,306 @@
                                         aria-labelledby="v-pills-formtelecontrol-tab-nobd">
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <!-- CB Open -->
                                                 <div class="form-group">
-                                                    <label for="email_telecontrol">Email Address</label>
-                                                    <input type="email" class="form-control" id="email_telecontrol"
-                                                        name="email_telecontrol" placeholder="Enter Email" />
-                                                    <small id="emailHelp_telecontrol" class="form-text text-muted">We'll
-                                                        never share your email with anyone else.</small>
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label class="form-label t-bold">CB Open</label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="selectgroup w-100">
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="1"
+                                                                        class="selectgroup-input" id="selectAll" />
+                                                                    <span class="selectgroup-button">Normal</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="2"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">OK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="3"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">NOK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="4"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">LOG</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="5"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">Tidak Uji</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <!-- CB Close -->
                                                 <div class="form-group">
-                                                    <label for="password_telecontrol">Password</label>
-                                                    <input type="password" class="form-control"
-                                                        id="password_telecontrol" name="password_telecontrol"
-                                                        placeholder="Password" />
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label class="form-label t-bold">CB Close</label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="selectgroup w-100">
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="1"
+                                                                        class="selectgroup-input" id="selectAll" />
+                                                                    <span class="selectgroup-button">Normal</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="2"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">OK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="3"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">NOK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="4"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">LOG</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="5"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">Tidak Uji</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <!-- CB 2 Open -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label class="form-label t-bold">CB 2 Open</label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="selectgroup w-100">
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="1"
+                                                                        class="selectgroup-input" id="selectAll" />
+                                                                    <span class="selectgroup-button">Normal</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="2"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">OK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="3"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">NOK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="4"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">LOG</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="5"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">Tidak Uji</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- CB 2 Close -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label class="form-label t-bold">CB 2 Close</label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="selectgroup w-100">
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="1"
+                                                                        class="selectgroup-input" id="selectAll" />
+                                                                    <span class="selectgroup-button">Normal</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="2"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">OK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="3"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">NOK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="4"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">LOG</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="5"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">Tidak Uji</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- HLT OFF -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label class="form-label t-bold">HLT OFF</label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="selectgroup w-100">
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="1"
+                                                                        class="selectgroup-input" id="selectAll" />
+                                                                    <span class="selectgroup-button">Normal</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="2"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">OK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="3"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">NOK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="4"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">LOG</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="5"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">Tidak Uji</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- HLT ON -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label class="form-label t-bold">HLT ON</label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="selectgroup w-100">
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="1"
+                                                                        class="selectgroup-input" id="selectAll" />
+                                                                    <span class="selectgroup-button">Normal</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="2"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">OK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="3"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">NOK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="4"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">LOG</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="5"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">Tidak Uji</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Reset -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label class="form-label t-bold">Reset</label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="selectgroup w-100">
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="1"
+                                                                        class="selectgroup-input" id="selectAll" />
+                                                                    <span class="selectgroup-button">Normal</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="2"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">OK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="3"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">NOK</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="4"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">LOG</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="5"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">SLD</span>
+                                                                </label>
+                                                                <label class="selectgroup-item">
+                                                                    <input type="checkbox" name="item" value="6"
+                                                                        class="selectgroup-input" />
+                                                                    <span class="selectgroup-button">Tidak Uji</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment_formdata">Keterangan</label>
+                                                <textarea class="form-control" id="comment_formdata"
+                                                    name="comment_formdata" rows="5"
+                                                    placeholder="Masukkan keterangan Anda"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1174,24 +1641,112 @@
                                     <div class="tab-pane fade" id="v-pills-formtelemetering-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelemetering-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="email_telemetering">Email
-                                                        Address</label>
-                                                    <input type="email" class="form-control" id="email_telemetering"
-                                                        name="email_telemetering" placeholder="Enter Email" />
-                                                    <small id="emailHelp_telemetering"
-                                                        class="form-text text-muted">We'll never share
-                                                        your
-                                                        email with
-                                                        anyone else.</small>
+                                                    <label for="arusphaser">Arus Phase R</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="ir_rtu" placeholder="Enter IR RTU" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2 " id="namakeypoint"
+                                                            name="ir_master" placeholder="Enter IR Master" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="scale" placeholder="Enter Scale" required />
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="password_telemetering">Password</label>
-                                                    <input type="password" class="form-control"
-                                                        id="password_telemetering" name="password_telemetering"
-                                                        placeholder="Password" />
+                                                    <label for="arusphaser">Arus Phase S</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="ir_rtu" placeholder="Enter IS RTU" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2 " id="namakeypoint"
+                                                            name="ir_master" placeholder="Enter IS Master" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="scale" placeholder="Enter Scale" required />
+                                                    </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="arusphaser">Arus Phase T</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="ir_rtu" placeholder="Enter IT RTU" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2 " id="namakeypoint"
+                                                            name="ir_master" placeholder="Enter IT Master" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="scale" placeholder="Enter Scale" required />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="protocolrtuaddress">Sign Strength</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="protocolrtuaddress"
+                                                            name="protocol_rtu_address" placeholder="30db" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="arusphaser">Teg Phase R</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="ir_rtu" placeholder="Enter VR RTU" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2 " id="namakeypoint"
+                                                            name="ir_master" placeholder="Enter VR Master" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="scale" placeholder="Enter Scale" required />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="arusphaser">Teg Phase S</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="ir_rtu" placeholder="Enter VS RTU" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2 " id="namakeypoint"
+                                                            name="ir_master" placeholder="Enter VS Master" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="scale" placeholder="Enter Scale" required />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="arusphaser">Teg Phase T</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="ir_rtu" placeholder="Enter VT RTU" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2 " id="namakeypoint"
+                                                            name="ir_master" placeholder="Enter VT Master" required />
+                                                    </div>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control mb-2" id="namakeypoint"
+                                                            name="scale" placeholder="Enter Scale" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment_formdata">Keterangan</label>
+                                                <textarea class="form-control" id="comment_formdata"
+                                                    name="comment_formdata" rows="5"
+                                                    placeholder="Masukkan keterangan Anda"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1201,44 +1756,69 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="email_pickomisioning">Email
-                                                        Address</label>
-                                                    <input type="email" class="form-control" id="email_pickomisioning"
-                                                        name="email_pickomisioning" placeholder="Enter Email" />
-                                                    <small id="emailHelp_pickomisioning"
-                                                        class="form-text text-muted">We'll never share
-                                                        your
-                                                        email with
-                                                        anyone else.</small>
+                                                    <label for="merkrtu">Jenis Komisioning</label>
+                                                    <select class="form-select form-control" id="merkrtu"
+                                                        name="merk_rtu">
+                                                        <option value="1">Option 1</option>
+                                                        <option value="2">Option 2</option>
+                                                        <option value="3">Option 3</option>
+                                                        <option value="4">Option 4</option>
+                                                        <option value="5">Option 5</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="password_pickomisioning">Password</label>
-                                                    <input type="password" class="form-control"
-                                                        id="password_pickomisioning" name="password_pickomisioning"
-                                                        placeholder="Password" />
+                                                    <label for="pelaksanamaster">Pelaksana Master</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="pelaksanamaster"
+                                                            name="pelaksana_master" placeholder="Nama Pelaksana Master"
+                                                            required readonly />
+                                                    </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="pelaksana_master_ii">Pelaksana Master II</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="pelaksana_master_ii"
+                                                            name="pelaksana_master_ii"
+                                                            placeholder="Nama Pelaksana Master II" required readonly />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="pelaksana_rtu">Pelaksana RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="pelaksana_rtu"
+                                                            name="pelaksana_rtu" placeholder="Nama Pelaksana RTU"
+                                                            required readonly />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment_formdata">Keterangan</label>
+                                                <textarea class="form-control" id="comment_formdata"
+                                                    name="comment_formdata" rows="5"
+                                                    placeholder="Masukkan keterangan Anda"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-action">
-                                    <button type="submit" class="btn btn-success">
-                                        <span class="btn-label">
-                                            <i class="fas fa-paper-plane"></i>
-                                        </span>
-                                        Submit
-                                    </button>
-                                    <button type="button" class="btn btn-danger" onclick="window.history.back()">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </form>
                         </div>
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-success">
+                                <span class="btn-label">
+                                    <i class="fas fa-paper-plane"></i>
+                                </span>
+                                Submit
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="window.history.back()">
+                                Cancel
+                            </button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection
 

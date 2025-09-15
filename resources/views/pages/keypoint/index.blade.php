@@ -3,7 +3,6 @@
 @section('title', 'Dashboard')
 
 @section('content')
-
 <div class="page-inner">
     <div class="page-header">
         <h3 class="fw-bold mb-3">Data Keypoint</h3>
@@ -84,25 +83,34 @@
                                 </tr>
                             </tfoot>
                             <tbody>
+                                @forelse ($keypoints as $keypoint)
                                 <tr>
-                                    <td>Monday, 10-06-2024</td>
-                                    <td>LBSM 3 WAY ASDP (BWI_12)</td>
-                                    <td>GI BANYUWANGI - P.KALIPURO/BOSOWA 1</td>
-                                    <td>SANXING 4G - ABB REC 615</td>
-                                    <td>PEMELIHARAAN</td>
-                                    <td>RIZKY</td>
+                                    <td>{{ \Carbon\Carbon::parse($keypoint->tgl_komisioning)->format('l, d-m-Y') }}</td>
+                                    <td>{{ $keypoint->nama_keypoint }}</td>
+                                    <td>{{ $keypoint->gi_penyulang }}</td>
+                                    <td>{{ $keypoint->merk_modem_rtu ?? 'N/A' }}</td> <!-- Handle null values -->
+                                    <td>{{ $keypoint->keterangan }}</td>
+                                    <td>{{ $keypoint->master }}</td>
                                     <td>
-                                        <a type="button" class="btn btn-icon btn-round btn-primary">
+                                        <a href="{{ route('keypoint.show', $keypoint->id_formkp) }}" type="button"
+                                            class="btn btn-icon btn-round btn-primary">
                                             <i class="far fa-clone"></i>
                                         </a>
-                                        <a type="button" class="btn btn-icon btn-round btn-warning">
+                                        <a href="{{ route('keypoint.edit', $keypoint->id_formkp) }}" type="button"
+                                            class="btn btn-icon btn-round btn-warning">
                                             <i class="fa fa-pen"></i>
                                         </a>
-                                        <a type="button" class="btn btn-icon btn-round btn-success">
+                                        <a href="{{ route('keypoint.note', $keypoint->id_formkp) }}" type="button"
+                                            class="btn btn-icon btn-round btn-success">
                                             <i class="far fa-sticky-note"></i>
                                         </a>
                                     </td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="7" class="text-center">No data available</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -111,8 +119,6 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 @section('scripts')
