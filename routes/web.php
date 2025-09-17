@@ -4,10 +4,21 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KeypointController;
 use Illuminate\Support\Facades\Route;
 
-// Root route (redirects to dashboard)
+// Root route (redirects to login)
 Route::get('/', function () {
     return view('pages.auth.login');
 })->name('login');
+
+// Login POST route
+Route::post('/login', [AdminController::class, 'login'])->name('login.post');
+
+// Dashboard route (protected by admin authentication)
+Route::get('/dashboard', function () {
+    return view('pages.dashboard.index');
+})->name('dashboard')->middleware('auth:admin');
+
+// Logout route
+Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 
 // Resource routes for Keypoint (defines index, create, store, show, edit, update, destroy)
 Route::resource('keypoint', KeypointController::class);
@@ -17,11 +28,6 @@ Route::get('/keypoint', [KeypointController::class, 'index'])->name('keypoint');
 
 // Custom route for note
 Route::get('/keypoint/{keypoint}/note', [KeypointController::class, 'note'])->name('keypoint.note');
-
-// Dashboard
-Route::get('/dashboard', function () {
-    return view('pages.dashboard.index');
-})->name('dashboard');
 
 // Forms
 Route::get('/feeder-inc', function () {
@@ -61,4 +67,10 @@ Route::get('/datapengusahaan/sectoral', function () {
 })->name('datapengusahaan.sectoral');
 
 // tb_admin
-Route::resource('tb-admin', AdminController::class); // Or 'admins' as preferred
+Route::resource('tb-admin', AdminController::class);
+
+// Register routes
+Route::get('/register', function () {
+    return view('pages.auth.register');
+})->name('register');
+Route::post('/register', [AdminController::class, 'register'])->name('register.post');

@@ -4,7 +4,7 @@ function login() {
   const errorMsg = document.getElementById("error-msg");
   const successMsg = document.getElementById("success-msg");
 
-  if (username === "plnuser" && password === "12345") {
+  if (username === "username" && password === "password") {
     errorMsg.style.display = "none";
     successMsg.style.display = "block";
     setTimeout(() => {
