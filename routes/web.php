@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 // Root route (redirects to dashboard)
 Route::get('/', function () {
-    return view('pages.dashboard.index');
-})->name('dashboard');
+    return view('pages.auth.login');
+})->name('login');
 
 // Resource routes for Keypoint (defines index, create, store, show, edit, update, destroy)
 Route::resource('keypoint', KeypointController::class);

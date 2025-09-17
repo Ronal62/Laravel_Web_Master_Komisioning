@@ -40,6 +40,7 @@ class KeypointController extends Controller
      */
     public function create()
     {
+
         return view('pages.keypoint.add');
     }
 
