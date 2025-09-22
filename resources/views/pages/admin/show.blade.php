@@ -16,6 +16,9 @@
                 <div class="card-body">
                     <p><strong>Nama:</strong> {{ $admin->nama_admin }}</p>
                     <p><strong>Username:</strong> {{ $admin->username }}</p>
+                    <p><strong>Password:</strong> {{ $admin->temp_password }}</p>
+                    <a href="{{ route('admin.edit', $admin->id_admin) }}" class="btn btn-warning">Edit Admin (Change
+                        Password)</a>
                     <a href="{{ route('admin.index') }}" class="btn btn-primary">Back to List</a>
                 </div>
             </div>

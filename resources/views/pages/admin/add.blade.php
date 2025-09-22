@@ -37,8 +37,8 @@
                         @if (session('success'))
                         <p class="success" id="success-msg">✅ {{ session('success') }}</p>
                         @endif
-                        <button type="submit" class="btn btn-primary">Add Admin</button>
-                        <a href="{{ route('admin.index') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary mt-2 mx-2">Add Admin</button>
+                        <a href="{{ route('admin.index') }}" class="btn btn-secondary mt-2 mx-auto">Cancel</a>
                     </form>
                 </div>
             </div>

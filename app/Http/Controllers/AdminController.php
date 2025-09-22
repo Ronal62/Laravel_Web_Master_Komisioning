@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
-
-
-
 class AdminController extends Controller
 {
     /**
@@ -47,6 +44,7 @@ class AdminController extends Controller
             'nama_admin' => $request->nama_admin,
             'username' => $request->username,
             'password' => Hash::make($request->password),
+            'temp_password' => $request->password, // Store plain-text password
         ]);
 
         Log::info('Registration successful for user: ', ['id' => $admin->id_admin]);
@@ -84,6 +82,7 @@ class AdminController extends Controller
             'nama_admin' => $request->nama_admin,
             'username' => $request->username,
             'password' => $request->password ? Hash::make($request->password) : $admin->password,
+            'temp_password' => $request->password ? $request->password : $admin->temp_password, // Update temp_password if new password provided
         ]);
 
         Log::info('Admin updated successfully: ', ['id' => $admin->id_admin]);
@@ -134,6 +133,7 @@ class AdminController extends Controller
             'nama_admin' => $request->nama_admin,
             'username' => $request->username,
             'password' => Hash::make($request->password),
+            'temp_password' => $request->password, // Store plain-text password
         ]);
 
         Log::info('Registration successful for user: ', ['id' => $admin->id_admin]);
@@ -154,7 +154,4 @@ class AdminController extends Controller
     {
         return view('pages.dashboard.index');
     }
-
-
-
 }

@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
                 'nama_admin' => 'Admin User',
                 'username' => 'admin',
                 'password' => Hash::make('admin'), // Change in production!
+                'temp_password' => 'admin', // Optional temporary password
                 // id_admin is auto-incremented
             ]);
         }
