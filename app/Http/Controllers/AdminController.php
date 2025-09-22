@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+
+
+
+
 class AdminController extends Controller
 {
     /**
@@ -15,15 +19,16 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $admins = Admin::all(); // Fetch all admin records
+        return view('pages.admin.index', compact('admins')); // Pass admins to the view
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for adding a new resource.
      */
-    public function create()
+    public function add()
     {
-        //
+        return view('pages.admin.add');
     }
 
     /**
@@ -31,7 +36,21 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Log::info('Store method called', ['input' => $request->all()]);
+        $request->validate([
+            'nama_admin' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:tb_admin',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $admin = Admin::create([
+            'nama_admin' => $request->nama_admin,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+        ]);
+
+        Log::info('Registration successful for user: ', ['id' => $admin->id_admin]);
+        return redirect()->route('admin.index')->with('success', '✅ Admin berhasil ditambahkan!');
     }
 
     /**
@@ -39,7 +58,7 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
-        //
+        return view('pages.admin.show', compact('admin'));
     }
 
     /**
@@ -47,7 +66,7 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        //
+        return view('pages.admin.edit', compact('admin')); // Return the edit form view
     }
 
     /**
@@ -55,7 +74,20 @@ class AdminController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        //
+        $request->validate([
+            'nama_admin' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:tb_admin,username,' . $admin->id_admin . ',id_admin',
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        $admin->update([
+            'nama_admin' => $request->nama_admin,
+            'username' => $request->username,
+            'password' => $request->password ? Hash::make($request->password) : $admin->password,
+        ]);
+
+        Log::info('Admin updated successfully: ', ['id' => $admin->id_admin]);
+        return redirect()->route('admin.index')->with('success', '✅ Admin berhasil diperbarui!');
     }
 
     /**
@@ -63,7 +95,9 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        //
+        $admin->delete();
+        Log::info('Admin deleted successfully: ', ['id' => $admin->id_admin]);
+        return redirect()->route('admin.index')->with('success', '✅ Admin berhasil dihapus!');
     }
 
     /**
@@ -72,16 +106,16 @@ class AdminController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('username', 'password');
-        Log::info('Login attempt with credentials: ', $credentials); // Add logging
+        Log::info('Login attempt with credentials: ', ['username' => $credentials['username']]);
 
         if (Auth::guard('admin')->attempt($credentials)) {
             $admin = Auth::guard('admin')->user();
-            Log::info('Login successful for user: ', ['id' => $admin->id_admin]);
-            Session::put('admin_id', $admin->id_admin); // Ensure session is set
+            Log::info('Login successful for user: ', ['id' => $admin->id_admin, 'username' => $admin->username]);
+            Session::put('admin_id', $admin->id_admin);
             return redirect()->route('dashboard')->with('success', '✅ Login berhasil!');
         }
 
-        Log::info('Login failed');
+        Log::error('Login failed for username: ', ['username' => $credentials['username']]);
         return redirect()->back()->with('error', '⚠️ Username atau password salah!');
     }
 
@@ -105,7 +139,7 @@ class AdminController extends Controller
         Log::info('Registration successful for user: ', ['id' => $admin->id_admin]);
         return redirect()->route('login')->with('success', '✅ Registrasi berhasil! Silakan login.');
     }
-    
+
     /**
      * Handle logout request
      */
@@ -115,4 +149,12 @@ class AdminController extends Controller
         Session::flush();
         return redirect()->route('login')->with('success', '✅ Logout berhasil!');
     }
+
+    public function dashboard()
+    {
+        return view('pages.dashboard.index');
+    }
+
+
+
 }

@@ -33,11 +33,17 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <li class="nav-item @if(Route::is('admin.index')) active @endif">
+                    <a href="{{ route('admin.index') }}">
+                        <i class="fas fa-users"></i>
+                        <p>Admin</p>
+                    </a>
+                </li>
                 <li
                     class="nav-item @if(Route::is('keypoint') || Route::is('feeder-inc') || Route::is('absen')) active @endif">
                     <a data-bs-toggle="collapse" href="#forms"
                         class="@if(Route::is('keypoint') || Route::is('feeder-inc') || Route::is('absen')) show @endif">
-                        <i class="icon-notebook"></i>
+                        <i class="icon-notebook"></i> `
                         <p>Forms</p>
                         <span class="caret"></span>
                     </a>

@@ -2,19 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 
 class Keypoint extends Model
 {
-    use HasFactory;
-
-    protected $table = 'tb_formkp';
-
-    protected $primaryKey = 'id_formkp';
-
-    public $incrementing = true;
+    protected $table = 'tb_formkp'; // Specify the table name
+    protected $primaryKey = 'id_formkp'; // Specify the primary key
+    public $timestamps = false; // Disable timestamps
 
     protected $fillable = [
         'tgl_komisioning',
@@ -70,9 +64,5 @@ class Keypoint extends Model
         'id_picms',
         'pelrtu',
         'ketkp',
-    ];
-
-    protected $casts = [
-        'tgl_komisioning' => 'date',
     ];
 }
