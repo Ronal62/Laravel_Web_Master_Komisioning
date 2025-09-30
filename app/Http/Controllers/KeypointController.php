@@ -56,9 +56,25 @@ class KeypointController extends Controller
     {
         // Define array fields that come from checkboxes
         $arrayFields = [
-            's_cb', 's_cb2', 's_lr', 's_door', 's_acf', 's_dcf', 's_dcd', 's_hlt', 's_sf6',
-            's_fir', 's_fis', 's_fit', 's_fin', 's_comf', 's_lruf',
-            'c_cb', 'c_cb2', 'c_hlt', 'c_rst'
+            's_cb',
+            's_cb2',
+            's_lr',
+            's_door',
+            's_acf',
+            's_dcf',
+            's_dcd',
+            's_hlt',
+            's_sf6',
+            's_fir',
+            's_fis',
+            's_fit',
+            's_fin',
+            's_comf',
+            's_lruf',
+            'c_cb',
+            'c_cb2',
+            'c_hlt',
+            'c_rst'
         ];
 
         // Validation rules
@@ -94,7 +110,7 @@ class KeypointController extends Controller
             'sign_kp' => 'nullable|string|max:10',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'nullable|string|max:10',
-            'id_picms' => 'required|string|max:25|exists:tb_picmaster,id_picmaster', // Updated to id_picmaster
+            'id_picms' => 'required|integer|exists:tb_picmaster,id_picmaster',
             'pelrtu' => 'required|string|max:25',
             'ketkp' => 'required|string|max:500',
         ]);
@@ -103,17 +119,13 @@ class KeypointController extends Controller
         foreach ($arrayFields as $field) {
             $request->validate([
                 $field => 'nullable|array',
-                $field.'.*' => 'string|in:normal,ok,nok,log,sld,tidak_uji',
+                $field . '.*' => 'string|in:normal,ok,nok,log,sld,tidak_uji',
             ]);
         }
 
         // Process array fields: implode into comma-separated string
         foreach ($arrayFields as $field) {
-            if ($request->has($field)) {
-                $validated[$field] = implode(',', $request->input($field));
-            } else {
-                $validated[$field] = ''; // Use empty string for NOT NULL columns
-            }
+            $validated[$field] = $request->has($field) ? implode(',', $request->input($field)) : '';
         }
 
         // Create the record
@@ -145,17 +157,29 @@ class KeypointController extends Controller
 
         // For array fields, explode the comma-separated values to pre-check checkboxes
         $arrayFields = [
-            's_cb', 's_cb2', 's_lr', 's_door', 's_acf', 's_dcf', 's_dcd', 's_hlt', 's_sf6',
-            's_fir', 's_fis', 's_fit', 's_fin', 's_comf', 's_lruf',
-            'c_cb', 'c_cb2', 'c_hlt', 'c_rst'
+            's_cb',
+            's_cb2',
+            's_lr',
+            's_door',
+            's_acf',
+            's_dcf',
+            's_dcd',
+            's_hlt',
+            's_sf6',
+            's_fir',
+            's_fis',
+            's_fit',
+            's_fin',
+            's_comf',
+            's_lruf',
+            'c_cb',
+            'c_cb2',
+            'c_hlt',
+            'c_rst'
         ];
 
         foreach ($arrayFields as $field) {
-            if ($keypoint->$field) {
-                $keypoint->$field = explode(',', $keypoint->$field);
-            } else {
-                $keypoint->$field = [];
-            }
+            $keypoint->$field = $keypoint->$field ? explode(',', $keypoint->$field) : [];
         }
 
         return view('pages.keypoint.edit', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'picmaster'));
@@ -168,9 +192,25 @@ class KeypointController extends Controller
     {
         // Define array fields that come from checkboxes
         $arrayFields = [
-            's_cb', 's_cb2', 's_lr', 's_door', 's_acf', 's_dcf', 's_dcd', 's_hlt', 's_sf6',
-            's_fir', 's_fis', 's_fit', 's_fin', 's_comf', 's_lruf',
-            'c_cb', 'c_cb2', 'c_hlt', 'c_rst'
+            's_cb',
+            's_cb2',
+            's_lr',
+            's_door',
+            's_acf',
+            's_dcf',
+            's_dcd',
+            's_hlt',
+            's_sf6',
+            's_fir',
+            's_fis',
+            's_fit',
+            's_fin',
+            's_comf',
+            's_lruf',
+            'c_cb',
+            'c_cb2',
+            'c_hlt',
+            'c_rst'
         ];
 
         // Validation rules
@@ -206,7 +246,7 @@ class KeypointController extends Controller
             'sign_kp' => 'nullable|string|max:10',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'nullable|string|max:10',
-            'id_picms' => 'required|string|max:25|exists:tb_picmaster,id_picmaster', // Updated to id_picmaster
+            'id_picms' => 'required|integer|exists:tb_picmaster,id_picmaster',
             'pelrtu' => 'required|string|max:25',
             'ketkp' => 'required|string|max:500',
         ]);
@@ -215,17 +255,13 @@ class KeypointController extends Controller
         foreach ($arrayFields as $field) {
             $request->validate([
                 $field => 'nullable|array',
-                $field.'.*' => 'string|in:normal,ok,nok,log,sld,tidak_uji',
+                $field . '.*' => 'string|in:normal,ok,nok,log,sld,tidak_uji',
             ]);
         }
 
         // Process array fields: implode into comma-separated string
         foreach ($arrayFields as $field) {
-            if ($request->has($field)) {
-                $validated[$field] = implode(',', $request->input($field));
-            } else {
-                $validated[$field] = ''; // Use empty string for NOT NULL columns
-            }
+            $validated[$field] = $request->has($field) ? implode(',', $request->input($field)) : '';
         }
 
         // Update the record
