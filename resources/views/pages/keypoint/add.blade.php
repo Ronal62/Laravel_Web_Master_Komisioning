@@ -208,7 +208,8 @@
                                             <div class="form-group">
                                                 <label for="ketkp">Keterangan</label>
                                                 <textarea class="form-control" id="ketkp" name="ketkp" rows="5"
-                                                    placeholder="Masukkan keterangan Anda" required>{{ old('ketkp') }}</textarea>
+                                                    placeholder="Masukkan keterangan Anda"
+                                                    required>{{ old('ketkp') }}</textarea>
                                                 @error('ketkp')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -244,13 +245,15 @@
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
-                                                                @foreach (['normal' => 'Normal', 'ok' => 'OK', 'nok' => 'NOK', 'log' => 'LOG', 'sld' => 'SLD', 'tidak_uji' => 'Tidak Uji'] as $value => $display)
+                                                                @foreach (['normal' => 'Normal', 'ok' => 'OK', 'nok' =>
+                                                                'NOK', 'log' => 'LOG', 'sld' => 'SLD', 'tidak_uji' =>
+                                                                'Tidak Uji'] as $value => $display)
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="{{ $field }}[]"
-                                                                        value="{{ $value }}"
-                                                                        class="selectgroup-input"
+                                                                        value="{{ $value }}" class="selectgroup-input"
                                                                         {{ in_array($value, old($field, [])) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">{{ $display }}</span>
+                                                                    <span
+                                                                        class="selectgroup-button">{{ $display }}</span>
                                                                 </label>
                                                                 @endforeach
                                                             </div>
@@ -282,13 +285,15 @@
                                                         </div>
                                                         <div class="col-md-10">
                                                             <div class="selectgroup w-100">
-                                                                @foreach (['normal' => 'Normal', 'ok' => 'OK', 'nok' => 'NOK', 'log' => 'LOG', 'sld' => 'SLD', 'tidak_uji' => 'Tidak Uji'] as $value => $display)
+                                                                @foreach (['normal' => 'Normal', 'ok' => 'OK', 'nok' =>
+                                                                'NOK', 'log' => 'LOG', 'sld' => 'SLD', 'tidak_uji' =>
+                                                                'Tidak Uji'] as $value => $display)
                                                                 <label class="selectgroup-item">
                                                                     <input type="checkbox" name="{{ $field }}[]"
-                                                                        value="{{ $value }}"
-                                                                        class="selectgroup-input"
+                                                                        value="{{ $value }}" class="selectgroup-input"
                                                                         {{ in_array($value, old($field, [])) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">{{ $display }}</span>
+                                                                    <span
+                                                                        class="selectgroup-button">{{ $display }}</span>
                                                                 </label>
                                                                 @endforeach
                                                             </div>
@@ -383,7 +388,8 @@
                                                     <label for="sign_kp">Sign Strength</label>
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="sign_kp"
-                                                            name="sign_kp" placeholder="30db" value="{{ old('sign_kp') }}" />
+                                                            name="sign_kp" placeholder="30db"
+                                                            value="{{ old('sign_kp') }}" />
                                                         @error('sign_kp')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -491,8 +497,8 @@
                                                     <label for="nama_user">Pelaksana Master</label>
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="nama_user"
-                                                            name="nama_user" placeholder="Nama Pelaksana Master"
-                                                            value="{{ old('nama_user') }}" />
+                                                            name="nama_user"
+                                                            value="{{ auth()->user()->nama_admin ?? '' }}" readonly />
                                                         @error('nama_user')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -552,45 +558,45 @@
 
 @push('scripts')
 <script>
-    try {
-        if (document.querySelector('#lineChart')) {
-            jQuery("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-                type: "line",
-                height: "70",
-                width: "100%",
-                lineWidth: "2",
-                lineColor: "#177dff",
-                fillColor: "rgba(23, 125, 255, 0.14)",
-            });
-        } else {
-            console.warn('Warning: #lineChart element not found, skipping Sparkline initialization');
-        }
-        if (document.querySelector('#lineChart2')) {
-            jQuery("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-                type: "line",
-                height: "70",
-                width: "100%",
-                lineWidth: "2",
-                lineColor: "#f3545d",
-                fillColor: "rgba(243, 84, 93, .14)",
-            });
-        } else {
-            console.warn('Warning: #lineChart2 element not found, skipping Sparkline initialization');
-        }
-        if (document.querySelector('#lineChart3')) {
-            jQuery("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-                type: "line",
-                height: "70",
-                width: "100%",
-                lineWidth: "2",
-                lineColor: "#ffa534",
-                fillColor: "rgba(255, 165, 52, .14)",
-            });
-        } else {
-            console.warn('Warning: #lineChart3 element not found, skipping Sparkline initialization');
-        }
-    } catch (error) {
-        console.error('Error in Sparkline initialization:', error);
+try {
+    if (document.querySelector('#lineChart')) {
+        jQuery("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#177dff",
+            fillColor: "rgba(23, 125, 255, 0.14)",
+        });
+    } else {
+        console.warn('Warning: #lineChart element not found, skipping Sparkline initialization');
     }
+    if (document.querySelector('#lineChart2')) {
+        jQuery("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#f3545d",
+            fillColor: "rgba(243, 84, 93, .14)",
+        });
+    } else {
+        console.warn('Warning: #lineChart2 element not found, skipping Sparkline initialization');
+    }
+    if (document.querySelector('#lineChart3')) {
+        jQuery("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+            type: "line",
+            height: "70",
+            width: "100%",
+            lineWidth: "2",
+            lineColor: "#ffa534",
+            fillColor: "rgba(255, 165, 52, .14)",
+        });
+    } else {
+        console.warn('Warning: #lineChart3 element not found, skipping Sparkline initialization');
+    }
+} catch (error) {
+    console.error('Error in Sparkline initialization:', error);
+}
 </script>
 @endpush
