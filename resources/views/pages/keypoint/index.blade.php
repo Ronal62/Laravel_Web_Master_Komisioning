@@ -92,7 +92,7 @@
                                     <td>{{ $keypoint->keterangan }}</td>
                                     <td>{{ $keypoint->master }}</td>
                                     <td>
-                                        <a href="{{ route('keypoint.show', $keypoint->id_formkp) }}" type="button"
+                                        <a href="{{ route('keypoint.clone', $keypoint->id_formkp) }}"
                                             class="btn btn-icon btn-round btn-primary">
                                             <i class="far fa-clone"></i>
                                         </a>

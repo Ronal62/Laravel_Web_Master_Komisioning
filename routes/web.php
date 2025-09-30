@@ -33,6 +33,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('admin', AdminController::class)->except(['create']);
 
     // Custom add route
+    Route::get('/keypoint/{id}/clone', [KeypointController::class, 'clone'])->name('keypoint.clone');
+
 
     // Keypoint routes
     Route::resource('keypoint', KeypointController::class);

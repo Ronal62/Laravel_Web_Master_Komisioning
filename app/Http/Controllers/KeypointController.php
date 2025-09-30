@@ -286,4 +286,52 @@ class KeypointController extends Controller
     {
         return view('pages.keypoint.note', compact('keypoint'));
     }
+
+    public function clone($id)
+    {
+        $merklbs = DB::table('tb_merklbs')->get();
+        $modems = DB::table('tb_modem')->get();
+        $medkom = DB::table('tb_medkom')->get();
+        $garduinduk = DB::table('tb_garduinduk')->get();
+        $sectoral = DB::table('tb_sectoral')->get();
+        $komkp = DB::table('tb_komkp')->get();
+        $picmaster = DB::table('tb_picmaster')->get();
+        $admin = DB::table('tb_admin')->get();
+
+        $keypoint = Keypoint::where('id_formkp', $id)->first();
+
+        if (!$keypoint) {
+            abort(404, 'Keypoint not found');
+        }
+
+        // For array fields, explode the comma-separated values to pre-check checkboxes
+        $arrayFields = [
+            's_cb',
+            's_cb2',
+            's_lr',
+            's_door',
+            's_acf',
+            's_dcf',
+            's_dcd',
+            's_hlt',
+            's_sf6',
+            's_fir',
+            's_fis',
+            's_fit',
+            's_fin',
+            's_comf',
+            's_lruf',
+            'c_cb',
+            'c_cb2',
+            'c_hlt',
+            'c_rst'
+        ];
+
+        foreach ($arrayFields as $field) {
+            $keypoint->$field = $keypoint->$field ? explode(',', $keypoint->$field) : [];
+        }
+
+        return view('pages.keypoint.clone', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'picmaster', 'admin'));
+    }
+
 }
