@@ -100,10 +100,19 @@
                                             class="btn btn-icon btn-round btn-warning">
                                             <i class="fa fa-pen"></i>
                                         </a>
-                                        <a href="{{ route('keypoint.note', $keypoint->id_formkp) }}" type="button"
-                                            class="btn btn-icon btn-round btn-success">
-                                            <i class="far fa-sticky-note"></i>
+                                        <a href="{{ route('keypoint.exportpdf', $keypoint->id_formkp) }}"
+                                            target="_blank" type="button" class="btn btn-icon btn-round btn-danger">
+                                            <i class="fas fa-file-pdf"></i>
                                         </a>
+                                        <form action="{{ route('keypoint.destroy', $keypoint->id_formkp) }}"
+                                            method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-icon btn-round btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this keypoint?')">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @empty

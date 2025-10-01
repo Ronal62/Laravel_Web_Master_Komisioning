@@ -334,4 +334,9 @@ class KeypointController extends Controller
         return view('pages.keypoint.clone', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'picmaster', 'admin'));
     }
 
+    /**
+     * Export a Keypoint record as a PDF.
+     */
+
+
 }

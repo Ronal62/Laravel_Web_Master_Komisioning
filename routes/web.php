@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KeypointController;
+use App\Http\Controllers\ExportPdfController;
 use Illuminate\Support\Facades\Route;
 
 // Root route (redirects to login)
@@ -32,13 +33,11 @@ Route::middleware('auth:admin')->group(function () {
     // Admin resource routes (excluding create)
     Route::resource('admin', AdminController::class)->except(['create']);
 
-    // Custom add route
-    Route::get('/keypoint/{id}/clone', [KeypointController::class, 'clone'])->name('keypoint.clone');
-
-
     // Keypoint routes
     Route::resource('keypoint', KeypointController::class);
     Route::get('/keypoint/{keypoint}/note', [KeypointController::class, 'note'])->name('keypoint.note');
+    Route::get('/keypoint/{id}/clone', [KeypointController::class, 'clone'])->name('keypoint.clone');
+    Route::get('/keypoint/{id}/exportpdf', [ExportPdfController::class, 'exportpdf'])->name('keypoint.exportpdf');
 
     // Forms
     Route::get('/feeder-inc', function () {
