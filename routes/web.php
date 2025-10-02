@@ -3,7 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KeypointController;
 use App\Http\Controllers\ExportPdfController;
+use App\Http\Controllers\GarduindukController;
+use App\Http\Controllers\MerklbsController;
 use Illuminate\Support\Facades\Route;
+
 
 // Root route (redirects to login)
 Route::get('/', function () {
@@ -27,6 +30,10 @@ Route::get('/admin/add', [AdminController::class, 'add'])->name('admin.add');
 
 // Admin routes (protected by admin authentication)
 Route::middleware('auth:admin')->group(function () {
+
+    //Gardu Induk
+    Route::resource('garduindux', GarduindukController::class);
+
     // Dashboard route
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
@@ -37,7 +44,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('keypoint', KeypointController::class);
     Route::get('/keypoint/{keypoint}/note', [KeypointController::class, 'note'])->name('keypoint.note');
     Route::get('/keypoint/{id}/clone', [KeypointController::class, 'clone'])->name('keypoint.clone');
+
+    // Export PDF routes
+    Route::get('/keypoint/{id}', [ExportPdfController::class, 'show'])->name('keypoint.show');
     Route::get('/keypoint/{id}/exportpdf', [ExportPdfController::class, 'exportpdf'])->name('keypoint.exportpdf');
+
 
     // Forms
     Route::get('/feeder-inc', function () {
@@ -60,19 +71,32 @@ Route::middleware('auth:admin')->group(function () {
     })->name('data.absen');
 
     // Data Pengusahaan
-    Route::get('/datapengusahaan', function () {
-        return view('pages.datapengusahaan.index');
-    })->name('datapengusahaan');
-    Route::get('/datapengusahaan/gardu', function () {
-        return view('pages.gardu_induk.index');
-    })->name('datapengusahaan.gardu');
-    Route::get('/datapengusahaan/lbs', function () {
-        return view('pages.merklbs.index');
-    })->name('datapengusahaan.lbs');
-    Route::get('/datapengusahaan/modem', function () {
-        return view('pages.modem.index');
-    })->name('datapengusahaan.modem');
-    Route::get('/datapengusahaan/sectoral', function () {
-        return view('pages.sectoral.index');
-    })->name('datapengusahaan.sectoral');
+    Route::prefix('datapengusahaan')->group(function () {
+        // Gardu Induk routes
+        Route::get('gardu', [GarduindukController::class, 'index'])->name('gardu.index');
+        Route::get('gardu/add', [GarduindukController::class, 'create'])->name('gardu.add');
+        Route::post('gardu', [GarduindukController::class, 'store'])->name('gardu.store');
+        Route::get('gardu/{gardu}', [GarduindukController::class, 'show'])->name('gardu.show');
+        Route::get('gardu/{gardu}/edit', [GarduindukController::class, 'edit'])->name('gardu.edit');
+        Route::put('gardu/{gardu}', [GarduindukController::class, 'update'])->name('gardu.update');
+        Route::delete('gardu/{gardu}', [GarduindukController::class, 'destroy'])->name('gardu.destroy');
+
+        // Merk LBS routes
+        Route::get('merk', [MerklbsController::class, 'index'])->name('merk.index');
+        Route::get('merk/add', [MerklbsController::class, 'create'])->name('merk.add');
+        Route::post('merk', [MerklbsController::class, 'store'])->name('merk.store');
+        Route::get('merk/{merk}', [MerklbsController::class, 'show'])->name('merk.show');
+        Route::get('merk/{merk}/edit', [MerklbsController::class, 'edit'])->name('merk.edit');
+        Route::put('merk/{merk}', [MerklbsController::class, 'update'])->name('merk.update');
+        Route::delete('merk/{merk}', [MerklbsController::class, 'destroy'])->name('merk.destroy');
+
+
+
+
+
+        // Placeholder routes for other menu items
+        // Route::get('lbs', [LbsController::class, 'index'])->name('lbs.index');
+        // Route::get('modem', [ModemController::class, 'index'])->name('modem.index');
+        // Route::get('sectoral', [SectoralController::class, 'index'])->name('sectoral.index');
+    });
 });

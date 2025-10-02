@@ -1,11 +1,11 @@
 @extends('layout.app')
 
-@section('title', 'admin')
+@section('title', 'Merk LBS')
 
 @section('content')
 <div class="page-inner">
     <div class="page-header">
-        <h3 class="fw-bold mb-3">Data Admin</h3>
+        <h3 class="fw-bold mb-3">Data Merk LBS</h3>
         <ul class="breadcrumbs mb-3">
             <li class="nav-home">
                 <a href="{{ route('dashboard') }}">
@@ -22,7 +22,7 @@
                 <i class="icon-arrow-right"></i>
             </li>
             <li class="nav-item">
-                <a href="{{ route('admin.index') }}">Data Admin</a>
+                <a href="{{ route('merk.index') }}">Data Merk LBS</a>
             </li>
         </ul>
     </div>
@@ -30,18 +30,18 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Data Admin</h4>
+                    <h4 class="card-title">Data Merk LBS</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="row mb-3">
                             <div class="col-md-4">
-                                <form action="{{ route('admin.add') }}" method="GET" style="display:inline;">
+                                <form action="{{ route('merk.add') }}" method="GET" style="display:inline;">
                                     <button type="submit" class="btn btn-primary">
                                         <span class="btn-label">
                                             <i class="fas fa-plus"></i>
                                         </span>
-                                        Tambah Admin
+                                        Tambah Merk LBS
                                     </button>
                                 </form>
                             </div>
@@ -50,41 +50,35 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Admin</th>
-                                    <th>Username</th>
+                                    <th>Nama Merk LBS</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Admin</th>
-                                    <th>Username</th>
+                                    <th>Nama Merk LBS</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @isset($admins)
-                                @forelse ($admins as $index => $admin)
+                                @isset($merklbs)
+                                @forelse ($merklbs as $index => $merklbs)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $admin->nama_admin }}</td>
-                                    <td>{{ $admin->username }}</td>
+                                    <td>{{ $merklbs->nama_merklbs }}</td>
                                     <td>
-                                        <a href="{{ route('admin.show', $admin->id_admin) }}" type="button"
-                                            class="btn btn-icon btn-round btn-primary">
-                                            <i class="far fa-clone"></i>
                                         </a>
-                                        <a href="{{ route('admin.edit', $admin->id_admin) }}" type="button"
+                                        <a href="{{ route('merk.edit', $merklbs->id_merkrtu) }}" type="button"
                                             class="btn btn-icon btn-round btn-warning">
                                             <i class="fa fa-pen"></i>
                                         </a>
-                                        <form action="{{ route('admin.destroy', $admin->id_admin) }}" method="POST"
+                                        <form action="{{ route('merk.destroy', $merklbs->id_merkrtu) }}" method="POST"
                                             style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-icon btn-round btn-danger"
-                                                onclick="return confirm('Are you sure you want to delete this admin?')">
+                                                onclick="return confirm('Are you sure you want to delete this merk?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -92,12 +86,12 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="text-center">No data available</td>
+                                    <td colspan="7" class="text-center">No data available</td>
                                 </tr>
                                 @endforelse
                                 @else
                                 <tr>
-                                    <td colspan="4" class="text-center">No data available</td>
+                                    <td colspan="7" class="text-center">No data available</td>
                                 </tr>
                                 @endisset
                             </tbody>
@@ -109,6 +103,7 @@
     </div>
 </div>
 @endsection
+
 
 @section('scripts')
 <script>
@@ -123,7 +118,7 @@ $(document).ready(function() {
                     var column = this;
                     var select = $(
                             '<select class="form-select"><option value="">All</option></select>'
-                            )
+                        )
                         .appendTo($(column.footer()).empty())
                         .on("change", function() {
                             var val = $.fn.dataTable.util.escapeRegex($(this).val());

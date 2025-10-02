@@ -82,28 +82,25 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item @if(Route::is('datapengusahaan*')) active @endif">
-                    <a data-bs-toggle="collapse" href="#datapengusahaan"
-                        class="@if(Route::is('datapengusahaan*')) show @endif">
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#datapengusahaan" class="show">
                         <i class="icon-settings"></i>
                         <p>Data Pengusahaan</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse @if(Route::is('datapengusahaan*')) show @endif" id="datapengusahaan">
+                    <div class="collapse show" id="datapengusahaan">
                         <ul class="nav nav-collapse">
-                            <li class="@if(Route::is('datapengusahaan.gardu')) active @endif">
-                                <a href="{{ route('datapengusahaan.gardu') }}"><span class="sub-item">Gardu
-                                        Induk</span></a>
+                            <li>
+                                <a href="{{ route('gardu.index') }}"><span class="sub-item">Gardu Induk</span></a>
                             </li>
-                            <li class="@if(Route::is('datapengusahaan.lbs')) active @endif">
-                                <a href="{{ route('datapengusahaan.lbs') }}"><span class="sub-item">Merk Lbs</span></a>
+                            <li>
+                                <a href="{{ route('merk.index') }}"><span class="sub-item">Merk Lbs</span></a>
                             </li>
-                            <li class="@if(Route::is('datapengusahaan.modem')) active @endif">
-                                <a href="{{ route('datapengusahaan.modem') }}"><span class="sub-item">Modem</span></a>
+                            <li>
+                                <a href="/datapengusahaan/modem"><span class="sub-item">Modem</span></a>
                             </li>
-                            <li class="@if(Route::is('datapengusahaan.sectoral')) active @endif">
-                                <a href="{{ route('datapengusahaan.sectoral') }}"><span
-                                        class="sub-item">Sectoral</span></a>
+                            <li>
+                                <a href="/datapengusahaan/sectoral"><span class="sub-item">Sectoral</span></a>
                             </li>
                         </ul>
                     </div>
