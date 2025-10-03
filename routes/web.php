@@ -85,11 +85,9 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('merk', [MerklbsController::class, 'index'])->name('merk.index');
         Route::get('merk/add', [MerklbsController::class, 'create'])->name('merk.add');
         Route::post('merk', [MerklbsController::class, 'store'])->name('merk.store');
-        Route::get('merk/{merk}', [MerklbsController::class, 'show'])->name('merk.show');
         Route::get('merk/{merk}/edit', [MerklbsController::class, 'edit'])->name('merk.edit');
         Route::put('merk/{merk}', [MerklbsController::class, 'update'])->name('merk.update');
         Route::delete('merk/{merk}', [MerklbsController::class, 'destroy'])->name('merk.destroy');
-
 
 
 

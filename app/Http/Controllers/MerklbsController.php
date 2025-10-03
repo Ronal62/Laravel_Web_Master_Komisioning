@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\merklbs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MerklbsController extends Controller
 {
@@ -20,7 +21,7 @@ class MerklbsController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.merklbs.add');
     }
 
     /**
@@ -28,38 +29,61 @@ class MerklbsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama_merklbs' => 'required|string|max:25',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('merk.add')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        MerkLbs::create([
+            'nama_merklbs' => $request->nama_merklbs,
+        ]);
+
+        return redirect()->route('merk.index')->with('success', 'Merk LBS created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(merklbs $merklbs)
+    public function edit(MerkLbs $merk)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(merklbs $merklbs)
-    {
-        //
+        return view('pages.merklbs.edit', compact('merk'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, merklbs $merklbs)
+    public function update(Request $request, MerkLbs $merk)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama_merklbs' => 'required|string|max:25',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('merk.edit', $merk->id_merkrtu)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $merk->update([
+            'nama_merklbs' => $request->nama_merklbs,
+        ]);
+
+        return redirect()->route('merk.index')->with('success', 'Merk LBS updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(merklbs $merklbs)
+    public function destroy(MerkLbs $merk)
     {
-        //
+        $merk->delete();
+        return redirect()->route('merk.index')->with('success', 'Merk LBS deleted successfully.');
     }
+
+    /**
+     * Display the specified resource.
+     */
+
 }
