@@ -7,8 +7,7 @@ use App\Http\Controllers\GarduindukController;
 use App\Http\Controllers\MerklbsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ModemController;
-use App\Http\Controllers\SectoralController;
-use App\Models\Sectoral;
+use App\Http\Controllers\SectoralController;;
 
 // Root route (redirects to login)
 Route::get('/', function () {
