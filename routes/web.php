@@ -6,7 +6,9 @@ use App\Http\Controllers\ExportPdfController;
 use App\Http\Controllers\GarduindukController;
 use App\Http\Controllers\MerklbsController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ModemController;
+use App\Http\Controllers\SectoralController;
+use App\Models\Sectoral;
 
 // Root route (redirects to login)
 Route::get('/', function () {
@@ -89,6 +91,22 @@ Route::middleware('auth:admin')->group(function () {
         Route::put('merk/{merk}', [MerklbsController::class, 'update'])->name('merk.update');
         Route::delete('merk/{merk}', [MerklbsController::class, 'destroy'])->name('merk.destroy');
 
+
+        // Modem routes
+        Route::get('modem', [ModemController::class, 'index'])->name('modem.index');
+        Route::get('modem/add', [ModemController::class, 'create'])->name('modem.add');
+        Route::post('modem', [ModemController::class, 'store'])->name('modem.store');
+        Route::get('modem/{modem}/edit', [ModemController::class, 'edit'])->name('modem.edit');
+        Route::put('modem/{modem}', [ModemController::class, 'update'])->name('modem.update');
+        Route::delete('modem/{modem}', [ModemController::class, 'destroy'])->name('modem.destroy');
+
+        //sectoral routes
+        Route::get('sectoral', [SectoralController::class, 'index'])->name('sectoral.index');
+        Route::get('sectoral/add', [SectoralController::class, 'create'])->name('sectoral.add');
+        Route::post('sectoral', [SectoralController::class, 'store'])->name('sectoral.store');
+        Route::get('sectoral/{sectoral}/edit', [SectoralController::class, 'edit'])->name('sectoral.edit');
+        Route::put('sectoral/{sectoral}', [SectoralController::class, 'update'])->name('sectoral.update');
+        Route::delete('sectoral/{sectoral}', [SectoralController::class, 'destroy'])->name('sectoral.destroy');
 
 
 

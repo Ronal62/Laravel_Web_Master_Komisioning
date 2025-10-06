@@ -97,10 +97,10 @@
                                 <a href="{{ route('merk.index') }}"><span class="sub-item">Merk Lbs</span></a>
                             </li>
                             <li>
-                                <a href="/datapengusahaan/modem"><span class="sub-item">Modem</span></a>
+                                <a href="{{ route('modem.index') }} "><span class="sub-item">Modem</span></a>
                             </li>
                             <li>
-                                <a href="/datapengusahaan/sectoral"><span class="sub-item">Sectoral</span></a>
+                                <a href="{{ route('sectoral.index') }}"><span class="sub-item">Sectoral</span></a>
                             </li>
                         </ul>
                     </div>

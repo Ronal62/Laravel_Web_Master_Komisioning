@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use TCPDF;
 use Illuminate\Http\Response;
 use Exception;
+use Illuminate\Routing\Controller;
 
 class ExportPdfController extends Controller
 {

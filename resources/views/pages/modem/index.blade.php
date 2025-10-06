@@ -1,17 +1,17 @@
 @extends('layout.app')
 
-@section('title', 'Sektor')
+@section('title', 'modem LBS')
 
 @section('content')
 <div class="page-inner">
     <div class="page-header">
-        <h3 class="fw-bold mb-3">Data Sektor</h3>
+        <h3 class="fw-bold mb-3">Data Modem</h3>
         <ul class="breadcrumbs mb-3">
             <li class="nav-home">
                 <a href="{{ route('dashboard') }}">
                     <i class="icon-home"></i>
                 </a>
-            </li>   
+            </li>
             <li class="separator">
                 <i class="icon-arrow-right"></i>
             </li>
@@ -22,7 +22,7 @@
                 <i class="icon-arrow-right"></i>
             </li>
             <li class="nav-item">
-                <a href="{{ route('sectoral.index') }}">Data Sektor</a>
+                <a href="{{ route('modem.index') }}">Data Modem</a>
             </li>
         </ul>
     </div>
@@ -30,18 +30,18 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Data Sektor</h4>
+                    <h4 class="card-title">Data modem LBS</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="row mb-3">
                             <div class="col-md-4">
-                                <form action="{{ route('sectoral.add') }}" method="GET" style="display:inline;">
+                                <form action="{{ route('modem.add') }}" method="GET" style="display:inline;">
                                     <button type="submit" class="btn btn-primary">
                                         <span class="btn-label">
                                             <i class="fas fa-plus"></i>
                                         </span>
-                                        Tambah Sektor
+                                        Tambah modem LBS
                                     </button>
                                 </form>
                             </div>
@@ -50,35 +50,38 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Sektor</th>
+                                    <th>Nama Modem</th>
+                                    <th>Sinyal</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Sektor</th>
+                                    <th>Nama Modem</th>
+                                    <th>Sinyal</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @isset($sectoral)
-                                @forelse ($sectoral as $index => $sectoral)
+                                @isset($modem)
+                                @forelse ($modem as $index => $modem)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $sectoral->nama_sec }}</td>
+                                    <td>{{ $modem->nama_modem }}</td>
+                                    <td>{{ $modem->sinyal }}</td>
                                     <td>
                                         </a>
-                                        <a href="{{ route('sectoral.edit', $sectoral->id_sec) }}" type="button"
+                                        <a href="{{ route('modem.edit', $modem->id_modem) }}" type="button"
                                             class="btn btn-icon btn-round btn-warning">
                                             <i class="fa fa-pen"></i>
                                         </a>
-                                        <form action="{{ route('sectoral.destroy', $sectoral->id_sec) }}" method="POST"
+                                        <form action="{{ route('modem.destroy', $modem->id_modem) }}" method="POST"
                                             style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-icon btn-round btn-danger"
-                                                onclick="return confirm('Are you sure you want to delete this merk?')">
+                                                onclick="return confirm('Are you sure you want to delete this modem?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
