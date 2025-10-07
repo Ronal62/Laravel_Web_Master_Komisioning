@@ -176,37 +176,37 @@
         {
             checkAllId: "ccb_open_checkAll_ok",
             targetIds: ["ccb_open_1", "ccb_open_3", "ccb_open_4"],
-            name: "ccb[]",
+            name: "c_cb[]",
         },
         {
             checkAllId: "ccb_close_checkAll_ok",
             targetIds: ["ccb_close_1", "ccb_close_3", "ccb_close_4"],
-            name: "ccb[]",
+            name: "c_cb[]",
         },
         {
             checkAllId: "ccb2_open_checkAll_ok",
             targetIds: ["ccb2_open_1", "ccb2_open_3", "ccb2_open_4"],
-            name: "ccb2[]",
+            name: "c_cb2[]",
         },
         {
             checkAllId: "ccb2_close_checkAll_ok",
             targetIds: ["ccb2_close_1", "ccb2_close_3", "ccb2_close_4"],
-            name: "ccb2[]",
+            name: "c_cb2[]",
         },
         {
             checkAllId: "chlt_off_checkAll_ok",
             targetIds: ["chlt_off_1", "chlt_off_3", "chlt_off_4"],
-            name: "chlt[]",
+            name: "c_hlt[]",
         },
         {
             checkAllId: "chlt_on_checkAll_ok",
             targetIds: ["chlt_on_1", "chlt_on_3", "chlt_on_4"],
-            name: "chlt[]",
+            name: "c_hlt[]",
         },
         {
             checkAllId: "crst_on_checkAll_ok",
             targetIds: ["crst_on_1", "crst_on_3", "crst_on_4"],
-            name: "crst[]",
+            name: "c_rst[]",
         },
     ];
 

@@ -11,4 +11,5 @@ class Modem extends Model
     public $incrementing = true;
     protected $fillable = ['nama_modem','sinyal'];
     public $timestamps = false;
+    
 }

@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Keypoint extends Model
 {
-    protected $table = 'tb_formkp'; // Specify the table name
-    protected $primaryKey = 'id_formkp'; // Specify the primary key
-    public $timestamps = false; // Disable timestamps
+    protected $table = 'tb_formkp';
+    protected $primaryKey = 'id_formkp';
+
+    // Disable timestamps
+    public $timestamps = false;
 
     protected $fillable = [
         'tgl_komisioning',
@@ -21,25 +23,6 @@ class Keypoint extends Model
         'id_gi',
         'nama_peny',
         'id_sec',
-        's_cb',
-        's_cb2',
-        's_lr',
-        's_door',
-        's_acf',
-        's_dcf',
-        's_dcd',
-        's_hlt',
-        's_sf6',
-        's_fir',
-        's_fis',
-        's_fit',
-        's_fin',
-        's_comf',
-        's_lruf',
-        'c_cb',
-        'c_cb2',
-        'c_hlt',
-        'c_rst',
         'ir_rtu',
         'ir_ms',
         'ir_scale',
@@ -64,5 +47,24 @@ class Keypoint extends Model
         'id_picms',
         'pelrtu',
         'ketkp',
+        's_cb',
+        's_cb2',
+        's_lr',
+        's_door',
+        's_acf',
+        's_dcf',
+        's_dcd',
+        's_hlt',
+        's_sf6',
+        's_fir',
+        's_fis',
+        's_fit',
+        's_fin',
+        's_comf',
+        's_lruf',
+        'c_cb',
+        'c_cb2',
+        'c_hlt',
+        'c_rst',
     ];
 }
