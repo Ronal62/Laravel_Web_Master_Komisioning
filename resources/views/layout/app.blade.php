@@ -100,7 +100,8 @@
     <!-- Kaiadmin DEMO methods -->
     <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
     <script src="{{ asset('assets/js/demo.js') }}"></script>
-
+    <script src="{{ asset('js/selectgroup_handler.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}" />
 
     @yield('scripts')
 </body>
