@@ -1942,23 +1942,22 @@
                                                 <label for="id_picms" class="custom-label">Pelaksana Master II</label>
                                                 <div class="custom-select-wrapper">
                                                     <div class="selected-items" id="selected-items"></div>
-                                                    <select class="custom-select" id="id_picms" name="id_picms" multiple
-                                                        onchange="handleSelection()">
-                                                        <option value="">Pilih Pelaksana Master II</option>
-                                                        @foreach ($picmaster as $pic)
-                                                        <option value="{{ $pic->id_picmaster }}"
-                                                            @selected(old('id_picms')==$pic->id_picmaster)>
-                                                            {{ $pic->nama_picmaster }}
-                                                        </option>
+                                                    <input type="hidden" id="id_picms" name="id_picms" value="{{ old('id_picms', implode(',', $selectedPicms ?? [])) }}">
+                                                    <div class="dropdown" id="dropdown-options">
+                                                        @foreach ($picmaster as $item)
+                                                        <div class="dropdown-item" data-id="{{ $item->id_picmaster }}">{{ $item->nama_picmaster }}</div>
                                                         @endforeach
-                                                    </select>
-                                                    <div class="dropdown" id="dropdown-options"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="invalid-feedback" id="error-message" style="display: none;">
+                                                    Please select at least one option.
                                                 </div>
                                                 @error('id_picms')
-                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
+
 
                                         <div class="form-group">
                                             <label for="pelrtu">Pelaksana RTU</label>
@@ -1996,4 +1995,92 @@
         </div>
     </div>
 </div>
+
+<script>
+    const hiddenInput = document.getElementById("id_picms");
+    let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
+
+    const selectedItems = document.getElementById("selected-items");
+    const dropdown = document.getElementById("dropdown-options");
+    const errorMessage = document.getElementById("error-message");
+    const wrapper = document.querySelector(".custom-select-wrapper");
+
+    function handleSelection() {
+        selectedItems.innerHTML = "";
+        hiddenInput.value = selectedValues.join(",");
+
+        selectedValues.forEach((value) => {
+            const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
+            if (option) {
+                const div = document.createElement("div");
+                div.className = "selected-item";
+                div.innerHTML = `${option.textContent} <button class="remove-item" onclick="removeSelection('${value}')">×</button>`;
+                selectedItems.appendChild(div);
+            }
+        });
+
+        updateDropdown();
+        checkValidation();
+    }
+
+    function removeSelection(value) {
+        selectedValues = selectedValues.filter(val => val !== value);
+        handleSelection();
+    }
+
+    function toggleSelection(value) {
+        if (selectedValues.includes(value)) {
+            selectedValues = selectedValues.filter(val => val !== value);
+        } else {
+            selectedValues.push(value);
+        }
+        handleSelection();
+    }
+
+    function updateDropdown() {
+        const items = dropdown.getElementsByClassName("dropdown-item");
+        Array.from(items).forEach((item) => {
+            const value = item.getAttribute("data-id");
+            if (selectedValues.includes(value)) {
+                item.classList.add("selected");
+            } else {
+                item.classList.remove("selected");
+            }
+        });
+
+        dropdown.classList.toggle("active", items.length > 0);
+    }
+
+    function checkValidation() {
+        const hasSelection = selectedValues.length > 0;
+        errorMessage.style.display = hasSelection ? "none" : "block";
+    }
+
+    // Toggle dropdown on click
+    wrapper.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!wrapper.contains(e.target)) {
+            dropdown.classList.remove("active");
+        }
+    });
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", handleSelection);
+
+    // Add click event to dropdown items
+    dropdown.addEventListener("click", (e) => {
+        const item = e.target.closest(".dropdown-item");
+        if (item) {
+            const value = item.getAttribute("data-id");
+            toggleSelection(value);
+        }
+    });
+</script>
+
+
 @endsection

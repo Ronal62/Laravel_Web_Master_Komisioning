@@ -10,125 +10,116 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
 
     <style>
-    .custom-form-container .custom-form-group {
-        margin: 15px 0;
-        font-family: Arial, sans-serif;
-    }
+        .custom-form-container .custom-form-group {
+            margin: 15px 0;
+            font-family: Arial, sans-serif;
+        }
 
-    .custom-form-container .custom-label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-        color: #333;
-    }
+        .custom-form-container .custom-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
 
-    .custom-form-container .custom-select-wrapper {
-        position: relative;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        background-color: #fff;
-        min-height: 38px;
-        padding: 5px;
-        box-sizing: border-box;
-    }
+        .custom-form-container .custom-select-wrapper {
+            position: relative;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            min-height: 38px;
+            padding: 5px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
 
-    .custom-form-container .custom-select {
-        width: 100%;
-        border: none;
-        outline: none;
-        background: transparent;
-        padding: 0;
-        margin: 0;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        cursor: pointer;
-    }
+        .custom-form-container .selected-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 5px 0;
+        }
 
-    .custom-form-container .custom-select option {
-        padding: 8px;
-    }
+        .custom-form-container .selected-item {
+            display: flex;
+            align-items: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
 
-    .custom-form-container .selected-items {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        padding: 5px 0;
-    }
+        .custom-form-container .remove-item {
+            margin-left: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #fff;
+            background: none;
+            border: none;
+            padding: 0 5px;
+        }
 
-    .custom-form-container .selected-item {
-        display: flex;
-        align-items: center;
-        background-color: #007bff;
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 14px;
-    }
+        .custom-form-container .remove-item:hover {
+            color: #ff4444;
+        }
 
-    .custom-form-container .remove-item {
-        margin-left: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        color: #fff;
-        background: none;
-        border: none;
-        padding: 0 5px;
-    }
+        .custom-form-container .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-    .custom-form-container .remove-item:hover {
-        color: #ff4444;
-    }
+        .custom-form-container .dropdown.active {
+            display: block;
+        }
 
-    .custom-form-container .dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 1000;
-        display: none;
-    }
+        .custom-form-container .dropdown div {
+            padding: 8px;
+            cursor: pointer;
+        }
 
-    .custom-form-container .dropdown.active {
-        display: block;
-    }
+        .custom-form-container .dropdown div:hover {
+            background-color: #f0f0f0;
+        }
 
-    .custom-form-container .dropdown option {
-        padding: 8px;
-        cursor: pointer;
-    }
+        .custom-form-container .dropdown .selected {
+            background-color: #e6f3ff;
+            color: #007bff;
+            font-weight: bold;
+        }
 
-    .custom-form-container .dropdown option:hover {
-        background-color: #f0f0f0;
-    }
-
-    .custom-form-container .invalid-feedback {
-        color: #dc3545;
-        font-size: 12px;
-        margin-top: 5px;
-    }
+        .custom-form-container .invalid-feedback {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+        }
     </style>
     <!-- Fonts and icons -->
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
     <script>
-    WebFont.load({
-        google: {
-            families: ["Public Sans:300,400,500,600,700"]
-        },
-        custom: {
-            families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands",
-                "simple-line-icons"
-            ],
-            urls: ["{{ asset('assets/css/fonts.min.css') }}"],
-        },
-        active: function() {
-            sessionStorage.fonts = true;
-        },
-    });
+        WebFont.load({
+            google: {
+                families: ["Public Sans:300,400,500,600,700"]
+            },
+            custom: {
+                families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands",
+                    "simple-line-icons"
+                ],
+                urls: ["{{ asset('assets/css/fonts.min.css') }}"],
+            },
+            active: function() {
+                sessionStorage.fonts = true;
+            },
+        });
     </script>
 
     <!-- CSS Files -->
@@ -204,6 +195,7 @@
     <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
     <script src="{{ asset('assets/js/demo.js') }}"></script>
     <script src="{{ asset('js/selectgroup_handler.js') }}"></script>
+
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}" />
 
     @yield('scripts')
