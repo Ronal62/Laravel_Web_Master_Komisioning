@@ -64,8 +64,13 @@
             name: "s_cb2[]",
         },
         {
-            checkAllId: "lr_checkAll",
+            checkAllId: "lr_local_checkAll",
             targetIds: ["lr_local_1", "lr_local_3", "lr_local_4"],
+            name: "s_lr[]",
+        },
+        {
+            checkAllId: "lr_remote_checkAll",
+            targetIds: ["lr_remote_1", "lr_remote_3", "lr_remote_4"],
             name: "s_lr[]",
         },
         {
@@ -119,29 +124,89 @@
             name: "s_hlt[]",
         },
         {
-            checkAllId: "sf6_checkAll",
+            checkAllId: "sf6_normal_checkAll",
             targetIds: ["sf6_sf6nrml_1", "sf6_sf6nrml_3", "sf6_sf6nrml_4"],
             name: "s_sf6[]",
         },
         {
-            checkAllId: "fir_checkAll",
+            checkAllId: "sf6_failed_checkAll",
+            targetIds: ["sf6_sf6fail_1", "sf6_sf6fail_3", "sf6_sf6fail_4"],
+            name: "s_sf6[]",
+        },
+        {
+            checkAllId: "fir_normal_checkAll",
             targetIds: ["fir_firnrml_1", "fir_firnrml_3", "fir_firnrml_4"],
             name: "s_fir[]",
         },
         {
-            checkAllId: "fis_checkAll",
+            checkAllId: "fir_failed_checkAll",
+            targetIds: ["fir_firfail_1", "fir_firfail_3", "fir_firfail_4"],
+            name: "s_fir[]",
+        },
+        {
+            checkAllId: "fis_normal_checkAll",
             targetIds: ["fis_fisnrml_1", "fis_fisnrml_3", "fis_fisnrml_4"],
             name: "s_fis[]",
         },
         {
-            checkAllId: "fit_checkAll",
+            checkAllId: "fis_failed_checkAll",
+            targetIds: ["fis_fisfail_1", "fis_fisfail_3", "fis_fisfail_4"],
+            name: "s_fis[]",
+        },
+        {
+            checkAllId: "fit_normal_checkAll",
             targetIds: ["fit_fitnrml_1", "fit_fitnrml_3", "fit_fitnrml_4"],
             name: "s_fit[]",
         },
         {
-            checkAllId: "fin_checkAll",
+            checkAllId: "fit_failed_checkAll",
+            targetIds: ["fit_fitfail_1", "fit_fitfail_3", "fit_fitfail_4"],
+            name: "s_fit[]",
+        },
+        {
+            checkAllId: "fin_normal_checkAll",
             targetIds: ["fin_finnrml_1", "fin_finnrml_3", "fin_finnrml_4"],
             name: "s_fin[]",
+        },
+        {
+            checkAllId: "fin_failed_checkAll",
+            targetIds: ["fin_finfail_1", "fin_finfail_3", "fin_finfail_4"],
+            name: "s_fin[]",
+        },
+        {
+            checkAllId: "ccb_open_checkAll_ok",
+            targetIds: ["ccb_open_1", "ccb_open_3", "ccb_open_4"],
+            name: "ccb[]",
+        },
+        {
+            checkAllId: "ccb_close_checkAll_ok",
+            targetIds: ["ccb_close_1", "ccb_close_3", "ccb_close_4"],
+            name: "ccb[]",
+        },
+        {
+            checkAllId: "ccb2_open_checkAll_ok",
+            targetIds: ["ccb2_open_1", "ccb2_open_3", "ccb2_open_4"],
+            name: "ccb2[]",
+        },
+        {
+            checkAllId: "ccb2_close_checkAll_ok",
+            targetIds: ["ccb2_close_1", "ccb2_close_3", "ccb2_close_4"],
+            name: "ccb2[]",
+        },
+        {
+            checkAllId: "chlt_off_checkAll_ok",
+            targetIds: ["chlt_off_1", "chlt_off_3", "chlt_off_4"],
+            name: "chlt[]",
+        },
+        {
+            checkAllId: "chlt_on_checkAll_ok",
+            targetIds: ["chlt_on_1", "chlt_on_3", "chlt_on_4"],
+            name: "chlt[]",
+        },
+        {
+            checkAllId: "crst_on_checkAll_ok",
+            targetIds: ["crst_on_1", "crst_on_3", "crst_on_4"],
+            name: "crst[]",
         },
     ];
 
@@ -172,4 +237,83 @@
                 });
             }
         });
+    });
+
+    // Multi-select dropdown logic
+
+
+
+    const select = document.getElementById("id_picms");
+    const selectedItems = document.getElementById("selected-items");
+    const dropdown = document.getElementById("dropdown-options");
+    const errorMessage = document.getElementById("error-message");
+
+    function handleSelection() {
+        selectedItems.innerHTML = "";
+        const selectedOptions = Array.from(select.selectedOptions);
+        selectedOptions.forEach((option) => {
+            if (option.value) {
+                const div = document.createElement("div");
+                div.className = "selected-item";
+                div.innerHTML = `${option.text} <button class="remove-item" onclick="removeSelection('${option.value}')">×</button>`;
+                selectedItems.appendChild(div);
+            }
+        });
+        updateDropdown();
+        checkValidation();
+    }
+
+    function removeSelection(value) {
+        const option = Array.from(select.options).find(
+            (opt) => opt.value === value
+        );
+        if (option) {
+            option.selected = false;
+            handleSelection();
+        }
+    }
+
+    function updateDropdown() {
+        dropdown.innerHTML = "";
+        const allOptions = Array.from(select.options);
+        allOptions.forEach((option) => {
+            if (!option.selected && option.value) {
+                const div = document.createElement("div");
+                div.textContent = option.text;
+                div.onclick = () => {
+                    option.selected = true;
+                    handleSelection();
+                };
+                dropdown.appendChild(div);
+            }
+        });
+        dropdown.classList.toggle(
+            "active",
+            allOptions.some((opt) => !opt.selected && opt.value)
+        );
+    }
+
+    function checkValidation() {
+        const hasSelection = Array.from(select.selectedOptions).some(
+            (opt) => opt.value
+        );
+        errorMessage.style.display = hasSelection ? "none" : "block";
+    }
+
+    // Initialize
+    select.addEventListener("focus", updateDropdown);
+    select.addEventListener("blur", () =>
+        setTimeout(() => dropdown.classList.remove("active"), 200)
+    );
+    handleSelection();
+
+    // Simulate preselected items (e.g., ANDRY, DIMAS, DWIKI)
+    document.addEventListener("DOMContentLoaded", () => {
+        ["2", "3", "4"].forEach((value) => {
+            const option = Array.from(select.options).find(
+                (opt) => opt.value === value
+            );
+            if (option) option.selected = true;
+        });
+        handleSelection();
     });
