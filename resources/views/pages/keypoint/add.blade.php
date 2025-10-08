@@ -1433,7 +1433,8 @@
 
                                             </div>
                                         </div>
-                                    </div> <!-- Form Telecontrol Tab -->
+                                    </div>
+                                    <!-- Form Telecontrol Tab -->
                                     <div class="tab-pane fade" id="v-pills-formtelecontrol-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelecontrol-tab-nobd">
                                         <div class="row">

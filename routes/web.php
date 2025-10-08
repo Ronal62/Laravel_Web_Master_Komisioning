@@ -45,6 +45,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('keypoint', KeypointController::class);
     Route::get('/keypoint/{keypoint}/note', [KeypointController::class, 'note'])->name('keypoint.note');
     Route::get('/keypoint/{id}/clone', [KeypointController::class, 'clone'])->name('keypoint.clone');
+    Route::post('/keypoint/clone', [KeypointController::class, 'storeClone'])->name('keypoint.clone.store');
 
     // Export PDF routes
     Route::get('/keypoint/{id}', [ExportPdfController::class, 'show'])->name('keypoint.show');
