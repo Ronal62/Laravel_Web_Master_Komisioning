@@ -44,22 +44,16 @@
                                 <input type="date" id="sampai-tanggal" class="form-control" />
                             </div>
                             <div class="col-md-4">
-                                <label for="sampai-tanggal" class="form-label">Export Data To :</label>
-                                <button class="btn btn-danger">
-                                    <span class="btn-label">
-                                        <i class="fas fa-file-pdf"></i>
-                                    </span>
-                                    PDF
+                                <label class="form-label">Export Data To :</label>
+                                <button class="btn btn-danger" onclick="exportTo('pdf')">
+                                    <span class="btn-label"><i class="fas fa-file-pdf"></i></span> PDF
                                 </button>
-                                <button class="btn btn-success">
-                                    <span class="btn-label">
-                                        <i class="fas fa-file-excel"></i>
-                                    </span>
-                                    Excel
+                                <button class="btn btn-success" onclick="exportTo('excel')">
+                                    <span class="btn-label"><i class="fas fa-file-excel"></i></span> Excel
                                 </button>
                             </div>
                         </div>
-                        <table id="multi-filter-select" class="display table table-striped table-hover">
+                        <table id="keypoint-table" class="display table table-striped table-hover" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Tgl Komisioning</th>
@@ -71,56 +65,18 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
+                            <tbody></tbody> <!-- Ensure this is empty -->
                             <tfoot>
                                 <tr>
-                                    <th>Tgl Komisioning</th>
-                                    <th>Nama Keypoint</th>
-                                    <th>GI & Penyulang</th>
-                                    <th>Merk Modem & RTU</th>
-                                    <th>Keterangan</th>
-                                    <th>Master</th>
-                                    <th>Action</th>
+                                    <th><input type="text" placeholder="Filter Tgl" class="form-control" /></th>
+                                    <th><input type="text" placeholder="Filter Nama" class="form-control" /></th>
+                                    <th><input type="text" placeholder="Filter GI & Penyulang" class="form-control" /></th>
+                                    <th><input type="text" placeholder="Filter Merk" class="form-control" /></th>
+                                    <th><input type="text" placeholder="Filter Keterangan" class="form-control" /></th>
+                                    <th><input type="text" placeholder="Filter Master" class="form-control" /></th>
+                                    <th></th> <!-- No filter for action -->
                                 </tr>
                             </tfoot>
-                            <tbody>
-                                @forelse ($keypoints as $keypoint)
-                                <tr>
-                                    <td>{{ \Carbon\Carbon::parse($keypoint->tgl_komisioning)->format('l, d-m-Y') }}</td>
-                                    <td>{{ $keypoint->nama_keypoint }}</td>
-                                    <td>{{ $keypoint->gi_penyulang }}</td>
-                                    <td>{{ $keypoint->merk_modem_rtu ?? 'N/A' }}</td> <!-- Handle null values -->
-                                    <td>{{ $keypoint->keterangan }}</td>
-                                    <td>{{ $keypoint->master }}</td>
-                                    <td>
-                                        <a href="{{ route('keypoint.clone', $keypoint->id_formkp) }}"
-                                            class="btn btn-icon btn-round btn-primary">
-                                            <i class="far fa-clone"></i>
-                                        </a>
-                                        <a href="{{ route('keypoint.edit', $keypoint->id_formkp) }}" type="button"
-                                            class="btn btn-icon btn-round btn-warning">
-                                            <i class="fa fa-pen"></i>
-                                        </a>
-                                        <a href="{{ route('keypoint.exportpdf', $keypoint->id_formkp) }}"
-                                            target="_blank" type="button" class="btn btn-icon btn-round btn-danger">
-                                            <i class="fas fa-file-pdf"></i>
-                                        </a>
-                                        <form action="{{ route('keypoint.destroy', $keypoint->id_formkp) }}"
-                                            method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-icon btn-round btn-danger"
-                                                onclick="return confirm('Are you sure you want to delete this keypoint?')">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="7" class="text-center">No data available</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -128,70 +84,100 @@
         </div>
     </div>
 </div>
-@endsection
 
-@section('scripts')
+<!-- Include DataTables CSS/JS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <script>
-$("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-    type: "line",
-    height: "70",
-    width: "100%",
-    lineWidth: "2",
-    lineColor: "#177dff",
-    fillColor: "rgba(23, 125, 255, 0.14)",
-});
+    function exportTo(type) {
+        var from = $('#dari-tanggal').val();
+        var to = $('#sampai-tanggal').val();
+        var url = '/keypoint/export/' + type + '?from=' + from + '&to=' + to;
+        window.open(url, '_blank');
+    }
 
-$("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-    type: "line",
-    height: "70",
-    width: "100%",
-    lineWidth: "2",
-    lineColor: "#f3545d",
-    fillColor: "rgba(243, 84, 93, .14)",
-});
+    $(document).ready(function() {
+        // Destroy existing DataTable if it exists
+        if ($.fn.DataTable.isDataTable('#keypoint-table')) {
+            $('#keypoint-table').DataTable().destroy();
+        }
 
-$("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-    type: "line",
-    height: "70",
-    width: "100%",
-    lineWidth: "2",
-    lineColor: "#ffa534",
-    fillColor: "rgba(255, 165, 52, .14)",
-});
-</script>
-<script>
-$(document).ready(function() {
-    $("#multi-filter-select").DataTable({
-        pageLength: 5,
-        initComplete: function() {
-            this.api()
-                .columns()
-                .every(function() {
-                    var column = this;
-                    var select = $(
-                            '<select class="form-select"><option value=""></option></select>'
-                        )
-                        .appendTo($(column.footer()).empty())
-                        .on("change", function() {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+        var table = $('#keypoint-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route("keypoint.data") }}',
+                type: 'POST',
+                data: function(d) {
+                    d.from_date = $('#dari-tanggal').val();
+                    d.to_date = $('#sampai-tanggal').val();
+                    d._token = $('meta[name="csrf-token"]').attr('content');
+                },
+                error: function(xhr, error, thrown) {
+                    console.log('Ajax Error: ', xhr.responseText);
+                }
+            },
+            columns: [{
+                    data: 'tgl_komisioning',
+                    name: 'tgl_komisioning'
+                },
+                {
+                    data: 'nama_keypoint',
+                    name: 'nama_keypoint'
+                },
+                {
+                    data: 'gi_penyulang',
+                    name: 'gi_penyulang'
+                },
+                {
+                    data: 'merk_modem_rtu',
+                    name: 'merk_modem_rtu'
+                },
+                {
+                    data: 'keterangan',
+                    name: 'keterangan'
+                },
+                {
+                    data: 'master',
+                    name: 'master'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row) {
+                        // Return the action HTML with proper escaping
+                        return data;
+                    }
+                }
+            ],
+            pageLength: 25,
+            lengthMenu: [10, 25, 50, 100],
+            order: [
+                [0, 'desc']
+            ],
+            language: {
+                processing: "Loading data...",
+                emptyTable: "No data available"
+            }
+        });
 
-                            column
-                                .search(val ? "^" + val + "$" : "", true, false)
-                                .draw();
-                        });
+        // Per-column filtering
+        $('#keypoint-table tfoot input').on('keyup change clear', function() {
+            var column = table.column($(this).closest('th').index());
+            column.search(this.value).draw();
+        });
 
-                    column
-                        .data()
-                        .unique()
-                        .sort()
-                        .each(function(d, j) {
-                            select.append(
-                                '<option value="' + d + '">' + d + "</option>"
-                            );
-                        });
-                });
-        },
+        // Redraw table on date change
+        $('#dari-tanggal, #sampai-tanggal').change(function() {
+            table.draw();
+        });
     });
-});
 </script>
 @endsection

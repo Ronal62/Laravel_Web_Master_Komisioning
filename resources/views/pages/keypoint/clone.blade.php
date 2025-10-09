@@ -77,8 +77,7 @@
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="nama_lbs"
                                                             name="nama_lbs" placeholder="Nama Keypoint"
-                                                            value="{{ old('nama_lbs', $keypoint->nama_lbs) }}"
-                                                            required />
+                                                            value="{{ old('nama_lbs') }}" required />
                                                         @error('nama_lbs')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror

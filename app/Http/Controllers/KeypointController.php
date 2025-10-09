@@ -8,6 +8,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+use TCPDF; // Assuming TCPDF is installed via composer or available
+use Illuminate\Support\Facades\Response; // For potential CSV/excel fallback
 
 class KeypointController extends Controller
 {
@@ -16,24 +19,241 @@ class KeypointController extends Controller
      */
     public function index()
     {
-        $keypoints = DB::table('tb_formkp')
-            ->select(
-                'id_formkp',
-                'tgl_komisioning',
-                'nama_lbs as nama_keypoint',
-                DB::raw("CONCAT(id_gi, ' - ', nama_peny) as gi_penyulang"),
-                DB::raw("CONCAT(
-                    COALESCE((SELECT nama_merklbs FROM tb_merklbs WHERE id_merkrtu = tb_formkp.id_merkrtu LIMIT 1), 'Unknown'),
-                    ' - ',
-                    COALESCE((SELECT nama_modem FROM tb_modem WHERE id_modem = tb_formkp.id_modem LIMIT 1), 'Unknown')
-                ) as merk_modem_rtu"),
-                'ketkp as keterangan',
-                'nama_user as master',
-                'lastupdate'
-            )
-            ->get();
+        // Simply return the view; data will be loaded via AJAX for the table
+        return view('pages.keypoint.index');
+    }
 
-        return view('pages.keypoint.index', compact('keypoints'));
+    /**
+     * Server-side DataTables data provider
+     */
+    public function data(Request $request)
+    {
+        $draw = $request->draw;
+        $start = $request->start;
+        $length = $request->length;
+        $searchValue = $request->search['value'];
+        $orderColumnIndex = $request->order[0]['column'];
+        $orderDir = $request->order[0]['dir'];
+        $columns = $request->columns;
+
+        // Additional date filters
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+
+        // Map DataTables column indices to database fields
+        $columnMap = [
+            0 => 'tb_formkp.tgl_komisioning',
+            1 => 'tb_formkp.nama_lbs',
+            2 => 'gi_penyulang',
+            3 => 'merk_modem_rtu',
+            4 => 'tb_formkp.ketkp',
+            5 => 'tb_formkp.nama_user',
+        ];
+
+        $orderColumn = $columnMap[$orderColumnIndex] ?? 'tb_formkp.tgl_komisioning';
+
+        // Base query with joins
+        $query = DB::table('tb_formkp')
+            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
+            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
+            ->select(
+                'tb_formkp.id_formkp',
+                'tb_formkp.tgl_komisioning',
+                'tb_formkp.nama_lbs as nama_keypoint',
+                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
+                DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
+                'tb_formkp.ketkp as keterangan',
+                'tb_formkp.nama_user as master'
+            );
+
+        // Apply date range filter
+        if ($fromDate && $toDate) {
+            $query->whereBetween('tb_formkp.tgl_komisioning', [$fromDate, $toDate]);
+        } elseif ($fromDate) {
+            $query->whereDate('tb_formkp.tgl_komisioning', '>=', $fromDate);
+        } elseif ($toDate) {
+            $query->whereDate('tb_formkp.tgl_komisioning', '<=', $toDate);
+        }
+
+        // Global search
+        if (!empty($searchValue)) {
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('tb_formkp.nama_lbs', 'like', "%{$searchValue}%")
+                    ->orWhere('tb_formkp.ketkp', 'like', "%{$searchValue}%")
+                    ->orWhere('tb_formkp.nama_peny', 'like', "%{$searchValue}%")
+                    ->orWhere('tb_formkp.nama_user', 'like', "%{$searchValue}%")
+                    ->orWhereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$searchValue}%"])
+                    ->orWhereRaw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) LIKE ?", ["%{$searchValue}%"]);
+            });
+        }
+
+        // Per-column searches
+        foreach ($columns as $index => $col) {
+            $colSearchValue = $col['search']['value'];
+            if (!empty($colSearchValue) && $col['searchable'] == 'true') {
+                switch ($index) {
+                    case 0:
+                        $query->whereDate('tb_formkp.tgl_komisioning', 'like', "%{$colSearchValue}%");
+                        break;
+                    case 1:
+                        $query->where('tb_formkp.nama_lbs', 'like', "%{$colSearchValue}%");
+                        break;
+                    case 2:
+                        $query->whereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$colSearchValue}%"]);
+                        break;
+                    case 3:
+                        $query->whereRaw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) LIKE ?", ["%{$colSearchValue}%"]);
+                        break;
+                    case 4:
+                        $query->where('tb_formkp.ketkp', 'like', "%{$colSearchValue}%");
+                        break;
+                    case 5:
+                        $query->where('tb_formkp.nama_user', 'like', "%{$colSearchValue}%");
+                        break;
+                }
+            }
+        }
+
+        // Total records
+        $totalRecords = DB::table('tb_formkp')->count();
+
+        // Total filtered
+        $totalFiltered = $query->count();
+
+        // Apply ordering
+        if (strpos($orderColumn, 'gi_penyulang') !== false) {
+            $query->orderByRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) {$orderDir}");
+        } elseif (strpos($orderColumn, 'merk_modem_rtu') !== false) {
+            $query->orderByRaw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) {$orderDir}");
+        } else {
+            $query->orderBy($orderColumn, $orderDir);
+        }
+
+        // Pagination
+        $records = $query->offset($start)->limit($length)->get();
+
+        // Format data
+        $data = $records->map(function ($row) {
+            $row->tgl_komisioning = Carbon::parse($row->tgl_komisioning)->format('l, d-m-Y');
+            $row->action = '
+            <a href="' . route('keypoint.clone', $row->id_formkp) . '" class="btn btn-icon btn-round btn-primary">
+                <i class="far fa-clone"></i>
+            </a>
+            <a href="' . route('keypoint.edit', $row->id_formkp) . '" class="btn btn-icon btn-round btn-warning">
+                <i class="fa fa-pen"></i>
+            </a>
+            <a href="' . route('keypoint.exportpdf', $row->id_formkp) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+            <form action="' . route('keypoint.destroy', $row->id_formkp) . '" method="POST" style="display:inline;">
+                ' . csrf_field() . '
+                ' . method_field('DELETE') . '
+                <button type="submit" class="btn btn-icon btn-round btn-secondary" onclick="return confirm(\'Are you sure you want to delete this keypoint?\')">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </form>
+            ';
+            return $row;
+        })->toArray();
+
+        return response()->json([
+            'draw' => (int)$draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalFiltered,
+            'data' => $data,
+        ]);
+    }
+
+    // New methods for filtered exports (PDF and Excel)
+    // Assume you have a view 'pdf.allkeypoints' with a table loop similar to index
+    public function exportPdfFiltered(Request $request)
+    {
+        $fromDate = $request->query('from');
+        $toDate = $request->query('to');
+
+        // Reuse the same query logic as in data() but without pagination/search columns (only dates for export as per UI)
+        $query = DB::table('tb_formkp')
+            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
+            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
+            ->select(
+                'tb_formkp.tgl_komisioning',
+                'tb_formkp.nama_lbs as nama_keypoint',
+                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
+                DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
+                'tb_formkp.ketkp as keterangan',
+                'tb_formkp.nama_user as master'
+            );
+
+        if ($fromDate && $toDate) {
+            $query->whereBetween('tb_formkp.tgl_komisioning', [$fromDate, $toDate]);
+        } // Add more filters if needed later
+
+        $keypoints = $query->get();
+
+        // Format dates
+        $keypoints = $keypoints->map(function ($row) {
+            $row->tgl_komisioning = Carbon::parse($row->tgl_komisioning)->format('l, d-m-Y');
+            return $row;
+        });
+
+        $data = ['keypoints' => $keypoints];
+        $html = view('pdf.allkeypoints', $data)->render(); // Create this view with <table> loop
+
+        $filename = "Data_Keypoint_" . now()->format('d-m-Y') . ".pdf";
+        $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->SetMargins(10, 5, 10);
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->AddPage('L');
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        return response()->streamDownload(function () use ($pdf, $filename) {
+            $pdf->Output($filename, 'I');
+        }, $filename, ['Content-Type' => 'application/pdf']);
+    }
+
+    // For Excel: Fallback to CSV if no library; recommend installing maatwebsite/excel
+    public function exportExcelFiltered(Request $request)
+    {
+        $fromDate = $request->query('from');
+        $toDate = $request->query('to');
+
+        // Similar query as PDF
+        $query = DB::table('tb_formkp')
+            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
+            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
+            ->select(
+                DB::raw("DATE_FORMAT(tb_formkp.tgl_komisioning, '%d-%m-%Y') as tgl_komisioning"),
+                'tb_formkp.nama_lbs as nama_keypoint',
+                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
+                DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
+                'tb_formkp.ketkp as keterangan',
+                'tb_formkp.nama_user as master'
+            );
+
+        if ($fromDate && $toDate) {
+            $query->whereBetween('tb_formkp.tgl_komisioning', [$fromDate, $toDate]);
+        }
+
+        $keypoints = $query->get()->toArray();
+
+        $filename = "Data_Keypoint_" . now()->format('d-m-Y') . ".csv";
+        $handle = fopen('php://output', 'w');
+        fputcsv($handle, ['Tgl Komisioning', 'Nama Keypoint', 'GI & Penyulang', 'Merk Modem & RTU', 'Keterangan', 'Master']); // Headers
+
+        foreach ($keypoints as $row) {
+            fputcsv($handle, (array)$row);
+        }
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename={$filename}",
+        ];
+
+        return response()->streamDownload(function () use ($handle) {
+            fclose($handle);
+        }, $filename, $headers);
     }
 
     /**

@@ -43,13 +43,19 @@ Route::middleware('auth:admin')->group(function () {
 
     // Keypoint routes
     Route::resource('keypoint', KeypointController::class);
-    Route::get('/keypoint/{keypoint}/note', [KeypointController::class, 'note'])->name('keypoint.note');
     Route::get('/keypoint/{id}/clone', [KeypointController::class, 'clone'])->name('keypoint.clone');
     Route::post('/keypoint/clone', [KeypointController::class, 'storeClone'])->name('keypoint.clone.store');
+    Route::get('/keypoint/data', [KeypointController::class, 'data'])->name('keypoint.data');
+    Route::post('/keypoint/data', [KeypointController::class, 'data'])->name('keypoint.data');
+
+    // Filtered exports
+    Route::get('/keypoint/export/pdf', [KeypointController::class, 'exportPdfFiltered'])->name('keypoint.exportpdfall');
+    Route::get('/keypoint/export/excel', [KeypointController::class, 'exportExcelFiltered'])->name('keypoint.exportexcelall');
 
     // Export PDF routes
     Route::get('/keypoint/{id}', [ExportPdfController::class, 'show'])->name('keypoint.show');
     Route::get('/keypoint/{id}/exportpdf', [ExportPdfController::class, 'exportpdf'])->name('keypoint.exportpdf');
+
 
 
     // Forms
