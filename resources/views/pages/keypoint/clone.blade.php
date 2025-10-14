@@ -85,7 +85,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="id_merkrtu">Merk RTU</label>
-                                                    <select class="form-select form-control" id="id_merkrtu"
+                                                    <sel ect class="form-select form-control" id="id_merkrtu"
                                                         name="id_merkrtu" required>
                                                         <option value="">Pilih Merk RTU</option>
                                                         @foreach ($merklbs as $merk)
@@ -94,7 +94,7 @@
                                                             {{ $merk->nama_merklbs }}
                                                         </option>
                                                         @endforeach
-                                                    </select>
+                                                    </sel>
                                                     @error('id_merkrtu')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror

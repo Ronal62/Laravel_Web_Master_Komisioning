@@ -9,7 +9,7 @@
         </nav>
         <div class="copyright">
             {{ date('Y') }}, made with <i class="fa fa-heart heart text-danger"></i> by
-            <a href="https://www.linkedin.com/in/iamrnldo/">Iamrnldo</a>
+            <a href="https://www.linkedin.com/in/iamrnldo/">RAN</a>
         </div>
         <div>
             Distributed by

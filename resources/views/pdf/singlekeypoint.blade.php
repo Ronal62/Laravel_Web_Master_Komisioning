@@ -1,1303 +1,404 @@
-@extends('layout.app')
+<!DOCTYPE html>
+<html>
 
-@section('title', 'Keypoint Details')
-
-@section('content')
-<div class="page-inner">
-    <div class="page-header">
-        <h3 class="fw-bold mb-3">Keypoint Details</h3>
-    </div>
-    <div class="row">
-        <div class="col-12 col-md-4 mt-2 mt-md-0">
-            <label for="export-options" class="form-label">Export Data To:</label>
-            <div class="d-flex flex-column flex-md-row">
-                <a href="{{ route('exportpdf', $keypoint->id_formkp) }}" class="btn btn-danger me-md-2 mb-2 mb-md-0 w-100 w-md-auto">
-                    <span class="btn-label">
-                        <i class="fas fa-file-pdf"></i>
-                    </span>
-                    PDF
-                </a>
-                <button class="btn btn-success w-100 w-md-auto">
-                    <span class="btn-label">
-                        <i class="fas fa-file-excel"></i>
-                    </span>
-                    Excel
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Form Komisioning Keypoint</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-sm">
-                            <!-- Empty rows for spacing (rows 1-17) -->
-                            @for ($i = 1; $i <= 17; $i++)
-                                <tr>
-                                @for ($j = 1; $j <= 17; $j++)
-                                    <td>
-                                    </td>
-                                    @endfor
-                                    </tr>
-                                    @endfor
-
-                                    <!-- Row 18: Header -->
-                                    <tr>
-                                        <th colspan="17" class="text-center">FORM KOMISIONING KEYPOINT</th>
-                                    </tr>
-
-                                    <!-- Row 19: Empty -->
-                                    <tr>
-                                        <td colspan="17"></td>
-                                    </tr>
-
-                                    <!-- Row 20: Nama LBS, Modem, Gardu Induk -->
-                                    <tr>
-                                        <td>Nama LBS / REC.</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Modem</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td>Gardu Induk / Sectoral</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">{{ $keypoint->nama_lbs }}</td>
-                                        <td colspan="5">{{ $modem }}</td>
-                                        <td colspan="7">{{ $gi }} / {{ $sectoral }}</td>
-                                    </tr>
-
-                                    <!-- Row 21: Merk LBS, IP Address, Penyulang -->
-                                    <tr>
-                                        <td>Merk LBS / REC.</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IP Address / No. Kartu</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td>Penyulang</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">{{ $merklbs }}</td>
-                                        <td colspan="5">{{ $keypoint->ip_kp }}</td>
-                                        <td colspan="7">{{ $keypoint->nama_peny }}</td>
-                                    </tr>
-
-                                    <!-- Row 22: Protocol / RTU Address, Koordinat, Tanggal -->
-                                    <tr>
-                                        <td>Protocol / RTU Address</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Koordinat</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td>Tanggal</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">{{ $medkom }}</td>
-                                        <td>/</td>
-                                        <td colspan="2">{{ $keypoint->rtu_addrs }}</td>
-                                        <td colspan="5"></td> <!-- Koordinat not in DB -->
-                                        <td colspan="7">{{ \Carbon\Carbon::parse($keypoint->tgl_komisioning)->format('d-m-Y') }}</td>
-                                    </tr>
-
-                                    <!-- Row 23: Empty -->
-                                    <tr>
-                                        <td colspan="17"></td>
-                                    </tr>
-
-                                    <!-- Row 24: Status Header -->
-                                    <tr>
-                                        <th>ADD-MS</th>
-                                        <th>ADD-RTU</th>
-                                        <th>OBJ/FRMT</th>
-                                        <th>STATUS</th>
-                                        <th>VALUE</th>
-                                        <th>OK</th>
-                                        <th>NOK</th>
-                                        <th>LOG</th>
-                                        <th>SLD</th>
-                                        <th>Keterangan</th>
-                                        <th></th>
-                                        <th>Hardware</th>
-                                        <th>OK/NOK</th>
-                                        <th>Value</th>
-                                        <th>Keterangan</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-
-                                    <!-- Row 25-48: Status Rows -->
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>CB</td>
-                                        <td>Open</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_cb)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_cb)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->s_cb)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->s_cb)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_cb)) ? 'Tidak Uji' : (in_array('normal', explode(',', $keypoint->s_cb)) ? 'Normal' : '') }}</td>
-                                        <td></td>
-                                        <td>Batere</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_fin)) ? 'OK' : (in_array('nok', explode(',', $keypoint->s_fin)) ? 'NOK' : '') }}</td>
-                                        <td>{{ $keypoint->sign_kp }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Close</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>PS 220</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>CB 2</td>
-                                        <td>Open</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_cb2)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_cb2)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->s_cb2)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->s_cb2)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_cb2)) ? 'Tidak Uji' : '' }}</td>
-                                        <td></td>
-                                        <td>Charger</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Close</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Limit Switch</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>L / R</td>
-                                        <td>Local</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_lr)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_lr)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->s_lr)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->s_lr)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_lr)) ? 'Tidak Uji' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Remote</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>System</td>
-                                        <th>OK/NOK</th>
-                                        <th>Value</th>
-                                        <th>Keterangan</th>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>DOOR</td>
-                                        <td>Open</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_door)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_door)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->s_door)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->s_door)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_door)) ? 'Tidak Uji' : '' }}</td>
-                                        <td></td>
-                                        <td>COMF</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_comf)) ? 'OK' : (in_array('nok', explode(',', $keypoint->s_comf)) ? 'NOK' : '') }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Close</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>LRUF</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_lruf)) ? 'OK' : (in_array('nok', explode(',', $keypoint->s_lruf)) ? 'NOK' : '') }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>ACF</td>
-                                        <td>Normal</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_acf)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_acf)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->s_acf)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->s_acf)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_acf)) ? 'Tidak Uji' : (in_array('normal', explode(',', $keypoint->s_acf)) ? 'Normal' : '') }}</td>
-                                        <td></td>
-                                        <td>SIGN S</td>
-                                        <td></td>
-                                        <td>{{ $keypoint->sign_kp }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Failed</td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_acf)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_acf)) ? 'Failed' : '' }}</td>
-                                        <td></td>
-                                        <td>Limit Switch</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>DCF</td>
-                                        <td>Normal</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_dcf)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_dcf)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_dcf)) ? 'Tidak Uji' : (in_array('normal', explode(',', $keypoint->s_dcf)) ? 'Normal' : '') }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Failed</td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_dcf)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_dcf)) ? 'Failed' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>DCD</td>
-                                        <td>Normal</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_dcd)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_dcd)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_dcd)) ? 'Tidak Uji' : (in_array('normal', explode(',', $keypoint->s_dcd)) ? 'Normal' : '') }}</td>
-                                        <td></td>
-                                        <td>AR</td>
-                                        <td>{{ in_array('on', explode(',', $keypoint->s_comf)) ? 'On' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Failed</td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_dcd)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_dcd)) ? 'Failed' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('off', explode(',', $keypoint->s_comf)) ? 'Off' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>HLT</td>
-                                        <td>Active</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_hlt)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_hlt)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_hlt)) ? 'Tidak Uji' : (in_array('active', explode(',', $keypoint->s_hlt)) ? 'Active' : '') }}</td>
-                                        <td></td>
-                                        <td>CTRL AR</td>
-                                        <td>{{ in_array('on', explode(',', $keypoint->s_lruf)) ? 'On' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Inactive</td>
-                                        <td></td>
-                                        <td>{{ in_array('inactive', explode(',', $keypoint->s_hlt)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('inactive', explode(',', $keypoint->s_hlt)) ? 'Inactive' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('off', explode(',', $keypoint->s_lruf)) ? 'Off' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>SF6</td>
-                                        <td>Normal</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_sf6)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_sf6)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_sf6)) ? 'Tidak Uji' : (in_array('normal', explode(',', $keypoint->s_sf6)) ? 'Normal' : '') }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Low</td>
-                                        <td></td>
-                                        <td>{{ in_array('low', explode(',', $keypoint->s_sf6)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('low', explode(',', $keypoint->s_sf6)) ? 'Low' : '' }}</td>
-                                        <td></td>
-                                        <td>Catatan :</td>
-                                        <td>{{ $keypoint->ketkp }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>FIR</td>
-                                        <td>Normal</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_fir)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_fir)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_fir)) ? 'Tidak Uji' : (in_array('normal', explode(',', $keypoint->s_fir)) ? 'Normal' : '') }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Failed</td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_fir)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_fir)) ? 'Failed' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>FIS</td>
-                                        <td>Normal</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_fis)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_fis)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_fis)) ? 'Tidak Uji' : (in_array('normal', explode(',', $keypoint->s_fis)) ? 'Normal' : '') }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Failed</td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_fis)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_fis)) ? 'Failed' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>FIT</td>
-                                        <td>Normal</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->s_fit)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->s_fit)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->s_fit)) ? 'Tidak Uji' : (in_array('normal', explode(',', $keypoint->s_fit)) ? 'Normal' : '') }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Failed</td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_fit)) ? 'X' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ in_array('failed', explode(',', $keypoint->s_fit)) ? 'Failed' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
-                                    <!-- Row 49: Empty -->
-                                    <tr>
-                                        <td colspan="17"></td>
-                                    </tr>
-
-                                    <!-- Row 50: CTRL Header -->
-                                    <tr>
-                                        <th>ADD-MS</th>
-                                        <th>ADD-RTU</th>
-                                        <th>OBJ/FRMT</th>
-                                        <th>CTRL</th>
-                                        <th>VALUE</th>
-                                        <th>OK</th>
-                                        <th>NOK</th>
-                                        <th>LOG</th>
-                                        <th>SLD</th>
-                                        <th>Keterangan</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-
-                                    <!-- Row 51-57: CTRL Rows -->
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>CB</td>
-                                        <td>Open</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->c_cb)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->c_cb)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->c_cb)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->c_cb)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->c_cb)) ? 'Tidak Uji' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Close</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>CB 2</td>
-                                        <td>Open</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->c_cb2)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->c_cb2)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->c_cb2)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->c_cb2)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->c_cb2)) ? 'Tidak Uji' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Close</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>HLT</td>
-                                        <td>On</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->c_hlt)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->c_hlt)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->c_hlt)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->c_hlt)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->c_hlt)) ? 'Tidak Uji' : '' }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Off</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>RR</td>
-                                        <td>Reset</td>
-                                        <td>{{ in_array('ok', explode(',', $keypoint->c_rst)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('nok', explode(',', $keypoint->c_rst)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('log', explode(',', $keypoint->c_rst)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('sld', explode(',', $keypoint->c_rst)) ? 'X' : '' }}</td>
-                                        <td>{{ in_array('tidak_uji', explode(',', $keypoint->c_rst)) ? 'Tidak Uji' : '' }}</td>
-                                        <td>PELAKSANA :</td>
-                                        <td colspan="6">{{ $keypoint->pelrtu }}</td>
-                                    </tr>
-
-                                    <!-- Row 58: Empty -->
-                                    <tr>
-                                        <td colspan="17"></td>
-                                    </tr>
-
-                                    <!-- Row 59: Metering Header -->
-                                    <tr>
-                                        <th>ADD-MS</th>
-                                        <th>ADD-RTU</th>
-                                        <th>OBJ/FRMT</th>
-                                        <th>METERING</th>
-                                        <th>FIELD</th>
-                                        <th>MS</th>
-                                        <th>SCALE</th>
-                                        <th>OK/NOK</th>
-                                        <th>SLD</th>
-                                        <th>Keterangan</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-
-                                    <!-- Row 60-81: Metering Rows -->
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>HZ</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>I AVG</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IR</td>
-                                        <td>{{ $keypoint->ir_rtu }}</td>
-                                        <td>{{ $keypoint->ir_ms }}</td>
-                                        <td>{{ $keypoint->ir_scale }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IS</td>
-                                        <td>{{ $keypoint->is_rtu }}</td>
-                                        <td>{{ $keypoint->is_ms }}</td>
-                                        <td>{{ $keypoint->is_scale }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IT</td>
-                                        <td>{{ $keypoint->it_rtu }}</td>
-                                        <td>{{ $keypoint->it_ms }}</td>
-                                        <td>{{ $keypoint->it_scale }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IN</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IFR</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Field Eng. 01</td>
-                                        <td>{{ $picms }}</td>
-                                        <td></td>
-                                        <td>MS Eng. 01</td>
-                                        <td>{{ $picms }}</td>
-                                        <td>Dispatcher 01</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IFS</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IFT</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IFN</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pseudo</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IFR</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pseudo</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IFS</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pseudo</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IFT</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pseudo</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IFN</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>PF</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>V AVG</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>V-R_IN</td>
-                                        <td>{{ $keypoint->vr_rtu }}</td>
-                                        <td>{{ $keypoint->vr_ms }}</td>
-                                        <td>{{ $keypoint->vr_scale }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>V-S_IN</td>
-                                        <td>{{ $keypoint->vs_rtu }}</td>
-                                        <td>{{ $keypoint->vs_ms }}</td>
-                                        <td>{{ $keypoint->vs_scale }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Field Eng. 02</td>
-                                        <td>{{ $picms }}</td>
-                                        <td></td>
-                                        <td>MS Eng. 02</td>
-                                        <td>{{ $picms }}</td>
-                                        <td>Dispatcher 02</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>V-T_IN</td>
-                                        <td>{{ $keypoint->vt_rtu }}</td>
-                                        <td>{{ $keypoint->vt_ms }}</td>
-                                        <td>{{ $keypoint->vt_scale }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>V-R_OUT</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>V-S_OUT</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>V-T_OUT</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
-                                    <!-- Row 82-83: Empty -->
-                                    <tr>
-                                        <td colspan="17"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="17"></td>
-                                    </tr>
-
-                                    <!-- Row 84: Footer Note -->
-                                    <tr>
-                                        <td colspan="17">Apabila dokumen ini didownload / dicetak maka akan menjadi "DOKUMEN TIDAK TERKENDALI"</td>
-                                    </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section('styles')
-<style>
-    .table-sm th,
-    .table-sm td {
-        font-size: 0.8rem;
-        /* Smaller font for wide table */
-        padding: 0.3rem;
-        /* Compact padding for landscape-like display */
+<head>
+    <meta charset="UTF-8">
+    <title>Keypoint Details</title>
+    <style>
+    body {
+        font-family: Helvetica, sans-serif;
+        font-size: 8pt;
+        margin: 0;
+        padding: 0;
     }
 
-    @media (max-width: 576px) {
-
-        .table-sm th,
-        .table-sm td {
-            font-size: 0.65rem;
-            /* Smaller font for mobile */
-            padding: 0.2rem;
-            /* Reduced padding for mobile */
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
     }
-</style>
-@endsection
-@endsection                         </tr>
 
-                                    <!-- Row 84: Footer Note -->
-                                    <tr>
-                                        <td colspan="17">Apabila dokumen ini didownload / dicetak maka akan menjadi
-                                            "DOKUMEN TIDAK TERKENDALI"</td>
-                                    </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+    th,
+    td {
+        border: 1px solid #000;
+        padding: 2px;
+        /* Reduced from 3px to save space */
+        text-align: center;
+        vertical-align: middle;
+        font-size: 7pt;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .header {
+        font-size: 10pt;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .section-header {
+        background-color: #e0e0e0;
+    }
+
+    .col-label {
+        width: 12%;
+        /* Reduced from 15% to allow more space for other columns */
+        text-align: left;
+    }
+
+    .col-value {
+        width: 18%;
+        /* Reduced from 20% to balance with other columns */
+    }
+
+    .col-small {
+        width: 3%;
+        /* Reduced from 5% to fit more columns */
+    }
+
+    .col-medium {
+        width: 8%;
+        /* Reduced from 10% to optimize space */
+    }
+
+    .col-ket {
+        width: 12%;
+        /* Reduced from 15% to align with col-label */
+        text-align: left;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="header">FORM KOMISIONING KEYPOINT</div>
+
+    <table>
+        <tr>
+            <td class="col-label">Nama LBS / REC.</td>
+            <td class="col-value" colspan="4">{{ $formkp->nama_lbs }}</td>
+            <td class="col-label">Modem</td>
+            <td class="col-value" colspan="4">{{ $modem }}</td>
+            <td class="col-label">Gardu Induk / Sectoral</td>
+            <td class="col-value" colspan="6">{{ $gi }} / {{ $sectoral }}</td>
+        </tr>
+        <tr>
+            <td class="col-label">Merk LBS / REC.</td>
+            <td class="col-value" colspan="4">{{ $merklbs }}</td>
+            <td class="col-label">IP Address / No. Kartu</td>
+            <td class="col-value" colspan="4">{{ $formkp->ip_kp }}</td>
+            <td class="col-label">Penyulang</td>
+            <td class="col-value" colspan="6">{{ $formkp->nama_peny }}</td>
+        </tr>
+        <tr>
+            <td class="col-label">Protocol / RTU Address</td>
+            <td class="col-value" colspan="2">{{ $medkom }}</td>
+            <td class="col-small">/</td>
+            <td class="col-value">{{ $formkp->rtu_addrs }}</td>
+            <td class="col-label">Koordinat</td>
+            <td class="col-value" colspan="4">N/A</td>
+            <td class="col-label">Tanggal</td>
+            <td class="col-value" colspan="6">{{ \Carbon\Carbon::parse($formkp->tgl_komisioning)->format('d-m-Y') }}
+            </td>
+        </tr>
+        <tr>
+            <td class="col-label">Jenis Komisioning</td>
+            <td class="col-value" colspan="4">{{ $komkp }}</td>
+            <td class="col-label"></td>
+            <td class="col-value" colspan="4"></td>
+            <td class="col-label"></td>
+            <td class="col-value" colspan="6"></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr class="section-header">
+            <th class="col-medium">ADD-MS</th>
+            <th class="col-medium">ADD-RTU</th>
+            <th class="col-medium">OBJ/FRMT</th>
+            <th class="col-medium">STATUS</th>
+            <th class="col-medium">VALUE</th>
+            <th class="col-small">OK</th>
+            <th class="col-small">NOK</th>
+            <th class="col-small">LOG</th>
+            <th class="col-small">SLD</th>
+            <th class="col-ket">Keterangan</th>
+            <th class="col-small"></th>
+            <th class="col-medium">Hardware</th>
+            <th class="col-small">OK/NOK</th>
+            <th class="col-medium">Value</th>
+            <th class="col-ket">Keterangan</th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+        </tr>
+        @php
+        $statuses = [
+        's_cb' => ['open_1' => 'CB Open', 'close_1' => 'CB Close'],
+        's_cb2' => ['open_1' => 'CB 2 Open', 'close_1' => 'CB 2 Close'],
+        's_lr' => ['local_1' => 'L/R Local', 'remote_1' => 'L/R Remote'],
+        's_door' => ['dropen_1' => 'DOOR Open', 'drclose_1' => 'DOOR Close'],
+        's_acf' => ['acnrml_1' => 'ACF Normal', 'acfail_1' => 'ACF Failed'],
+        's_dcf' => ['dcfnrml_1' => 'DCF Normal', 'dcffail_1' => 'DCF Failed'],
+        's_dcd' => ['dcnrml_1' => 'DCD Normal', 'dcfail_1' => 'DCD Failed'],
+        's_hlt' => ['hlton_1' => 'HLT Active', 'hltoff_1' => 'HLT Inactive'],
+        's_sf6' => ['sf6nrml_1' => 'SF6 Normal', 'sf6fail_1' => 'SF6 Low'],
+        's_fir' => ['firnrml_1' => 'FIR Normal', 'firfail_1' => 'FIR Failed'],
+        's_fis' => ['fisnrml_1' => 'FIS Normal', 'fisfail_1' => 'FIS Failed'],
+        's_fit' => ['fitnrml_1' => 'FIT Normal', 'fitfail_1' => 'FIT Failed'],
+        's_fin' => ['finnrml_1' => 'Batere OK', 'finfail_1' => 'Batere NOK'],
+        's_comf' => ['comf_nrml_1' => 'COMF Normal'],
+        's_lruf' => ['lruf_nrml_1' => 'LRUF Normal']
+        ];
+        $hardware = [
+        'Batere' => $formkp->sign_kp,
+        'PS 220' => '',
+        'Charger' => '',
+        'Limit Switch' => '',
+        'System' => '',
+        'COMF' => in_array('comf_nrml_1', explode(',', $formkp->s_comf)) ? 'OK' : 'NOK',
+        'LRUF' => in_array('lruf_nrml_1', explode(',', $formkp->s_lruf)) ? 'OK' : 'NOK',
+        'SIGN S' => $formkp->sign_kp,
+        'AR' => in_array('comf_nrml_1', explode(',', $formkp->s_comf)) ? 'On' : 'Off',
+        'CTRL AR' => in_array('lruf_nrml_1', explode(',', $formkp->s_lruf)) ? 'On' : 'Off',
+        'Catatan' => $formkp->ketkp
+        ];
+        @endphp
+        @foreach ($statuses as $field => $values)
+        @foreach ($values as $key => $label)
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{ strtoupper(str_replace(['s_', '_1'], '', $field)) }}</td>
+            <td>{{ str_replace(['CB Open', 'CB Close', 'CB 2 Open', 'CB 2 Close', 'L/R Local', 'L/R Remote'], ['CB', 'CB', 'CB 2', 'CB 2', 'L/R', 'L/R'], $label) }}
+            </td>
+            <td>{{ str_replace(['CB ', 'CB 2 ', 'L/R ', 'DOOR ', 'ACF ', 'DCF ', 'DCD ', 'HLT ', 'SF6 ', 'FIR ', 'FIS ', 'FIT ', 'Batere ', 'COMF ', 'LRUF '], ['', '', '', '', '', '', '', '', '', '', '', '', '', ''], $label) }}
+            </td>
+            <td>{{ in_array($key, explode(',', $formkp->$field)) ? 'X' : '' }}</td>
+            <td>{{ in_array(str_replace(['nrml', 'on', 'open'], ['fail', 'off', 'close'], $key), explode(',', $formkp->$field)) ? 'X' : '' }}
+            </td>
+            <td></td>
+            <td></td>
+            <td>{{ in_array($key, explode(',', $formkp->$field)) ? str_replace(['nrml_1', 'fail_1', 'on_1', 'off_1', 'open_1', 'close_1'], ['Normal', 'Failed', 'Active', 'Inactive', 'Open', 'Close'], $key) : '' }}
+            </td>
+            <td></td>
+            <td>{{ isset($hardware[$label]) ? $label : '' }}</td>
+            <td>{{ isset($hardware[$label]) ? ($hardware[$label] == 'OK' || $hardware[$label] == 'On' ? 'OK' : 'NOK') : '' }}
+            </td>
+            <td>{{ isset($hardware[$label]) ? $hardware[$label] : '' }}</td>
+            <td>{{ $label == 'Catatan' ? $formkp->ketkp : '' }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @endforeach
+        @endforeach
+        @foreach ($hardware as $key => $value)
+        @if (!array_key_exists($key, array_merge(...array_values($statuses))))
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ $key }}</td>
+            <td>{{ $value == 'OK' || $value == 'On' ? 'OK' : ($value ? 'NOK' : '') }}</td>
+            <td>{{ $value }}</td>
+            <td>{{ $key == 'Catatan' ? $formkp->ketkp : '' }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @endif
+        @endforeach
+    </table>
+
+    <table>
+        <tr class="section-header">
+            <th class="col-medium">ADD-MS</th>
+            <th class="col-medium">ADD-RTU</th>
+            <th class="col-medium">OBJ/FRMT</th>
+            <th class="col-medium">CTRL</th>
+            <th class="col-medium">VALUE</th>
+            <th class="col-small">OK</th>
+            <th class="col-small">NOK</th>
+            <th class="col-small">LOG</th>
+            <th class="col-small">SLD</th>
+            <th class="col-ket">Keterangan</th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+        </tr>
+        @php
+        $controls = [
+        'c_cb' => ['cbctrl_op_1' => 'CB Open', 'cbctrl_cl_1' => 'CB Close'],
+        'c_cb2' => ['cbctrl_op_1' => 'CB 2 Open', 'cbctrl_cl_1' => 'CB 2 Close'],
+        'c_hlt' => ['hltctrl_on_1' => 'HLT On', 'hltctrl_off_1' => 'HLT Off'],
+        'c_rst' => ['rrctrl_on_1' => 'RR Reset']
+        ];
+        @endphp
+        @foreach ($controls as $field => $values)
+        @foreach ($values as $key => $label)
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{ strtoupper(str_replace(['c_', '_1'], '', $field)) }}</td>
+            <td>{{ str_replace(['CB Open', 'CB Close', 'CB 2 Open', 'CB 2 Close'], ['CB', 'CB', 'CB 2', 'CB 2'], $label) }}
+            </td>
+            <td>{{ str_replace(['CB ', 'CB 2 ', 'HLT ', 'RR '], ['', '', '', ''], $label) }}</td>
+            <td>{{ in_array($key, explode(',', $formkp->$field)) ? 'X' : '' }}</td>
+            <td>{{ in_array(str_replace(['op', 'on'], ['cl', 'off'], $key), explode(',', $formkp->$field)) ? 'X' : '' }}
+            </td>
+            <td></td>
+            <td></td>
+            <td>{{ in_array($key, explode(',', $formkp->$field)) ? str_replace(['cbctrl_op_1', 'cbctrl_cl_1', 'hltctrl_on_1', 'hltctrl_off_1', 'rrctrl_on_1'], ['Open', 'Close', 'On', 'Off', 'Reset'], $key) : '' }}
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @endforeach
+        @endforeach
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Pelaksana:</td>
+            <td colspan="6">{{ $formkp->pelrtu }}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr class="section-header">
+            <th class="col-medium">ADD-MS</th>
+            <th class="col-medium">ADD-RTU</th>
+            <th class="col-medium">OBJ/FRMT</th>
+            <th class="col-medium">METERING</th>
+            <th class="col-medium">FIELD</th>
+            <th class="col-medium">MS</th>
+            <th class="col-medium">SCALE</th>
+            <th class="col-small">OK/NOK</th>
+            <th class="col-small">SLD</th>
+            <th class="col-ket">Keterangan</th>
+            <th class="col-small"></th>
+            <th class="col-medium"></th>
+            <th class="col-small"></th>
+            <th class="col-medium"></th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+            <th class="col-small"></th>
+        </tr>
+        @php
+        $metering = [
+        'HZ' => ['', '', ''],
+        'I AVG' => ['', '', ''],
+        'IR' => [$formkp->ir_rtu, $formkp->ir_ms, $formkp->ir_scale],
+        'IS' => [$formkp->is_rtu, $formkp->is_ms, $formkp->is_scale],
+        'IT' => [$formkp->it_rtu, $formkp->it_ms, $formkp->it_scale],
+        'IN' => ['', '', ''],
+        'IFR' => ['', '', ''],
+        'IFS' => ['', '', ''],
+        'IFT' => ['', '', ''],
+        'IFN' => ['', '', ''],
+        'Pseudo IFR' => ['', '', ''],
+        'Pseudo IFS' => ['', '', ''],
+        'Pseudo IFT' => ['', '', ''],
+        'Pseudo IFN' => ['', '', ''],
+        'PF' => ['', '', ''],
+        'V AVG' => ['', '', ''],
+        'V-R_IN' => [$formkp->vr_rtu, $formkp->vr_ms, $formkp->vr_scale],
+        'V-S_IN' => [$formkp->vs_rtu, $formkp->vs_ms, $formkp->vs_scale],
+        'V-T_IN' => [$formkp->vt_rtu, $formkp->vt_ms, $formkp->vt_scale],
+        'V-R_OUT' => ['', '', ''],
+        'V-S_OUT' => ['', '', ''],
+        'V-T_OUT' => ['', '', '']
+        ];
+        @endphp
+        @foreach ($metering as $key => $values)
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{ strtoupper($key) }}</td>
+            <td>{{ $key }}</td>
+            <td>{{ $values[0] }}</td>
+            <td>{{ $values[1] }}</td>
+            <td>{{ $values[2] }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @endforeach
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Field Eng. 01</td>
+            <td>{{ $picms[0] ?? 'N/A' }}</td>
+            <td></td>
+            <td>MS Eng. 01</td>
+            <td>{{ $picms[0] ?? 'N/A' }}</td>
+            <td>Dispatcher 01</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Field Eng. 02</td>
+            <td>{{ $picms[1] ?? 'N/A' }}</td>
+            <td></td>
+            <td>MS Eng. 02</td>
+            <td>{{ $picms[1] ?? 'N/A' }}</td>
+            <td>Dispatcher 02</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div style="text-align: center; font-size: 7pt; margin-top: 10px;">
+        Apabila dokumen ini didownload / dicetak maka akan menjadi "DOKUMEN TIDAK TERKENDALI"
     </div>
-</div>
+</body>
 
-@section('styles')
-<style>
-.table-sm th,
-.table-sm td {
-    font-size: 0.8rem;
-    /* Smaller font for wide table */
-    padding: 0.3rem;
-    /* Compact padding for landscape-like display */
-}
-
-@media (max-width: 576px) {
-
-    .table-sm th,
-    .table-sm td {
-        font-size: 0.65rem;
-        /* Smaller font for mobile */
-        padding: 0.2rem;
-        /* Reduced padding for mobile */
-    }
-}
-</style>
-@endsection
-@endsection
+</html>
