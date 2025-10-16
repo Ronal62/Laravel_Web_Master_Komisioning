@@ -8,6 +8,7 @@ use App\Http\Controllers\MerklbsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ModemController;
 use App\Http\Controllers\SectoralController;;
+use App\Http\Controllers\PenyulanganController;
 
 // Root route (redirects to login)
 Route::get('/', function () {
@@ -48,32 +49,40 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/keypoint/data', [KeypointController::class, 'data'])->name('keypoint.data');
     Route::post('/keypoint/data', [KeypointController::class, 'data'])->name('keypoint.data');
 
-    // Filtered exports
+
     Route::get('/keypoint/export/pdf', [KeypointController::class, 'exportPdfFiltered'])->name('keypoint.exportpdfall');
     Route::get('/keypoint/export/excel', [KeypointController::class, 'exportExcelFiltered'])->name('keypoint.exportexcelall');
 
-    // Export PDF routes
+   
     Route::get('/keypoint/{id}', [ExportPdfController::class, 'show'])->name('keypoint.show');
     Route::get('/keypoint/{id}/exportpdf', [ExportPdfController::class, 'exportpdf'])->name('keypoint.exportpdf');
 
 
 
+    // Penyulangan routes
+    Route::resource('penyulangan', PenyulanganController::class);
+    Route::get('/penyulangan/{id}/clone', [PenyulanganController::class, 'clone'])->name('penyulangan.clone');
+    Route::post('/penyulangan/clone', [PenyulanganController::class, 'storeClone'])->name('penyulangan.clone.store');
+    Route::get('/penyulangan/data', [PenyulanganController::class, 'data'])->name('penyulangan.data');
+    Route::post('/penyulangan/data', [PenyulanganController::class, 'data'])->name('penyulangan.data');
+    Route::get('/penyulangan/export/pdf', [PenyulanganController::class, 'exportPdfFiltered'])->name('penyulangan.exportpdfall');
+    Route::get('/penyulangan/export/excel', [PenyulanganController::class, 'exportExcelFiltered'])->name('penyulangan.exportexcelall');
+
+
+
+
+
+
     // Forms
-    Route::get('/feeder-inc', function () {
-        return view('pages.feeder-inc.index');
-    })->name('feeder-inc');
     Route::get('/absen', function () {
         return view('pages.absen.index');
     })->name('absen');
-
     // Data
     Route::get('/data', function () {
         return view('pages.data.index');
     })->name('data');
     Route::get('/data/keypoint', [KeypointController::class, 'index'])->name('data.keypoint');
-    Route::get('/data/feeder', function () {
-        return view('pages.data.feeder');
-    })->name('data.feeder');
+    Route::get('/data/penyulangan', [PenyulanganController::class, 'index'])->name('data.penyulangan');
     Route::get('/data/absen', function () {
         return view('pages.data.absen');
     })->name('data.absen');

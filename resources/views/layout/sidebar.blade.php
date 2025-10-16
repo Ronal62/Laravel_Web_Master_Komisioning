@@ -40,21 +40,22 @@
                     </a>
                 </li>
                 <li
-                    class="nav-item @if(Route::is('keypoint') || Route::is('feeder-inc') || Route::is('absen')) active @endif">
+                    class="nav-item @if(Route::is('keypoint') || Route::is('penyulangan') || Route::is('absen')) active @endif">
                     <a data-bs-toggle="collapse" href="#forms"
-                        class="@if(Route::is('keypoint') || Route::is('feeder-inc') || Route::is('absen')) show @endif">
+                        class="@if(Route::is('keypoint') || Route::is('penyulangan') || Route::is('absen')) show @endif">
                         <i class="icon-notebook"></i>
                         <p>Forms</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse @if(Route::is('keypoint.create') || Route::is('feeder-inc') || Route::is('absen')) show @endif"
+                    <div class="collapse @if(Route::is('keypoint.create') || Route::is('penyulangan.create') || Route::is('absen')) show @endif"
                         id="forms">
                         <ul class="nav nav-collapse">
                             <li class="@if(Route::is('keypoint.create')) active @endif">
                                 <a href="{{ route('keypoint.create') }}"><span class="sub-item">Keypoint Form</span></a>
                             </li>
-                            <li class="@if(Route::is('feeder-inc')) active @endif">
-                                <a href="{{ route('feeder-inc') }}"><span class="sub-item">Feeder & Inc</span></a>
+                            <li class="@if(Route::is('penyulangan.create')) active @endif">
+                                <a href="{{ route('penyulangan.create') }}"><span
+                                        class="sub-item">Penyulangan</span></a>
                             </li>
                             <li class="@if(Route::is('absen')) active @endif">
                                 <a href="{{ route('absen') }}"><span class="sub-item">Absen</span></a>
@@ -73,8 +74,9 @@
                             <li class="@if(Route::is('data.keypoint')) active @endif">
                                 <a href="{{ route('data.keypoint') }}"><span class="sub-item">Data Keypoint</span></a>
                             </li>
-                            <li class="@if(Route::is('data.feeder')) active @endif">
-                                <a href="{{ route('data.feeder') }}"><span class="sub-item">Data Feeder & Inc</span></a>
+                            <li class="@if(Route::is('data.penyulangan')) active @endif">
+                                <a href="{{ route('data.penyulangan') }}"><span class="sub-item">Data
+                                        Penyulangan</span></a>
                             </li>
                             <li class="@if(Route::is('data.absen')) active @endif">
                                 <a href="{{ route('data.absen') }}"><span class="sub-item">Data Rekap Absen</span></a>
@@ -97,7 +99,7 @@
                                 <a href="{{ route('merk.index') }}"><span class="sub-item">Merk Lbs</span></a>
                             </li>
                             <li>
-                                <a href="{{ route('modem.index') }} "><span class="sub-item">Modem</span></a>
+                                <a href="{{ route('modem.index') }}"><span class="sub-item">Modem</span></a>
                             </li>
                             <li>
                                 <a href="{{ route('sectoral.index') }}"><span class="sub-item">Sectoral</span></a>
