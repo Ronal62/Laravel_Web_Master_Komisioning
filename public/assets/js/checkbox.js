@@ -208,6 +208,26 @@
             targetIds: ["crst_on_1", "crst_on_3", "crst_on_4"],
             name: "c_rst[]",
         },
+        {
+            checkAllId: "s_ocr_dis_checkAll",
+            targetIds: ["s_ocrd_1", "s_ocrd_3", "s_ocrd_4"],
+            name: "c_rst[]",
+        },
+        {
+            checkAllId: "s_ocr_app_checkAll",
+            targetIds: ["s_ocra_1", "s_ocra_3", "s_ocra_4"],
+            name: "c_rst[]",
+        },
+        {
+            checkAllId: "s_ocri_dis_checkAll",
+            targetIds: ["s_ocrid_1", "s_ocrid_3", "s_ocrid_4"],
+            name: "c_rst[]",
+        },
+        {
+            checkAllId: "s_ocri_app_checkAll",
+            targetIds: ["s_ocria_1", "s_ocria_3", "s_ocria_4"],
+            name: "c_rst[]",
+        },
     ];
 
     // Apply logic to each form group

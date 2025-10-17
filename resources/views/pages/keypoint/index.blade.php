@@ -33,6 +33,7 @@
                     <h4 class="card-title">Data Keypoint</h4>
                 </div>
                 <div class="card-body">
+
                     <div class="table-responsive">
                         <div class="row mb-3">
                             <div class="col-md-2">
