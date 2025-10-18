@@ -18,18 +18,7 @@ class PenyulanganController extends Controller
         return view('pages.penyulangan.index');
     }
 
-    public function show($id)
-    {
-        $penyulang = Penyulangan::findOrFail($id);
-        $rtugi = DB::table('tb_merkrtugi')->get();
-        $medkom = DB::table('tb_medkom')->get();
-        $garduinduk = DB::table('tb_garduinduk')->get();
-        $kompeny = DB::table('tb_komkp')->get();
-        $pelms = DB::table('tb_picmaster')->get();
-        $selectedPelms = json_decode($penyulang->id_pelms, true) ?? [];
-
-        return view('pages.penyulangan.show', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'kompeny', 'pelms', 'selectedPelms'));
-    }
+    
 
     public function data(Request $request)
     {

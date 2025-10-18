@@ -62,7 +62,7 @@ class Penyulangan extends Model
         'f_rtu',
         'f_ms',
         'f_scale',
-        'id_kompeny',
+        'id_komkp',
         'nama_user',
         'id_pelms',
         'pelrtu',
