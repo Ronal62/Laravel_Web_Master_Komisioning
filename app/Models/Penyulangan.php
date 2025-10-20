@@ -12,7 +12,6 @@ class Penyulangan extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_peny',
         'tgl_kom',
         'nama_peny',
         'id_gi',

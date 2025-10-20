@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Data Keypoint')
 
 @section('content')
 <div class="page-inner">

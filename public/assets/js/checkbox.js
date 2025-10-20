@@ -1,45 +1,3 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//     // Select all checkboxes with the class 'selectgroup-input' and value '1' (Normal)
-//     const normalCheckboxes = document.querySelectorAll(
-//         'input.selectgroup-input[value="normal"]'
-//     );
-
-//     normalCheckboxes.forEach((normalCheckbox) => {
-//         normalCheckbox.addEventListener("change", function () {
-//             // Find the closest form-group ancestor
-//             const formGroup = this.closest(".form-group");
-//             if (formGroup) {
-//                 // Select checkboxes with values 2 (OK), 4 (LOG), and 5 (Tidak Uji) within the same form-group
-//                 const targetCheckboxes = formGroup.querySelectorAll(
-//                     'input.selectgroup-input[value="ok"], input.selectgroup-input[value="log"], input.selectgroup-input[value="sld"]'
-//                 );
-//                 targetCheckboxes.forEach((checkbox) => {
-//                     // Set the checked state of OK, LOG, and Tidak Uji to match the Normal checkbox
-//                     checkbox.checked = this.checked;
-//                 });
-//             }
-//         });
-//     });
-
-//     // Optional: Update Normal checkbox state if all OK, LOG, and Tidak Uji are checked
-//     document.querySelectorAll(".form-group").forEach((formGroup) => {
-//         const checkboxes = formGroup.querySelectorAll(
-//             'input.selectgroup-input[value="ok"], input.selectgroup-input[value="log"], input.selectgroup-input[value="sld"]'
-//         );
-//         checkboxes.forEach((checkbox) => {
-//             checkbox.addEventListener("change", function () {
-//                 const normalCheckbox = formGroup.querySelector(
-//                     'input.selectgroup-input[value="normal"]'
-//                 );
-//                 if (normalCheckbox) {
-//                     normalCheckbox.checked = [...checkboxes].every(
-//                         (cb) => cb.checked
-//                     );
-//                 }
-//             });
-//         });
-//     });
-// });
 
 // Configuration for each form group
 const formGroups = [
@@ -230,81 +188,81 @@ const formGroups = [
     },
     {
         checkAllId: "s_dgr_dis_checkAll",
-        targetIds: ["s_dgrd_1", "s_dgrd_2", "s_dgrd_4"],
+        targetIds: ["s_dgrd_1", "s_dgrd_3", "s_dgrd_4"],
         name: "s_dgr[]",
     },
     {
         checkAllId: "s_dgr_app_checkAll",
-        targetIds: ["s_dgra_1", "s_dgra_2", "s_dgra_4"],
+        targetIds: ["s_dgra_1", "s_dgra_3", "s_dgra_4"],
         name: "s_dgr[]",
     },
     {
         checkAllId: "s_cbtr_dis_checkAll",
-        targetIds: ["s_cbtrd_1", "s_cbtrd_2", "s_cbtrd_4"],
+        targetIds: ["s_cbtrd_1", "s_cbtrd_3", "s_cbtrd_4"],
         name: "s_cbtr[]",
     },
     {
         checkAllId: "s_cbtr_app_checkAll",
-        targetIds: ["s_cbtra_1", "s_cbtra_2", "s_cbtra_4"],
+        targetIds: ["s_cbtra_1", "s_cbtra_3", "s_cbtra_4"],
         name: "s_cbtr[]",
     },
     {
         checkAllId: "s_ar_dis_checkAll",
-        targetIds: ["s_ard_1", "s_ard_2", "s_ard_4"],
+        targetIds: ["s_ard_1", "s_ard_3", "s_ard_4"],
         name: "s_ar[]",
     },
     {
         checkAllId: "s_ar_app_checkAll",
-        targetIds: ["s_ara_1", "s_ara_2", "s_ara_4"],
+        targetIds: ["s_ara_1", "s_ara_3", "s_ara_4"],
         name: "s_ar[]",
     },
     {
         checkAllId: "s_aru_dis_checkAll",
-        targetIds: ["s_arud_1", "s_arud_2", "s_arud_4"],
+        targetIds: ["s_arud_1", "s_arud_3", "s_arud_4"],
         name: "s_aru[]",
     },
     {
         checkAllId: "s_aru_app_checkAll",
-        targetIds: ["s_arua_1", "s_arua_2", "s_arua_4"],
+        targetIds: ["s_arua_1", "s_arua_3", "s_arua_4"],
         name: "s_aru[]",
     },
     {
         checkAllId: "s_tc_dis_checkAll",
-        targetIds: ["s_tcd_1", "s_tcd_2", "s_tcd_4"],
+        targetIds: ["s_tcd_1", "s_tcd_3", "s_tcd_4"],
         name: "s_tc[]",
     },
     {
         checkAllId: "s_tc_app_checkAll",
-        targetIds: ["s_tca_1", "s_tca_2", "s_tca_4"],
+        targetIds: ["s_tca_1", "s_tca_3", "s_tca_4"],
         name: "s_tc[]",
     },
     {
         checkAllId: "c_aru_use_checkAll",
-        targetIds: ["c_aruu_1", "c_aruu_2", "c_aruu_4"],
+        targetIds: ["c_aruu_1", "c_aruu_3", "c_aruu_4"],
         name: "c_aru[]",
         c_aru_use: "no",
         c_aru: "yes",
     },
     {
         checkAllId: "c_aru_unuse_checkAll",
-        targetIds: ["c_aruun_1", "c_aruun_2", "c_aruun_4"],
+        targetIds: ["c_aruun_1", "c_aruun_3", "c_aruun_4"],
         name: "c_aru[]",
         c_aru_unuse: "no",
         c_aru: "yes",
     },
     {
         checkAllId: "c_reset_on_checkAll",
-        targetIds: ["c_rrctrl_on_1", "c_rrctrl_on_2", "c_rrctrl_on_4"],
+        targetIds: ["c_rrctrl_on_1", "c_rrctrl_on_3", "c_rrctrl_on_4"],
         name: "c_reset_on[]",
     },
     {
         checkAllId: "c_tc_raiser_checkAll",
-        targetIds: ["c_tcrai_1", "c_tcrai_2", "c_tcrai_4"],
+        targetIds: ["c_tcrai_1", "c_tcrai_3", "c_tcrai_4"],
         name: "c_tc_raiser[]",
     },
     {
         checkAllId: "c_tc_lower_checkAll",
-        targetIds: ["c_tclow_1", "c_tclow_2", "c_tclow_4"],
+        targetIds: ["c_tclow_1", "c_tclow_3", "c_tclow_4"],
         name: "c_tc_lower[]",
     },
 ];

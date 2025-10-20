@@ -18,8 +18,6 @@ class PenyulanganController extends Controller
         return view('pages.penyulangan.index');
     }
 
-    
-
     public function data(Request $request)
     {
         $draw = $request->draw;
@@ -224,16 +222,19 @@ class PenyulanganController extends Controller
         $rtugi = DB::table('tb_merkrtugi')->get();
         $medkom = DB::table('tb_medkom')->get();
         $garduinduk = DB::table('tb_garduinduk')->get();
-        $kompeny = DB::table('tb_komkp')->get();
+        $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
-        return view('pages.penyulangan.add', compact('rtugi', 'medkom', 'garduinduk', 'kompeny', 'pelms'));
+        return view('pages.penyulangan.add', compact('rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms'));
+
     }
 
     public function store(Request $request)
     {
+        // Preprocess id_pelms to ensure it's an array
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
 
+        // Define array fields that come from checkboxes
         $arrayFields = [
             's_cb',
             's_lr',
@@ -250,6 +251,7 @@ class PenyulanganController extends Controller
             'c_tc'
         ];
 
+        // Define valid checkbox values
         $validCheckboxValues = [
             'open_1',
             'open_2',
@@ -271,6 +273,111 @@ class PenyulanganController extends Controller
             'remote_3',
             'remote_4',
             'remote_5',
+            'ocrd_1',
+            'ocrd_2',
+            'ocrd_3',
+            'ocrd_4',
+            'ocrd_5',
+            'ocra_1',
+            'ocra_2',
+            'ocra_3',
+            'ocra_4',
+            'ocra_5',
+            'ocrid_1',
+            'ocrid_2',
+            'ocrid_3',
+            'ocrid_4',
+            'ocrid_5',
+            'ocria_1',
+            'ocria_2',
+            'ocria_3',
+            'ocria_4',
+            'ocria_5',
+            'dgrd_1',
+            'dgrd_2',
+            'dgrd_3',
+            'dgrd_4',
+            'dgrd_5',
+            'dgra_1',
+            'dgra_2',
+            'dgra_3',
+            'dgra_4',
+            'dgra_5',
+            'cbtrd_1',
+            'cbtrd_2',
+            'cbtrd_3',
+            'cbtrd_4',
+            'cbtrd_5',
+            'cbtra_1',
+            'cbtra_2',
+            'cbtra_3',
+            'cbtra_4',
+            'cbtra_5',
+            'ard_1',
+            'ard_2',
+            'ard_3',
+            'ard_4',
+            'ard_5',
+            'ara_1',
+            'ara_2',
+            'ara_3',
+            'ara_4',
+            'ara_5',
+            'arud_1',
+            'arud_2',
+            'arud_3',
+            'arud_4',
+            'arud_5',
+            'arua_1',
+            'arua_2',
+            'arua_3',
+            'arua_4',
+            'arua_5',
+            'tcd_1',
+            'tcd_2',
+            'tcd_3',
+            'tcd_4',
+            'tcd_5',
+            'tca_1',
+            'tca_2',
+            'tca_3',
+            'tca_4',
+            'tca_5',
+            'ccb_open_1',
+            'ccb_open_2',
+            'ccb_open_3',
+            'ccb_open_4',
+            'ccb_open_5',
+            'ccb_close_1',
+            'ccb_close_2',
+            'ccb_close_3',
+            'ccb_close_4',
+            'ccb_close_5',
+            'caru_1',
+            'caru_2',
+            'caru_3',
+            'caru_4',
+            'caru_5',
+            'carun_1',
+            'carun_2',
+            'carun_3',
+            'carun_4',
+            'carun_5',
+            'rrctrl_on_1',
+            'rrctrl_on_2',
+            'rrctrl_on_3',
+            'rrctrl_on_4',
+            'rrctrl_on_5',
+            'ctcr_1',
+            'ctcr_2',
+            'ctcr_3',
+            'ctcr_4',
+            'ctcr_5',
+            'ctcl_1',
+            'ctcl_2',
+            'ctcl_3',
+            'ctcl_4',
+            'ctcl_5',
             'normal',
             'ok',
             'nok',
@@ -279,43 +386,44 @@ class PenyulanganController extends Controller
             'tidak_uji'
         ];
 
+        // Validation rules
         $validated = $request->validate([
             'tgl_kom' => 'required|date',
             'nama_peny' => 'required|string|max:50',
-            'id_gi' => 'required|string|max:25',
+            'id_gi' => 'required|integer|exists:tb_garduinduk,id_gi',
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
-            'ir_rtu' => 'required|integer',
-            'is_rtu' => 'required|integer',
-            'it_rtu' => 'required|integer',
-            'ir_ms' => 'required|integer',
-            'is_ms' => 'required|integer',
-            'it_ms' => 'required|integer',
+            'ir_rtu' => 'required|string|max:10',
+            'is_rtu' => 'required|string|max:10',
+            'it_rtu' => 'required|string|max:10',
+            'ir_ms' => 'required|string|max:10',
+            'is_ms' => 'required|string|max:10',
+            'it_ms' => 'required|string|max:10',
             'ir_scale' => 'required|string|max:10',
             'is_scale' => 'required|string|max:10',
             'it_scale' => 'required|string|max:10',
-            'fir_rtu' => 'required|integer',
-            'fis_rtu' => 'required|integer',
-            'fit_rtu' => 'required|integer',
-            'fin_rtu' => 'required|integer',
-            'fir_ms' => 'required|integer',
-            'fis_ms' => 'required|integer',
-            'fit_ms' => 'required|integer',
-            'fin_ms' => 'required|integer',
-            'fir_scale' => 'required|string|max:10',
-            'fis_scale' => 'required|string|max:10',
-            'fit_scale' => 'required|string|max:10',
-            'fin_scale' => 'required|string|max:10',
-            'p_rtu' => 'required|string|max:10',
-            'p_ms' => 'required|string|max:10',
-            'p_scale' => 'required|string|max:10',
-            'v_rtu' => 'required|string|max:10',
-            'v_ms' => 'required|string|max:10',
-            'v_scale' => 'required|string|max:10',
-            'f_rtu' => 'required|string|max:10',
-            'f_ms' => 'required|string|max:10',
-            'f_scale' => 'required|string|max:10',
+            'fir_rtu' => 'required|string|max:50',
+            'fis_rtu' => 'required|string|max:50',
+            'fit_rtu' => 'required|string|max:50',
+            'fin_rtu' => 'required|string|max:50',
+            'fir_ms' => 'required|string|max:50',
+            'fis_ms' => 'required|string|max:50',
+            'fit_ms' => 'required|string|max:50',
+            'fin_ms' => 'required|string|max:50',
+            'fir_scale' => 'required|string|max:50',
+            'fis_scale' => 'required|string|max:50',
+            'fit_scale' => 'required|string|max:50',
+            'fin_scale' => 'required|string|max:50',
+            'p_rtu' => 'required|string|max:50',
+            'p_ms' => 'required|string|max:50',
+            'p_scale' => 'required|string|max:50',
+            'v_rtu' => 'required|string|max:50',
+            'v_ms' => 'required|string|max:50',
+            'v_scale' => 'required|string|max:50',
+            'f_rtu' => 'required|string|max:50',
+            'f_ms' => 'required|string|max:50',
+            'f_scale' => 'required|string|max:50',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'required|string|max:10',
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
@@ -327,17 +435,22 @@ class PenyulanganController extends Controller
             'ketpeny' => 'required|string|max:500',
         ]);
 
+        // Validate array fields separately
         foreach ($arrayFields as $field) {
             $request->validate([
                 $field => 'nullable|array',
                 $field . '.*' => 'string|in:' . implode(',', $validCheckboxValues),
             ]);
+            // Set empty string for array fields if not present or empty
             $validated[$field] = $request->has($field) && is_array($request->input($field)) && !empty($request->input($field))
                 ? implode(',', array_filter($request->input($field)))
                 : '';
         }
 
+        // Merge preprocessed id_pelms array into validated data
         $validated['id_pelms'] = json_encode($idPelmsArray);
+
+        // Create the record
         Penyulangan::create($validated);
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan created successfully!');
@@ -349,11 +462,12 @@ class PenyulanganController extends Controller
         $rtugi = DB::table('tb_merkrtugi')->get();
         $medkom = DB::table('tb_medkom')->get();
         $garduinduk = DB::table('tb_garduinduk')->get();
-        $kompeny = DB::table('tb_komkp')->get();
+        $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
-        $selectedPelms = json_decode($penyulang->id_pelms, true) ?? [];
+        $decoded = json_decode($penyulang->id_pelms, true);
+        $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
 
-        return view('pages.penyulangan.edit', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'kompeny', 'pelms', 'selectedPelms'));
+        return view('pages.penyulangan.edit', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms'));
     }
 
     public function update(Request $request, string $id)
@@ -399,12 +513,111 @@ class PenyulanganController extends Controller
             'remote_3',
             'remote_4',
             'remote_5',
-            'normal',
-            'ok',
-            'nok',
-            'log',
-            'sld',
-            'tidak_uji'
+            'ocrd_1',
+            'ocrd_2',
+            'ocrd_3',
+            'ocrd_4',
+            'ocrd_5',
+            'ocra_1',
+            'ocra_2',
+            'ocra_3',
+            'ocra_4',
+            'ocra_5',
+            'ocrid_1',
+            'ocrid_2',
+            'ocrid_3',
+            'ocrid_4',
+            'ocrid_5',
+            'ocria_1',
+            'ocria_2',
+            'ocria_3',
+            'ocria_4',
+            'ocria_5',
+            'dgrd_1',
+            'dgrd_2',
+            'dgrd_3',
+            'dgrd_4',
+            'dgrd_5',
+            'dgra_1',
+            'dgra_2',
+            'dgra_3',
+            'dgra_4',
+            'dgra_5',
+            'cbtrd_1',
+            'cbtrd_2',
+            'cbtrd_3',
+            'cbtrd_4',
+            'cbtrd_5',
+            'cbtra_1',
+            'cbtra_2',
+            'cbtra_3',
+            'cbtra_4',
+            'cbtra_5',
+            'ard_1',
+            'ard_2',
+            'ard_3',
+            'ard_4',
+            'ard_5',
+            'ara_1',
+            'ara_2',
+            'ara_3',
+            'ara_4',
+            'ara_5',
+            'arud_1',
+            'arud_2',
+            'arud_3',
+            'arud_4',
+            'arud_5',
+            'arua_1',
+            'arua_2',
+            'arua_3',
+            'arua_4',
+            'arua_5',
+            'tcd_1',
+            'tcd_2',
+            'tcd_3',
+            'tcd_4',
+            'tcd_5',
+            'tca_1',
+            'tca_2',
+            'tca_3',
+            'tca_4',
+            'tca_5',
+            'ccb_open_1',
+            'ccb_open_2',
+            'ccb_open_3',
+            'ccb_open_4',
+            'ccb_open_5',
+            'ccb_close_1',
+            'ccb_close_2',
+            'ccb_close_3',
+            'ccb_close_4',
+            'ccb_close_5',
+            'caru_1',
+            'caru_2',
+            'caru_3',
+            'caru_4',
+            'caru_5',
+            'carun_1',
+            'carun_2',
+            'carun_3',
+            'carun_4',
+            'carun_5',
+            'rrctrl_on_1',
+            'rrctrl_on_2',
+            'rrctrl_on_3',
+            'rrctrl_on_4',
+            'rrctrl_on_5',
+            'ctcr_1',
+            'ctcr_2',
+            'ctcr_3',
+            'ctcr_4',
+            'ctcr_5',
+            'ctcl_1',
+            'ctcl_2',
+            'ctcl_3',
+            'ctcl_4',
+            'ctcl_5'
         ];
 
         $validated = $request->validate([
@@ -415,38 +628,38 @@ class PenyulanganController extends Controller
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
-            'ir_rtu' => 'required|integer',
-            'is_rtu' => 'required|integer',
-            'it_rtu' => 'required|integer',
-            'ir_ms' => 'required|integer',
-            'is_ms' => 'required|integer',
-            'it_ms' => 'required|integer',
-            'ir_scale' => 'required|string|max:10',
-            'is_scale' => 'required|string|max:10',
-            'it_scale' => 'required|string|max:10',
-            'fir_rtu' => 'required|integer',
-            'fis_rtu' => 'required|integer',
-            'fit_rtu' => 'required|integer',
-            'fin_rtu' => 'required|integer',
-            'fir_ms' => 'required|integer',
-            'fis_ms' => 'required|integer',
-            'fit_ms' => 'required|integer',
-            'fin_ms' => 'required|integer',
-            'fir_scale' => 'required|string|max:10',
-            'fis_scale' => 'required|string|max:10',
-            'fit_scale' => 'required|string|max:10',
-            'fin_scale' => 'required|string|max:10',
-            'p_rtu' => 'required|string|max:10',
-            'p_ms' => 'required|string|max:10',
-            'p_scale' => 'required|string|max:10',
-            'v_rtu' => 'required|string|max:10',
-            'v_ms' => 'required|string|max:10',
-            'v_scale' => 'required|string|max:10',
-            'f_rtu' => 'required|string|max:10',
-            'f_ms' => 'required|string|max:10',
-            'f_scale' => 'required|string|max:10',
+            'ir_rtu' => 'nullable|string|max:10',
+            'is_rtu' => 'nullable|string|max:10',
+            'it_rtu' => 'nullable|string|max:10',
+            'ir_ms' => 'nullable|string|max:10',
+            'is_ms' => 'nullable|string|max:10',
+            'it_ms' => 'nullable|string|max:10',
+            'ir_scale' => 'nullable|string|max:10',
+            'is_scale' => 'nullable|string|max:10',
+            'it_scale' => 'nullable|string|max:10',
+            'fir_rtu' => 'nullable|string|max:50',
+            'fis_rtu' => 'nullable|string|max:50',
+            'fit_rtu' => 'nullable|string|max:50',
+            'fin_rtu' => 'nullable|string|max:50',
+            'fir_ms' => 'nullable|string|max:50',
+            'fis_ms' => 'nullable|string|max:50',
+            'fit_ms' => 'nullable|string|max:50',
+            'fin_ms' => 'nullable|string|max:50',
+            'fir_scale' => 'nullable|string|max:50',
+            'fis_scale' => 'nullable|string|max:50',
+            'fit_scale' => 'nullable|string|max:50',
+            'fin_scale' => 'nullable|string|max:50',
+            'p_rtu' => 'nullable|string|max:50',
+            'p_ms' => 'nullable|string|max:50',
+            'p_scale' => 'nullable|string|max:50',
+            'v_rtu' => 'nullable|string|max:50',
+            'v_ms' => 'nullable|string|max:50',
+            'v_scale' => 'nullable|string|max:50',
+            'f_rtu' => 'nullable|string|max:50',
+            'f_ms' => 'nullable|string|max:50',
+            'f_scale' => 'nullable|string|max:50',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
-            'nama_user' => 'required|string|max:10',
+            'nama_user' => 'nullable|string|max:10',
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
                 if (empty($idPelmsArray)) {
                     $fail('The id pelms field must be an array and cannot be empty.');
@@ -479,11 +692,11 @@ class PenyulanganController extends Controller
             $rtugi = DB::table('tb_merkrtugi')->get();
             $medkom = DB::table('tb_medkom')->get();
             $garduinduk = DB::table('tb_garduinduk')->get();
-            $kompeny = DB::table('tb_komkp')->get();
+            $komkp = DB::table('tb_komkp')->get();
             $pelms = DB::table('tb_picmaster')->get();
             $selectedPelms = json_decode($penyulang->id_pelms, true) ?? [];
 
-            return view('pages.penyulangan.clone', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'kompeny', 'pelms', 'selectedPelms'));
+            return view('pages.penyulangan.clone', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms'));
         } catch (\Exception $e) {
             Log::error('Error in clone method: ' . $e->getMessage());
             return redirect()->route('penyulangan.index')->with('error', 'Failed to load clone form: ' . $e->getMessage());
@@ -608,6 +821,6 @@ class PenyulanganController extends Controller
     {
         $penyulang = Penyulangan::findOrFail($id);
         $penyulang->delete();
-        return redirect()->route('data.penyulangan')->with('success', 'Penyulangan deleted successfully!');
+        return redirect()->route('penyulangan.index')->with('success', 'Penyulangan deleted successfully!');
     }
 }
