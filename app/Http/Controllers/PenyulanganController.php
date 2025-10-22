@@ -685,31 +685,27 @@ class PenyulanganController extends Controller
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan updated successfully!');
     }
 
+
     public function clone($id)
     {
-        try {
-            $penyulang = Penyulangan::findOrFail($id);
-            $rtugi = DB::table('tb_merkrtugi')->get();
-            $medkom = DB::table('tb_medkom')->get();
-            $garduinduk = DB::table('tb_garduinduk')->get();
-            $komkp = DB::table('tb_komkp')->get();
-            $pelms = DB::table('tb_picmaster')->get();
-
-            $decoded = json_decode($penyulang->id_pelms, true);
-            $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
-
-            return view('pages.penyulangan.clone', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms'));
-        } catch (\Exception $e) {
-            Log::error('Error in clone method: ' . $e->getMessage());
-            return redirect()->route('penyulangan.index')->with('error', 'Failed to load clone form: ' . $e->getMessage());
-        }
+        $penyulang = Penyulangan::findOrFail($id);
+        $rtugi = DB::table('tb_merkrtugi')->get();
+        $medkom = DB::table('tb_medkom')->get();
+        $garduinduk = DB::table('tb_garduinduk')->get();
+        $komkp = DB::table('tb_komkp')->get();
+        $pelms = DB::table('tb_picmaster')->get();
+        $decoded = json_decode($penyulang->id_pelms, true);
+        $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
+        return view('pages.penyulangan.clone', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms'));
     }
 
     public function storeClone(Request $request)
     {
+        // Preprocess id_pelms to ensure it's an array
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
 
+        // Define array fields that come from checkboxes
         $arrayFields = [
             's_cb',
             's_lr',
@@ -726,6 +722,7 @@ class PenyulanganController extends Controller
             'c_tc'
         ];
 
+        // Define valid checkbox values
         $validCheckboxValues = [
             'open_1',
             'open_2',
@@ -860,8 +857,8 @@ class PenyulanganController extends Controller
             'tidak_uji'
         ];
 
+        // Validation rules
         $validated = $request->validate([
-            'id_peny' => 'required|integer|exists:tb_formpeny,id_peny',
             'tgl_kom' => 'required|date',
             'nama_peny' => 'required|string|max:50',
             'id_gi' => 'required|string|max:25',
@@ -909,21 +906,26 @@ class PenyulanganController extends Controller
             'ketpeny' => 'required|string|max:500',
         ]);
 
+        // Validate array fields separately
         foreach ($arrayFields as $field) {
             $request->validate([
                 $field => 'nullable|array',
                 $field . '.*' => 'string|in:' . implode(',', $validCheckboxValues),
             ]);
+            // Set empty string for array fields if not present or empty
             $validated[$field] = $request->has($field) && is_array($request->input($field)) && !empty($request->input($field))
                 ? implode(',', array_filter($request->input($field)))
                 : '';
         }
 
+        // Merge preprocessed id_pelms array into validated data
         $validated['id_pelms'] = json_encode($idPelmsArray);
+
+        // Create the record
         Penyulangan::create($validated);
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan cloned successfully!');
-    }
+    }   
 
 
     public function destroy(string $id)
