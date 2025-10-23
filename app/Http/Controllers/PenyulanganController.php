@@ -225,7 +225,6 @@ class PenyulanganController extends Controller
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
         return view('pages.penyulangan.add', compact('rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms'));
-
     }
 
     public function store(Request $request)
@@ -925,7 +924,7 @@ class PenyulanganController extends Controller
         Penyulangan::create($validated);
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan cloned successfully!');
-    }   
+    }
 
 
     public function destroy(string $id)

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ModemController;
 use App\Http\Controllers\SectoralController;;
 use App\Http\Controllers\PenyulanganController;
+use App\Http\Controllers\AbsenController;
 
 // Root route (redirects to login)
 Route::get('/', function () {
@@ -70,21 +71,21 @@ Route::middleware('auth:admin')->group(function () {
 
 
 
+//Absen Routes
+    Route::resource('absen',AbsenController::class);
+    Route::get('/absen/data', [AbsenController::class, 'data'])->name('absen.data');
+    Route::post('/absen/data', [AbsenController::class, 'data'])->name('absen.data');
+    Route::get('/absen/data', [AbsenController::class, 'data'])->name('absen.data');
 
 
-    // Forms
-    Route::get('/absen', function () {
-        return view('pages.absen.index');
-    })->name('absen');
+
     // Data
     Route::get('/data', function () {
         return view('pages.data.index');
     })->name('data');
     Route::get('/data/keypoint', [KeypointController::class, 'index'])->name('data.keypoint');
     Route::get('/data/penyulangan', [PenyulanganController::class, 'index'])->name('data.penyulangan');
-    Route::get('/data/absen', function () {
-        return view('pages.data.absen');
-    })->name('data.absen');
+    Route::get('/data/absen', [AbsenController::class, 'index'])->name('data.absen');
 
     // Data Pengusahaan
     Route::prefix('datapengusahaan')->group(function () {
