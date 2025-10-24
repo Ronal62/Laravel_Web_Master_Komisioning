@@ -92,7 +92,7 @@
                         <p>Data Pengusahaan</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse @if(Route::is('gardu*') || Route::is('merk*') || Route::is('modem*') || Route::is('sectoral*')) show @endif"
+                    <div class="collapse @if(Route::is('gardu*') || Route::is('merk*') || Route::is('modem*') ||Route::is('picmaster*') || Route::is('sectoral*')) show @endif"
                         id="datapengusahaan" data-bs-parent="#sidebarMenu">
                         <ul class="nav nav-collapse">
                             <li class="@if(Route::is('gardu*')) active @endif">
@@ -103,6 +103,9 @@
                             </li>
                             <li class="@if(Route::is('modem*')) active @endif">
                                 <a href="{{ route('modem.index') }}"><span class="sub-item">Modem</span></a>
+                            </li>
+                            <li class="@if(Route::is('picmaster*')) active @endif">
+                                <a href="{{ route('picmaster.index') }}"><span class="sub-item">Pelaksana II</span></a>
                             </li>
                             <li class="@if(Route::is('sectoral*')) active @endif">
                                 <a href="{{ route('sectoral.index') }}"><span class="sub-item">Sectoral</span></a>

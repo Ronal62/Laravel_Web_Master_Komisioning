@@ -10,6 +10,7 @@ use App\Http\Controllers\ModemController;
 use App\Http\Controllers\SectoralController;;
 use App\Http\Controllers\PenyulanganController;
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\PicmasterController;
 
 // Root route (redirects to login)
 Route::get('/', function () {
@@ -111,6 +112,14 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('modem/{modem}/edit', [ModemController::class, 'edit'])->name('modem.edit');
         Route::put('modem/{modem}', [ModemController::class, 'update'])->name('modem.update');
         Route::delete('modem/{modem}', [ModemController::class, 'destroy'])->name('modem.destroy');
+
+        //Pelaksana II
+        Route::get('picmaster', [PicmasterController::class, 'index'])->name('picmaster.index');
+        Route::get('picmaster/add', [PicmasterController::class, 'create'])->name('picmaster.add');
+        Route::post('picmaster', [PicmasterController::class, 'store'])->name('picmaster.store');
+        Route::get('picmaster/{picmaster}/edit', [PicmasterController::class, 'edit'])->name('picmaster.edit');
+        Route::put('picmaster/{picmaster}', [PicmasterController::class, 'update'])->name('picmaster.update');
+        Route::delete('picmaster/{picmaster}', [PicmasterController::class, 'destroy'])->name('picmaster.destroy');
 
         //sectoral routes
         Route::get('sectoral', [SectoralController::class, 'index'])->name('sectoral.index');
