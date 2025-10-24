@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
 
 class AbsenController extends Controller
@@ -103,4 +105,42 @@ class AbsenController extends Controller
             'data' => $data,
         ]);
     }
+
+
+    public function create()
+    {
+        $jenisAbsens = collect([
+            (object) ['jenis_absen' => 'Clock In'],
+            (object) ['jenis_absen' => 'Clock Out'],
+        ]);
+
+        return view('pages.absen.add', compact('jenisAbsens'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'tgl_absen' => 'required|date',
+            'jenis_absen' => 'required|in:Clock In,Clock Out',
+            'ket_absen' => 'required|string|max:50',
+            'nama_absen' => 'required|string|max:25',  // Add validation for the submitted field
+        ]);
+
+        // Use the submitted nama_absen (from the form) instead of re-fetching from Auth::user()
+        // This prevents override issues and allows validation to catch empty values
+        $absensi = new Absen();
+        $absensi->nama_absen = $validated['nama_absen'];
+        $absensi->tgl_absen = $validated['tgl_absen'];
+        $absensi->jenis_absen = $validated['jenis_absen'];
+        $absensi->ket_absen = $validated['ket_absen'];
+        $absensi->save();
+
+        return redirect()->route('absen.index')->with('success', 'Absensi created successfully.');
+    }
+
+
+
 }

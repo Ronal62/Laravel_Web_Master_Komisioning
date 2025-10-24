@@ -30,11 +30,25 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Data Absensi</h4>
+                        <div class="row mb-6">
+                            <div class="col-md-2">
+                                <h4 class="card-title">Data Absensi</h4>
+                            </div>
+                        </div>
+                        <form action="{{ route('absen.create') }}" method="GET" style="display:inline;">
+                            <button type="submit" class="btn btn-primary ">
+                                <span class="btn-label">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                Form Absensi
+                            </button>
+                        </form>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+
                             <div class="row mb-3">
+
                                 <div class="col-md-2">
                                     <label for="dari-tanggal" class="form-label">Dari Tanggal:</label>
                                     <input type="date" id="dari-tanggal" class="form-control" />

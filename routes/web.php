@@ -73,10 +73,7 @@ Route::middleware('auth:admin')->group(function () {
 
 //Absen Routes
     Route::resource('absen',AbsenController::class);
-    Route::get('/absen/data', [AbsenController::class, 'data'])->name('absen.data');
-    Route::post('/absen/data', [AbsenController::class, 'data'])->name('absen.data');
-    Route::get('/absen/data', [AbsenController::class, 'data'])->name('absen.data');
-
+    Route::match(['get', 'post'], '/absen/data', [AbsenController::class, 'data'])->name('absen.data');
 
 
     // Data
