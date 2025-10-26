@@ -72,8 +72,11 @@ Route::middleware('auth:admin')->group(function () {
 
 
 
-//Absen Routes
-    Route::resource('absen',AbsenController::class);
+    //Absen Routes
+    Route::get('absen', [AbsenController::class, 'index'])->name('absen.index');
+    Route::get('absen/create', [AbsenController::class, 'create'])->name('absen.create');
+    Route::post('absen', [AbsenController::class, 'store'])->name('absen.store');
+    Route::get('absen/export-pdf', [AbsenController::class, 'exportPdf'])->name('absen.exportPdf');
     Route::match(['get', 'post'], '/absen/data', [AbsenController::class, 'data'])->name('absen.data');
 
 

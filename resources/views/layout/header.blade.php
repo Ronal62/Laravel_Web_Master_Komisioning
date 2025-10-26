@@ -31,7 +31,7 @@
                 </div>
             </nav>
             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
+                <!-- <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                         aria-expanded="false" aria-haspopup="true">
                         <i class="fa fa-search"></i>
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                     </ul>
-                </li>
+                </li> -->
                 <!-- <li class="nav-item topbar-icon dropdown hidden-caret">
                     <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -157,10 +157,10 @@
                 </li> -->
                 <li class="nav-item topbar-user dropdown hidden-caret">
                     <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-                        <!-- <div class="avatar-sm">
-                            <img src="{{ asset('assets/img/profile.jpg') }}" alt="..."
+                        <div class="avatar-sm">
+                            <img src="{{ asset('assets/img/logopln1.png') }}" alt="..."
                                 class="avatar-img rounded-circle" />
-                        </div> -->
+                        </div>
                         <span class="profile-username">
                             <span class="op-7">Hi,</span>
                             <span class="fw-bold">{{ auth()->guard('admin')->user()->nama_admin ?? 'nama_admin' }}

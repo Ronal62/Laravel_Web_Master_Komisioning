@@ -57,8 +57,8 @@
                                 <a href="{{ route('penyulangan.create') }}"><span
                                         class="sub-item">Penyulangan</span></a>
                             </li>
-                            <li class="@if(Route::is('absen.index')) active @endif">
-                                <a href="{{ route('absen.index') }}"><span class="sub-item">Absen</span></a>
+                            <li class="@if(Route::is('absen.create')) active @endif">
+                                <a href="{{ route('absen.create') }}"><span class="sub-item">Absen</span></a>
                             </li>
                         </ul>
                     </div>

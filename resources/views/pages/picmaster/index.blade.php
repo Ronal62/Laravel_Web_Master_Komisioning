@@ -41,7 +41,7 @@
                                         <span class="btn-label">
                                             <i class="fas fa-plus"></i>
                                         </span>
-                                        Tambah Pelaksana master
+                                        Add Pelaksana 
                                     </button>
                                 </form>
                             </div>
