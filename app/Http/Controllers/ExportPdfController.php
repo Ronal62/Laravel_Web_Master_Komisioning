@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class ExportPdfController extends Controller
 {
-    public function exportpdf($id)
+    public function exportsinglepdfkeypoint($id)
     {
         try {
             // Fetch the Keypoint record

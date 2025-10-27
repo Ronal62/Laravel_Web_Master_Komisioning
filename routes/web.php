@@ -56,7 +56,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/keypoint/export/excel', [KeypointController::class, 'exportExcelFiltered'])->name('keypoint.exportexcelall');
 
 
-    Route::get('/keypoint/{id}/exportpdf', [ExportPdfController::class, 'exportpdf'])->name('keypoint.exportpdf');
+    Route::get('/keypoint/{id}/exportpdf', [ExportPdfController::class, 'exportsinglepdfkeypoint'])->name('keypoint.exportpdf');
 
 
 
