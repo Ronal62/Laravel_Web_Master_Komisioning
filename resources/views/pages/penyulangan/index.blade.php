@@ -146,8 +146,8 @@ $(document).ready(function() {
                 name: 'nama_user'
             },
             {
-                data: 'pelrtu',
-                name: 'pelrtu'
+                data: 'id_pelrtu',
+                name: 'id_pelrtu'
             },
             {
                 data: 'action',

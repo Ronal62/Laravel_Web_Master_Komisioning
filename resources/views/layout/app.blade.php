@@ -100,7 +100,20 @@
     .custom-form-container .invalid-feedback {
         color: #dc3545;
         font-size: 12px;
+
+
         margin-top: 5px;
+    }
+
+
+    .selectgroup-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .selectgroup-item {
+        flex: 0 0 auto;
     }
     </style>
     <!-- Fonts and icons -->

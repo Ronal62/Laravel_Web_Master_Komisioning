@@ -11,11 +11,23 @@ use App\Http\Controllers\SectoralController;;
 use App\Http\Controllers\PenyulanganController;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\PicmasterController;
+use App\Http\Controllers\PelaksanaRTUController;
+
+Route::get('/', function () {
+    return view('choose');
+});
+
+
 
 // Root route (redirects to login)
-Route::get('/', function () {
+
+Route::get('/login', function () {
     return view('pages.auth.login');
 })->name('login');
+
+// Route::get('/', function () {
+//     return view('pages.auth.login');
+// })->name('login');
 
 // Login POST route
 Route::post('/login', [AdminController::class, 'login'])->name('login.post');
@@ -124,6 +136,14 @@ Route::middleware('auth:admin')->group(function () {
         Route::put('picmaster/{picmaster}', [PicmasterController::class, 'update'])->name('picmaster.update');
         Route::delete('picmaster/{picmaster}', [PicmasterController::class, 'destroy'])->name('picmaster.destroy');
 
+        //Pelaksana RTU
+        Route::get('pelrtu', [PelaksanaRtuController::class, 'index'])->name('pelrtu.index');
+        Route::get('pelrtu/add', [PelaksanaRtuController::class, 'create'])->name('pelrtu.add');
+        Route::post('pelrtu', [PelaksanaRtuController::class, 'store'])->name('pelrtu.store');
+        Route::get('pelrtu/{pelrtu}/edit', [PelaksanaRtuController::class, 'edit'])->name('pelrtu.edit');
+        Route::put('pelrtu/{pelrtu}', [PelaksanaRtuController::class, 'update'])->name('pelrtu.update');
+        Route::delete('pelrtu/{pelrtu}', [PelaksanaRtuController::class, 'destroy'])->name('pelrtu.destroy');
+
         //sectoral routes
         Route::get('sectoral', [SectoralController::class, 'index'])->name('sectoral.index');
         Route::get('sectoral/add', [SectoralController::class, 'create'])->name('sectoral.add');
@@ -132,11 +152,5 @@ Route::middleware('auth:admin')->group(function () {
         Route::put('sectoral/{sectoral}', [SectoralController::class, 'update'])->name('sectoral.update');
         Route::delete('sectoral/{sectoral}', [SectoralController::class, 'destroy'])->name('sectoral.destroy');
 
-
-
-        // Placeholder routes for other menu items
-        // Route::get('lbs', [LbsController::class, 'index'])->name('lbs.index');
-        // Route::get('modem', [ModemController::class, 'index'])->name('modem.index');
-        // Route::get('sectoral', [SectoralController::class, 'index'])->name('sectoral.index');
     });
 });

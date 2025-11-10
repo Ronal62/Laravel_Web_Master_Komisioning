@@ -30,16 +30,7 @@ class PenyulanganController extends Controller
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
 
-        $columnMap = [
-            0 => 'tb_formpeny.tgl_kom',
-            1 => 'tb_formpeny.nama_peny',
-            2 => 'tb_formpeny.id_gi',
-            3 => 'tb_formpeny.id_rtugi',
-            4 => 'tb_formpeny.ketpeny',
-            5 => 'tb_formpeny.nama_user',
-            6 => 'tb_formpeny.pelrtu',
-        ];
-        $orderColumn = $columnMap[$orderColumnIndex] ?? 'tb_formpeny.tgl_kom';
+        $pelrtuMap = DB::table('tb_pelaksana_rtu')->pluck('nama_pelrtu', 'id_pelrtu')->toArray();
 
         $query = DB::table('tb_formpeny')
             ->select(
@@ -50,7 +41,7 @@ class PenyulanganController extends Controller
                 'tb_formpeny.id_rtugi',
                 'tb_formpeny.ketpeny',
                 'tb_formpeny.nama_user',
-                'tb_formpeny.pelrtu'
+                'tb_formpeny.id_pelrtu'
             );
 
         if ($fromDate && $toDate) {
@@ -61,53 +52,80 @@ class PenyulanganController extends Controller
             $query->whereDate('tb_formpeny.tgl_kom', '<=', $toDate);
         }
 
+        $records = $query->get();
+
+        $records = $records->map(function ($row) use ($pelrtuMap) {
+            $ids = json_decode($row->id_pelrtu, true) ?? [];
+            $names = [];
+            foreach ($ids as $id) {
+                $id = trim($id, '"'); // Clean up any extra quotes if present
+                if (isset($pelrtuMap[$id])) {
+                    $names[] = $pelrtuMap[$id];
+                }
+            }
+            $row->pic_rtu_names = implode(', ', $names);
+            return $row;
+        });
+
         if (!empty($searchValue)) {
-            $query->where(function ($q) use ($searchValue) {
-                $q->where('tb_formpeny.nama_peny', 'like', "%{$searchValue}%")
-                    ->orWhere('tb_formpeny.id_gi', 'like', "%{$searchValue}%")
-                    ->orWhere('tb_formpeny.id_rtugi', 'like', "%{$searchValue}%")
-                    ->orWhere('tb_formpeny.ketpeny', 'like', "%{$searchValue}%")
-                    ->orWhere('tb_formpeny.nama_user', 'like', "%{$searchValue}%")
-                    ->orWhere('tb_formpeny.pelrtu', 'like', "%{$searchValue}%");
+            $records = $records->filter(function ($row) use ($searchValue) {
+                return stripos($row->nama_peny, $searchValue) !== false ||
+                    stripos($row->id_gi, $searchValue) !== false ||
+                    stripos($row->id_rtugi, $searchValue) !== false ||
+                    stripos($row->ketpeny, $searchValue) !== false ||
+                    stripos($row->nama_user, $searchValue) !== false ||
+                    stripos($row->pic_rtu_names, $searchValue) !== false;
             });
         }
 
         foreach ($columns as $index => $col) {
             $colSearchValue = $col['search']['value'];
             if (!empty($colSearchValue) && $col['searchable'] == 'true') {
-                switch ($index) {
-                    case 0:
-                        $query->whereDate('tb_formpeny.tgl_kom', 'like', "%{$colSearchValue}%");
-                        break;
-                    case 1:
-                        $query->where('tb_formpeny.nama_peny', 'like', "%{$colSearchValue}%");
-                        break;
-                    case 2:
-                        $query->where('tb_formpeny.id_gi', 'like', "%{$colSearchValue}%");
-                        break;
-                    case 3:
-                        $query->where('tb_formpeny.id_rtugi', 'like', "%{$colSearchValue}%");
-                        break;
-                    case 4:
-                        $query->where('tb_formpeny.ketpeny', 'like', "%{$colSearchValue}%");
-                        break;
-                    case 5:
-                        $query->where('tb_formpeny.nama_user', 'like', "%{$colSearchValue}%");
-                        break;
-                    case 6:
-                        $query->where('tb_formpeny.pelrtu', 'like', "%{$colSearchValue}%");
-                        break;
-                }
+                $records = $records->filter(function ($row) use ($index, $colSearchValue) {
+                    switch ($index) {
+                        case 0:
+                            return $row->tgl_kom && stripos(Carbon::parse($row->tgl_kom)->format('l, d-m-Y'), $colSearchValue) !== false;
+                        case 1:
+                            return stripos($row->nama_peny, $colSearchValue) !== false;
+                        case 2:
+                            return stripos($row->id_gi, $colSearchValue) !== false;
+                        case 3:
+                            return stripos($row->id_rtugi, $colSearchValue) !== false;
+                        case 4:
+                            return stripos($row->ketpeny, $colSearchValue) !== false;
+                        case 5:
+                            return stripos($row->nama_user, $colSearchValue) !== false;
+                        case 6:
+                            return stripos($row->pic_rtu_names, $colSearchValue) !== false;
+                    }
+                    return true;
+                });
             }
         }
 
-        $totalRecords = DB::table('tb_formpeny')->count();
-        $totalFiltered = $query->count();
-        $query->orderBy($orderColumn, $orderDir);
-        $records = $query->offset($start)->limit($length)->get();
+        $orderFieldMap = [
+            0 => 'tgl_kom',
+            1 => 'nama_peny',
+            2 => 'id_gi',
+            3 => 'id_rtugi',
+            4 => 'ketpeny',
+            5 => 'nama_user',
+            6 => 'pic_rtu_names',
+        ];
+        $orderField = $orderFieldMap[$orderColumnIndex] ?? 'tgl_kom';
 
-        $data = $records->map(function ($row) {
-            $row->tgl_kom = Carbon::parse($row->tgl_kom)->format('l, d-m-Y');
+        if ($orderDir === 'desc') {
+            $records = $records->sortByDesc($orderField);
+        } else {
+            $records = $records->sortBy($orderField);
+        }
+
+        $totalRecords = DB::table('tb_formpeny')->count();
+        $totalFiltered = $records->count();
+
+        $data = $records->slice($start, $length)->map(function ($row) {
+            $row->tgl_kom = $row->tgl_kom ? Carbon::parse($row->tgl_kom)->format('l, d-m-Y') : '';
+            $row->id_pelrtu = $row->pic_rtu_names;
             $row->action = '
                 <a href="' . route('penyulangan.clone', $row->id_peny) . '" class="btn btn-icon btn-round btn-primary">
                     <i class="far fa-clone"></i>
@@ -124,8 +142,9 @@ class PenyulanganController extends Controller
                     </button>
                 </form>
             ';
+            unset($row->pic_rtu_names);
             return $row;
-        })->toArray();
+        })->values()->toArray();
 
         return response()->json([
             'draw' => (int)$draw,
@@ -135,28 +154,45 @@ class PenyulanganController extends Controller
         ]);
     }
 
+
     public function exportPdfFiltered(Request $request)
     {
         $fromDate = $request->query('from');
         $toDate = $request->query('to');
 
         $query = DB::table('tb_formpeny')
+            ->leftJoin('tb_garduinduk', 'tb_formpeny.id_gi', '=', 'tb_garduinduk.id_gi')
+            ->leftJoin('tb_merkrtugi', 'tb_formpeny.id_rtugi', '=', 'tb_merkrtugi.id_rtugi')
             ->select(
                 'tb_formpeny.tgl_kom',
                 'tb_formpeny.nama_peny',
-                'tb_formpeny.id_gi',
-                'tb_formpeny.id_rtugi',
+                'tb_garduinduk.nama_gi as id_gi',
+                'tb_merkrtugi.merk_rtugi as id_rtugi',
                 'tb_formpeny.ketpeny',
                 'tb_formpeny.nama_user',
-                'tb_formpeny.pelrtu'
+                'tb_formpeny.id_pelrtu'
             );
 
         if ($fromDate && $toDate) {
             $query->whereBetween('tb_formpeny.tgl_kom', [$fromDate, $toDate]);
         }
 
-        $penyulangans = $query->get()->map(function ($row) {
+        $penyulangans = $query->get();
+
+        $pelrtuMap = DB::table('tb_pelaksana_rtu')->pluck('nama_pelrtu', 'id_pelrtu')->toArray();
+
+        $penyulangans = $penyulangans->map(function ($row) use ($pelrtuMap) {
             $row->tgl_kom = Carbon::parse($row->tgl_kom)->format('l, d-m-Y');
+
+            $ids = json_decode($row->id_pelrtu, true) ?? [];
+            $names = [];
+            foreach ($ids as $id) {
+                if (isset($pelrtuMap[$id])) {
+                    $names[] = $pelrtuMap[$id];
+                }
+            }
+            $row->id_pelrtu = implode(', ', $names);
+
             return $row;
         });
 
@@ -183,36 +219,59 @@ class PenyulanganController extends Controller
         $toDate = $request->query('to');
 
         $query = DB::table('tb_formpeny')
+            ->leftJoin('tb_garduinduk', 'tb_formpeny.id_gi', '=', 'tb_garduinduk.id_gi')
+            ->leftJoin('tb_merkrtugi', 'tb_formpeny.id_rtugi', '=', 'tb_merkrtugi.id_rtugi')
             ->select(
                 DB::raw("DATE_FORMAT(tb_formpeny.tgl_kom, '%d-%m-%Y') as tgl_kom"),
                 'tb_formpeny.nama_peny',
-                'tb_formpeny.id_gi',
-                'tb_formpeny.id_rtugi',
+                'tb_garduinduk.nama_gi as id_gi',
+                'tb_merkrtugi.merk_rtugi as id_rtugi',
                 'tb_formpeny.ketpeny',
                 'tb_formpeny.nama_user',
-                'tb_formpeny.pelrtu'
+                'tb_formpeny.id_pelrtu'
             );
 
         if ($fromDate && $toDate) {
             $query->whereBetween('tb_formpeny.tgl_kom', [$fromDate, $toDate]);
         }
 
-        $penyulangans = $query->get()->toArray();
+        $penyulangans = $query->get();
+
+        $pelrtuMap = DB::table('tb_pelaksana_rtu')->pluck('nama_pelrtu', 'id_pelrtu')->toArray();
+
+        $penyulangans = $penyulangans->map(function ($row) use ($pelrtuMap) {
+            $ids = json_decode($row->id_pelrtu, true) ?? [];
+            $names = [];
+            foreach ($ids as $id) {
+                if (isset($pelrtuMap[$id])) {
+                    $names[] = $pelrtuMap[$id];
+                }
+            }
+            $row->id_pelrtu = implode(', ', $names);
+            return $row;
+        })->toArray();
+
         $filename = "Data_Penyulangan_" . now()->format('d-m-Y') . ".csv";
-
-        $handle = fopen('php://output', 'w');
-        fputcsv($handle, ['Tgl Komisioning', 'Nama Penyulang', 'Gardu Induk', 'Wilayah DCC', 'Keterangan', 'PIC Master', 'PIC RTU']);
-
-        foreach ($penyulangans as $row) {
-            fputcsv($handle, (array)$row);
-        }
 
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename={$filename}",
         ];
 
-        return response()->streamDownload(function () use ($handle) {
+        return response()->streamDownload(function () use ($penyulangans) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['Tgl Komisioning', 'Nama Penyulang', 'Gardu Induk', 'Wilayah DCC', 'Keterangan', 'PIC Master', 'PIC RTU']);
+            foreach ($penyulangans as $row) {
+                fputcsv($handle, [
+                    $row->tgl_kom,
+                    $row->nama_peny,
+                    $row->id_gi,
+                    $row->id_rtugi,
+                    $row->ketpeny,
+                    $row->nama_user,
+                    $row->id_pelrtu
+                ]);
+            }
             fclose($handle);
         }, $filename, $headers);
     }
@@ -224,16 +283,18 @@ class PenyulanganController extends Controller
         $garduinduk = DB::table('tb_garduinduk')->get();
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
-        return view('pages.penyulangan.add', compact('rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms'));
+        $pelrtus = DB::table('tb_pelaksana_rtu')->get();
+        return view('pages.penyulangan.add', compact('rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'pelrtus'));
     }
 
     public function store(Request $request)
     {
-        // Preprocess id_pelms to ensure it's an array
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
 
-        // Define array fields that come from checkboxes
+        $idPelrtuInput = $request->input('id_pelrtu', '');
+        $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
+
         $arrayFields = [
             's_cb',
             's_lr',
@@ -250,7 +311,6 @@ class PenyulanganController extends Controller
             'c_tc'
         ];
 
-        // Define valid checkbox values
         $validCheckboxValues = [
             'open_1',
             'open_2',
@@ -385,11 +445,10 @@ class PenyulanganController extends Controller
             'tidak_uji'
         ];
 
-        // Validation rules
         $validated = $request->validate([
             'tgl_kom' => 'required|date',
             'nama_peny' => 'required|string|max:50',
-            'id_gi' => 'required|string|max:25',
+            'id_gi' => 'required|string|max:25|exists:tb_garduinduk,id_gi',
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
@@ -423,33 +482,119 @@ class PenyulanganController extends Controller
             'f_rtu' => 'nullable|string|max:50',
             'f_ms' => 'nullable|string|max:50',
             'f_scale' => 'nullable|string|max:50',
+            'scb_open_address' => 'nullable|string|max:100',
+            'scb_close_address' => 'nullable|string|max:100',
+            'slocal_address' => 'nullable|string|max:100',
+            'sremote_address' => 'nullable|string|max:100',
+            'socr_dis_address' => 'nullable|string|max:100',
+            'socr_app_address' => 'nullable|string|max:100',
+            'socri_dis_address' => 'nullable|string|max:100',
+            'socri_app_address' => 'nullable|string|max:100',
+            'sdgr_dis_address' => 'nullable|string|max:100',
+            'sdgr_app_address' => 'nullable|string|max:100',
+            'scbtr_dis_address' => 'nullable|string|max:100',
+            'scbtr_app_address' => 'nullable|string|max:100',
+            'sar_dis_address' => 'nullable|string|max:100',
+            'sar_app_address' => 'nullable|string|max:100',
+            'saru_dis_address' => 'nullable|string|max:100',
+            'saru_app_address' => 'nullable|string|max:100',
+            'stc_dis_address' => 'nullable|string|max:100',
+            'stc_app_address' => 'nullable|string|max:100',
+            'scb_open_rtu' => 'nullable|string|max:100',
+            'scb_close_rtu' => 'nullable|string|max:100',
+            'slocal_rtu' => 'nullable|string|max:100',
+            'sremote_rtu' => 'nullable|string|max:100',
+            'socr_dis_rtu' => 'nullable|string|max:100',
+            'socr_app_rtu' => 'nullable|string|max:100',
+            'socri_dis_rtu' => 'nullable|string|max:100',
+            'socri_app_rtu' => 'nullable|string|max:100',
+            'sdgr_dis_rtu' => 'nullable|string|max:100',
+            'sdgr_app_rtu' => 'nullable|string|max:100',
+            'scbtr_dis_rtu' => 'nullable|string|max:100',
+            'scbtr_app_rtu' => 'nullable|string|max:100',
+            'sar_dis_rtu' => 'nullable|string|max:100',
+            'sar_app_rtu' => 'nullable|string|max:100',
+            'saru_dis_rtu' => 'nullable|string|max:100',
+            'saru_app_rtu' => 'nullable|string|max:100',
+            'stc_dis_rtu' => 'nullable|string|max:100',
+            'stc_app_rtu' => 'nullable|string|max:100',
+            'scb_open_objfrmt' => 'nullable|string|max:100',
+            'scb_close_objfrmt' => 'nullable|string|max:100',
+            'slocal_objfrmt' => 'nullable|string|max:100',
+            'sremote_objfrmt' => 'nullable|string|max:100',
+            'socr_dis_objfrmt' => 'nullable|string|max:100',
+            'socr_app_objfrmt' => 'nullable|string|max:100',
+            'socri_dis_objfrmt' => 'nullable|string|max:100',
+            'socri_app_objfrmt' => 'nullable|string|max:100',
+            'sdgr_dis_objfrmt' => 'nullable|string|max:100',
+            'sdgr_app_objfrmt' => 'nullable|string|max:100',
+            'scbtr_dis_objfrmt' => 'nullable|string|max:100',
+            'scbtr_app_objfrmt' => 'nullable|string|max:100',
+            'sar_dis_objfrmt' => 'nullable|string|max:100',
+            'sar_app_objfrmt' => 'nullable|string|max:100',
+            'saru_dis_objfrmt' => 'nullable|string|max:100',
+            'saru_app_objfrmt' => 'nullable|string|max:100',
+            'stc_dis_objfrmt' => 'nullable|string|max:100',
+            'stc_app_objfrmt' => 'nullable|string|max:100',
+            'ccb_open_address' => 'nullable|string|max:100',
+            'ccb_close_address' => 'nullable|string|max:100',
+            'caru_use_address' => 'nullable|string|max:100',
+            'caru_unuse_address' => 'nullable|string|max:100',
+            'creset_on_address' => 'nullable|string|max:100',
+            'ctc_raiser_address' => 'nullable|string|max:100',
+            'ctc_lower_address' => 'nullable|string|max:100',
+            'ccb_open_rtu' => 'nullable|string|max:100',
+            'ccb_close_rtu' => 'nullable|string|max:100',
+            'caru_use_rtu' => 'nullable|string|max:100',
+            'caru_unuse_rtu' => 'nullable|string|max:100',
+            'creset_on_rtu' => 'nullable|string|max:100',
+            'ctc_raiser_rtu' => 'nullable|string|max:100',
+            'ctc_lower_rtu' => 'nullable|string|max:100',
+            'ccb_open_objfrmt' => 'nullable|string|max:100',
+            'ccb_close_objfrmt' => 'nullable|string|max:100',
+            'caru_use_objfrmt' => 'nullable|string|max:100',
+            'caru_unuse_objfrmt' => 'nullable|string|max:100',
+            'creset_on_objfrmt' => 'nullable|string|max:100',
+            'ctc_raiser_objfrmt' => 'nullable|string|max:100',
+            'ctc_lower_objfrmt' => 'nullable|string|max:100',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'nullable|string|max:10',
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
                 if (empty($idPelmsArray)) {
                     $fail('The id pelms field must be an array and cannot be empty.');
                 }
+                foreach ($idPelmsArray as $id) {
+                    if (!DB::table('tb_picmaster')->where('id_picmaster', $id)->exists()) {
+                        $fail("Invalid id_pelms: $id");
+                    }
+                }
             }],
-            'pelrtu' => 'required|string|max:25',
+            'id_pelrtu' => ['required', function ($attribute, $value, $fail) use ($idPelrtuArray) {
+                if (empty($idPelrtuArray)) {
+                    $fail('The id pelrtu field must be an array and cannot be empty.');
+                }
+                foreach ($idPelrtuArray as $id) {
+                    if (!DB::table('tb_pelaksana_rtu')->where('id_pelrtu', $id)->exists()) {
+                        $fail("Invalid id_pelrtu: $id");
+                    }
+                }
+            }],
             'ketpeny' => 'required|string|max:500',
         ]);
 
-        // Validate array fields separately
         foreach ($arrayFields as $field) {
             $request->validate([
                 $field => 'nullable|array',
                 $field . '.*' => 'string|in:' . implode(',', $validCheckboxValues),
             ]);
-            // Set empty string for array fields if not present or empty
             $validated[$field] = $request->has($field) && is_array($request->input($field)) && !empty($request->input($field))
                 ? implode(',', array_filter($request->input($field)))
                 : '';
         }
 
-        // Merge preprocessed id_pelms array into validated data
         $validated['id_pelms'] = json_encode($idPelmsArray);
+        $validated['id_pelrtu'] = json_encode($idPelrtuArray);
 
-        // Create the record
         Penyulangan::create($validated);
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan created successfully!');
@@ -463,10 +608,13 @@ class PenyulanganController extends Controller
         $garduinduk = DB::table('tb_garduinduk')->get();
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
+        $pelrtus = DB::table('tb_pelaksana_rtu')->get();
         $decoded = json_decode($penyulang->id_pelms, true);
         $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
+        $decodedRtu = json_decode($penyulang->id_pelrtu, true);
+        $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : ($decodedRtu ? [$decodedRtu] : []);
 
-        return view('pages.penyulangan.edit', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms'));
+        return view('pages.penyulangan.edit', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'pelrtus', 'selectedPelms', 'selectedPelrtus'));
     }
 
     public function update(Request $request, string $id)
@@ -474,6 +622,8 @@ class PenyulanganController extends Controller
         $penyulang = Penyulangan::findOrFail($id);
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
+        $idPelrtuInput = $request->input('id_pelrtu', '');
+        $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
 
         $arrayFields = [
             's_cb',
@@ -623,7 +773,7 @@ class PenyulanganController extends Controller
             'id_peny' => 'required|integer|exists:tb_formpeny,id_peny',
             'tgl_kom' => 'required|date',
             'nama_peny' => 'required|string|max:50',
-            'id_gi' => 'required|string|max:25',
+            'id_gi' => 'required|string|max:25|exists:tb_garduinduk,id_gi',
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
@@ -657,14 +807,103 @@ class PenyulanganController extends Controller
             'f_rtu' => 'nullable|string|max:50',
             'f_ms' => 'nullable|string|max:50',
             'f_scale' => 'nullable|string|max:50',
+            'scb_open_address' => 'nullable|string|max:100',
+            'scb_close_address' => 'nullable|string|max:100',
+            'slocal_address' => 'nullable|string|max:100',
+            'sremote_address' => 'nullable|string|max:100',
+            'socr_dis_address' => 'nullable|string|max:100',
+            'socr_app_address' => 'nullable|string|max:100',
+            'socri_dis_address' => 'nullable|string|max:100',
+            'socri_app_address' => 'nullable|string|max:100',
+            'sdgr_dis_address' => 'nullable|string|max:100',
+            'sdgr_app_address' => 'nullable|string|max:100',
+            'scbtr_dis_address' => 'nullable|string|max:100',
+            'scbtr_app_address' => 'nullable|string|max:100',
+            'sar_dis_address' => 'nullable|string|max:100',
+            'sar_app_address' => 'nullable|string|max:100',
+            'saru_dis_address' => 'nullable|string|max:100',
+            'saru_app_address' => 'nullable|string|max:100',
+            'stc_dis_address' => 'nullable|string|max:100',
+            'stc_app_address' => 'nullable|string|max:100',
+            'scb_open_rtu' => 'nullable|string|max:100',
+            'scb_close_rtu' => 'nullable|string|max:100',
+            'slocal_rtu' => 'nullable|string|max:100',
+            'sremote_rtu' => 'nullable|string|max:100',
+            'socr_dis_rtu' => 'nullable|string|max:100',
+            'socr_app_rtu' => 'nullable|string|max:100',
+            'socri_dis_rtu' => 'nullable|string|max:100',
+            'socri_app_rtu' => 'nullable|string|max:100',
+            'sdgr_dis_rtu' => 'nullable|string|max:100',
+            'sdgr_app_rtu' => 'nullable|string|max:100',
+            'scbtr_dis_rtu' => 'nullable|string|max:100',
+            'scbtr_app_rtu' => 'nullable|string|max:100',
+            'sar_dis_rtu' => 'nullable|string|max:100',
+            'sar_app_rtu' => 'nullable|string|max:100',
+            'saru_dis_rtu' => 'nullable|string|max:100',
+            'saru_app_rtu' => 'nullable|string|max:100',
+            'stc_dis_rtu' => 'nullable|string|max:100',
+            'stc_app_rtu' => 'nullable|string|max:100',
+            'scb_open_objfrmt' => 'nullable|string|max:100',
+            'scb_close_objfrmt' => 'nullable|string|max:100',
+            'slocal_objfrmt' => 'nullable|string|max:100',
+            'sremote_objfrmt' => 'nullable|string|max:100',
+            'socr_dis_objfrmt' => 'nullable|string|max:100',
+            'socr_app_objfrmt' => 'nullable|string|max:100',
+            'socri_dis_objfrmt' => 'nullable|string|max:100',
+            'socri_app_objfrmt' => 'nullable|string|max:100',
+            'sdgr_dis_objfrmt' => 'nullable|string|max:100',
+            'sdgr_app_objfrmt' => 'nullable|string|max:100',
+            'scbtr_dis_objfrmt' => 'nullable|string|max:100',
+            'scbtr_app_objfrmt' => 'nullable|string|max:100',
+            'sar_dis_objfrmt' => 'nullable|string|max:100',
+            'sar_app_objfrmt' => 'nullable|string|max:100',
+            'saru_dis_objfrmt' => 'nullable|string|max:100',
+            'saru_app_objfrmt' => 'nullable|string|max:100',
+            'stc_dis_objfrmt' => 'nullable|string|max:100',
+            'stc_app_objfrmt' => 'nullable|string|max:100',
+            'ccb_open_address' => 'nullable|string|max:100',
+            'ccb_close_address' => 'nullable|string|max:100',
+            'caru_use_address' => 'nullable|string|max:100',
+            'caru_unuse_address' => 'nullable|string|max:100',
+            'creset_on_address' => 'nullable|string|max:100',
+            'ctc_raiser_address' => 'nullable|string|max:100',
+            'ctc_lower_address' => 'nullable|string|max:100',
+            'ccb_open_rtu' => 'nullable|string|max:100',
+            'ccb_close_rtu' => 'nullable|string|max:100',
+            'caru_use_rtu' => 'nullable|string|max:100',
+            'caru_unuse_rtu' => 'nullable|string|max:100',
+            'creset_on_rtu' => 'nullable|string|max:100',
+            'ctc_raiser_rtu' => 'nullable|string|max:100',
+            'ctc_lower_rtu' => 'nullable|string|max:100',
+            'ccb_open_objfrmt' => 'nullable|string|max:100',
+            'ccb_close_objfrmt' => 'nullable|string|max:100',
+            'caru_use_objfrmt' => 'nullable|string|max:100',
+            'caru_unuse_objfrmt' => 'nullable|string|max:100',
+            'creset_on_objfrmt' => 'nullable|string|max:100',
+            'ctc_raiser_objfrmt' => 'nullable|string|max:100',
+            'ctc_lower_objfrmt' => 'nullable|string|max:100',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'nullable|string|max:10',
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
                 if (empty($idPelmsArray)) {
                     $fail('The id pelms field must be an array and cannot be empty.');
                 }
+                foreach ($idPelmsArray as $id) {
+                    if (!DB::table('tb_picmaster')->where('id_picmaster', $id)->exists()) {
+                        $fail("Invalid id_pelms: $id");
+                    }
+                }
             }],
-            'pelrtu' => 'required|string|max:25',
+            'id_pelrtu' => ['required', function ($attribute, $value, $fail) use ($idPelrtuArray) {
+                if (empty($idPelrtuArray)) {
+                    $fail('The id pelrtu field must be an array and cannot be empty.');
+                }
+                foreach ($idPelrtuArray as $id) {
+                    if (!DB::table('tb_pelaksana_rtu')->where('id_pelrtu', $id)->exists()) {
+                        $fail("Invalid id_pelrtu: $id");
+                    }
+                }
+            }],
             'ketpeny' => 'required|string|max:500',
         ]);
 
@@ -679,6 +918,7 @@ class PenyulanganController extends Controller
         }
 
         $validated['id_pelms'] = json_encode($idPelmsArray);
+        $validated['id_pelrtu'] = json_encode($idPelrtuArray);
         $penyulang->update($validated);
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan updated successfully!');
@@ -693,18 +933,22 @@ class PenyulanganController extends Controller
         $garduinduk = DB::table('tb_garduinduk')->get();
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
+        $pelrtus = DB::table('tb_pelaksana_rtu')->get();
         $decoded = json_decode($penyulang->id_pelms, true);
         $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
-        return view('pages.penyulangan.clone', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms'));
+        $decodedRtu = json_decode($penyulang->id_pelrtu, true);
+        $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : ($decodedRtu ? [$decodedRtu] : []);
+        return view('pages.penyulangan.clone', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'pelrtus', 'selectedPelms', 'selectedPelrtus'));
     }
 
     public function storeClone(Request $request)
     {
-        // Preprocess id_pelms to ensure it's an array
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
 
-        // Define array fields that come from checkboxes
+        $idPelrtuInput = $request->input('id_pelrtu', '');
+        $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
+
         $arrayFields = [
             's_cb',
             's_lr',
@@ -721,7 +965,6 @@ class PenyulanganController extends Controller
             'c_tc'
         ];
 
-        // Define valid checkbox values
         $validCheckboxValues = [
             'open_1',
             'open_2',
@@ -856,11 +1099,10 @@ class PenyulanganController extends Controller
             'tidak_uji'
         ];
 
-        // Validation rules
         $validated = $request->validate([
             'tgl_kom' => 'required|date',
             'nama_peny' => 'required|string|max:50',
-            'id_gi' => 'required|string|max:25',
+            'id_gi' => 'required|string|max:25|exists:tb_garduinduk,id_gi',
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
@@ -894,33 +1136,120 @@ class PenyulanganController extends Controller
             'f_rtu' => 'nullable|string|max:50',
             'f_ms' => 'nullable|string|max:50',
             'f_scale' => 'nullable|string|max:50',
+            'scb_open_address' => 'nullable|string|max:100',
+            'scb_close_address' => 'nullable|string|max:100',
+            'slocal_address' => 'nullable|string|max:100',
+            'sremote_address' => 'nullable|string|max:100',
+            'socr_dis_address' => 'nullable|string|max:100',
+            'socr_app_address' => 'nullable|string|max:100',
+            'socri_dis_address' => 'nullable|string|max:100',
+            'socri_app_address' => 'nullable|string|max:100',
+            'sdgr_dis_address' => 'nullable|string|max:100',
+            'sdgr_app_address' => 'nullable|string|max:100',
+            'scbtr_dis_address' => 'nullable|string|max:100',
+            'scbtr_app_address' => 'nullable|string|max:100',
+            'sar_dis_address' => 'nullable|string|max:100',
+            'sar_app_address' => 'nullable|string|max:100',
+            'saru_dis_address' => 'nullable|string|max:100',
+            'saru_app_address' => 'nullable|string|max:100',
+            'stc_dis_address' => 'nullable|string|max:100',
+            'stc_app_address' => 'nullable|string|max:100',
+            'scb_open_rtu' => 'nullable|string|max:100',
+            'scb_close_rtu' => 'nullable|string|max:100',
+            'slocal_rtu' => 'nullable|string|max:100',
+            'sremote_rtu' => 'nullable|string|max:100',
+            'socr_dis_rtu' => 'nullable|string|max:100',
+            'socr_app_rtu' => 'nullable|string|max:100',
+            'socri_dis_rtu' => 'nullable|string|max:100',
+            'socri_app_rtu' => 'nullable|string|max:100',
+            'sdgr_dis_rtu' => 'nullable|string|max:100',
+            'sdgr_app_rtu' => 'nullable|string|max:100',
+            'scbtr_dis_rtu' => 'nullable|string|max:100',
+            'scbtr_app_rtu' => 'nullable|string|max:100',
+            'sar_dis_rtu' => 'nullable|string|max:100',
+            'sar_app_rtu' => 'nullable|string|max:100',
+            'saru_dis_rtu' => 'nullable|string|max:100',
+            'saru_app_rtu' => 'nullable|string|max:100',
+            'stc_dis_rtu' => 'nullable|string|max:100',
+            'stc_app_rtu' => 'nullable|string|max:100',
+            'scb_open_objfrmt' => 'nullable|string|max:100',
+            'scb_close_objfrmt' => 'nullable|string|max:100',
+            'slocal_objfrmt' => 'nullable|string|max:100',
+            'sremote_objfrmt' => 'nullable|string|max:100',
+            'socr_dis_objfrmt' => 'nullable|string|max:100',
+            'socr_app_objfrmt' => 'nullable|string|max:100',
+            'socri_dis_objfrmt' => 'nullable|string|max:100',
+            'socri_app_objfrmt' => 'nullable|string|max:100',
+            'sdgr_dis_objfrmt' => 'nullable|string|max:100',
+            'sdgr_app_objfrmt' => 'nullable|string|max:100',
+            'scbtr_dis_objfrmt' => 'nullable|string|max:100',
+            'scbtr_app_objfrmt' => 'nullable|string|max:100',
+            'sar_dis_objfrmt' => 'nullable|string|max:100',
+            'sar_app_objfrmt' => 'nullable|string|max:100',
+            'saru_dis_objfrmt' => 'nullable|string|max:100',
+            'saru_app_objfrmt' => 'nullable|string|max:100',
+            'stc_dis_objfrmt' => 'nullable|string|max:100',
+            'stc_app_objfrmt' => 'nullable|string|max:100',
+            'ccb_open_address' => 'nullable|string|max:100',
+            'ccb_close_address' => 'nullable|string|max:100',
+            'caru_use_address' => 'nullable|string|max:100',
+            'caru_unuse_address' => 'nullable|string|max:100',
+            'creset_on_address' => 'nullable|string|max:100',
+            'ctc_raiser_address' => 'nullable|string|max:100',
+            'ctc_lower_address' => 'nullable|string|max:100',
+            'ccb_open_rtu' => 'nullable|string|max:100',
+            'ccb_close_rtu' => 'nullable|string|max:100',
+            'caru_use_rtu' => 'nullable|string|max:100',
+            'caru_unuse_rtu' => 'nullable|string|max:100',
+            'creset_on_rtu' => 'nullable|string|max:100',
+            'ctc_raiser_rtu' => 'nullable|string|max:100',
+            'ctc_lower_rtu' => 'nullable|string|max:100',
+            'ccb_open_objfrmt' => 'nullable|string|max:100',
+            'ccb_close_objfrmt' => 'nullable|string|max:100',
+            'caru_use_objfrmt' => 'nullable|string|max:100',
+            'caru_unuse_objfrmt' => 'nullable|string|max:100',
+            'creset_on_objfrmt' => 'nullable|string|max:100',
+            'ctc_raiser_objfrmt' => 'nullable|string|max:100',
+            'ctc_lower_objfrmt' => 'nullable|string|max:100',
+
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'nullable|string|max:10',
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
                 if (empty($idPelmsArray)) {
                     $fail('The id pelms field must be an array and cannot be empty.');
                 }
+                foreach ($idPelmsArray as $id) {
+                    if (!DB::table('tb_picmaster')->where('id_picmaster', $id)->exists()) {
+                        $fail("Invalid id_pelms: $id");
+                    }
+                }
             }],
-            'pelrtu' => 'required|string|max:25',
+            'id_pelrtu' => ['required', function ($attribute, $value, $fail) use ($idPelrtuArray) {
+                if (empty($idPelrtuArray)) {
+                    $fail('The id pelrtu field must be an array and cannot be empty.');
+                }
+                foreach ($idPelrtuArray as $id) {
+                    if (!DB::table('tb_pelaksana_rtu')->where('id_pelrtu', $id)->exists()) {
+                        $fail("Invalid id_pelrtu: $id");
+                    }
+                }
+            }],
             'ketpeny' => 'required|string|max:500',
         ]);
 
-        // Validate array fields separately
         foreach ($arrayFields as $field) {
             $request->validate([
                 $field => 'nullable|array',
                 $field . '.*' => 'string|in:' . implode(',', $validCheckboxValues),
             ]);
-            // Set empty string for array fields if not present or empty
             $validated[$field] = $request->has($field) && is_array($request->input($field)) && !empty($request->input($field))
                 ? implode(',', array_filter($request->input($field)))
                 : '';
         }
 
-        // Merge preprocessed id_pelms array into validated data
         $validated['id_pelms'] = json_encode($idPelmsArray);
+        $validated['id_pelrtu'] = json_encode($idPelrtuArray);
 
-        // Create the record
         Penyulangan::create($validated);
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan cloned successfully!');

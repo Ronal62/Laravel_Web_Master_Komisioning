@@ -212,3 +212,69 @@ body {
   color: #fff;
   text-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
+
+
+
+
+/* Additional styles for choose.blade.php */
+/* Add these to your existing login.css or create a separate choose.css */
+
+/* Button link styling for choice buttons */
+.btn-link {
+  display: block;
+  width: 100%;
+  padding: 18px 15px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    0 6px 18px rgba(0, 123, 255, 0.45),
+    0 1.5px 0.5px 0 rgba(255, 255, 255, 0.13) inset;
+  transition: transform 0.23s cubic-bezier(.23, 1.02, .51, .98),
+              box-shadow 0.3s cubic-bezier(.23, 1.02, .51, .98),
+              background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-link:hover {
+  transform: translateY(-5px) scale3d(1.04, 1.04, 1.01) rotateX(2deg);
+  box-shadow: 0 14px 38px rgba(0, 123, 255, 0.7),
+              0 2px 20px 0 rgba(0, 198, 255, 0.15);
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+  filter: brightness(1.08);
+}
+
+.btn-link:active {
+  transform: translateY(-2px) scale3d(1.02, 1.02, 1);
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+}
+
+/* Alternative style for second button */
+.btn-link.secondary {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  box-shadow:
+    0 6px 18px rgba(108, 117, 125, 0.45),
+    0 1.5px 0.5px 0 rgba(255, 255, 255, 0.13) inset;
+}
+
+.btn-link.secondary:hover {
+  background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+  box-shadow: 0 14px 38px rgba(108, 117, 125, 0.7),
+              0 2px 20px 0 rgba(108, 117, 125, 0.15);
+}
+
+/* Spacing adjustment for choice form */
+.choice-form .form-group {
+  margin-bottom: 20px;
+}
+
+.choice-form .form-group:last-of-type {
+  margin-bottom: 18px;
+}

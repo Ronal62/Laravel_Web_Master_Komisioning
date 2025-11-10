@@ -151,7 +151,7 @@
                                     <div class="tab-pane fade" id="v-pills-formtelestatus-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelestatus-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-12 col-lg-6">
                                                 @php
                                                 $s_cb = old('s_cb', $penyulang->s_cb ?? '');
                                                 $s_cb_array = is_array($s_cb) ? $s_cb : explode(',', $s_cb);
@@ -173,856 +173,1323 @@
                                                 $s_tc_array = is_array($s_tc) ? $s_tc : explode(',', $s_tc);
                                                 @endphp
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Open</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="cb_open_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_1"
-                                                                        id="cb_open_1" class="selectgroup-input"
-                                                                        {{ in_array('open_1', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_2"
-                                                                        id="cb_open_2" class="selectgroup-input"
-                                                                        {{ in_array('open_2', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_3"
-                                                                        id="cb_open_3" class="selectgroup-input"
-                                                                        {{ in_array('open_3', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_4"
-                                                                        id="cb_open_4" class="selectgroup-input"
-                                                                        {{ in_array('open_4', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_5"
-                                                                        id="cb_open_5" class="selectgroup-input"
-                                                                        {{ in_array('open_5', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">CB Open</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="cb_open_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_1"
+                                                                id="cb_open_1" class="selectgroup-input"
+                                                                {{ in_array('open_1', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_2"
+                                                                id="cb_open_2" class="selectgroup-input"
+                                                                {{ in_array('open_2', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_3"
+                                                                id="cb_open_3" class="selectgroup-input"
+                                                                {{ in_array('open_3', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_4"
+                                                                id="cb_open_4" class="selectgroup-input"
+                                                                {{ in_array('open_4', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_5"
+                                                                id="cb_open_5" class="selectgroup-input"
+                                                                {{ in_array('open_5', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="cb_close_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_1"
-                                                                        id="cb_close_1" class="selectgroup-input"
-                                                                        {{ in_array('close_1', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_2"
-                                                                        id="cb_close_2" class="selectgroup-input"
-                                                                        {{ in_array('close_2', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_3"
-                                                                        id="cb_close_3" class="selectgroup-input"
-                                                                        {{ in_array('close_3', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_4"
-                                                                        id="cb_close_4" class="selectgroup-input"
-                                                                        {{ in_array('close_4', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_5"
-                                                                        id="cb_close_5" class="selectgroup-input"
-                                                                        {{ in_array('close_5', $s_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">CB Close</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="cb_close_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_1"
+                                                                id="cb_close_1" class="selectgroup-input"
+                                                                {{ in_array('close_1', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_2"
+                                                                id="cb_close_2" class="selectgroup-input"
+                                                                {{ in_array('close_2', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_3"
+                                                                id="cb_close_3" class="selectgroup-input"
+                                                                {{ in_array('close_3', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_4"
+                                                                id="cb_close_4" class="selectgroup-input"
+                                                                {{ in_array('close_4', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_5"
+                                                                id="cb_close_5" class="selectgroup-input"
+                                                                {{ in_array('close_5', $s_cb_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">Local</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="lr_local_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_1"
-                                                                        id="lr_local_1" class="selectgroup-input"
-                                                                        {{ in_array('local_1', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_2"
-                                                                        id="lr_local_2" class="selectgroup-input"
-                                                                        {{ in_array('local_2', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_3"
-                                                                        id="lr_local_3" class="selectgroup-input"
-                                                                        {{ in_array('local_3', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_4"
-                                                                        id="lr_local_4" class="selectgroup-input"
-                                                                        {{ in_array('local_4', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_5"
-                                                                        id="lr_local_5" class="selectgroup-input"
-                                                                        {{ in_array('local_5', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">Local</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="lr_local_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_1"
+                                                                id="lr_local_1" class="selectgroup-input"
+                                                                {{ in_array('local_1', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_2"
+                                                                id="lr_local_2" class="selectgroup-input"
+                                                                {{ in_array('local_2', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_3"
+                                                                id="lr_local_3" class="selectgroup-input"
+                                                                {{ in_array('local_3', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_4"
+                                                                id="lr_local_4" class="selectgroup-input"
+                                                                {{ in_array('local_4', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_5"
+                                                                id="lr_local_5" class="selectgroup-input"
+                                                                {{ in_array('local_5', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">Remote</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="lr_remote_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_1" id="lr_remote_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('remote_1', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_2" id="lr_remote_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('remote_2', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_3" id="lr_remote_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('remote_3', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_4" id="lr_remote_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('remote_4', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_5" id="lr_remote_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('remote_5', $s_lr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">Remote</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="lr_remote_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_1"
+                                                                id="lr_remote_1" class="selectgroup-input"
+                                                                {{ in_array('remote_1', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_2"
+                                                                id="lr_remote_2" class="selectgroup-input"
+                                                                {{ in_array('remote_2', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_3"
+                                                                id="lr_remote_3" class="selectgroup-input"
+                                                                {{ in_array('remote_3', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_4"
+                                                                id="lr_remote_4" class="selectgroup-input"
+                                                                {{ in_array('remote_4', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_5"
+                                                                id="lr_remote_5" class="selectgroup-input"
+                                                                {{ in_array('remote_5', $s_lr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">OCR Dis</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_ocr_dis_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocrd_1"
-                                                                        id="s_ocrd_1" class="selectgroup-input"
-                                                                        {{ in_array('ocrd_1', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocrd_2"
-                                                                        id="s_ocrd_2" class="selectgroup-input"
-                                                                        {{ in_array('ocrd_2', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocrd_3"
-                                                                        id="s_ocrd_3" class="selectgroup-input"
-                                                                        {{ in_array('ocrd_3', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocrd_4"
-                                                                        id="s_ocrd_4" class="selectgroup-input"
-                                                                        {{ in_array('ocrd_4', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocrd_5"
-                                                                        id="s_ocrd_5" class="selectgroup-input"
-                                                                        {{ in_array('ocrd_5', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">OCR Dis</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_ocr_dis_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocrd_1"
+                                                                id="s_ocrd_1" class="selectgroup-input"
+                                                                {{ in_array('ocrd_1', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocrd_2"
+                                                                id="s_ocrd_2" class="selectgroup-input"
+                                                                {{ in_array('ocrd_2', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocrd_3"
+                                                                id="s_ocrd_3" class="selectgroup-input"
+                                                                {{ in_array('ocrd_3', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocrd_4"
+                                                                id="s_ocrd_4" class="selectgroup-input"
+                                                                {{ in_array('ocrd_4', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocrd_5"
+                                                                id="s_ocrd_5" class="selectgroup-input"
+                                                                {{ in_array('ocrd_5', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">OCR App</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_ocr_app_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocra_1"
-                                                                        id="s_ocra_1" class="selectgroup-input"
-                                                                        {{ in_array('ocra_1', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocra_2"
-                                                                        id="s_ocra_2" class="selectgroup-input"
-                                                                        {{ in_array('ocra_2', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocra_3"
-                                                                        id="s_ocra_3" class="selectgroup-input"
-                                                                        {{ in_array('ocra_3', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocra_4"
-                                                                        id="s_ocra_4" class="selectgroup-input"
-                                                                        {{ in_array('ocra_4', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocr[]" value="ocra_5"
-                                                                        id="s_ocra_5" class="selectgroup-input"
-                                                                        {{ in_array('ocra_5', $s_ocr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">OCR App</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_ocr_app_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocra_1"
+                                                                id="s_ocra_1" class="selectgroup-input"
+                                                                {{ in_array('ocra_1', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocra_2"
+                                                                id="s_ocra_2" class="selectgroup-input"
+                                                                {{ in_array('ocra_2', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocra_3"
+                                                                id="s_ocra_3" class="selectgroup-input"
+                                                                {{ in_array('ocra_3', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocra_4"
+                                                                id="s_ocra_4" class="selectgroup-input"
+                                                                {{ in_array('ocra_4', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocr[]" value="ocra_5"
+                                                                id="s_ocra_5" class="selectgroup-input"
+                                                                {{ in_array('ocra_5', $s_ocr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">OCRI Dis</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_ocri_dis_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocrid_1" id="s_ocrid_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocrid_1', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocrid_2" id="s_ocrid_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocrid_2', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocrid_3" id="s_ocrid_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocrid_3', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocrid_4" id="s_ocrid_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocrid_4', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocrid_5" id="s_ocrid_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocrid_5', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">OCRI Dis</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_ocri_dis_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocrid_1"
+                                                                id="s_ocrid_1" class="selectgroup-input"
+                                                                {{ in_array('ocrid_1', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocrid_2"
+                                                                id="s_ocrid_2" class="selectgroup-input"
+                                                                {{ in_array('ocrid_2', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocrid_3"
+                                                                id="s_ocrid_3" class="selectgroup-input"
+                                                                {{ in_array('ocrid_3', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocrid_4"
+                                                                id="s_ocrid_4" class="selectgroup-input"
+                                                                {{ in_array('ocrid_4', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocrid_5"
+                                                                id="s_ocrid_5" class="selectgroup-input"
+                                                                {{ in_array('ocrid_5', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">OCRI App</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_ocri_app_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocria_1" id="s_ocria_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocria_1', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocria_2" id="s_ocria_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocria_2', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocria_3" id="s_ocria_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocria_3', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocria_4" id="s_ocria_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocria_4', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ocri[]"
-                                                                        value="ocria_5" id="s_ocria_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ocria_5', $s_ocri_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">OCRI App</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_ocri_app_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocria_1"
+                                                                id="s_ocria_1" class="selectgroup-input"
+                                                                {{ in_array('ocria_1', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocria_2"
+                                                                id="s_ocria_2" class="selectgroup-input"
+                                                                {{ in_array('ocria_2', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocria_3"
+                                                                id="s_ocria_3" class="selectgroup-input"
+                                                                {{ in_array('ocria_3', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocria_4"
+                                                                id="s_ocria_4" class="selectgroup-input"
+                                                                {{ in_array('ocria_4', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ocri[]" value="ocria_5"
+                                                                id="s_ocria_5" class="selectgroup-input"
+                                                                {{ in_array('ocria_5', $s_ocri_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">DGR Dis</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_dgr_dis_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgrd_1"
-                                                                        id="s_dgrd_1" class="selectgroup-input"
-                                                                        {{ in_array('dgrd_1', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgrd_2"
-                                                                        id="s_dgrd_2" class="selectgroup-input"
-                                                                        {{ in_array('dgrd_2', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgrd_3"
-                                                                        id="s_dgrd_3" class="selectgroup-input"
-                                                                        {{ in_array('dgrd_3', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgrd_4"
-                                                                        id="s_dgrd_4" class="selectgroup-input"
-                                                                        {{ in_array('dgrd_4', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgrd_5"
-                                                                        id="s_dgrd_5" class="selectgroup-input"
-                                                                        {{ in_array('dgrd_5', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">DGR Dis</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_dgr_dis_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgrd_1"
+                                                                id="s_dgrd_1" class="selectgroup-input"
+                                                                {{ in_array('dgrd_1', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgrd_2"
+                                                                id="s_dgrd_2" class="selectgroup-input"
+                                                                {{ in_array('dgrd_2', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgrd_3"
+                                                                id="s_dgrd_3" class="selectgroup-input"
+                                                                {{ in_array('dgrd_3', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgrd_4"
+                                                                id="s_dgrd_4" class="selectgroup-input"
+                                                                {{ in_array('dgrd_4', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgrd_5"
+                                                                id="s_dgrd_5" class="selectgroup-input"
+                                                                {{ in_array('dgrd_5', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">DGR App</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_dgr_app_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgra_1"
-                                                                        id="s_dgra_1" class="selectgroup-input"
-                                                                        {{ in_array('dgra_1', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgra_2"
-                                                                        id="s_dgra_2" class="selectgroup-input"
-                                                                        {{ in_array('dgra_2', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgra_3"
-                                                                        id="s_dgra_3" class="selectgroup-input"
-                                                                        {{ in_array('dgra_3', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgra_4"
-                                                                        id="s_dgra_4" class="selectgroup-input"
-                                                                        {{ in_array('dgra_4', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dgr[]" value="dgra_5"
-                                                                        id="s_dgra_5" class="selectgroup-input"
-                                                                        {{ in_array('dgra_5', $s_dgr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">DGR App</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_dgr_app_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgra_1"
+                                                                id="s_dgra_1" class="selectgroup-input"
+                                                                {{ in_array('dgra_1', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgra_2"
+                                                                id="s_dgra_2" class="selectgroup-input"
+                                                                {{ in_array('dgra_2', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgra_3"
+                                                                id="s_dgra_3" class="selectgroup-input"
+                                                                {{ in_array('dgra_3', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgra_4"
+                                                                id="s_dgra_4" class="selectgroup-input"
+                                                                {{ in_array('dgra_4', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dgr[]" value="dgra_5"
+                                                                id="s_dgra_5" class="selectgroup-input"
+                                                                {{ in_array('dgra_5', $s_dgr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CBTR Dis</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_cbtr_dis_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtrd_1" id="s_cbtrd_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtrd_1', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtrd_2" id="s_cbtrd_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtrd_2', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtrd_3" id="s_cbtrd_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtrd_3', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtrd_4" id="s_cbtrd_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtrd_4', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtrd_5" id="s_cbtrd_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtrd_5', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">CBTR Dis</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_cbtr_dis_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtrd_1"
+                                                                id="s_cbtrd_1" class="selectgroup-input"
+                                                                {{ in_array('cbtrd_1', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtrd_2"
+                                                                id="s_cbtrd_2" class="selectgroup-input"
+                                                                {{ in_array('cbtrd_2', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtrd_3"
+                                                                id="s_cbtrd_3" class="selectgroup-input"
+                                                                {{ in_array('cbtrd_3', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtrd_4"
+                                                                id="s_cbtrd_4" class="selectgroup-input"
+                                                                {{ in_array('cbtrd_4', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtrd_5"
+                                                                id="s_cbtrd_5" class="selectgroup-input"
+                                                                {{ in_array('cbtrd_5', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CBTR App</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_cbtr_app_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtra_1" id="s_cbtra_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtra_1', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtra_2" id="s_cbtra_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtra_2', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtra_3" id="s_cbtra_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtra_3', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtra_4" id="s_cbtra_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtra_4', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cbtr[]"
-                                                                        value="cbtra_5" id="s_cbtra_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('cbtra_5', $s_cbtr_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">CBTR App</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_cbtr_app_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtra_1"
+                                                                id="s_cbtra_1" class="selectgroup-input"
+                                                                {{ in_array('cbtra_1', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtra_2"
+                                                                id="s_cbtra_2" class="selectgroup-input"
+                                                                {{ in_array('cbtra_2', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtra_3"
+                                                                id="s_cbtra_3" class="selectgroup-input"
+                                                                {{ in_array('cbtra_3', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtra_4"
+                                                                id="s_cbtra_4" class="selectgroup-input"
+                                                                {{ in_array('cbtra_4', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cbtr[]" value="cbtra_5"
+                                                                id="s_cbtra_5" class="selectgroup-input"
+                                                                {{ in_array('cbtra_5', $s_cbtr_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">AR Dis</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_ar_dis_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ard_1"
-                                                                        id="s_ard_1" class="selectgroup-input"
-                                                                        {{ in_array('ard_1', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ard_2"
-                                                                        id="s_ard_2" class="selectgroup-input"
-                                                                        {{ in_array('ard_2', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ard_3"
-                                                                        id="s_ard_3" class="selectgroup-input"
-                                                                        {{ in_array('ard_3', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ard_4"
-                                                                        id="s_ard_4" class="selectgroup-input"
-                                                                        {{ in_array('ard_4', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ard_5"
-                                                                        id="s_ard_5" class="selectgroup-input"
-                                                                        {{ in_array('ard_5', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">AR Dis</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_ar_dis_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ard_1"
+                                                                id="s_ard_1" class="selectgroup-input"
+                                                                {{ in_array('ard_1', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ard_2"
+                                                                id="s_ard_2" class="selectgroup-input"
+                                                                {{ in_array('ard_2', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ard_3"
+                                                                id="s_ard_3" class="selectgroup-input"
+                                                                {{ in_array('ard_3', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ard_4"
+                                                                id="s_ard_4" class="selectgroup-input"
+                                                                {{ in_array('ard_4', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ard_5"
+                                                                id="s_ard_5" class="selectgroup-input"
+                                                                {{ in_array('ard_5', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">AR App</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_ar_app_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ara_1"
-                                                                        id="s_ara_1" class="selectgroup-input"
-                                                                        {{ in_array('ara_1', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ara_2"
-                                                                        id="s_ara_2" class="selectgroup-input"
-                                                                        {{ in_array('ara_2', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ara_3"
-                                                                        id="s_ara_3" class="selectgroup-input"
-                                                                        {{ in_array('ara_3', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ara_4"
-                                                                        id="s_ara_4" class="selectgroup-input"
-                                                                        {{ in_array('ara_4', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_ar[]" value="ara_5"
-                                                                        id="s_ara_5" class="selectgroup-input"
-                                                                        {{ in_array('ara_5', $s_ar_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">AR App</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_ar_app_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ara_1"
+                                                                id="s_ara_1" class="selectgroup-input"
+                                                                {{ in_array('ara_1', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ara_2"
+                                                                id="s_ara_2" class="selectgroup-input"
+                                                                {{ in_array('ara_2', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ara_3"
+                                                                id="s_ara_3" class="selectgroup-input"
+                                                                {{ in_array('ara_3', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ara_4"
+                                                                id="s_ara_4" class="selectgroup-input"
+                                                                {{ in_array('ara_4', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_ar[]" value="ara_5"
+                                                                id="s_ara_5" class="selectgroup-input"
+                                                                {{ in_array('ara_5', $s_ar_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">ARU Dis</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_aru_dis_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arud_1"
-                                                                        id="s_arud_1" class="selectgroup-input"
-                                                                        {{ in_array('arud_1', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arud_2"
-                                                                        id="s_arud_2" class="selectgroup-input"
-                                                                        {{ in_array('arud_2', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arud_3"
-                                                                        id="s_arud_3" class="selectgroup-input"
-                                                                        {{ in_array('arud_3', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arud_4"
-                                                                        id="s_arud_4" class="selectgroup-input"
-                                                                        {{ in_array('arud_4', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arud_5"
-                                                                        id="s_arud_5" class="selectgroup-input"
-                                                                        {{ in_array('arud_5', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">ARU Dis</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_aru_dis_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arud_1"
+                                                                id="s_arud_1" class="selectgroup-input"
+                                                                {{ in_array('arud_1', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arud_2"
+                                                                id="s_arud_2" class="selectgroup-input"
+                                                                {{ in_array('arud_2', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arud_3"
+                                                                id="s_arud_3" class="selectgroup-input"
+                                                                {{ in_array('arud_3', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arud_4"
+                                                                id="s_arud_4" class="selectgroup-input"
+                                                                {{ in_array('arud_4', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arud_5"
+                                                                id="s_arud_5" class="selectgroup-input"
+                                                                {{ in_array('arud_5', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">ARU App</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_aru_app_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arua_1"
-                                                                        id="s_arua_1" class="selectgroup-input"
-                                                                        {{ in_array('arua_1', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arua_2"
-                                                                        id="s_arua_2" class="selectgroup-input"
-                                                                        {{ in_array('arua_2', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arua_3"
-                                                                        id="s_arua_3" class="selectgroup-input"
-                                                                        {{ in_array('arua_3', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arua_4"
-                                                                        id="s_arua_4" class="selectgroup-input"
-                                                                        {{ in_array('arua_4', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_aru[]" value="arua_5"
-                                                                        id="s_arua_5" class="selectgroup-input"
-                                                                        {{ in_array('arua_5', $s_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">ARU App</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_aru_app_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arua_1"
+                                                                id="s_arua_1" class="selectgroup-input"
+                                                                {{ in_array('arua_1', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arua_2"
+                                                                id="s_arua_2" class="selectgroup-input"
+                                                                {{ in_array('arua_2', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arua_3"
+                                                                id="s_arua_3" class="selectgroup-input"
+                                                                {{ in_array('arua_3', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arua_4"
+                                                                id="s_arua_4" class="selectgroup-input"
+                                                                {{ in_array('arua_4', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_aru[]" value="arua_5"
+                                                                id="s_arua_5" class="selectgroup-input"
+                                                                {{ in_array('arua_5', $s_aru_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">TC Dis</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_tc_dis_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tcd_1"
-                                                                        id="s_tcd_1" class="selectgroup-input"
-                                                                        {{ in_array('tcd_1', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tcd_2"
-                                                                        id="s_tcd_2" class="selectgroup-input"
-                                                                        {{ in_array('tcd_2', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tcd_3"
-                                                                        id="s_tcd_3" class="selectgroup-input"
-                                                                        {{ in_array('tcd_3', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tcd_4"
-                                                                        id="s_tcd_4" class="selectgroup-input"
-                                                                        {{ in_array('tcd_4', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tcd_5"
-                                                                        id="s_tcd_5" class="selectgroup-input"
-                                                                        {{ in_array('tcd_5', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">TC Dis</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_tc_dis_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tcd_1"
+                                                                id="s_tcd_1" class="selectgroup-input"
+                                                                {{ in_array('tcd_1', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tcd_2"
+                                                                id="s_tcd_2" class="selectgroup-input"
+                                                                {{ in_array('tcd_2', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tcd_3"
+                                                                id="s_tcd_3" class="selectgroup-input"
+                                                                {{ in_array('tcd_3', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tcd_4"
+                                                                id="s_tcd_4" class="selectgroup-input"
+                                                                {{ in_array('tcd_4', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tcd_5"
+                                                                id="s_tcd_5" class="selectgroup-input"
+                                                                {{ in_array('tcd_5', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">TC App</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="s_tc_app_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tca_1"
-                                                                        id="s_tca_1" class="selectgroup-input"
-                                                                        {{ in_array('tca_1', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tca_2"
-                                                                        id="s_tca_2" class="selectgroup-input"
-                                                                        {{ in_array('tca_2', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tca_3"
-                                                                        id="s_tca_3" class="selectgroup-input"
-                                                                        {{ in_array('tca_3', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tca_4"
-                                                                        id="s_tca_4" class="selectgroup-input"
-                                                                        {{ in_array('tca_4', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_tc[]" value="tca_5"
-                                                                        id="s_tca_5" class="selectgroup-input"
-                                                                        {{ in_array('tca_5', $s_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">TC App</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="s_tc_app_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tca_1"
+                                                                id="s_tca_1" class="selectgroup-input"
+                                                                {{ in_array('tca_1', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tca_2"
+                                                                id="s_tca_2" class="selectgroup-input"
+                                                                {{ in_array('tca_2', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tca_3"
+                                                                id="s_tca_3" class="selectgroup-input"
+                                                                {{ in_array('tca_3', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tca_4"
+                                                                id="s_tca_4" class="selectgroup-input"
+                                                                {{ in_array('tca_4', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_tc[]" value="tca_5"
+                                                                id="s_tca_5" class="selectgroup-input"
+                                                                {{ in_array('tca_5', $s_tc_array) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2 ">
+                                                <div class="form-group ">
+                                                    <label for="scb_open_addms">CB Open ADD MS</label>
+                                                    <div class="input-icon ">
+                                                        <input type="text" class="form-control" id="scb_open_addms"
+                                                            name="scb_open_addms" placeholder="CB Open ADD MS"
+                                                            value="{{ old('scb_open_addms', $penyulang->scb_open_addms) }}" />
+                                                        @error('scb_open_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_addms">CB Close ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_addms"
+                                                            name="scb_close_addms" placeholder="CB Close ADD MS"
+                                                            value="{{ old('scb_close_addms', $penyulang->scb_close_addms) }}" />
+                                                        @error('scb_close_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slocal_addms">Local ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slocal_addms"
+                                                            name="slocal_addms" placeholder="Local ADD MS"
+                                                            value="{{ old('slocal_addms', $penyulang->slocal_addms) }}" />
+                                                        @error('slocal_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sremote_addms">Remote ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sremote_addms"
+                                                            name="sremote_addms" placeholder="Remote ADD MS"
+                                                            value="{{ old('sremote_addms', $penyulang->sremote_addms) }}" />
+                                                        @error('sremote_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socr_dis_addms">OCR Dis ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socr_dis_addms"
+                                                            name="socr_dis_addms" placeholder="OCR Dis ADD MS"
+                                                            value="{{ old('socr_dis_addms', $penyulang->socr_dis_addms) }}" />
+                                                        @error('socr_dis_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socr_app_addms">OCR App ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socr_app_addms"
+                                                            name="socr_app_addms" placeholder="OCR App ADD MS"
+                                                            value="{{ old('socr_app_addms', $penyulang->socr_app_addms) }}" />
+                                                        @error('socr_app_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socri_dis_addms">OCRI Dis ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socri_dis_addms"
+                                                            name="socri_dis_addms" placeholder="OCRI Dis ADD MS"
+                                                            value="{{ old('socri_dis_addms', $penyulang->socri_dis_addms) }}" />
+                                                        @error('socri_dis_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socri_app_addms">OCRI App ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socri_app_addms"
+                                                            name="socri_app_addms" placeholder="OCRI App ADD MS"
+                                                            value="{{ old('socri_app_addms', $penyulang->socri_app_addms) }}" />
+                                                        @error('socri_app_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdgr_dis_addms">DGR Dis ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdgr_dis_addms"
+                                                            name="sdgr_dis_addms" placeholder="DGR Dis ADD MS"
+                                                            value="{{ old('sdgr_dis_addms', $penyulang->sdgr_dis_addms) }}" />
+                                                        @error('sdgr_dis_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdgr_app_addms">DGR App ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdgr_app_addms"
+                                                            name="sdgr_app_addms" placeholder="DGR App ADD MS"
+                                                            value="{{ old('sdgr_app_addms', $penyulang->sdgr_app_addms) }}" />
+                                                        @error('sdgr_app_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scbtr_dis_addms">CBTR Dis ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scbtr_dis_addms"
+                                                            name="scbtr_dis_addms" placeholder="CBTR Dis ADD MS"
+                                                            value="{{ old('scbtr_dis_addms', $penyulang->scbtr_dis_addms) }}" />
+                                                        @error('scbtr_dis_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scbtr_app_addms">CBTR App ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scbtr_app_addms"
+                                                            name="scbtr_app_addms" placeholder="CBTR App ADD MS"
+                                                            value="{{ old('scbtr_app_addms', $penyulang->scbtr_app_addms) }}" />
+                                                        @error('scbtr_app_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sar_dis_addms">AR Dis ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sar_dis_addms"
+                                                            name="sar_dis_addms" placeholder="AR Dis ADD MS"
+                                                            value="{{ old('sar_dis_addms', $penyulang->sar_dis_addms) }}" />
+                                                        @error('sar_dis_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sar_app_addms">AR App ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sar_app_addms"
+                                                            name="sar_app_addms" placeholder="AR App ADD MS"
+                                                            value="{{ old('sar_app_addms', $penyulang->sar_app_addms) }}" />
+                                                        @error('sar_app_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saru_dis_addms">ARU Dis ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="saru_dis_addms"
+                                                            name="saru_dis_addms" placeholder="ARU Dis ADD MS"
+                                                            value="{{ old('saru_dis_addms', $penyulang->saru_dis_addms) }}" />
+                                                        @error('saru_dis_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saru_app_addms">ARU App ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="saru_app_addms"
+                                                            name="saru_app_addms" placeholder="ARU App ADD MS"
+                                                            value="{{ old('saru_app_addms', $penyulang->saru_app_addms) }}" />
+                                                        @error('saru_app_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="stc_dis_addms">TC Dis ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="stc_dis_addms"
+                                                            name="stc_dis_addms" placeholder="TC Dis ADD MS"
+                                                            value="{{ old('stc_dis_addms', $penyulang->stc_dis_addms) }}" />
+                                                        @error('stc_dis_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="stc_app_addms">TC App ADD MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="stc_app_addms"
+                                                            name="stc_app_addms" placeholder="TC App ADD MS"
+                                                            value="{{ old('stc_app_addms', $penyulang->stc_app_addms) }}" />
+                                                        @error('stc_app_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="scb_open_rtu">CB Open RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_open_rtu"
+                                                            name="scb_open_rtu" placeholder="CB Open RTU"
+                                                            value="{{ old('scb_open_rtu', $penyulang->scb_open_rtu) }}" />
+                                                        @error('scb_open_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_rtu">CB Close RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_rtu"
+                                                            name="scb_close_rtu" placeholder="CB Close RTU"
+                                                            value="{{ old('scb_close_rtu', $penyulang->scb_close_rtu) }}" />
+                                                        @error('scb_close_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slocal_rtu">Local RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slocal_rtu"
+                                                            name="slocal_rtu" placeholder="Local RTU"
+                                                            value="{{ old('slocal_rtu', $penyulang->slocal_rtu) }}" />
+                                                        @error('slocal_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sremote_rtu">Remote RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sremote_rtu"
+                                                            name="sremote_rtu" placeholder="Remote RTU"
+                                                            value="{{ old('sremote_rtu', $penyulang->sremote_rtu) }}" />
+                                                        @error('sremote_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socr_dis_rtu">OCR Dis RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socr_dis_rtu"
+                                                            name="socr_dis_rtu" placeholder="OCR Dis RTU"
+                                                            value="{{ old('socr_dis_rtu', $penyulang->socr_dis_rtu) }}" />
+                                                        @error('socr_dis_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socr_app_rtu">OCR App RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socr_app_rtu"
+                                                            name="socr_app_rtu" placeholder="OCR App RTU"
+                                                            value="{{ old('socr_app_rtu', $penyulang->socr_app_rtu) }}" />
+                                                        @error('socr_app_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socri_dis_rtu">OCRI Dis RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socri_dis_rtu"
+                                                            name="socri_dis_rtu" placeholder="OCRI Dis RTU"
+                                                            value="{{ old('socri_dis_rtu', $penyulang->socri_dis_rtu) }}" />
+                                                        @error('socri_dis_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socri_app_rtu">OCRI App RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socri_app_rtu"
+                                                            name="socri_app_rtu" placeholder="OCRI App RTU"
+                                                            value="{{ old('socri_app_rtu', $penyulang->socri_app_rtu) }}" />
+                                                        @error('socri_app_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdgr_dis_rtu">DGR Dis RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdgr_dis_rtu"
+                                                            name="sdgr_dis_rtu" placeholder="DGR Dis RTU"
+                                                            value="{{ old('sdgr_dis_rtu', $penyulang->sdgr_dis_rtu) }}" />
+                                                        @error('sdgr_dis_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdgr_app_rtu">DGR App RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdgr_app_rtu"
+                                                            name="sdgr_app_rtu" placeholder="DGR App RTU"
+                                                            value="{{ old('sdgr_app_rtu', $penyulang->sdgr_app_rtu) }}" />
+                                                        @error('sdgr_app_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scbtr_dis_rtu">CBTR Dis RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scbtr_dis_rtu"
+                                                            name="scbtr_dis_rtu" placeholder="CBTR Dis RTU"
+                                                            value="{{ old('scbtr_dis_rtu', $penyulang->scbtr_dis_rtu) }}" />
+                                                        @error('scbtr_dis_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scbtr_app_rtu">CBTR App RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scbtr_app_rtu"
+                                                            name="scbtr_app_rtu" placeholder="CBTR App RTU"
+                                                            value="{{ old('scbtr_app_rtu', $penyulang->scbtr_app_rtu) }}" />
+                                                        @error('scbtr_app_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sar_dis_rtu">AR Dis RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sar_dis_rtu"
+                                                            name="sar_dis_rtu" placeholder="AR Dis RTU"
+                                                            value="{{ old('sar_dis_rtu', $penyulang->sar_dis_rtu) }}" />
+                                                        @error('sar_dis_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sar_app_rtu">AR App RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sar_app_rtu"
+                                                            name="sar_app_rtu" placeholder="AR App RTU"
+                                                            value="{{ old('sar_app_rtu', $penyulang->sar_app_rtu) }}" />
+                                                        @error('sar_app_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saru_dis_rtu">ARU Dis RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="saru_dis_rtu"
+                                                            name="saru_dis_rtu" placeholder="ARU Dis RTU"
+                                                            value="{{ old('saru_dis_rtu', $penyulang->saru_dis_rtu) }}" />
+                                                        @error('saru_dis_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saru_app_rtu">ARU App RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="saru_app_rtu"
+                                                            name="saru_app_rtu" placeholder="ARU App RTU"
+                                                            value="{{ old('saru_app_rtu', $penyulang->saru_app_rtu) }}" />
+                                                        @error('saru_app_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="stc_dis_rtu">TC Dis RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="stc_dis_rtu"
+                                                            name="stc_dis_rtu" placeholder="TC Dis RTU"
+                                                            value="{{ old('stc_dis_rtu', $penyulang->stc_dis_rtu) }}" />
+                                                        @error('stc_dis_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="stc_app_rtu">TC App RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="stc_app_rtu"
+                                                            name="stc_app_rtu" placeholder="TC App RTU"
+                                                            value="{{ old('stc_app_rtu', $penyulang->stc_app_rtu) }}" />
+                                                        @error('stc_app_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="scb_open_objfrmt">CB Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_open_objfrmt"
+                                                            name="scb_open_objfrmt" placeholder="CB Open OBJ/FRMT"
+                                                            value="{{ old('scb_open_objfrmt', $penyulang->scb_open_objfrmt) }}" />
+                                                        @error('scb_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_objfrmt">CB Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_objfrmt"
+                                                            name="scb_close_objfrmt" placeholder="CB Close OBJ/FRMT"
+                                                            value="{{ old('scb_close_objfrmt', $penyulang->scb_close_objfrmt) }}" />
+                                                        @error('scb_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slocal_objfrmt">Local OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slocal_objfrmt"
+                                                            name="slocal_objfrmt" placeholder="Local OBJ/FRMT"
+                                                            value="{{ old('slocal_objfrmt', $penyulang->slocal_objfrmt) }}" />
+                                                        @error('slocal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sremote_objfrmt">Remote OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sremote_objfrmt"
+                                                            name="sremote_objfrmt" placeholder="Remote OBJ/FRMT"
+                                                            value="{{ old('sremote_objfrmt', $penyulang->sremote_objfrmt) }}" />
+                                                        @error('sremote_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socr_dis_objfrmt">OCR Dis OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socr_dis_objfrmt"
+                                                            name="socr_dis_objfrmt" placeholder="OCR Dis OBJ/FRMT"
+                                                            value="{{ old('socr_dis_objfrmt', $penyulang->socr_dis_objfrmt) }}" />
+                                                        @error('socr_dis_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socr_app_objfrmt">OCR App OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socr_app_objfrmt"
+                                                            name="socr_app_objfrmt" placeholder="OCR App OBJ/FRMT"
+                                                            value="{{ old('socr_app_objfrmt', $penyulang->socr_app_objfrmt) }}" />
+                                                        @error('socr_app_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socri_dis_objfrmt">OCRI Dis OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socri_dis_objfrmt"
+                                                            name="socri_dis_objfrmt" placeholder="OCRI Dis OBJ/FRMT"
+                                                            value="{{ old('socri_dis_objfrmt', $penyulang->socri_dis_objfrmt) }}" />
+                                                        @error('socri_dis_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="socri_app_objfrmt">OCRI App OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="socri_app_objfrmt"
+                                                            name="socri_app_objfrmt" placeholder="OCRI App OBJ/FRMT"
+                                                            value="{{ old('socri_app_objfrmt', $penyulang->socri_app_objfrmt) }}" />
+                                                        @error('socri_app_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdgr_dis_objfrmt">DGR Dis OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdgr_dis_objfrmt"
+                                                            name="sdgr_dis_objfrmt" placeholder="DGR Dis OBJ/FRMT"
+                                                            value="{{ old('sdgr_dis_objfrmt', $penyulang->sdgr_dis_objfrmt) }}" />
+                                                        @error('sdgr_dis_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdgr_app_objfrmt">DGR App OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdgr_app_objfrmt"
+                                                            name="sdgr_app_objfrmt" placeholder="DGR App OBJ/FRMT"
+                                                            value="{{ old('sdgr_app_objfrmt', $penyulang->sdgr_app_objfrmt) }}" />
+                                                        @error('sdgr_app_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scbtr_dis_objfrmt">CBTR Dis OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scbtr_dis_objfrmt"
+                                                            name="scbtr_dis_objfrmt" placeholder="CBTR Dis OBJ/FRMT"
+                                                            value="{{ old('scbtr_dis_objfrmt', $penyulang->scbtr_dis_objfrmt) }}" />
+                                                        @error('scbtr_dis_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scbtr_app_objfrmt">CBTR App OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scbtr_app_objfrmt"
+                                                            name="scbtr_app_objfrmt" placeholder="CBTR App OBJ/FRMT"
+                                                            value="{{ old('scbtr_app_objfrmt', $penyulang->scbtr_app_objfrmt) }}" />
+                                                        @error('scbtr_app_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sar_dis_objfrmt">AR Dis OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sar_dis_objfrmt"
+                                                            name="sar_dis_objfrmt" placeholder="AR Dis OBJ/FRMT"
+                                                            value="{{ old('sar_dis_objfrmt', $penyulang->sar_dis_objfrmt) }}" />
+                                                        @error('sar_dis_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sar_app_objfrmt">AR App OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sar_app_objfrmt"
+                                                            name="sar_app_objfrmt" placeholder="AR App OBJ/FRMT"
+                                                            value="{{ old('sar_app_objfrmt', $penyulang->sar_app_objfrmt) }}" />
+                                                        @error('sar_app_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saru_dis_objfrmt">ARU Dis OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="saru_dis_objfrmt"
+                                                            name="saru_dis_objfrmt" placeholder="ARU Dis OBJ/FRMT"
+                                                            value="{{ old('saru_dis_objfrmt', $penyulang->saru_dis_objfrmt) }}" />
+                                                        @error('saru_dis_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="saru_app_objfrmt">ARU App OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="saru_app_objfrmt"
+                                                            name="saru_app_objfrmt" placeholder="ARU App OBJ/FRMT"
+                                                            value="{{ old('saru_app_objfrmt', $penyulang->saru_app_objfrmt) }}" />
+                                                        @error('saru_app_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="stc_dis_objfrmt">TC Dis OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="stc_dis_objfrmt"
+                                                            name="stc_dis_objfrmt" placeholder="TC Dis OBJ/FRMT"
+                                                            value="{{ old('stc_dis_objfrmt', $penyulang->stc_dis_objfrmt) }}" />
+                                                        @error('stc_dis_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="stc_app_objfrmt">TC App OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="stc_app_objfrmt"
+                                                            name="stc_app_objfrmt" placeholder="TC App OBJ/FRMT"
+                                                            value="{{ old('stc_app_objfrmt', $penyulang->stc_app_objfrmt) }}" />
+                                                        @error('stc_app_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -1032,357 +1499,554 @@
                                     <div class="tab-pane fade" id="v-pills-formtelecontrol-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelecontrol-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-12 col-lg-6">
                                                 @php
                                                 $c_cb = old('c_cb', $penyulang->c_cb ?? '');
                                                 $c_cb_array = is_array($c_cb) ? $c_cb : explode(',', $c_cb);
+
                                                 $c_aru = old('c_aru', $penyulang->c_aru ?? '');
                                                 $c_aru_array = is_array($c_aru) ? $c_aru : explode(',', $c_aru);
+
                                                 $c_rst = old('c_rst', $penyulang->c_rst ?? '');
                                                 $c_rst_array = is_array($c_rst) ? $c_rst : explode(',', $c_rst);
+
                                                 $c_tc = old('c_tc', $penyulang->c_tc ?? '');
                                                 $c_tc_array = is_array($c_tc) ? $c_tc : explode(',', $c_tc);
                                                 @endphp
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Open</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="ccb_open_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_open_1" id="ccb_open_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_open_1', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_open_2" id="ccb_open_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_open_2', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_open_3" id="ccb_open_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_open_3', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_open_4" id="ccb_open_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_open_4', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_open_5" id="ccb_open_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_open_5', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">CB Open</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0 ">
+                                                                <input type="checkbox" id="ccb_open_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_open_1"
+                                                                    id="ccb_open_1" class="selectgroup-input"
+                                                                    {{ in_array('ccb_open_1', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_open_2"
+                                                                    id="ccb_open_2" class="selectgroup-input"
+                                                                    {{ in_array('ccb_open_2', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_open_3"
+                                                                    id="ccb_open_3" class="selectgroup-input"
+                                                                    {{ in_array('ccb_open_3', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_open_4"
+                                                                    id="ccb_open_4" class="selectgroup-input"
+                                                                    {{ in_array('ccb_open_4', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_open_5"
+                                                                    id="ccb_open_5" class="selectgroup-input"
+                                                                    {{ in_array('ccb_open_5', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="ccb_close_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_close_1" id="ccb_close_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_close_1', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_close_2" id="ccb_close_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_close_2', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_close_3" id="ccb_close_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_close_3', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_close_4" id="ccb_close_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_close_4', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="ccb_close_5" id="ccb_close_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('ccb_close_5', $c_cb_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">CB Close</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="ccb_close_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_close_1"
+                                                                    id="ccb_close_1" class="selectgroup-input"
+                                                                    {{ in_array('ccb_close_1', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_close_2"
+                                                                    id="ccb_close_2" class="selectgroup-input"
+                                                                    {{ in_array('ccb_close_2', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_close_3"
+                                                                    id="ccb_close_3" class="selectgroup-input"
+                                                                    {{ in_array('ccb_close_3', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_close_4"
+                                                                    id="ccb_close_4" class="selectgroup-input"
+                                                                    {{ in_array('ccb_close_4', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="ccb_close_5"
+                                                                    id="ccb_close_5" class="selectgroup-input"
+                                                                    {{ in_array('ccb_close_5', $c_cb_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">ARU Use</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="c_aru_use_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]" value="caru_1"
-                                                                        id="c_aruu_1" class="selectgroup-input"
-                                                                        {{ in_array('caru_1', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]" value="caru_2"
-                                                                        id="c_aruu_2" class="selectgroup-input"
-                                                                        {{ in_array('caru_2', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]" value="caru_3"
-                                                                        id="c_aruu_3" class="selectgroup-input"
-                                                                        {{ in_array('caru_3', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]" value="caru_4"
-                                                                        id="c_aruu_4" class="selectgroup-input"
-                                                                        {{ in_array('caru_4', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]" value="caru_5"
-                                                                        id="c_aruu_5" class="selectgroup-input"
-                                                                        {{ in_array('caru_5', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">ARU Use</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="c_aru_use_checkAll"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="caru_1"
+                                                                    id="c_aru_1" class="selectgroup-input"
+                                                                    {{ in_array('caru_1', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="caru_2"
+                                                                    id="c_aru_2" class="selectgroup-input"
+                                                                    {{ in_array('caru_2', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="caru_3"
+                                                                    id="c_aru_3" class="selectgroup-input"
+                                                                    {{ in_array('caru_3', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="caru_4"
+                                                                    id="c_aru_4" class="selectgroup-input"
+                                                                    {{ in_array('caru_4', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="caru_5"
+                                                                    id="c_aru_5" class="selectgroup-input"
+                                                                    {{ in_array('caru_5', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">ARU Unuse</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="c_aru_unuse_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]"
-                                                                        value="carun_1" id="c_aruun_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('carun_1', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]"
-                                                                        value="carun_2" id="c_aruun_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('carun_2', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]"
-                                                                        value="carun_3" id="c_aruun_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('carun_3', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]"
-                                                                        value="carun_4" id="c_aruun_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('carun_4', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_aru[]"
-                                                                        value="carun_5" id="c_aruun_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('carun_5', $c_aru_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">ARU Unuse</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0 ">
+                                                                <input type="checkbox" id="c_aru_unuse_checkAll"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="carun_1"
+                                                                    id="c_aruun_1" class="selectgroup-input"
+                                                                    {{ in_array('carun_1', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="carun_2"
+                                                                    id="c_aruun_2" class="selectgroup-input"
+                                                                    {{ in_array('carun_2', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="carun_3"
+                                                                    id="c_aruun_3" class="selectgroup-input"
+                                                                    {{ in_array('carun_3', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="carun_4"
+                                                                    id="c_aruun_4" class="selectgroup-input"
+                                                                    {{ in_array('carun_4', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_aru[]" value="carun_5"
+                                                                    id="c_aruun_5" class="selectgroup-input"
+                                                                    {{ in_array('carun_5', $c_aru_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">RESET On</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="crst_on_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_1" id="crst_on_1"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('rrctrl_on_1', $c_rst_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_2" id="crst_on_2"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('rrctrl_on_2', $c_rst_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_3" id="crst_on_3"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('rrctrl_on_3', $c_rst_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_4" id="crst_on_4"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('rrctrl_on_4', $c_rst_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_5" id="crst_on_5"
-                                                                        class="selectgroup-input"
-                                                                        {{ in_array('rrctrl_on_5', $c_rst_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">RESET On</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="crst_on_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_1" id="crst_on_1"
+                                                                    class="selectgroup-input"
+                                                                    {{ in_array('rrctrl_on_1', $c_rst_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_2" id="crst_on_2"
+                                                                    class="selectgroup-input"
+                                                                    {{ in_array('rrctrl_on_2', $c_rst_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_3" id="crst_on_3"
+                                                                    class="selectgroup-input"
+                                                                    {{ in_array('rrctrl_on_3', $c_rst_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_4" id="crst_on_4"
+                                                                    class="selectgroup-input"
+                                                                    {{ in_array('rrctrl_on_4', $c_rst_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_5" id="crst_on_5"
+                                                                    class="selectgroup-input"
+                                                                    {{ in_array('rrctrl_on_5', $c_rst_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">TC Raiser</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="c_tc_raiser_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcr_1"
-                                                                        id="c_tcrai_1" class="selectgroup-input"
-                                                                        {{ in_array('ctcr_1', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcr_2"
-                                                                        id="c_tcrai_2" class="selectgroup-input"
-                                                                        {{ in_array('ctcr_2', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcr_3"
-                                                                        id="c_tcrai_3" class="selectgroup-input"
-                                                                        {{ in_array('ctcr_3', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcr_4"
-                                                                        id="c_tcrai_4" class="selectgroup-input"
-                                                                        {{ in_array('ctcr_4', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcr_5"
-                                                                        id="c_tcrai_5" class="selectgroup-input"
-                                                                        {{ in_array('ctcr_5', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">TC Raiser</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="c_tc_raiser_checkAll"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcr_1"
+                                                                    id="c_tcrai_1" class="selectgroup-input"
+                                                                    {{ in_array('ctcr_1', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcr_2"
+                                                                    id="c_tcrai_2" class="selectgroup-input"
+                                                                    {{ in_array('ctcr_2', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcr_3"
+                                                                    id="c_tcrai_3" class="selectgroup-input"
+                                                                    {{ in_array('ctcr_3', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcr_4"
+                                                                    id="c_tcrai_4" class="selectgroup-input"
+                                                                    {{ in_array('ctcr_4', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcr_5"
+                                                                    id="c_tcrai_5" class="selectgroup-input"
+                                                                    {{ in_array('ctcr_5', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">TC Lower</label>
+                                                        <label class="form-label t-bold">TC Lower</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="c_tc_lower_checkAll"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcl_1"
+                                                                    id="c_tclow_1" class="selectgroup-input"
+                                                                    {{ in_array('ctcl_1', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcl_2"
+                                                                    id="c_tclow_2" class="selectgroup-input"
+                                                                    {{ in_array('ctcl_2', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcl_3"
+                                                                    id="c_tclow_3" class="selectgroup-input"
+                                                                    {{ in_array('ctcl_3', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcl_4"
+                                                                    id="c_tclow_4" class="selectgroup-input"
+                                                                    {{ in_array('ctcl_4', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_tc[]" value="ctcl_5"
+                                                                    id="c_tclow_5" class="selectgroup-input"
+                                                                    {{ in_array('ctcl_5', $c_tc_array) ? 'checked' : '' }} />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="c_tc_lower_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcl_1"
-                                                                        id="c_tclow_1" class="selectgroup-input"
-                                                                        {{ in_array('ctcl_1', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcl_2"
-                                                                        id="c_tclow_2" class="selectgroup-input"
-                                                                        {{ in_array('ctcl_2', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcl_3"
-                                                                        id="c_tclow_3" class="selectgroup-input"
-                                                                        {{ in_array('ctcl_3', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcl_4"
-                                                                        id="c_tclow_4" class="selectgroup-input"
-                                                                        {{ in_array('ctcl_4', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_tc[]" value="ctcl_5"
-                                                                        id="c_tclow_5" class="selectgroup-input"
-                                                                        {{ in_array('ctcl_5', $c_tc_array) ? 'checked' : '' }} />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="ccb_open_addms">CB Open Add MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb_open_addms"
+                                                            name="ccb_open_addms" placeholder="CB Open Add MS"
+                                                            value="{{ $penyulang->ccb_open_addms ?? old('ccb_open_addms') }}" />
+                                                        @error('ccb_open_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ccb_close_addms">CB Close Add MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb_close_addms"
+                                                            name="ccb_close_addms" placeholder="CB Close Add MS"
+                                                            value="{{ $penyulang->ccb_close_addms ?? old('ccb_close_addms') }}" />
+                                                        @error('ccb_close_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="caru_use_addms">ARU Use Add MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="caru_use_addms"
+                                                            name="caru_use_addms" placeholder="ARU Use Add MS"
+                                                            value="{{ $penyulang->caru_use_addms ?? old('caru_use_addms') }}" />
+                                                        @error('caru_use_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="caru_unuse_addms">ARU Unuse Add MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="caru_unuse_addms"
+                                                            name="caru_unuse_addms" placeholder="ARU Unuse Add MS"
+                                                            value="{{ $penyulang->caru_unuse_addms ?? old('caru_unuse_addms') }}" />
+                                                        @error('caru_unuse_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="creset_on_addms">Reset On Add MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="creset_on_addms"
+                                                            name="creset_on_addms" placeholder="Reset On Add MS"
+                                                            value="{{ $penyulang->creset_on_addms ?? old('creset_on_addms') }}" />
+                                                        @error('creset_on_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ctc_raiser_addms">TC Raiser Add MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ctc_raiser_addms"
+                                                            name="ctc_raiser_addms" placeholder="TC Raiser Add MS"
+                                                            value="{{ $penyulang->ctc_raiser_addms ?? old('ctc_raiser_addms') }}" />
+                                                        @error('ctc_raiser_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ctc_lower_addms">TC Lower Add MS</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ctc_lower_addms"
+                                                            name="ctc_lower_addms" placeholder="TC Lower Add MS"
+                                                            value="{{ $penyulang->ctc_lower_addms ?? old('ctc_lower_addms') }}" />
+                                                        @error('ctc_lower_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="ccb_open_rtu">CB Open RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb_open_rtu"
+                                                            name="ccb_open_rtu" placeholder="CB Open RTU"
+                                                            value="{{ $penyulang->ccb_open_rtu ?? old('ccb_open_rtu') }}" />
+                                                        @error('ccb_open_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ccb_close_rtu">CB Close RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb_close_rtu"
+                                                            name="ccb_close_rtu" placeholder="CB Close RTU"
+                                                            value="{{ $penyulang->ccb_close_rtu ?? old('ccb_close_rtu') }}" />
+                                                        @error('ccb_close_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="caru_use_rtu">ARU Use RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="caru_use_rtu"
+                                                            name="caru_use_rtu" placeholder="ARU Use RTU"
+                                                            value="{{ $penyulang->caru_use_rtu ?? old('caru_use_rtu') }}" />
+                                                        @error('caru_use_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="caru_unuse_rtu">ARU Unuse RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="caru_unuse_rtu"
+                                                            name="caru_unuse_rtu" placeholder="ARU Unuse RTU"
+                                                            value="{{ $penyulang->caru_unuse_rtu ?? old('caru_unuse_rtu') }}" />
+                                                        @error('caru_unuse_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="creset_on_rtu">Reset On RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="creset_on_rtu"
+                                                            name="creset_on_rtu" placeholder="Reset On RTU"
+                                                            value="{{ $penyulang->creset_on_rtu ?? old('creset_on_rtu') }}" />
+                                                        @error('creset_on_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ctc_raiser_rtu">TC Raiser RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ctc_raiser_rtu"
+                                                            name="ctc_raiser_rtu" placeholder="TC Raiser RTU"
+                                                            value="{{ $penyulang->ctc_raiser_rtu ?? old('ctc_raiser_rtu') }}" />
+                                                        @error('ctc_raiser_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ctc_lower_rtu">TC Lower RTU</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ctc_lower_rtu"
+                                                            name="ctc_lower_rtu" placeholder="TC Lower RTU"
+                                                            value="{{ $penyulang->ctc_lower_rtu ?? old('ctc_lower_rtu') }}" />
+                                                        @error('ctc_lower_rtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="ccb_open_objfrmt">CB Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb_open_objfrmt"
+                                                            name="ccb_open_objfrmt" placeholder="CB Open OBJ/FRMT"
+                                                            value="{{ $penyulang->ccb_open_objfrmt ?? old('ccb_open_objfrmt') }}" />
+                                                        @error('ccb_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ccb_close_objfrmt">CB Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb_close_objfrmt"
+                                                            name="ccb_close_objfrmt" placeholder="CB Close OBJ/FRMT"
+                                                            value="{{ $penyulang->ccb_close_objfrmt ?? old('ccb_close_objfrmt') }}" />
+                                                        @error('ccb_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="caru_use_objfrmt">ARU Use OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="caru_use_objfrmt"
+                                                            name="caru_use_objfrmt" placeholder="ARU Use OBJ/FRMT"
+                                                            value="{{ $penyulang->caru_use_objfrmt ?? old('caru_use_objfrmt') }}" />
+                                                        @error('caru_use_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="caru_unuse_objfrmt">ARU Unuse OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="caru_unuse_objfrmt"
+                                                            name="caru_unuse_objfrmt" placeholder="ARU Unuse OBJ/FRMT"
+                                                            value="{{ $penyulang->caru_unuse_objfrmt ?? old('caru_unuse_objfrmt') }}" />
+                                                        @error('caru_unuse_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="creset_on_objfrmt">Reset On OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="creset_on_objfrmt"
+                                                            name="creset_on_objfrmt" placeholder="Reset On OBJ/FRMT"
+                                                            value="{{ $penyulang->creset_on_objfrmt ?? old('creset_on_objfrmt') }}" />
+                                                        @error('creset_on_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ctc_raiser_objfrmt">TC Raiser OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ctc_raiser_objfrmt"
+                                                            name="ctc_raiser_objfrmt" placeholder="TC Raiser OBJ/FRMT"
+                                                            value="{{ $penyulang->ctc_raiser_objfrmt ?? old('ctc_raiser_objfrmt') }}" />
+                                                        @error('ctc_raiser_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ctc_lower_objfrmt">TC Lower OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ctc_lower_objfrmt"
+                                                            name="ctc_lower_objfrmt" placeholder="TC Lower OBJ/FRMT"
+                                                            value="{{ $penyulang->ctc_lower_objfrmt ?? old('ctc_lower_objfrmt') }}" />
+                                                        @error('ctc_lower_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>

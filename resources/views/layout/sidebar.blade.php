@@ -107,6 +107,10 @@
                             <li class="@if(Route::is('picmaster*')) active @endif">
                                 <a href="{{ route('picmaster.index') }}"><span class="sub-item">Pelaksana II</span></a>
                             </li>
+                            <li class="@if(Route::is('pelaksanaRTU*')) active @endif">
+                                <a href="{{ route('pelrtu.index') }}"><span class="sub-item">Pelaksana
+                                        RTU</span></a>
+                            </li>
                             <li class="@if(Route::is('sectoral*')) active @endif">
                                 <a href="{{ route('sectoral.index') }}"><span class="sub-item">Sectoral</span></a>
                             </li>
