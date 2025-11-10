@@ -1892,24 +1892,6 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Daya (P)</label>
-                                                    <input class="form-control @error('p_rtu') is-invalid @enderror"
-                                                        placeholder="P RTU" name="p_rtu" value="{{ old('p_rtu') }}">
-                                                    @error('p_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('p_ms') is-invalid @enderror"
-                                                        placeholder="P Master" name="p_ms" value="{{ old('p_ms') }}">
-                                                    @error('p_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('p_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="p_scale" value="{{ old('p_scale') }}">
-                                                    @error('p_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
                                                     <label>Tegangan</label>
                                                     <input class="form-control @error('v_rtu') is-invalid @enderror"
                                                         placeholder="V RTU" name="v_rtu" value="{{ old('v_rtu') }}">
@@ -1924,26 +1906,6 @@
                                                     <input class="form-control @error('v_scale') is-invalid @enderror"
                                                         placeholder="Scale" name="v_scale" value="{{ old('v_scale') }}">
                                                     @error('v_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Frekuensi</label>
-                                                    <input class="form-control @error('f_rtu') is-invalid @enderror"
-                                                        placeholder="F RTU" name="f_rtu" value="{{ old('f_rtu') }}">
-                                                    @error('f_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('f_ms') is-invalid @enderror"
-                                                        placeholder="F Master" name="f_ms" value="{{ old('f_ms') }}">
-                                                    @error('f_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('f_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="f_scale" value="{{ old('f_scale') }}">
-                                                    @error('f_scale')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>

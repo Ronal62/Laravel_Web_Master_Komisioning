@@ -76,8 +76,7 @@
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="nama_peny"
                                                             name="nama_peny" placeholder="Nama Penyulangan"
-                                                            value="{{ old('nama_peny', $penyulang->nama_peny) }}"
-                                                            required />
+                                                            value="{{ old('nama_peny') }}" required />
                                                         @error('nama_peny')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -893,407 +892,207 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-2 ">
-                                                <div class="form-group ">
-                                                    <label for="scb_open_addms">CB Open ADD MS</label>
-                                                    <div class="input-icon ">
-                                                        <input type="text" class="form-control" id="scb_open_addms"
-                                                            name="scb_open_addms" placeholder="CB Open ADD MS"
-                                                            value="{{ old('scb_open_addms', $penyulang->scb_open_addms) }}" />
-                                                        @error('scb_open_addms')
+                                            <div class="col-12 col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="scb_open_address">CB Open Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_open_address"
+                                                            name="scb_open_address" placeholder="CB Open Address"
+                                                            value="{{ old('scb_open_address', $penyulang->scb_open_address) }}" />
+                                                        @error('scb_open_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb_close_addms">CB Close ADD MS</label>
+                                                    <label for="scb_close_address">CB Close Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_close_addms"
-                                                            name="scb_close_addms" placeholder="CB Close ADD MS"
-                                                            value="{{ old('scb_close_addms', $penyulang->scb_close_addms) }}" />
-                                                        @error('scb_close_addms')
+                                                        <input type="text" class="form-control" id="scb_close_address"
+                                                            name="scb_close_address" placeholder="CB Close Address"
+                                                            value="{{ old('scb_close_address', $penyulang->scb_close_address) }}" />
+                                                        @error('scb_close_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="slocal_addms">Local ADD MS</label>
+                                                    <label for="slocal_address">Local Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="slocal_addms"
-                                                            name="slocal_addms" placeholder="Local ADD MS"
-                                                            value="{{ old('slocal_addms', $penyulang->slocal_addms) }}" />
-                                                        @error('slocal_addms')
+                                                        <input type="text" class="form-control" id="slocal_address"
+                                                            name="slocal_address" placeholder="Local Address"
+                                                            value="{{ old('slocal_address', $penyulang->slocal_address) }}" />
+                                                        @error('slocal_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sremote_addms">Remote ADD MS</label>
+                                                    <label for="sremote_address">Remote Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sremote_addms"
-                                                            name="sremote_addms" placeholder="Remote ADD MS"
-                                                            value="{{ old('sremote_addms', $penyulang->sremote_addms) }}" />
-                                                        @error('sremote_addms')
+                                                        <input type="text" class="form-control" id="sremote_address"
+                                                            name="sremote_address" placeholder="Remote Address"
+                                                            value="{{ old('sremote_address', $penyulang->sremote_address) }}" />
+                                                        @error('sremote_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="socr_dis_addms">OCR Dis ADD MS</label>
+                                                    <label for="socr_dis_address">OCR Dis Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="socr_dis_addms"
-                                                            name="socr_dis_addms" placeholder="OCR Dis ADD MS"
-                                                            value="{{ old('socr_dis_addms', $penyulang->socr_dis_addms) }}" />
-                                                        @error('socr_dis_addms')
+                                                        <input type="text" class="form-control" id="socr_dis_address"
+                                                            name="socr_dis_address" placeholder="OCR Dis Address"
+                                                            value="{{ old('socr_dis_address', $penyulang->socr_dis_address) }}" />
+                                                        @error('socr_dis_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="socr_app_addms">OCR App ADD MS</label>
+                                                    <label for="socr_app_address">OCR App Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="socr_app_addms"
-                                                            name="socr_app_addms" placeholder="OCR App ADD MS"
-                                                            value="{{ old('socr_app_addms', $penyulang->socr_app_addms) }}" />
-                                                        @error('socr_app_addms')
+                                                        <input type="text" class="form-control" id="socr_app_address"
+                                                            name="socr_app_address" placeholder="OCR App Address"
+                                                            value="{{ old('socr_app_address', $penyulang->socr_app_address) }}" />
+                                                        @error('socr_app_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="socri_dis_addms">OCRI Dis ADD MS</label>
+                                                    <label for="socri_dis_address">OCRI Dis Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="socri_dis_addms"
-                                                            name="socri_dis_addms" placeholder="OCRI Dis ADD MS"
-                                                            value="{{ old('socri_dis_addms', $penyulang->socri_dis_addms) }}" />
-                                                        @error('socri_dis_addms')
+                                                        <input type="text" class="form-control" id="socri_dis_address"
+                                                            name="socri_dis_address" placeholder="OCRI Dis Address"
+                                                            value="{{ old('socri_dis_address', $penyulang->socri_dis_address) }}" />
+                                                        @error('socri_dis_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="socri_app_addms">OCRI App ADD MS</label>
+                                                    <label for="socri_app_address">OCRI App Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="socri_app_addms"
-                                                            name="socri_app_addms" placeholder="OCRI App ADD MS"
-                                                            value="{{ old('socri_app_addms', $penyulang->socri_app_addms) }}" />
-                                                        @error('socri_app_addms')
+                                                        <input type="text" class="form-control" id="socri_app_address"
+                                                            name="socri_app_address" placeholder="OCRI App Address"
+                                                            value="{{ old('socri_app_address', $penyulang->socri_app_address) }}" />
+                                                        @error('socri_app_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdgr_dis_addms">DGR Dis ADD MS</label>
+                                                    <label for="sdgr_dis_address">DGR Dis Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdgr_dis_addms"
-                                                            name="sdgr_dis_addms" placeholder="DGR Dis ADD MS"
-                                                            value="{{ old('sdgr_dis_addms', $penyulang->sdgr_dis_addms) }}" />
-                                                        @error('sdgr_dis_addms')
+                                                        <input type="text" class="form-control" id="sdgr_dis_address"
+                                                            name="sdgr_dis_address" placeholder="DGR Dis Address"
+                                                            value="{{ old('sdgr_dis_address', $penyulang->sdgr_dis_address) }}" />
+                                                        @error('sdgr_dis_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdgr_app_addms">DGR App ADD MS</label>
+                                                    <label for="sdgr_app_address">DGR App Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdgr_app_addms"
-                                                            name="sdgr_app_addms" placeholder="DGR App ADD MS"
-                                                            value="{{ old('sdgr_app_addms', $penyulang->sdgr_app_addms) }}" />
-                                                        @error('sdgr_app_addms')
+                                                        <input type="text" class="form-control" id="sdgr_app_address"
+                                                            name="sdgr_app_address" placeholder="DGR App Address"
+                                                            value="{{ old('sdgr_app_address', $penyulang->sdgr_app_address) }}" />
+                                                        @error('sdgr_app_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scbtr_dis_addms">CBTR Dis ADD MS</label>
+                                                    <label for="scbtr_dis_address">CBTR Dis Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scbtr_dis_addms"
-                                                            name="scbtr_dis_addms" placeholder="CBTR Dis ADD MS"
-                                                            value="{{ old('scbtr_dis_addms', $penyulang->scbtr_dis_addms) }}" />
-                                                        @error('scbtr_dis_addms')
+                                                        <input type="text" class="form-control" id="scbtr_dis_address"
+                                                            name="scbtr_dis_address" placeholder="CBTR Dis Address"
+                                                            value="{{ old('scbtr_dis_address', $penyulang->scbtr_dis_address) }}" />
+                                                        @error('scbtr_dis_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scbtr_app_addms">CBTR App ADD MS</label>
+                                                    <label for="scbtr_app_address">CBTR App Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scbtr_app_addms"
-                                                            name="scbtr_app_addms" placeholder="CBTR App ADD MS"
-                                                            value="{{ old('scbtr_app_addms', $penyulang->scbtr_app_addms) }}" />
-                                                        @error('scbtr_app_addms')
+                                                        <input type="text" class="form-control" id="scbtr_app_address"
+                                                            name="scbtr_app_address" placeholder="CBTR App Address"
+                                                            value="{{ old('scbtr_app_address', $penyulang->scbtr_app_address) }}" />
+                                                        @error('scbtr_app_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sar_dis_addms">AR Dis ADD MS</label>
+                                                    <label for="sar_dis_address">AR Dis Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sar_dis_addms"
-                                                            name="sar_dis_addms" placeholder="AR Dis ADD MS"
-                                                            value="{{ old('sar_dis_addms', $penyulang->sar_dis_addms) }}" />
-                                                        @error('sar_dis_addms')
+                                                        <input type="text" class="form-control" id="sar_dis_address"
+                                                            name="sar_dis_address" placeholder="AR Dis Address"
+                                                            value="{{ old('sar_dis_address', $penyulang->sar_dis_address) }}" />
+                                                        @error('sar_dis_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sar_app_addms">AR App ADD MS</label>
+                                                    <label for="sar_app_address">AR App Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sar_app_addms"
-                                                            name="sar_app_addms" placeholder="AR App ADD MS"
-                                                            value="{{ old('sar_app_addms', $penyulang->sar_app_addms) }}" />
-                                                        @error('sar_app_addms')
+                                                        <input type="text" class="form-control" id="sar_app_address"
+                                                            name="sar_app_address" placeholder="AR App Address"
+                                                            value="{{ old('sar_app_address', $penyulang->sar_app_address) }}" />
+                                                        @error('sar_app_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="saru_dis_addms">ARU Dis ADD MS</label>
+                                                    <label for="saru_dis_address">ARU Dis Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="saru_dis_addms"
-                                                            name="saru_dis_addms" placeholder="ARU Dis ADD MS"
-                                                            value="{{ old('saru_dis_addms', $penyulang->saru_dis_addms) }}" />
-                                                        @error('saru_dis_addms')
+                                                        <input type="text" class="form-control" id="saru_dis_address"
+                                                            name="saru_dis_address" placeholder="ARU Dis Address"
+                                                            value="{{ old('saru_dis_address', $penyulang->saru_dis_address) }}" />
+                                                        @error('saru_dis_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="saru_app_addms">ARU App ADD MS</label>
+                                                    <label for="saru_app_address">ARU App Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="saru_app_addms"
-                                                            name="saru_app_addms" placeholder="ARU App ADD MS"
-                                                            value="{{ old('saru_app_addms', $penyulang->saru_app_addms) }}" />
-                                                        @error('saru_app_addms')
+                                                        <input type="text" class="form-control" id="saru_app_address"
+                                                            name="saru_app_address" placeholder="ARU App Address"
+                                                            value="{{ old('saru_app_address', $penyulang->saru_app_address) }}" />
+                                                        @error('saru_app_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="stc_dis_addms">TC Dis ADD MS</label>
+                                                    <label for="stc_dis_address">TC Dis Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="stc_dis_addms"
-                                                            name="stc_dis_addms" placeholder="TC Dis ADD MS"
-                                                            value="{{ old('stc_dis_addms', $penyulang->stc_dis_addms) }}" />
-                                                        @error('stc_dis_addms')
+                                                        <input type="text" class="form-control" id="stc_dis_address"
+                                                            name="stc_dis_address" placeholder="TC Dis Address"
+                                                            value="{{ old('stc_dis_address', $penyulang->stc_dis_address) }}" />
+                                                        @error('stc_dis_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="stc_app_addms">TC App ADD MS</label>
+                                                    <label for="stc_app_address">TC App Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="stc_app_addms"
-                                                            name="stc_app_addms" placeholder="TC App ADD MS"
-                                                            value="{{ old('stc_app_addms', $penyulang->stc_app_addms) }}" />
-                                                        @error('stc_app_addms')
+                                                        <input type="text" class="form-control" id="stc_app_address"
+                                                            name="stc_app_address" placeholder="TC App Address"
+                                                            value="{{ old('stc_app_address', $penyulang->stc_app_address) }}" />
+                                                        @error('stc_app_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-2">
-                                                <div class="form-group">
-                                                    <label for="scb_open_rtu">CB Open RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_open_rtu"
-                                                            name="scb_open_rtu" placeholder="CB Open RTU"
-                                                            value="{{ old('scb_open_rtu', $penyulang->scb_open_rtu) }}" />
-                                                        @error('scb_open_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="scb_close_rtu">CB Close RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_close_rtu"
-                                                            name="scb_close_rtu" placeholder="CB Close RTU"
-                                                            value="{{ old('scb_close_rtu', $penyulang->scb_close_rtu) }}" />
-                                                        @error('scb_close_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="slocal_rtu">Local RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="slocal_rtu"
-                                                            name="slocal_rtu" placeholder="Local RTU"
-                                                            value="{{ old('slocal_rtu', $penyulang->slocal_rtu) }}" />
-                                                        @error('slocal_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sremote_rtu">Remote RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sremote_rtu"
-                                                            name="sremote_rtu" placeholder="Remote RTU"
-                                                            value="{{ old('sremote_rtu', $penyulang->sremote_rtu) }}" />
-                                                        @error('sremote_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="socr_dis_rtu">OCR Dis RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="socr_dis_rtu"
-                                                            name="socr_dis_rtu" placeholder="OCR Dis RTU"
-                                                            value="{{ old('socr_dis_rtu', $penyulang->socr_dis_rtu) }}" />
-                                                        @error('socr_dis_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="socr_app_rtu">OCR App RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="socr_app_rtu"
-                                                            name="socr_app_rtu" placeholder="OCR App RTU"
-                                                            value="{{ old('socr_app_rtu', $penyulang->socr_app_rtu) }}" />
-                                                        @error('socr_app_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="socri_dis_rtu">OCRI Dis RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="socri_dis_rtu"
-                                                            name="socri_dis_rtu" placeholder="OCRI Dis RTU"
-                                                            value="{{ old('socri_dis_rtu', $penyulang->socri_dis_rtu) }}" />
-                                                        @error('socri_dis_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="socri_app_rtu">OCRI App RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="socri_app_rtu"
-                                                            name="socri_app_rtu" placeholder="OCRI App RTU"
-                                                            value="{{ old('socri_app_rtu', $penyulang->socri_app_rtu) }}" />
-                                                        @error('socri_app_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sdgr_dis_rtu">DGR Dis RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdgr_dis_rtu"
-                                                            name="sdgr_dis_rtu" placeholder="DGR Dis RTU"
-                                                            value="{{ old('sdgr_dis_rtu', $penyulang->sdgr_dis_rtu) }}" />
-                                                        @error('sdgr_dis_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sdgr_app_rtu">DGR App RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdgr_app_rtu"
-                                                            name="sdgr_app_rtu" placeholder="DGR App RTU"
-                                                            value="{{ old('sdgr_app_rtu', $penyulang->sdgr_app_rtu) }}" />
-                                                        @error('sdgr_app_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="scbtr_dis_rtu">CBTR Dis RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scbtr_dis_rtu"
-                                                            name="scbtr_dis_rtu" placeholder="CBTR Dis RTU"
-                                                            value="{{ old('scbtr_dis_rtu', $penyulang->scbtr_dis_rtu) }}" />
-                                                        @error('scbtr_dis_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="scbtr_app_rtu">CBTR App RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scbtr_app_rtu"
-                                                            name="scbtr_app_rtu" placeholder="CBTR App RTU"
-                                                            value="{{ old('scbtr_app_rtu', $penyulang->scbtr_app_rtu) }}" />
-                                                        @error('scbtr_app_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sar_dis_rtu">AR Dis RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sar_dis_rtu"
-                                                            name="sar_dis_rtu" placeholder="AR Dis RTU"
-                                                            value="{{ old('sar_dis_rtu', $penyulang->sar_dis_rtu) }}" />
-                                                        @error('sar_dis_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sar_app_rtu">AR App RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sar_app_rtu"
-                                                            name="sar_app_rtu" placeholder="AR App RTU"
-                                                            value="{{ old('sar_app_rtu', $penyulang->sar_app_rtu) }}" />
-                                                        @error('sar_app_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="saru_dis_rtu">ARU Dis RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="saru_dis_rtu"
-                                                            name="saru_dis_rtu" placeholder="ARU Dis RTU"
-                                                            value="{{ old('saru_dis_rtu', $penyulang->saru_dis_rtu) }}" />
-                                                        @error('saru_dis_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="saru_app_rtu">ARU App RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="saru_app_rtu"
-                                                            name="saru_app_rtu" placeholder="ARU App RTU"
-                                                            value="{{ old('saru_app_rtu', $penyulang->saru_app_rtu) }}" />
-                                                        @error('saru_app_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="stc_dis_rtu">TC Dis RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="stc_dis_rtu"
-                                                            name="stc_dis_rtu" placeholder="TC Dis RTU"
-                                                            value="{{ old('stc_dis_rtu', $penyulang->stc_dis_rtu) }}" />
-                                                        @error('stc_dis_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="stc_app_rtu">TC App RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="stc_app_rtu"
-                                                            name="stc_app_rtu" placeholder="TC App RTU"
-                                                            value="{{ old('stc_app_rtu', $penyulang->stc_app_rtu) }}" />
-                                                        @error('stc_app_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-lg-2">
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
                                                     <label for="scb_open_objfrmt">CB Open OBJ/FRMT</label>
                                                     <div class="input-icon">
@@ -1813,165 +1612,86 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-2">
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
-                                                    <label for="ccb_open_addms">CB Open Add MS</label>
+                                                    <label for="ccb_open_address">CB Open Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ccb_open_addms"
-                                                            name="ccb_open_addms" placeholder="CB Open Add MS"
-                                                            value="{{ $penyulang->ccb_open_addms ?? old('ccb_open_addms') }}" />
-                                                        @error('ccb_open_addms')
+                                                        <input type="text" class="form-control" id="ccb_open_address"
+                                                            name="ccb_open_address" placeholder="CB Open Address"
+                                                            value="{{ $penyulang->ccb_open_address ?? old('ccb_open_address') }}" />
+                                                        @error('ccb_open_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="ccb_close_addms">CB Close Add MS</label>
+                                                    <label for="ccb_close_address">CB Close Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ccb_close_addms"
-                                                            name="ccb_close_addms" placeholder="CB Close Add MS"
-                                                            value="{{ $penyulang->ccb_close_addms ?? old('ccb_close_addms') }}" />
-                                                        @error('ccb_close_addms')
+                                                        <input type="text" class="form-control" id="ccb_close_address"
+                                                            name="ccb_close_address" placeholder="CB Close Address"
+                                                            value="{{ $penyulang->ccb_close_address ?? old('ccb_close_address') }}" />
+                                                        @error('ccb_close_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="caru_use_addms">ARU Use Add MS</label>
+                                                    <label for="caru_use_address">ARU Use Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="caru_use_addms"
-                                                            name="caru_use_addms" placeholder="ARU Use Add MS"
-                                                            value="{{ $penyulang->caru_use_addms ?? old('caru_use_addms') }}" />
-                                                        @error('caru_use_addms')
+                                                        <input type="text" class="form-control" id="caru_use_address"
+                                                            name="caru_use_address" placeholder="ARU Use Address"
+                                                            value="{{ $penyulang->caru_use_address ?? old('caru_use_address') }}" />
+                                                        @error('caru_use_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="caru_unuse_addms">ARU Unuse Add MS</label>
+                                                    <label for="caru_unuse_address">ARU Unuse Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="caru_unuse_addms"
-                                                            name="caru_unuse_addms" placeholder="ARU Unuse Add MS"
-                                                            value="{{ $penyulang->caru_unuse_addms ?? old('caru_unuse_addms') }}" />
-                                                        @error('caru_unuse_addms')
+                                                        <input type="text" class="form-control" id="caru_unuse_address"
+                                                            name="caru_unuse_address" placeholder="ARU Unuse Address"
+                                                            value="{{ $penyulang->caru_unuse_address ?? old('caru_unuse_address') }}" />
+                                                        @error('caru_unuse_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="creset_on_addms">Reset On Add MS</label>
+                                                    <label for="creset_on_address">Reset On Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="creset_on_addms"
-                                                            name="creset_on_addms" placeholder="Reset On Add MS"
-                                                            value="{{ $penyulang->creset_on_addms ?? old('creset_on_addms') }}" />
-                                                        @error('creset_on_addms')
+                                                        <input type="text" class="form-control" id="creset_on_address"
+                                                            name="creset_on_address" placeholder="Reset On Address"
+                                                            value="{{ $penyulang->creset_on_address ?? old('creset_on_address') }}" />
+                                                        @error('creset_on_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="ctc_raiser_addms">TC Raiser Add MS</label>
+                                                    <label for="ctc_raiser_address">TC Raiser Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ctc_raiser_addms"
-                                                            name="ctc_raiser_addms" placeholder="TC Raiser Add MS"
-                                                            value="{{ $penyulang->ctc_raiser_addms ?? old('ctc_raiser_addms') }}" />
-                                                        @error('ctc_raiser_addms')
+                                                        <input type="text" class="form-control" id="ctc_raiser_address"
+                                                            name="ctc_raiser_address" placeholder="TC Raiser Address"
+                                                            value="{{ $penyulang->ctc_raiser_address ?? old('ctc_raiser_address') }}" />
+                                                        @error('ctc_raiser_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="ctc_lower_addms">TC Lower Add MS</label>
+                                                    <label for="ctc_lower_address">TC Lower Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ctc_lower_addms"
-                                                            name="ctc_lower_addms" placeholder="TC Lower Add MS"
-                                                            value="{{ $penyulang->ctc_lower_addms ?? old('ctc_lower_addms') }}" />
-                                                        @error('ctc_lower_addms')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-lg-2">
-                                                <div class="form-group">
-                                                    <label for="ccb_open_rtu">CB Open RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ccb_open_rtu"
-                                                            name="ccb_open_rtu" placeholder="CB Open RTU"
-                                                            value="{{ $penyulang->ccb_open_rtu ?? old('ccb_open_rtu') }}" />
-                                                        @error('ccb_open_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="ccb_close_rtu">CB Close RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ccb_close_rtu"
-                                                            name="ccb_close_rtu" placeholder="CB Close RTU"
-                                                            value="{{ $penyulang->ccb_close_rtu ?? old('ccb_close_rtu') }}" />
-                                                        @error('ccb_close_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="caru_use_rtu">ARU Use RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="caru_use_rtu"
-                                                            name="caru_use_rtu" placeholder="ARU Use RTU"
-                                                            value="{{ $penyulang->caru_use_rtu ?? old('caru_use_rtu') }}" />
-                                                        @error('caru_use_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="caru_unuse_rtu">ARU Unuse RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="caru_unuse_rtu"
-                                                            name="caru_unuse_rtu" placeholder="ARU Unuse RTU"
-                                                            value="{{ $penyulang->caru_unuse_rtu ?? old('caru_unuse_rtu') }}" />
-                                                        @error('caru_unuse_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="creset_on_rtu">Reset On RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="creset_on_rtu"
-                                                            name="creset_on_rtu" placeholder="Reset On RTU"
-                                                            value="{{ $penyulang->creset_on_rtu ?? old('creset_on_rtu') }}" />
-                                                        @error('creset_on_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="ctc_raiser_rtu">TC Raiser RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ctc_raiser_rtu"
-                                                            name="ctc_raiser_rtu" placeholder="TC Raiser RTU"
-                                                            value="{{ $penyulang->ctc_raiser_rtu ?? old('ctc_raiser_rtu') }}" />
-                                                        @error('ctc_raiser_rtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="ctc_lower_rtu">TC Lower RTU</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ctc_lower_rtu"
-                                                            name="ctc_lower_rtu" placeholder="TC Lower RTU"
-                                                            value="{{ $penyulang->ctc_lower_rtu ?? old('ctc_lower_rtu') }}" />
-                                                        @error('ctc_lower_rtu')
+                                                        <input type="text" class="form-control" id="ctc_lower_address"
+                                                            name="ctc_lower_address" placeholder="TC Lower Address"
+                                                            value="{{ $penyulang->ctc_lower_address ?? old('ctc_lower_address') }}" />
+                                                        @error('ctc_lower_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-2">
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
                                                     <label for="ccb_open_objfrmt">CB Open OBJ/FRMT</label>
                                                     <div class="input-icon">
@@ -2056,7 +1776,7 @@
                                     <div class="tab-pane fade" id="v-pills-formtelemetering-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelemetering-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Arus Phase R</label>
                                                     <input class="form-control @error('ir_rtu') is-invalid @enderror"
@@ -2120,50 +1840,8 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Daya (P)</label>
-                                                    <input class="form-control @error('p_rtu') is-invalid @enderror"
-                                                        placeholder="P RTU" name="p_rtu"
-                                                        value="{{ old('p_rtu', $penyulang->p_rtu) }}">
-                                                    @error('p_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('p_ms') is-invalid @enderror"
-                                                        placeholder="P Master" name="p_ms"
-                                                        value="{{ old('p_ms', $penyulang->p_ms) }}">
-                                                    @error('p_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('p_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="p_scale"
-                                                        value="{{ old('p_scale', $penyulang->p_scale) }}">
-                                                    @error('p_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Tegangan</label>
-                                                    <input class="form-control @error('v_rtu') is-invalid @enderror"
-                                                        placeholder="V RTU" name="v_rtu"
-                                                        value="{{ old('v_rtu', $penyulang->v_rtu) }}">
-                                                    @error('v_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('v_ms') is-invalid @enderror"
-                                                        placeholder="V Master" name="v_ms"
-                                                        value="{{ old('v_ms', $penyulang->v_ms) }}">
-                                                    @error('v_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('v_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="v_scale"
-                                                        value="{{ old('v_scale', $penyulang->v_scale) }}">
-                                                    @error('v_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Arus Gangguan Phase R</label>
                                                     <input class="form-control @error('fir_rtu') is-invalid @enderror"
@@ -2227,6 +1905,8 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+                                            </div>
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Arus Gangguan Phase N</label>
                                                     <input class="form-control @error('fin_rtu') is-invalid @enderror"
@@ -2249,23 +1929,23 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Frekuensi</label>
-                                                    <input class="form-control @error('f_rtu') is-invalid @enderror"
-                                                        placeholder="F RTU" name="f_rtu"
-                                                        value="{{ old('f_rtu', $penyulang->f_rtu) }}">
-                                                    @error('f_rtu')
+                                                    <label>Tegangan</label>
+                                                    <input class="form-control @error('v_rtu') is-invalid @enderror"
+                                                        placeholder="V RTU" name="v_rtu"
+                                                        value="{{ old('v_rtu', $penyulang->v_rtu) }}">
+                                                    @error('v_rtu')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('f_ms') is-invalid @enderror"
-                                                        placeholder="F Master" name="f_ms"
-                                                        value="{{ old('f_ms', $penyulang->f_ms) }}">
-                                                    @error('f_ms')
+                                                    <input class="form-control @error('v_ms') is-invalid @enderror"
+                                                        placeholder="V Master" name="v_ms"
+                                                        value="{{ old('v_ms', $penyulang->v_ms) }}">
+                                                    @error('v_ms')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('f_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="f_scale"
-                                                        value="{{ old('f_scale', $penyulang->f_scale) }}">
-                                                    @error('f_scale')
+                                                    <input class="form-control @error('v_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="v_scale"
+                                                        value="{{ old('v_scale', $penyulang->v_scale) }}">
+                                                    @error('v_scale')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -2302,11 +1982,11 @@
                                         <div class="custom-form-container">
                                             <div class="custom-form-group">
                                                 <label for="id_pelms" class="custom-label">Pelaksana Master II</label>
-                                                <div class="custom-select-wrapper">
-                                                    <div class="selected-items" id="selected-items"></div>
+                                                <div class="custom-select-wrapper" id="ms-wrapper">
+                                                    <div class="selected-items" id="selected-items-ms"></div>
                                                     <input type="hidden" id="id_pelms" name="id_pelms"
                                                         value="{{ old('id_pelms', implode(',', $selectedPelms)) }}">
-                                                    <div class="dropdown" id="dropdown-options">
+                                                    <div class="dropdown" id="dropdown-options-ms">
                                                         @foreach ($pelms as $item)
                                                         <div class="dropdown-item" data-id="{{ $item->id_picmaster }}">
                                                             {{ $item->nama_picmaster }}
@@ -2314,7 +1994,8 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="invalid-feedback" id="error-message" style="display: none;">
+                                                <div class="invalid-feedback" id="error-message-ms"
+                                                    style="display: none;">
                                                     Please select at least one option.
                                                 </div>
                                                 @error('id_pelms')
@@ -2323,15 +2004,30 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="pelrtu">Pelaksana RTU</label>
-                                            <input type="text"
-                                                class="form-control text-uppercase @error('pelrtu') is-invalid @enderror"
-                                                id="pelrtu" name="pelrtu"
-                                                value="{{ old('pelrtu', $penyulang->pelrtu) }}">
-                                            @error('pelrtu')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <div class="custom-form-container">
+                                            <div class="custom-form-group">
+                                                <label for="id_pelrtu" class="custom-label">Pelaksana RTU II</label>
+                                                <div class="custom-select-wrapper" id="rtu-wrapper">
+                                                    <div class="selected-items" id="selected-items-rtu"></div>
+                                                    <input type="hidden" id="id_pelrtu" name="id_pelrtu"
+                                                        value="{{ old('id_pelrtu', implode(',', $selectedPelrtus)) }}">
+                                                    <div class="dropdown" id="dropdown-options-rtu">
+                                                        @foreach ($pelrtus as $item)
+                                                        <div class="dropdown-item" data-id="{{ $item->id_pelrtu }}">
+                                                            {{ $item->nama_pelrtu }}
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                <div class="invalid-feedback" id="error-message-rtu"
+                                                    style="display: none;">
+                                                    Please select at least one option.
+                                                </div>
+                                                @error('id_pelrtu')
+                                                <div class="invalid-feedback" style="display: block;">{{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -2362,81 +2058,95 @@
     </div>
 </div>
 <script>
-const hiddenInput = document.getElementById("id_pelms");
-let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
-const selectedItems = document.getElementById("selected-items");
-const dropdown = document.getElementById("dropdown-options");
-const errorMessage = document.getElementById("error-message");
-const wrapper = document.querySelector(".custom-select-wrapper");
+function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropdownId, errorId) {
+    const wrapper = document.getElementById(wrapperId);
+    const selectedItems = document.getElementById(selectedItemsId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    const dropdown = document.getElementById(dropdownId);
+    const errorMessage = document.getElementById(errorId);
+    const maxSelections = 2;
 
-function handleSelection() {
-    selectedItems.innerHTML = "";
-    hiddenInput.value = selectedValues.join(",");
-    selectedValues.forEach((value) => {
-        const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
-        if (option) {
-            const div = document.createElement("div");
-            div.className = "selected-item";
-            div.innerHTML =
-                `${option.textContent} <button class="remove-item" onclick="removeSelection('${value}')">×</button>`;
-            selectedItems.appendChild(div);
-        }
-    });
-    updateDropdown();
-    checkValidation();
-}
+    let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
 
-function removeSelection(value) {
-    selectedValues = selectedValues.filter(val => val !== value);
-    handleSelection();
-}
+    function handleSelection() {
+        selectedItems.innerHTML = "";
+        hiddenInput.value = selectedValues.join(",");
+        selectedValues.forEach((value) => {
+            const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
+            if (option) {
+                const div = document.createElement("div");
+                div.className = "selected-item";
+                div.innerHTML = `${option.textContent} <button class="remove-item">×</button>`;
+                selectedItems.appendChild(div);
+                div.querySelector('.remove-item').addEventListener('click', () => removeSelection(value));
+            }
+        });
+        updateDropdown();
+        checkValidation();
+    }
 
-function toggleSelection(value) {
-    if (selectedValues.includes(value)) {
+    function removeSelection(value) {
         selectedValues = selectedValues.filter(val => val !== value);
-    } else {
-        selectedValues.push(value);
+        handleSelection();
     }
-    handleSelection();
-}
 
-function updateDropdown() {
-    const items = dropdown.getElementsByClassName("dropdown-item");
-    Array.from(items).forEach((item) => {
-        const value = item.getAttribute("data-id");
+    function toggleSelection(value) {
         if (selectedValues.includes(value)) {
-            item.classList.add("selected");
-        } else {
-            item.classList.remove("selected");
+            selectedValues = selectedValues.filter(val => val !== value);
+        } else if (selectedValues.length < maxSelections) {
+            selectedValues.push(value);
+        }
+        handleSelection();
+    }
+
+    function updateDropdown() {
+        const items = dropdown.getElementsByClassName("dropdown-item");
+        Array.from(items).forEach((item) => {
+            const value = item.getAttribute("data-id");
+            if (selectedValues.includes(value)) {
+                item.classList.add("selected");
+            } else {
+                item.classList.remove("selected");
+            }
+        });
+        dropdown.classList.toggle("active", items.length > 0);
+    }
+
+    function checkValidation() {
+        const hasSelection = selectedValues.length > 0;
+        errorMessage.style.display = hasSelection ? "none" : "block";
+    }
+
+    // Toggle dropdown on click
+    wrapper.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!wrapper.contains(e.target)) {
+            dropdown.classList.remove("active");
         }
     });
-    dropdown.classList.toggle("active", items.length > 0);
+
+    // Add click event to dropdown items
+    dropdown.addEventListener("click", (e) => {
+        const item = e.target.closest(".dropdown-item");
+        if (item) {
+            const value = item.getAttribute("data-id");
+            toggleSelection(value);
+        }
+    });
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", handleSelection);
 }
 
-function checkValidation() {
-    const hasSelection = selectedValues.length > 0;
-    errorMessage.style.display = hasSelection ? "none" : "block";
-}
-// Toggle dropdown on click
-wrapper.addEventListener("click", (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle("active");
-});
-// Close dropdown when clicking outside
-document.addEventListener("click", (e) => {
-    if (!wrapper.contains(e.target)) {
-        dropdown.classList.remove("active");
-    }
-});
-// Initialize
-document.addEventListener("DOMContentLoaded", handleSelection);
-// Add click event to dropdown items
-dropdown.addEventListener("click", (e) => {
-    const item = e.target.closest(".dropdown-item");
-    if (item) {
-        const value = item.getAttribute("data-id");
-        toggleSelection(value);
-    }
-});
+// For PIC Master II
+initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms', 'error-message-ms');
+
+// For Pelaksana RTU II
+initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
 </script>
 @endsection
