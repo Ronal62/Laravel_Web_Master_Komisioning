@@ -48,22 +48,23 @@ class KeypointController extends Controller
             3 => 'merk_modem_rtu',
             4 => 'tb_formkp.ketkp',
             5 => 'tb_formkp.nama_user',
+            6 => 'pelaksana_rtu',
         ];
 
         $orderColumn = $columnMap[$orderColumnIndex] ?? 'tb_formkp.tgl_komisioning';
 
         // Base query with joins
         $query = DB::table('tb_formkp')
-            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
-            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
             ->select(
                 'tb_formkp.id_formkp',
                 'tb_formkp.tgl_komisioning',
                 'tb_formkp.nama_lbs as nama_keypoint',
                 DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
-                DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
+                'tb_formkp.id_merkrtu',
+                'tb_formkp.id_modem',
                 'tb_formkp.ketkp as keterangan',
-                'tb_formkp.nama_user as master'
+                'tb_formkp.nama_user as master',
+                'tb_formkp.id_pelrtu'
             );
 
         // Apply date range filter
@@ -83,7 +84,8 @@ class KeypointController extends Controller
                     ->orWhere('tb_formkp.nama_peny', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.nama_user', 'like', "%{$searchValue}%")
                     ->orWhereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$searchValue}%"])
-                    ->orWhereRaw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) LIKE ?", ["%{$searchValue}%"]);
+                    ->orWhere('tb_formkp.id_merkrtu', 'like', "%{$searchValue}%")
+                    ->orWhere('tb_formkp.id_modem', 'like', "%{$searchValue}%");
             });
         }
 
@@ -102,7 +104,8 @@ class KeypointController extends Controller
                         $query->whereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$colSearchValue}%"]);
                         break;
                     case 3:
-                        $query->whereRaw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) LIKE ?", ["%{$colSearchValue}%"]);
+                        $query->where('tb_formkp.id_merkrtu', 'like', "%{$colSearchValue}%")
+                            ->orWhere('tb_formkp.id_modem', 'like', "%{$colSearchValue}%");
                         break;
                     case 4:
                         $query->where('tb_formkp.ketkp', 'like', "%{$colSearchValue}%");
@@ -124,7 +127,7 @@ class KeypointController extends Controller
         if (strpos($orderColumn, 'gi_penyulang') !== false) {
             $query->orderByRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) {$orderDir}");
         } elseif (strpos($orderColumn, 'merk_modem_rtu') !== false) {
-            $query->orderByRaw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) {$orderDir}");
+            $query->orderBy('tb_formkp.id_merkrtu', $orderDir);
         } else {
             $query->orderBy($orderColumn, $orderDir);
         }
@@ -135,6 +138,21 @@ class KeypointController extends Controller
         // Format data
         $data = $records->map(function ($row) {
             $row->tgl_komisioning = Carbon::parse($row->tgl_komisioning)->format('l, d-m-Y');
+
+            // Process id_pelrtu to get Pelaksana RTU names
+            $idPelrtuArray = json_decode($row->id_pelrtu, true) ?? [];
+            $pelaksanaRtu = '';
+            if (!empty($idPelrtuArray)) {
+                $names = DB::table('tb_pelaksana_rtu')
+                    ->whereIn('id_pelrtu', $idPelrtuArray)
+                    ->pluck('nama_pelrtu')
+                    ->join(', ');
+                $pelaksanaRtu = $names;
+            }
+            $row->pelaksana_rtu = $pelaksanaRtu;
+
+            $row->merk_modem_rtu = $row->id_merkrtu . ' - ' . $row->id_modem; // Simple concat if no joins
+
             $row->action = '
             <a href="' . route('keypoint.clone', $row->id_formkp) . '" class="btn btn-icon btn-round btn-primary">
                 <i class="far fa-clone"></i>
@@ -267,9 +285,10 @@ class KeypointController extends Controller
         $garduinduk = DB::table('tb_garduinduk')->get();
         $sectoral = DB::table('tb_sectoral')->get();
         $komkp = DB::table('tb_komkp')->get();
-        $picmaster = DB::table('tb_picmaster')->get();
+        $pelms = DB::table('tb_picmaster')->get();
+        $pelrtus = DB::table('tb_pelaksana_rtu')->get();
 
-        return view('pages.keypoint.add', compact('merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'picmaster'));
+        return view('pages.keypoint.add', compact('merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'pelms', 'pelrtus'));
     }
 
     /**
@@ -278,9 +297,11 @@ class KeypointController extends Controller
     public function store(Request $request)
     {
 
-        // Preprocess id_picms to ensure it's an array
-        $idPicmsInput = $request->input('id_picms', '');
-        $idPicmsArray = !empty($idPicmsInput) ? array_filter(array_map('trim', explode(',', $idPicmsInput))) : [];
+        $idPelmsInput = $request->input('id_pelms', '');
+        $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
+
+        $idPelrtuInput = $request->input('id_pelrtu', '');
+        $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
 
         // Define array fields that come from checkboxes
         $arrayFields = [
@@ -509,12 +530,26 @@ class KeypointController extends Controller
             'sign_kp' => 'required|string|max:10',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'required|string|max:10',
-            'id_picms' => ['required', function ($attribute, $value, $fail) use ($idPicmsArray) {
-                if (empty($idPicmsArray)) {
-                    $fail('The id picms field must be an array and cannot be empty.');
+            'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
+                if (empty($idPelmsArray)) {
+                    $fail('The id pelms field must be an array and cannot be empty.');
+                }
+                foreach ($idPelmsArray as $id) {
+                    if (!DB::table('tb_picmaster')->where('id_picmaster', $id)->exists()) {
+                        $fail("Invalid id_pelms: $id");
+                    }
                 }
             }],
-            'pelrtu' => 'required|string|max:25',
+            'id_pelrtu' => ['required', function ($attribute, $value, $fail) use ($idPelrtuArray) {
+                if (empty($idPelrtuArray)) {
+                    $fail('The id pelrtu field must be an array and cannot be empty.');
+                }
+                foreach ($idPelrtuArray as $id) {
+                    if (!DB::table('tb_pelaksana_rtu')->where('id_pelrtu', $id)->exists()) {
+                        $fail("Invalid id_pelrtu: $id");
+                    }
+                }
+            }],
             'ketkp' => 'required|string|max:500',
         ]);
 
@@ -530,8 +565,9 @@ class KeypointController extends Controller
                 : '';
         }
 
-        // Merge preprocessed id_picms array into validated data
-        $validated['id_picms'] = json_encode($idPicmsArray);
+        // Merge preprocessed id_pelms array into validated data
+        $validated['id_pelms'] = json_encode($request->input('id_pelms', []));
+        $validated['id_pelrtu'] = json_encode($request->input('id_pelrtu', []));
 
         // Log validated data before creating the record
 
@@ -540,7 +576,6 @@ class KeypointController extends Controller
 
         return redirect()->route('keypoint.index')->with('success', 'Keypoint created successfully!');
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -804,7 +839,7 @@ class KeypointController extends Controller
                     $fail('The id picms field must be an array and cannot be empty.');
                 }
             }],
-            'pelrtu' => 'required|string|max:25',
+            'id_pelrtu' => 'required|string|max:25',
             'ketkp' => 'required|string|max:500',
         ]);
 
@@ -1101,7 +1136,7 @@ class KeypointController extends Controller
                     $fail('The id picms field must be an array and cannot be empty.');
                 }
             }],
-            'pelrtu' => 'required|string|max:25',
+            'id_pelrtu' => 'required|string|max:25',
             'ketkp' => 'required|string|max:500',
         ]);
 

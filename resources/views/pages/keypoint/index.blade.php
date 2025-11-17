@@ -63,6 +63,7 @@
                                     <th>Merk Modem & RTU</th>
                                     <th>Keterangan</th>
                                     <th>Master</th>
+                                    <th>Pelaksana RTU</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -76,6 +77,8 @@
                                     <th><input type="text" placeholder="Filter Merk" class="form-control" /></th>
                                     <th><input type="text" placeholder="Filter Keterangan" class="form-control" /></th>
                                     <th><input type="text" placeholder="Filter Master" class="form-control" /></th>
+                                    <th><input type="text" placeholder="Filter Pelaksana RTU" class="form-control" />
+                                    </th>
                                     <th></th> <!-- No filter for action -->
                                 </tr>
                             </tfoot>
@@ -147,6 +150,10 @@ $(document).ready(function() {
             {
                 data: 'master',
                 name: 'master'
+            },
+            {
+                data: 'pelaksana_rtu',
+                name: 'pelaksana_rtu'
             },
             {
                 data: 'action',

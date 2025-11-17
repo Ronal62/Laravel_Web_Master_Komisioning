@@ -203,1234 +203,1748 @@
                                     <!-- Form Telestatus Tab -->
                                     <div class="tab-pane fade" id="v-pills-formtelestatus-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelestatus-tab-nobd">
-                                        <div class="row">
-                                            <div class="col-md-12">
+                                        <div class="row g-3 g-lg-4">
+                                            <div class="col-12 col-lg-6">
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Open</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="cb_open_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_1"
-                                                                        id="cb_open_1" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_2"
-                                                                        id="cb_open_2" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_3"
-                                                                        id="cb_open_3" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_4"
-                                                                        id="cb_open_4" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="open_5"
-                                                                        id="cb_open_5" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">CB Open</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="cb_open_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_1"
+                                                                id="cb_open_1" class="selectgroup-input"
+                                                                {{ in_array('open_1', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_2"
+                                                                id="cb_open_2" class="selectgroup-input"
+                                                                {{ in_array('open_2', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_3"
+                                                                id="cb_open_3" class="selectgroup-input"
+                                                                {{ in_array('open_3', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_4"
+                                                                id="cb_open_4" class="selectgroup-input"
+                                                                {{ in_array('open_4', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="open_5"
+                                                                id="cb_open_5" class="selectgroup-input"
+                                                                {{ in_array('open_5', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="cb_close_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_1"
-                                                                        id="cb_close_1" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_2"
-                                                                        id="cb_close_2" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_3"
-                                                                        id="cb_close_3" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_4"
-                                                                        id="cb_close_4" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_5"
-                                                                        id="cb_close_5" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB 2 Open</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="cb2_open_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb2[]" value="open_1"
-                                                                        id="cb2_open_1" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb2[]" value="open_2"
-                                                                        id="cb2_open_2" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb2[]" value="open_3"
-                                                                        id="cb2_open_3" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb2[]" value="open_4"
-                                                                        id="cb2_open_4" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb2[]" value="open_5"
-                                                                        id="cb2_open_5" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">CB Close</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="cb_close_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_1"
+                                                                id="cb_close_1" class="selectgroup-input"
+                                                                {{ in_array('close_1', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_2"
+                                                                id="cb_close_2" class="selectgroup-input"
+                                                                {{ in_array('close_2', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_3"
+                                                                id="cb_close_3" class="selectgroup-input"
+                                                                {{ in_array('close_3', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_4"
+                                                                id="cb_close_4" class="selectgroup-input"
+                                                                {{ in_array('close_4', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb[]" value="close_5"
+                                                                id="cb_close_5" class="selectgroup-input"
+                                                                {{ in_array('close_5', old('s_cb', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB 2 Close</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="cb2_close_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_1"
-                                                                        id="cb2_close_1" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_2"
-                                                                        id="cb2_close_2" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_3"
-                                                                        id="cb2_close_3" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_4"
-                                                                        id="cb2_close_4" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_cb[]" value="close_5"
-                                                                        id="cb2_close_5" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">CB2 Open</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="cb2_open_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="open_1"
+                                                                id="cb2_open_1" class="selectgroup-input"
+                                                                {{ in_array('open_1', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="open_2"
+                                                                id="cb2_open_2" class="selectgroup-input"
+                                                                {{ in_array('open_2', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="open_3"
+                                                                id="cb2_open_3" class="selectgroup-input"
+                                                                {{ in_array('open_3', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="open_4"
+                                                                id="cb2_open_4" class="selectgroup-input"
+                                                                {{ in_array('open_4', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="open_5"
+                                                                id="cb2_open_5" class="selectgroup-input"
+                                                                {{ in_array('open_5', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">Local</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="lr_local_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_1"
-                                                                        id="lr_local_1" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_2"
-                                                                        id="lr_local_2" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_3"
-                                                                        id="lr_local_3" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_4"
-                                                                        id="lr_local_4" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]" value="local_5"
-                                                                        id="lr_local_5" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">CB2 Close</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="cb2_close_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="close_1"
+                                                                id="cb2_close_1" class="selectgroup-input"
+                                                                {{ in_array('close_1', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="close_2"
+                                                                id="cb2_close_2" class="selectgroup-input"
+                                                                {{ in_array('close_2', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="close_3"
+                                                                id="cb2_close_3" class="selectgroup-input"
+                                                                {{ in_array('close_3', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="close_4"
+                                                                id="cb2_close_4" class="selectgroup-input"
+                                                                {{ in_array('close_4', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_cb2[]" value="close_5"
+                                                                id="cb2_close_5" class="selectgroup-input"
+                                                                {{ in_array('close_5', old('s_cb2', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">Remote</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="lr_remote_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_1" id="lr_remote_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_2" id="lr_remote_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_3" id="lr_remote_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_4" id="lr_remote_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lr[]"
-                                                                        value="remote_5" id="lr_remote_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">Local</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="lr_local_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_1"
+                                                                id="lr_local_1" class="selectgroup-input"
+                                                                {{ in_array('local_1', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_2"
+                                                                id="lr_local_2" class="selectgroup-input"
+                                                                {{ in_array('local_2', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_3"
+                                                                id="lr_local_3" class="selectgroup-input"
+                                                                {{ in_array('local_3', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_4"
+                                                                id="lr_local_4" class="selectgroup-input"
+                                                                {{ in_array('local_4', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="local_5"
+                                                                id="lr_local_5" class="selectgroup-input"
+                                                                {{ in_array('local_5', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">Door Open</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="door_open_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="dropen_1" id="door_open_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="dropen_2" id="door_open_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="dropen_3" id="door_open_3"
-                                                                        class=" selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="dropen_4" id="door_open_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="dropen_5" id="door_open_5"
-                                                                        class=" selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">Remote</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="lr_remote_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_1"
+                                                                id="lr_remote_1" class="selectgroup-input"
+                                                                {{ in_array('remote_1', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_2"
+                                                                id="lr_remote_2" class="selectgroup-input"
+                                                                {{ in_array('remote_2', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_3"
+                                                                id="lr_remote_3" class="selectgroup-input"
+                                                                {{ in_array('remote_3', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_4"
+                                                                id="lr_remote_4" class="selectgroup-input"
+                                                                {{ in_array('remote_4', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lr[]" value="remote_5"
+                                                                id="lr_remote_5" class="selectgroup-input"
+                                                                {{ in_array('remote_5', old('s_lr', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">Door Close</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="door_close_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="drclose_1" id="door_close_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="drclose_2" id="door_close_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="drclose_3" id="door_close_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="drclose_4" id="door_close_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_door[]"
-                                                                        value="drclose_5" id="door_close_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">Door Open</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="door_open_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="dropen_1"
+                                                                id="door_open_1" class="selectgroup-input"
+                                                                {{ in_array('dropen_1', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="dropen_2"
+                                                                id="door_open_2" class="selectgroup-input"
+                                                                {{ in_array('dropen_2', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="dropen_3"
+                                                                id="door_open_3" class="selectgroup-input"
+                                                                {{ in_array('dropen_3', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="dropen_4"
+                                                                id="door_open_4" class="selectgroup-input"
+                                                                {{ in_array('dropen_4', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="dropen_5"
+                                                                id="door_open_5" class="selectgroup-input"
+                                                                {{ in_array('dropen_5', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">ACF Normal</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="acf_normal_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acnrml_1" id="acf_acnrml_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acnrml_2" id="acf_acnrml_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acnrml_3" id="acf_acnrml_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acnrml_4" id="acf_acnrml_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acnrml_5" id="acf_acnrml_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">Door Close</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="door_close_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="drclose_1"
+                                                                id="door_close_1" class="selectgroup-input"
+                                                                {{ in_array('drclose_1', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="drclose_2"
+                                                                id="door_close_2" class="selectgroup-input"
+                                                                {{ in_array('drclose_2', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="drclose_3"
+                                                                id="door_close_3" class="selectgroup-input"
+                                                                {{ in_array('drclose_3', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="drclose_4"
+                                                                id="door_close_4" class="selectgroup-input"
+                                                                {{ in_array('drclose_4', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_door[]" value="drclose_5"
+                                                                id="door_close_5" class="selectgroup-input"
+                                                                {{ in_array('drclose_5', old('s_door', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">ACF Failed</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="acf_failed_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acfail_1" id="acf_failed_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acfail_2" id="acf_failed_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acfail_3" id="acf_failed_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acfail_4" id="acf_failed_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_acf[]"
-                                                                        value="acfail_5" id="acf_failed_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">AC Normal</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="acf_normal_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acnrml_1"
+                                                                id="acf_normal_1" class="selectgroup-input"
+                                                                {{ in_array('acnrml_1', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acnrml_2"
+                                                                id="acf_normal_2" class="selectgroup-input"
+                                                                {{ in_array('acnrml_2', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acnrml_3"
+                                                                id="acf_normal_3" class="selectgroup-input"
+                                                                {{ in_array('acnrml_3', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acnrml_4"
+                                                                id="acf_normal_4" class="selectgroup-input"
+                                                                {{ in_array('acnrml_4', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acnrml_5"
+                                                                id="acf_normal_5" class="selectgroup-input"
+                                                                {{ in_array('acnrml_5', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">DCD Normal</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="dcd_normal_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcnrml_1" id="dcd_dcnrml_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcnrml_2" id="dcd_dcnrml_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcnrml_3" id="dcd_dcnrml_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcnrml_4" id="dcd_dcnrml_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcnrml_5" id="dcd_dcnrml_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">AC Fail</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="acf_fail_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acfail_1"
+                                                                id="acf_fail_1" class="selectgroup-input"
+                                                                {{ in_array('acfail_1', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acfail_2"
+                                                                id="acf_fail_2" class="selectgroup-input"
+                                                                {{ in_array('acfail_2', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acfail_3"
+                                                                id="acf_fail_3" class="selectgroup-input"
+                                                                {{ in_array('acfail_3', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acfail_4"
+                                                                id="acf_fail_4" class="selectgroup-input"
+                                                                {{ in_array('acfail_4', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_acf[]" value="acfail_5"
+                                                                id="acf_fail_5" class="selectgroup-input"
+                                                                {{ in_array('acfail_5', old('s_acf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">DCD Failed</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="dcd_failed_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcfail_1" id="dcd_dcfail_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcfail_2" id="dcd_dcfail_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcfail_3" id="dcd_dcfail_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcfail_4" id="dcd_dcfail_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcd[]"
-                                                                        value="dcfail_5" id="dcd_dcfail_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">DC Normal</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="dcf_normal_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcnrml_1"
+                                                                id="dcf_normal_1" class="selectgroup-input"
+                                                                {{ in_array('dcnrml_1', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcnrml_2"
+                                                                id="dcf_normal_2" class="selectgroup-input"
+                                                                {{ in_array('dcnrml_2', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcnrml_3"
+                                                                id="dcf_normal_3" class="selectgroup-input"
+                                                                {{ in_array('dcnrml_3', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcnrml_4"
+                                                                id="dcf_normal_4" class="selectgroup-input"
+                                                                {{ in_array('dcnrml_4', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcnrml_5"
+                                                                id="dcf_normal_5" class="selectgroup-input"
+                                                                {{ in_array('dcnrml_5', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">DCF Normal</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="dcf_normal_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcfnrml_1" id="dcf_dcfnrml_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcfnrml_2" id="dcf_dcfnrml_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcfnrml_3" id="dcf_dcfnrml_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcfnrml_4" id="dcf_dcfnrml_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcfnrml_5" id="dcf_dcfnrml_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">DC Fail</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="dcf_fail_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcfail_1"
+                                                                id="dcf_fail_1" class="selectgroup-input"
+                                                                {{ in_array('dcfail_1', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcfail_2"
+                                                                id="dcf_fail_2" class="selectgroup-input"
+                                                                {{ in_array('dcfail_2', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcfail_3"
+                                                                id="dcf_fail_3" class="selectgroup-input"
+                                                                {{ in_array('dcfail_3', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcfail_4"
+                                                                id="dcf_fail_4" class="selectgroup-input"
+                                                                {{ in_array('dcfail_4', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcf[]" value="dcfail_5"
+                                                                id="dcf_fail_5" class="selectgroup-input"
+                                                                {{ in_array('dcfail_5', old('s_dcf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">DCF Failed</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="dcf_failed_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcffail_1" id="dcf_dcffail_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcffail_2" id="dcf_dcffail_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcffail_3" id="dcf_dcffail_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcffail_4" id="dcf_dcffail_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_dcf[]"
-                                                                        value="dcffail_5" id="dcf_dcffail_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">HLT ON</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="hlt_on_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hlton_1" id="hlt_hlton_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hlton_2" id="hlt_hlton_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hlton_3" id="hlt_hlton_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hlton_4" id="hlt_hlton_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hlton_5" id="hlt_hlton_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">DCD Normal</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="dcd_normal_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcfnrml_1"
+                                                                id="dcd_normal_1" class="selectgroup-input"
+                                                                {{ in_array('dcfnrml_1', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcfnrml_2"
+                                                                id="dcd_normal_2" class="selectgroup-input"
+                                                                {{ in_array('dcfnrml_2', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcfnrml_3"
+                                                                id="dcd_normal_3" class="selectgroup-input"
+                                                                {{ in_array('dcfnrml_3', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcfnrml_4"
+                                                                id="dcd_normal_4" class="selectgroup-input"
+                                                                {{ in_array('dcfnrml_4', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcfnrml_5"
+                                                                id="dcd_normal_5" class="selectgroup-input"
+                                                                {{ in_array('dcfnrml_5', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">HLT OFF</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="hlt_off_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hltoff_1" id="hlt_hltoff_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hltoff_2" id="hlt_hltoff_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hltoff_3" id="hlt_hltoff_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hltoff_4" id="hlt_hltoff_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_hlt[]"
-                                                                        value="hltoff_5" id="hlt_hltoff_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">DCD Fail</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="dcd_fail_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcffail_1"
+                                                                id="dcd_fail_1" class="selectgroup-input"
+                                                                {{ in_array('dcffail_1', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcffail_2"
+                                                                id="dcd_fail_2" class="selectgroup-input"
+                                                                {{ in_array('dcffail_2', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcffail_3"
+                                                                id="dcd_fail_3" class="selectgroup-input"
+                                                                {{ in_array('dcffail_3', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcffail_4"
+                                                                id="dcd_fail_4" class="selectgroup-input"
+                                                                {{ in_array('dcffail_4', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_dcd[]" value="dcffail_5"
+                                                                id="dcd_fail_5" class="selectgroup-input"
+                                                                {{ in_array('dcffail_5', old('s_dcd', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">SF6 Normal</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="sf6_normal_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6nrml_1" id="sf6_sf6nrml_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6nrml_2" id="sf6_sf6nrml_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6nrml_3" id="sf6_sf6nrml_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6nrml_4" id="sf6_sf6nrml_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6nrml_5" id="sf6_sf6nrml_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">HLT On</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="hlt_on_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hlton_1"
+                                                                id="hlt_on_1" class="selectgroup-input"
+                                                                {{ in_array('hlton_1', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hlton_2"
+                                                                id="hlt_on_2" class="selectgroup-input"
+                                                                {{ in_array('hlton_2', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hlton_3"
+                                                                id="hlt_on_3" class="selectgroup-input"
+                                                                {{ in_array('hlton_3', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hlton_4"
+                                                                id="hlt_on_4" class="selectgroup-input"
+                                                                {{ in_array('hlton_4', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hlton_5"
+                                                                id="hlt_on_5" class="selectgroup-input"
+                                                                {{ in_array('hlton_5', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">SF6 Failed</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="sf6_failed_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6fail_1" id="sf6_sf6fail_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6fail_2" id="sf6_sf6fail_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6fail_3" id="sf6_sf6fail_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6fail_4" id="sf6_sf6fail_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_sf6[]"
-                                                                        value="sf6fail_5" id="sf6_sf6fail_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">HLT Off</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="hlt_off_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hltoff_1"
+                                                                id="hlt_off_1" class="selectgroup-input"
+                                                                {{ in_array('hltoff_1', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hltoff_2"
+                                                                id="hlt_off_2" class="selectgroup-input"
+                                                                {{ in_array('hltoff_2', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hltoff_3"
+                                                                id="hlt_off_3" class="selectgroup-input"
+                                                                {{ in_array('hltoff_3', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hltoff_4"
+                                                                id="hlt_off_4" class="selectgroup-input"
+                                                                {{ in_array('hltoff_4', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_hlt[]" value="hltoff_5"
+                                                                id="hlt_off_5" class="selectgroup-input"
+                                                                {{ in_array('hltoff_5', old('s_hlt', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">FIR Normal</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="fir_normal_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firnrml_1" id="fir_firnrml_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firnrml_2" id="fir_firnrml_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firnrml_3" id="fir_firnrml_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firnrml_4" id="fir_firnrml_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firnrml_5" id="fir_firnrml_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">SF6 Normal</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="sf6_normal_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6nrml_1"
+                                                                id="sf6_normal_1" class="selectgroup-input"
+                                                                {{ in_array('sf6nrml_1', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6nrml_2"
+                                                                id="sf6_normal_2" class="selectgroup-input"
+                                                                {{ in_array('sf6nrml_2', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6nrml_3"
+                                                                id="sf6_normal_3" class="selectgroup-input"
+                                                                {{ in_array('sf6nrml_3', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6nrml_4"
+                                                                id="sf6_normal_4" class="selectgroup-input"
+                                                                {{ in_array('sf6nrml_4', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6nrml_5"
+                                                                id="sf6_normal_5" class="selectgroup-input"
+                                                                {{ in_array('sf6nrml_5', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">FIR Failed</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="fir_failed_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firfail_1" id="fir_firfail_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firfail_2" id="fir_firfail_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firfail_3" id="fir_firfail_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firfail_4" id="fir_firfail_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fir[]"
-                                                                        value="firfail_5" id="fir_firfail_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">SF6 Fail</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="sf6_fail_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6fail_1"
+                                                                id="sf6_fail_1" class="selectgroup-input"
+                                                                {{ in_array('sf6fail_1', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6fail_2"
+                                                                id="sf6_fail_2" class="selectgroup-input"
+                                                                {{ in_array('sf6fail_2', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6fail_3"
+                                                                id="sf6_fail_3" class="selectgroup-input"
+                                                                {{ in_array('sf6fail_3', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6fail_4"
+                                                                id="sf6_fail_4" class="selectgroup-input"
+                                                                {{ in_array('sf6fail_4', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_sf6[]" value="sf6fail_5"
+                                                                id="sf6_fail_5" class="selectgroup-input"
+                                                                {{ in_array('sf6fail_5', old('s_sf6', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">FIS Normal</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="fis_normal_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisnrml_1" id="fis_fisnrml_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisnrml_2" id="fis_fisnrml_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisnrml_3" id="fis_fisnrml_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisnrml_4" id="fis_fisnrml_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisnrml_5" id="fis_fisnrml_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">FIR Normal</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="fir_normal_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firnrml_1"
+                                                                id="fir_normal_1" class="selectgroup-input"
+                                                                {{ in_array('firnrml_1', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firnrml_2"
+                                                                id="fir_normal_2" class="selectgroup-input"
+                                                                {{ in_array('firnrml_2', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firnrml_3"
+                                                                id="fir_normal_3" class="selectgroup-input"
+                                                                {{ in_array('firnrml_3', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firnrml_4"
+                                                                id="fir_normal_4" class="selectgroup-input"
+                                                                {{ in_array('firnrml_4', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firnrml_5"
+                                                                id="fir_normal_5" class="selectgroup-input"
+                                                                {{ in_array('firnrml_5', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">FIS Failed</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="fis_failed_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisfail_1" id="fis_fisfail_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisfail_2" id="fis_fisfail_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisfail_3" id="fis_fisfail_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisfail_4" id="fis_fisfail_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fis[]"
-                                                                        value="fisfail_5" id="fis_fisfail_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">FIR Fail</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="fir_fail_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firfail_1"
+                                                                id="fir_fail_1" class="selectgroup-input"
+                                                                {{ in_array('firfail_1', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firfail_2"
+                                                                id="fir_fail_2" class="selectgroup-input"
+                                                                {{ in_array('firfail_2', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firfail_3"
+                                                                id="fir_fail_3" class="selectgroup-input"
+                                                                {{ in_array('firfail_3', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firfail_4"
+                                                                id="fir_fail_4" class="selectgroup-input"
+                                                                {{ in_array('firfail_4', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fir[]" value="firfail_5"
+                                                                id="fir_fail_5" class="selectgroup-input"
+                                                                {{ in_array('firfail_5', old('s_fir', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">FIT Normal</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="fit_normal_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitnrml_1" id="fit_fitnrml_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitnrml_2" id="fit_fitnrml_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitnrml_3" id="fit_fitnrml_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitnrml_4" id="fit_fitnrml_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitnrml_5" id="fit_fitnrml_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">FIS Normal</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="fis_normal_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisnrml_1"
+                                                                id="fis_normal_1" class="selectgroup-input"
+                                                                {{ in_array('fisnrml_1', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisnrml_2"
+                                                                id="fis_normal_2" class="selectgroup-input"
+                                                                {{ in_array('fisnrml_2', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisnrml_3"
+                                                                id="fis_normal_3" class="selectgroup-input"
+                                                                {{ in_array('fisnrml_3', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisnrml_4"
+                                                                id="fis_normal_4" class="selectgroup-input"
+                                                                {{ in_array('fisnrml_4', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisnrml_5"
+                                                                id="fis_normal_5" class="selectgroup-input"
+                                                                {{ in_array('fisnrml_5', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">FIT Failed</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="fit_failed_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitfail_1" id="fit_fitfail_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitfail_2" id="fit_fitfail_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitfail_3" id="fit_fitfail_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitfail_4" id="fit_fitfail_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fit[]"
-                                                                        value="fitfail_5" id="fit_fitfail_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">FIS Fail</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="fis_fail_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisfail_1"
+                                                                id="fis_fail_1" class="selectgroup-input"
+                                                                {{ in_array('fisfail_1', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisfail_2"
+                                                                id="fis_fail_2" class="selectgroup-input"
+                                                                {{ in_array('fisfail_2', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisfail_3"
+                                                                id="fis_fail_3" class="selectgroup-input"
+                                                                {{ in_array('fisfail_3', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisfail_4"
+                                                                id="fis_fail_4" class="selectgroup-input"
+                                                                {{ in_array('fisfail_4', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fis[]" value="fisfail_5"
+                                                                id="fis_fail_5" class="selectgroup-input"
+                                                                {{ in_array('fisfail_5', old('s_fis', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">FIN Normal</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="fin_normal_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finnrml_1" id="fin_finnrml_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finnrml_2" id="fin_finnrml_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finnrml_3" id="fin_finnrml_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finnrml_4" id="fin_finnrml_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finnrml_3" id="fin_finnrml_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">FIT Normal</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="fit_normal_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitnrml_1"
+                                                                id="fit_normal_1" class="selectgroup-input"
+                                                                {{ in_array('fitnrml_1', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitnrml_2"
+                                                                id="fit_normal_2" class="selectgroup-input"
+                                                                {{ in_array('fitnrml_2', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitnrml_3"
+                                                                id="fit_normal_3" class="selectgroup-input"
+                                                                {{ in_array('fitnrml_3', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitnrml_4"
+                                                                id="fit_normal_4" class="selectgroup-input"
+                                                                {{ in_array('fitnrml_4', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitnrml_5"
+                                                                id="fit_normal_5" class="selectgroup-input"
+                                                                {{ in_array('fitnrml_5', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">FIN Failed</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" id="fin_failed_checkAll"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finfail_1" id="fin_finfail_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finfail_2" id="fin_finfail_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finfail_3" id="fin_finfail_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finfail_4" id="fin_finfail_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_fin[]"
-                                                                        value="finfail_5" id="fin_finfail_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Uji</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">FIT Fail</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="fit_fail_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitfail_1"
+                                                                id="fit_fail_1" class="selectgroup-input"
+                                                                {{ in_array('fitfail_1', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitfail_2"
+                                                                id="fit_fail_2" class="selectgroup-input"
+                                                                {{ in_array('fitfail_2', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitfail_3"
+                                                                id="fit_fail_3" class="selectgroup-input"
+                                                                {{ in_array('fitfail_3', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitfail_4"
+                                                                id="fit_fail_4" class="selectgroup-input"
+                                                                {{ in_array('fitfail_4', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fit[]" value="fitfail_5"
+                                                                id="fit_fail_5" class="selectgroup-input"
+                                                                {{ in_array('fitfail_5', old('s_fit', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">COMF</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_comf[]"
-                                                                        value="comf_nrml_1" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_comf[]"
-                                                                        value="comf_nrml_2" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_comf[]"
-                                                                        value="comf_nrml_3" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Ada</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">FIN Normal</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="fin_normal_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finnrml_1"
+                                                                id="fin_normal_1" class="selectgroup-input"
+                                                                {{ in_array('finnrml_1', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finnrml_2"
+                                                                id="fin_normal_2" class="selectgroup-input"
+                                                                {{ in_array('finnrml_2', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finnrml_3"
+                                                                id="fin_normal_3" class="selectgroup-input"
+                                                                {{ in_array('finnrml_3', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finnrml_4"
+                                                                id="fin_normal_4" class="selectgroup-input"
+                                                                {{ in_array('finnrml_4', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finnrml_5"
+                                                                id="fin_normal_5" class="selectgroup-input"
+                                                                {{ in_array('finnrml_5', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">LRUF</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lruf[]"
-                                                                        value="lruf_nrml_1" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lruf[]"
-                                                                        value="lruf_nrml_2" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="s_lruf[]"
-                                                                        value="lruf_nrml_5" class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Tidak Ada</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    <label class="form-label t-bold">FIN Fail</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="fin_fail_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finfail_1"
+                                                                id="fin_fail_1" class="selectgroup-input"
+                                                                {{ in_array('finfail_1', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finfail_2"
+                                                                id="fin_fail_2" class="selectgroup-input"
+                                                                {{ in_array('finfail_2', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finfail_3"
+                                                                id="fin_fail_3" class="selectgroup-input"
+                                                                {{ in_array('finfail_3', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finfail_4"
+                                                                id="fin_fail_4" class="selectgroup-input"
+                                                                {{ in_array('finfail_4', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_fin[]" value="finfail_5"
+                                                                id="fin_fail_5" class="selectgroup-input"
+                                                                {{ in_array('finfail_5', old('s_fin', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
                                                     </div>
                                                 </div>
-
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">COMF</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="comf_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_comf[]" value="comf_nrml_1"
+                                                                id="comf_1" class="selectgroup-input"
+                                                                {{ in_array('comf_nrml_1', old('s_comf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_comf[]" value="comf_nrml_2"
+                                                                id="comf_2" class="selectgroup-input"
+                                                                {{ in_array('comf_nrml_2', old('s_comf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_comf[]" value="comf_nrml_3"
+                                                                id="comf_3" class="selectgroup-input"
+                                                                {{ in_array('comf_nrml_3', old('s_comf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_comf[]" value="comf_nrml_4"
+                                                                id="comf_4" class="selectgroup-input"
+                                                                {{ in_array('comf_nrml_4', old('s_comf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_comf[]" value="comf_nrml_5"
+                                                                id="comf_5" class="selectgroup-input"
+                                                                {{ in_array('comf_nrml_5', old('s_comf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">LRUF</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="lruf_checkAll"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Normal</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lruf[]" value="lruf_nrml_1"
+                                                                id="lruf_1" class="selectgroup-input"
+                                                                {{ in_array('lruf_nrml_1', old('s_lruf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lruf[]" value="lruf_nrml_2"
+                                                                id="lruf_2" class="selectgroup-input"
+                                                                {{ in_array('lruf_nrml_2', old('s_lruf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lruf[]" value="lruf_nrml_3"
+                                                                id="lruf_3" class="selectgroup-input"
+                                                                {{ in_array('lruf_nrml_3', old('s_lruf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">LOG</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lruf[]" value="lruf_nrml_4"
+                                                                id="lruf_4" class="selectgroup-input"
+                                                                {{ in_array('lruf_nrml_4', old('s_lruf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="s_lruf[]" value="lruf_nrml_5"
+                                                                id="lruf_5" class="selectgroup-input"
+                                                                {{ in_array('lruf_nrml_5', old('s_lruf', [])) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Uji</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-3 ">
+                                                <div class="form-group ">
+                                                    <label for="scb_open_address">CB Open Address</label>
+                                                    <div class="input-icon ">
+                                                        <input type="text" class="form-control" id="scb_open_address"
+                                                            name="scb_open_address" placeholder="CB Open Address"
+                                                            value="{{ old('scb_open_address') }}" />
+                                                        @error('scb_open_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_address">CB Close Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_address"
+                                                            name="scb_close_address" placeholder="CB Close Address"
+                                                            value="{{ old('scb_close_address') }}" />
+                                                        @error('scb_close_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_open_address">CB2 Open Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_open_address"
+                                                            name="scb2_open_address" placeholder="CB2 Open Address"
+                                                            value="{{ old('scb2_open_address') }}" />
+                                                        @error('scb2_open_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_close_address">CB2 Close Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_close_address"
+                                                            name="scb2_close_address" placeholder="CB2 Close Address"
+                                                            value="{{ old('scb2_close_address') }}" />
+                                                        @error('scb2_close_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slr_local_address">Local Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slr_local_address"
+                                                            name="slr_local_address" placeholder="Local Address"
+                                                            value="{{ old('slr_local_address') }}" />
+                                                        @error('slr_local_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slr_remote_address">Remote Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slr_remote_address"
+                                                            name="slr_remote_address" placeholder="Remote Address"
+                                                            value="{{ old('slr_remote_address') }}" />
+                                                        @error('slr_remote_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdoor_open_address">Door Open Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdoor_open_address"
+                                                            name="sdoor_open_address" placeholder="Door Open Address"
+                                                            value="{{ old('sdoor_open_address') }}" />
+                                                        @error('sdoor_open_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdoor_close_address">Door Close Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdoor_close_address"
+                                                            name="sdoor_close_address" placeholder="Door Close Address"
+                                                            value="{{ old('sdoor_close_address') }}" />
+                                                        @error('sdoor_close_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sacf_normal_address">AC Normal Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sacf_normal_address"
+                                                            name="sacf_normal_address" placeholder="AC Normal Address"
+                                                            value="{{ old('sacf_normal_address') }}" />
+                                                        @error('sacf_normal_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sacf_fail_address">AC Fail Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sacf_fail_address"
+                                                            name="sacf_fail_address" placeholder="AC Fail Address"
+                                                            value="{{ old('sacf_fail_address') }}" />
+                                                        @error('sacf_fail_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcf_normal_address">DC Normal Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcf_normal_address"
+                                                            name="sdcf_normal_address" placeholder="DC Normal Address"
+                                                            value="{{ old('sdcf_normal_address') }}" />
+                                                        @error('sdcf_normal_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcf_fail_address">DC Fail Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcf_fail_address"
+                                                            name="sdcf_fail_address" placeholder="DC Fail Address"
+                                                            value="{{ old('sdcf_fail_address') }}" />
+                                                        @error('sdcf_fail_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcd_normal_address">DCD Normal Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcd_normal_address"
+                                                            name="sdcd_normal_address" placeholder="DCD Normal Address"
+                                                            value="{{ old('sdcd_normal_address') }}" />
+                                                        @error('sdcd_normal_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcd_fail_address">DCD Fail Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcd_fail_address"
+                                                            name="sdcd_fail_address" placeholder="DCD Fail Address"
+                                                            value="{{ old('sdcd_fail_address') }}" />
+                                                        @error('sdcd_fail_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_on_address">HLT On Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_on_address"
+                                                            name="shlt_on_address" placeholder="HLT On Address"
+                                                            value="{{ old('shlt_on_address') }}" />
+                                                        @error('shlt_on_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_off_address">HLT Off Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_off_address"
+                                                            name="shlt_off_address" placeholder="HLT Off Address"
+                                                            value="{{ old('shlt_off_address') }}" />
+                                                        @error('shlt_off_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ssf6_normal_address">SF6 Normal Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ssf6_normal_address"
+                                                            name="ssf6_normal_address" placeholder="SF6 Normal Address"
+                                                            value="{{ old('ssf6_normal_address') }}" />
+                                                        @error('ssf6_normal_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ssf6_fail_address">SF6 Fail Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ssf6_fail_address"
+                                                            name="ssf6_fail_address" placeholder="SF6 Fail Address"
+                                                            value="{{ old('ssf6_fail_address') }}" />
+                                                        @error('ssf6_fail_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfir_normal_address">FIR Normal Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfir_normal_address"
+                                                            name="sfir_normal_address" placeholder="FIR Normal Address"
+                                                            value="{{ old('sfir_normal_address') }}" />
+                                                        @error('sfir_normal_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfir_fail_address">FIR Fail Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfir_fail_address"
+                                                            name="sfir_fail_address" placeholder="FIR Fail Address"
+                                                            value="{{ old('sfir_fail_address') }}" />
+                                                        @error('sfir_fail_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfis_normal_address">FIS Normal Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfis_normal_address"
+                                                            name="sfis_normal_address" placeholder="FIS Normal Address"
+                                                            value="{{ old('sfis_normal_address') }}" />
+                                                        @error('sfis_normal_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfis_fail_address">FIS Fail Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfis_fail_address"
+                                                            name="sfis_fail_address" placeholder="FIS Fail Address"
+                                                            value="{{ old('sfis_fail_address') }}" />
+                                                        @error('sfis_fail_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfit_normal_address">FIT Normal Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfit_normal_address"
+                                                            name="sfit_normal_address" placeholder="FIT Normal Address"
+                                                            value="{{ old('sfit_normal_address') }}" />
+                                                        @error('sfit_normal_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfit_fail_address">FIT Fail Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfit_fail_address"
+                                                            name="sfit_fail_address" placeholder="FIT Fail Address"
+                                                            value="{{ old('sfit_fail_address') }}" />
+                                                        @error('sfit_fail_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfin_normal_address">FIN Normal Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfin_normal_address"
+                                                            name="sfin_normal_address" placeholder="FIN Normal Address"
+                                                            value="{{ old('sfin_normal_address') }}" />
+                                                        @error('sfin_normal_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfin_fail_address">FIN Fail Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfin_fail_address"
+                                                            name="sfin_fail_address" placeholder="FIN Fail Address"
+                                                            value="{{ old('sfin_fail_address') }}" />
+                                                        @error('sfin_fail_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scomf_address">COMF Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scomf_address"
+                                                            name="scomf_address" placeholder="COMF Address"
+                                                            value="{{ old('scomf_address') }}" />
+                                                        @error('scomf_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slruf_address">LRUF Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slruf_address"
+                                                            name="slruf_address" placeholder="LRUF Address"
+                                                            value="{{ old('slruf_address') }}" />
+                                                        @error('slruf_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="scb_open_objfrmt">CB Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_open_objfrmt"
+                                                            name="scb_open_objfrmt" placeholder="CB Open OBJ/FRMT"
+                                                            value="{{ old('scb_open_objfrmt') }}" />
+                                                        @error('scb_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_objfrmt">CB Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_objfrmt"
+                                                            name="scb_close_objfrmt" placeholder="CB Close OBJ/FRMT"
+                                                            value="{{ old('scb_close_objfrmt') }}" />
+                                                        @error('scb_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_open_objfrmt">CB2 Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_open_objfrmt"
+                                                            name="scb2_open_objfrmt" placeholder="CB2 Open OBJ/FRMT"
+                                                            value="{{ old('scb2_open_objfrmt') }}" />
+                                                        @error('scb2_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_close_objfrmt">CB2 Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_close_objfrmt"
+                                                            name="scb2_close_objfrmt" placeholder="CB2 Close OBJ/FRMT"
+                                                            value="{{ old('scb2_close_objfrmt') }}" />
+                                                        @error('scb2_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slr_local_objfrmt">Local OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slr_local_objfrmt"
+                                                            name="slr_local_objfrmt" placeholder="Local OBJ/FRMT"
+                                                            value="{{ old('slr_local_objfrmt') }}" />
+                                                        @error('slr_local_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slr_remote_objfrmt">Remote OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slr_remote_objfrmt"
+                                                            name="slr_remote_objfrmt" placeholder="Remote OBJ/FRMT"
+                                                            value="{{ old('slr_remote_objfrmt') }}" />
+                                                        @error('slr_remote_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdoor_open_objfrmt">Door Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdoor_open_objfrmt"
+                                                            name="sdoor_open_objfrmt" placeholder="Door Open OBJ/FRMT"
+                                                            value="{{ old('sdoor_open_objfrmt') }}" />
+                                                        @error('sdoor_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdoor_close_objfrmt">Door Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdoor_close_objfrmt"
+                                                            name="sdoor_close_objfrmt" placeholder="Door Close OBJ/FRMT"
+                                                            value="{{ old('sdoor_close_objfrmt') }}" />
+                                                        @error('sdoor_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sacf_normal_objfrmt">AC Normal OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sacf_normal_objfrmt"
+                                                            name="sacf_normal_objfrmt" placeholder="AC Normal OBJ/FRMT"
+                                                            value="{{ old('sacf_normal_objfrmt') }}" />
+                                                        @error('sacf_normal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sacf_fail_objfrmt">AC Fail OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sacf_fail_objfrmt"
+                                                            name="sacf_fail_objfrmt" placeholder="AC Fail OBJ/FRMT"
+                                                            value="{{ old('sacf_fail_objfrmt') }}" />
+                                                        @error('sacf_fail_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcf_normal_objfrmt">DC Normal OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcf_normal_objfrmt"
+                                                            name="sdcf_normal_objfrmt" placeholder="DC Normal OBJ/FRMT"
+                                                            value="{{ old('sdcf_normal_objfrmt') }}" />
+                                                        @error('sdcf_normal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcf_fail_objfrmt">DC Fail OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcf_fail_objfrmt"
+                                                            name="sdcf_fail_objfrmt" placeholder="DC Fail OBJ/FRMT"
+                                                            value="{{ old('sdcf_fail_objfrmt') }}" />
+                                                        @error('sdcf_fail_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcd_normal_objfrmt">DCD Normal OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcd_normal_objfrmt"
+                                                            name="sdcd_normal_objfrmt" placeholder="DCD Normal OBJ/FRMT"
+                                                            value="{{ old('sdcd_normal_objfrmt') }}" />
+                                                        @error('sdcd_normal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcd_fail_objfrmt">DCD Fail OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcd_fail_objfrmt"
+                                                            name="sdcd_fail_objfrmt" placeholder="DCD Fail OBJ/FRMT"
+                                                            value="{{ old('sdcd_fail_objfrmt') }}" />
+                                                        @error('sdcd_fail_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_on_objfrmt">HLT On OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_on_objfrmt"
+                                                            name="shlt_on_objfrmt" placeholder="HLT On OBJ/FRMT"
+                                                            value="{{ old('shlt_on_objfrmt') }}" />
+                                                        @error('shlt_on_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_off_objfrmt">HLT Off OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_off_objfrmt"
+                                                            name="shlt_off_objfrmt" placeholder="HLT Off OBJ/FRMT"
+                                                            value="{{ old('shlt_off_objfrmt') }}" />
+                                                        @error('shlt_off_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ssf6_normal_objfrmt">SF6 Normal OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ssf6_normal_objfrmt"
+                                                            name="ssf6_normal_objfrmt" placeholder="SF6 Normal OBJ/FRMT"
+                                                            value="{{ old('ssf6_normal_objfrmt') }}" />
+                                                        @error('ssf6_normal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ssf6_fail_objfrmt">SF6 Fail OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ssf6_fail_objfrmt"
+                                                            name="ssf6_fail_objfrmt" placeholder="SF6 Fail OBJ/FRMT"
+                                                            value="{{ old('ssf6_fail_objfrmt') }}" />
+                                                        @error('ssf6_fail_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfir_normal_objfrmt">FIR Normal OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfir_normal_objfrmt"
+                                                            name="sfir_normal_objfrmt" placeholder="FIR Normal OBJ/FRMT"
+                                                            value="{{ old('sfir_normal_objfrmt') }}" />
+                                                        @error('sfir_normal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfir_fail_objfrmt">FIR Fail OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfir_fail_objfrmt"
+                                                            name="sfir_fail_objfrmt" placeholder="FIR Fail OBJ/FRMT"
+                                                            value="{{ old('sfir_fail_objfrmt') }}" />
+                                                        @error('sfir_fail_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfis_normal_objfrmt">FIS Normal OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfis_normal_objfrmt"
+                                                            name="sfis_normal_objfrmt" placeholder="FIS Normal OBJ/FRMT"
+                                                            value="{{ old('sfis_normal_objfrmt') }}" />
+                                                        @error('sfis_normal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfis_fail_objfrmt">FIS Fail OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfis_fail_objfrmt"
+                                                            name="sfis_fail_objfrmt" placeholder="FIS Fail OBJ/FRMT"
+                                                            value="{{ old('sfis_fail_objfrmt') }}" />
+                                                        @error('sfis_fail_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfit_normal_objfrmt">FIT Normal OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfit_normal_objfrmt"
+                                                            name="sfit_normal_objfrmt" placeholder="FIT Normal OBJ/FRMT"
+                                                            value="{{ old('sfit_normal_objfrmt') }}" />
+                                                        @error('sfit_normal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfit_fail_objfrmt">FIT Fail OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfit_fail_objfrmt"
+                                                            name="sfit_fail_objfrmt" placeholder="FIT Fail OBJ/FRMT"
+                                                            value="{{ old('sfit_fail_objfrmt') }}" />
+                                                        @error('sfit_fail_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfin_normal_objfrmt">FIN Normal OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfin_normal_objfrmt"
+                                                            name="sfin_normal_objfrmt" placeholder="FIN Normal OBJ/FRMT"
+                                                            value="{{ old('sfin_normal_objfrmt') }}" />
+                                                        @error('sfin_normal_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfin_fail_objfrmt">FIN Fail OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfin_fail_objfrmt"
+                                                            name="sfin_fail_objfrmt" placeholder="FIN Fail OBJ/FRMT"
+                                                            value="{{ old('sfin_fail_objfrmt') }}" />
+                                                        @error('sfin_fail_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scomf_objfrmt">COMF OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scomf_objfrmt"
+                                                            name="scomf_objfrmt" placeholder="COMF OBJ/FRMT"
+                                                            value="{{ old('scomf_objfrmt') }}" />
+                                                        @error('scomf_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slruf_objfrmt">LRUF OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slruf_objfrmt"
+                                                            name="slruf_objfrmt" placeholder="LRUF OBJ/FRMT"
+                                                            value="{{ old('slruf_objfrmt') }}" />
+                                                        @error('slruf_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1942,38 +2456,55 @@
                                         </div>
                                         <div class="custom-form-container">
                                             <div class="custom-form-group">
-                                                <label for="id_picms" class="custom-label">Pelaksana Master II</label>
-                                                <div class="custom-select-wrapper">
-                                                    <div class="selected-items" id="selected-items"></div>
-                                                    <input type="hidden" id="id_picms" name="id_picms"
-                                                        value="{{ old('id_picms', implode(',', $selectedPicms ?? [])) }}">
-                                                    <div class="dropdown" id="dropdown-options">
-                                                        @foreach ($picmaster as $item)
+                                                <label for="id_pelms" class="custom-label">Pelaksana Master
+                                                    II</label>
+                                                <div class="custom-select-wrapper" id="ms-wrapper">
+                                                    <div class="selected-items" id="selected-items-ms"></div>
+                                                    <input type="hidden" id="id_pelms" name="id_pelms"
+                                                        value="{{ old('id_pelms') }}">
+                                                    <div class="dropdown" id="dropdown-options-ms">
+                                                        @foreach ($pelms as $item)
                                                         <div class="dropdown-item" data-id="{{ $item->id_picmaster }}">
                                                             {{ $item->nama_picmaster }}
                                                         </div>
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="invalid-feedback" id="error-message" style="display: none;">
+                                                <div class="invalid-feedback" id="error-message-ms"
+                                                    style="display: none;">
                                                     Please select at least one option.
                                                 </div>
-                                                @error('id_picms')
+                                                @error('id_pelms')
                                                 <div class="invalid-feedback" style="display: block;">{{ $message }}
                                                 </div>
                                                 @enderror
                                             </div>
                                         </div>
-
-
-                                        <div class="form-group">
-                                            <label for="pelrtu">Pelaksana RTU</label>
-                                            <input type="text"
-                                                class="form-control text-uppercase @error('pelrtu') is-invalid @enderror"
-                                                id="pelrtu" name="pelrtu" value="{{ old('pelrtu') }}">
-                                            @error('pelrtu')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <div class="custom-form-container">
+                                            <div class="custom-form-group">
+                                                <label for="id_pelrtu" class="custom-label">Pelaksana RTU
+                                                    II</label>
+                                                <div class="custom-select-wrapper" id="rtu-wrapper">
+                                                    <div class="selected-items" id="selected-items-rtu"></div>
+                                                    <input type="hidden" id="id_pelrtu" name="id_pelrtu"
+                                                        value="{{ old('id_pelrtu') }}">
+                                                    <div class="dropdown" id="dropdown-options-rtu">
+                                                        @foreach ($pelrtus as $item)
+                                                        <div class="dropdown-item" data-id="{{ $item->id_pelrtu }}">
+                                                            {{ $item->nama_pelrtu }}
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                <div class="invalid-feedback" id="error-message-rtu"
+                                                    style="display: none;">
+                                                    Please select at least one option.
+                                                </div>
+                                                @error('id_pelrtu')
+                                                <div class="invalid-feedback" style="display: block;">{{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -2004,91 +2535,96 @@
 </div>
 
 <script>
-const hiddenInput = document.getElementById("id_picms");
-let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
+function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropdownId, errorId) {
+    const wrapper = document.getElementById(wrapperId);
+    const selectedItems = document.getElementById(selectedItemsId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    const dropdown = document.getElementById(dropdownId);
+    const errorMessage = document.getElementById(errorId);
+    const maxSelections = 2;
 
-const selectedItems = document.getElementById("selected-items");
-const dropdown = document.getElementById("dropdown-options");
-const errorMessage = document.getElementById("error-message");
-const wrapper = document.querySelector(".custom-select-wrapper");
+    let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
 
-function handleSelection() {
-    selectedItems.innerHTML = "";
-    hiddenInput.value = selectedValues.join(",");
+    function handleSelection() {
+        selectedItems.innerHTML = "";
+        hiddenInput.value = selectedValues.join(",");
+        selectedValues.forEach((value) => {
+            const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
+            if (option) {
+                const div = document.createElement("div");
+                div.className = "selected-item";
+                div.innerHTML = `${option.textContent} <button class="remove-item">×</button>`;
+                selectedItems.appendChild(div);
+                div.querySelector('.remove-item').addEventListener('click', () => removeSelection(value));
+            }
+        });
+        updateDropdown();
+        checkValidation();
+    }
 
-    selectedValues.forEach((value) => {
-        const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
-        if (option) {
-            const div = document.createElement("div");
-            div.className = "selected-item";
-            div.innerHTML =
-                `${option.textContent} <button class="remove-item" onclick="removeSelection('${value}')">×</button>`;
-            selectedItems.appendChild(div);
-        }
-    });
-
-    updateDropdown();
-    checkValidation();
-}
-
-function removeSelection(value) {
-    selectedValues = selectedValues.filter(val => val !== value);
-    handleSelection();
-}
-
-function toggleSelection(value) {
-    if (selectedValues.includes(value)) {
+    function removeSelection(value) {
         selectedValues = selectedValues.filter(val => val !== value);
-    } else {
-        selectedValues.push(value);
+        handleSelection();
     }
-    handleSelection();
-}
 
-function updateDropdown() {
-    const items = dropdown.getElementsByClassName("dropdown-item");
-    Array.from(items).forEach((item) => {
-        const value = item.getAttribute("data-id");
+    function toggleSelection(value) {
         if (selectedValues.includes(value)) {
-            item.classList.add("selected");
-        } else {
-            item.classList.remove("selected");
+            selectedValues = selectedValues.filter(val => val !== value);
+        } else if (selectedValues.length < maxSelections) {
+            selectedValues.push(value);
+        }
+        handleSelection();
+    }
+
+    function updateDropdown() {
+        const items = dropdown.getElementsByClassName("dropdown-item");
+        Array.from(items).forEach((item) => {
+            const value = item.getAttribute("data-id");
+            if (selectedValues.includes(value)) {
+                item.classList.add("selected");
+            } else {
+                item.classList.remove("selected");
+            }
+        });
+        dropdown.classList.toggle("active", items.length > 0);
+    }
+
+    function checkValidation() {
+        const hasSelection = selectedValues.length > 0;
+        errorMessage.style.display = hasSelection ? "none" : "block";
+    }
+
+    // Toggle dropdown on click
+    wrapper.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!wrapper.contains(e.target)) {
+            dropdown.classList.remove("active");
         }
     });
 
-    dropdown.classList.toggle("active", items.length > 0);
+    // Add click event to dropdown items
+    dropdown.addEventListener("click", (e) => {
+        const item = e.target.closest(".dropdown-item");
+        if (item) {
+            const value = item.getAttribute("data-id");
+            toggleSelection(value);
+        }
+    });
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", handleSelection);
 }
 
-function checkValidation() {
-    const hasSelection = selectedValues.length > 0;
-    errorMessage.style.display = hasSelection ? "none" : "block";
-}
+// For PIC Master II
+initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms', 'error-message-ms');
 
-// Toggle dropdown on click
-wrapper.addEventListener("click", (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle("active");
-});
-
-// Close dropdown when clicking outside
-document.addEventListener("click", (e) => {
-    if (!wrapper.contains(e.target)) {
-        dropdown.classList.remove("active");
-    }
-});
-
-// Initialize
-document.addEventListener("DOMContentLoaded", handleSelection);
-
-// Add click event to dropdown items
-dropdown.addEventListener("click", (e) => {
-    const item = e.target.closest(".dropdown-item");
-    if (item) {
-        const value = item.getAttribute("data-id");
-        toggleSelection(value);
-    }
-});
+// For Pelaksana RTU II
+initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
 </script>
-
 
 @endsection
