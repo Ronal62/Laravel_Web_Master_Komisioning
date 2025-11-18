@@ -1326,317 +1326,317 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-3 ">
+                                            <div class="col-12 col-lg-2 ">
                                                 <div class="form-group ">
-                                                    <label for="scb_open_address">CB Open Address</label>
+                                                    <label for="scb_open_addms">CB Open AddMs</label>
                                                     <div class="input-icon ">
-                                                        <input type="text" class="form-control" id="scb_open_address"
-                                                            name="scb_open_address" placeholder="CB Open Address"
-                                                            value="{{ old('scb_open_address') }}" />
-                                                        @error('scb_open_address')
+                                                        <input type="text" class="form-control" id="scb_open_addms"
+                                                            name="scb_open_addms" placeholder="CB Open AddMs"
+                                                            value="{{ old('scb_open_addms') }}" />
+                                                        @error('scb_open_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb_close_address">CB Close Address</label>
+                                                    <label for="scb_close_addms">CB Close AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_close_address"
-                                                            name="scb_close_address" placeholder="CB Close Address"
-                                                            value="{{ old('scb_close_address') }}" />
-                                                        @error('scb_close_address')
+                                                        <input type="text" class="form-control" id="scb_close_addms"
+                                                            name="scb_close_addms" placeholder="CB Close AddMs"
+                                                            value="{{ old('scb_close_addms') }}" />
+                                                        @error('scb_close_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb2_open_address">CB2 Open Address</label>
+                                                    <label for="scb2_open_addms">CB2 Open AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb2_open_address"
-                                                            name="scb2_open_address" placeholder="CB2 Open Address"
-                                                            value="{{ old('scb2_open_address') }}" />
-                                                        @error('scb2_open_address')
+                                                        <input type="text" class="form-control" id="scb2_open_addms"
+                                                            name="scb2_open_addms" placeholder="CB2 Open AddMs"
+                                                            value="{{ old('scb2_open_addms') }}" />
+                                                        @error('scb2_open_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb2_close_address">CB2 Close Address</label>
+                                                    <label for="scb2_close_addms">CB2 Close AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb2_close_address"
-                                                            name="scb2_close_address" placeholder="CB2 Close Address"
-                                                            value="{{ old('scb2_close_address') }}" />
-                                                        @error('scb2_close_address')
+                                                        <input type="text" class="form-control" id="scb2_close_addms"
+                                                            name="scb2_close_addms" placeholder="CB2 Close AddMs"
+                                                            value="{{ old('scb2_close_addms') }}" />
+                                                        @error('scb2_close_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="slr_local_address">Local Address</label>
+                                                    <label for="slr_local_addms">Local AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="slr_local_address"
-                                                            name="slr_local_address" placeholder="Local Address"
-                                                            value="{{ old('slr_local_address') }}" />
-                                                        @error('slr_local_address')
+                                                        <input type="text" class="form-control" id="slr_local_addms"
+                                                            name="slr_local_addms" placeholder="Local AddMs"
+                                                            value="{{ old('slr_local_addms') }}" />
+                                                        @error('slr_local_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="slr_remote_address">Remote Address</label>
+                                                    <label for="slr_remote_addms">Remote AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="slr_remote_address"
-                                                            name="slr_remote_address" placeholder="Remote Address"
-                                                            value="{{ old('slr_remote_address') }}" />
-                                                        @error('slr_remote_address')
+                                                        <input type="text" class="form-control" id="slr_remote_addms"
+                                                            name="slr_remote_addms" placeholder="Remote AddMs"
+                                                            value="{{ old('slr_remote_addms') }}" />
+                                                        @error('slr_remote_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdoor_open_address">Door Open Address</label>
+                                                    <label for="sdoor_open_addms">Door Open AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdoor_open_address"
-                                                            name="sdoor_open_address" placeholder="Door Open Address"
-                                                            value="{{ old('sdoor_open_address') }}" />
-                                                        @error('sdoor_open_address')
+                                                        <input type="text" class="form-control" id="sdoor_open_addms"
+                                                            name="sdoor_open_addms" placeholder="Door Open AddMs"
+                                                            value="{{ old('sdoor_open_addms') }}" />
+                                                        @error('sdoor_open_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdoor_close_address">Door Close Address</label>
+                                                    <label for="sdoor_close_addms">Door Close AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdoor_close_address"
-                                                            name="sdoor_close_address" placeholder="Door Close Address"
-                                                            value="{{ old('sdoor_close_address') }}" />
-                                                        @error('sdoor_close_address')
+                                                        <input type="text" class="form-control" id="sdoor_close_addms"
+                                                            name="sdoor_close_addms" placeholder="Door Close AddMs"
+                                                            value="{{ old('sdoor_close_addms') }}" />
+                                                        @error('sdoor_close_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sacf_normal_address">AC Normal Address</label>
+                                                    <label for="sacf_normal_addms">AC Normal AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sacf_normal_address"
-                                                            name="sacf_normal_address" placeholder="AC Normal Address"
-                                                            value="{{ old('sacf_normal_address') }}" />
-                                                        @error('sacf_normal_address')
+                                                        <input type="text" class="form-control" id="sacf_normal_addms"
+                                                            name="sacf_normal_addms" placeholder="AC Normal AddMs"
+                                                            value="{{ old('sacf_normal_addms') }}" />
+                                                        @error('sacf_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sacf_fail_address">AC Fail Address</label>
+                                                    <label for="sacf_fail_addms">AC Fail AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sacf_fail_address"
-                                                            name="sacf_fail_address" placeholder="AC Fail Address"
-                                                            value="{{ old('sacf_fail_address') }}" />
-                                                        @error('sacf_fail_address')
+                                                        <input type="text" class="form-control" id="sacf_fail_addms"
+                                                            name="sacf_fail_addms" placeholder="AC Fail AddMs"
+                                                            value="{{ old('sacf_fail_addms') }}" />
+                                                        @error('sacf_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcf_normal_address">DC Normal Address</label>
+                                                    <label for="sdcf_normal_addms">DC Normal AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdcf_normal_address"
-                                                            name="sdcf_normal_address" placeholder="DC Normal Address"
-                                                            value="{{ old('sdcf_normal_address') }}" />
-                                                        @error('sdcf_normal_address')
+                                                        <input type="text" class="form-control" id="sdcf_normal_addms"
+                                                            name="sdcf_normal_addms" placeholder="DC Normal AddMs"
+                                                            value="{{ old('sdcf_normal_addms') }}" />
+                                                        @error('sdcf_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcf_fail_address">DC Fail Address</label>
+                                                    <label for="sdcf_fail_addms">DC Fail AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdcf_fail_address"
-                                                            name="sdcf_fail_address" placeholder="DC Fail Address"
-                                                            value="{{ old('sdcf_fail_address') }}" />
-                                                        @error('sdcf_fail_address')
+                                                        <input type="text" class="form-control" id="sdcf_fail_addms"
+                                                            name="sdcf_fail_addms" placeholder="DC Fail AddMs"
+                                                            value="{{ old('sdcf_fail_addms') }}" />
+                                                        @error('sdcf_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcd_normal_address">DCD Normal Address</label>
+                                                    <label for="sdcd_normal_addms">DCD Normal AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdcd_normal_address"
-                                                            name="sdcd_normal_address" placeholder="DCD Normal Address"
-                                                            value="{{ old('sdcd_normal_address') }}" />
-                                                        @error('sdcd_normal_address')
+                                                        <input type="text" class="form-control" id="sdcd_normal_addms"
+                                                            name="sdcd_normal_addms" placeholder="DCD Normal AddMs"
+                                                            value="{{ old('sdcd_normal_addms') }}" />
+                                                        @error('sdcd_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcd_fail_address">DCD Fail Address</label>
+                                                    <label for="sdcd_fail_addms">DCD Fail AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sdcd_fail_address"
-                                                            name="sdcd_fail_address" placeholder="DCD Fail Address"
-                                                            value="{{ old('sdcd_fail_address') }}" />
-                                                        @error('sdcd_fail_address')
+                                                        <input type="text" class="form-control" id="sdcd_fail_addms"
+                                                            name="sdcd_fail_addms" placeholder="DCD Fail AddMs"
+                                                            value="{{ old('sdcd_fail_addms') }}" />
+                                                        @error('sdcd_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="shlt_on_address">HLT On Address</label>
+                                                    <label for="shlt_on_addms">HLT On AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="shlt_on_address"
-                                                            name="shlt_on_address" placeholder="HLT On Address"
-                                                            value="{{ old('shlt_on_address') }}" />
-                                                        @error('shlt_on_address')
+                                                        <input type="text" class="form-control" id="shlt_on_addms"
+                                                            name="shlt_on_addms" placeholder="HLT On AddMs"
+                                                            value="{{ old('shlt_on_addms') }}" />
+                                                        @error('shlt_on_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="shlt_off_address">HLT Off Address</label>
+                                                    <label for="shlt_off_addms">HLT Off AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="shlt_off_address"
-                                                            name="shlt_off_address" placeholder="HLT Off Address"
-                                                            value="{{ old('shlt_off_address') }}" />
-                                                        @error('shlt_off_address')
+                                                        <input type="text" class="form-control" id="shlt_off_addms"
+                                                            name="shlt_off_addms" placeholder="HLT Off AddMs"
+                                                            value="{{ old('shlt_off_addms') }}" />
+                                                        @error('shlt_off_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="ssf6_normal_address">SF6 Normal Address</label>
+                                                    <label for="ssf6_normal_addms">SF6 Normal AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ssf6_normal_address"
-                                                            name="ssf6_normal_address" placeholder="SF6 Normal Address"
-                                                            value="{{ old('ssf6_normal_address') }}" />
-                                                        @error('ssf6_normal_address')
+                                                        <input type="text" class="form-control" id="ssf6_normal_addms"
+                                                            name="ssf6_normal_addms" placeholder="SF6 Normal AddMs"
+                                                            value="{{ old('ssf6_normal_addms') }}" />
+                                                        @error('ssf6_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="ssf6_fail_address">SF6 Fail Address</label>
+                                                    <label for="ssf6_fail_addms">SF6 Fail AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ssf6_fail_address"
-                                                            name="ssf6_fail_address" placeholder="SF6 Fail Address"
-                                                            value="{{ old('ssf6_fail_address') }}" />
-                                                        @error('ssf6_fail_address')
+                                                        <input type="text" class="form-control" id="ssf6_fail_addms"
+                                                            name="ssf6_fail_addms" placeholder="SF6 Fail AddMs"
+                                                            value="{{ old('ssf6_fail_addms') }}" />
+                                                        @error('ssf6_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sfir_normal_address">FIR Normal Address</label>
+                                                    <label for="sfir_normal_addms">FIR Normal AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfir_normal_address"
-                                                            name="sfir_normal_address" placeholder="FIR Normal Address"
-                                                            value="{{ old('sfir_normal_address') }}" />
-                                                        @error('sfir_normal_address')
+                                                        <input type="text" class="form-control" id="sfir_normal_addms"
+                                                            name="sfir_normal_addms" placeholder="FIR Normal AddMs"
+                                                            value="{{ old('sfir_normal_addms') }}" />
+                                                        @error('sfir_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sfir_fail_address">FIR Fail Address</label>
+                                                    <label for="sfir_fail_addms">FIR Fail AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfir_fail_address"
-                                                            name="sfir_fail_address" placeholder="FIR Fail Address"
-                                                            value="{{ old('sfir_fail_address') }}" />
-                                                        @error('sfir_fail_address')
+                                                        <input type="text" class="form-control" id="sfir_fail_addms"
+                                                            name="sfir_fail_addms" placeholder="FIR Fail AddMs"
+                                                            value="{{ old('sfir_fail_addms') }}" />
+                                                        @error('sfir_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sfis_normal_address">FIS Normal Address</label>
+                                                    <label for="sfis_normal_addms">FIS Normal AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfis_normal_address"
-                                                            name="sfis_normal_address" placeholder="FIS Normal Address"
-                                                            value="{{ old('sfis_normal_address') }}" />
-                                                        @error('sfis_normal_address')
+                                                        <input type="text" class="form-control" id="sfis_normal_addms"
+                                                            name="sfis_normal_addms" placeholder="FIS Normal AddMs"
+                                                            value="{{ old('sfis_normal_addms') }}" />
+                                                        @error('sfis_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sfis_fail_address">FIS Fail Address</label>
+                                                    <label for="sfis_fail_addms">FIS Fail AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfis_fail_address"
-                                                            name="sfis_fail_address" placeholder="FIS Fail Address"
-                                                            value="{{ old('sfis_fail_address') }}" />
-                                                        @error('sfis_fail_address')
+                                                        <input type="text" class="form-control" id="sfis_fail_addms"
+                                                            name="sfis_fail_addms" placeholder="FIS Fail AddMs"
+                                                            value="{{ old('sfis_fail_addms') }}" />
+                                                        @error('sfis_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sfit_normal_address">FIT Normal Address</label>
+                                                    <label for="sfit_normal_addms">FIT Normal AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfit_normal_address"
-                                                            name="sfit_normal_address" placeholder="FIT Normal Address"
-                                                            value="{{ old('sfit_normal_address') }}" />
-                                                        @error('sfit_normal_address')
+                                                        <input type="text" class="form-control" id="sfit_normal_addms"
+                                                            name="sfit_normal_addms" placeholder="FIT Normal AddMs"
+                                                            value="{{ old('sfit_normal_addms') }}" />
+                                                        @error('sfit_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sfit_fail_address">FIT Fail Address</label>
+                                                    <label for="sfit_fail_addms">FIT Fail AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfit_fail_address"
-                                                            name="sfit_fail_address" placeholder="FIT Fail Address"
-                                                            value="{{ old('sfit_fail_address') }}" />
-                                                        @error('sfit_fail_address')
+                                                        <input type="text" class="form-control" id="sfit_fail_addms"
+                                                            name="sfit_fail_addms" placeholder="FIT Fail AddMs"
+                                                            value="{{ old('sfit_fail_addms') }}" />
+                                                        @error('sfit_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sfin_normal_address">FIN Normal Address</label>
+                                                    <label for="sfin_normal_addms">FIN Normal AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfin_normal_address"
-                                                            name="sfin_normal_address" placeholder="FIN Normal Address"
-                                                            value="{{ old('sfin_normal_address') }}" />
-                                                        @error('sfin_normal_address')
+                                                        <input type="text" class="form-control" id="sfin_normal_addms"
+                                                            name="sfin_normal_addms" placeholder="FIN Normal AddMs"
+                                                            value="{{ old('sfin_normal_addms') }}" />
+                                                        @error('sfin_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sfin_fail_address">FIN Fail Address</label>
+                                                    <label for="sfin_fail_addms">FIN Fail AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfin_fail_address"
-                                                            name="sfin_fail_address" placeholder="FIN Fail Address"
-                                                            value="{{ old('sfin_fail_address') }}" />
-                                                        @error('sfin_fail_address')
+                                                        <input type="text" class="form-control" id="sfin_fail_addms"
+                                                            name="sfin_fail_addms" placeholder="FIN Fail AddMs"
+                                                            value="{{ old('sfin_fail_addms') }}" />
+                                                        @error('sfin_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scomf_address">COMF Address</label>
+                                                    <label for="scomf_addms">COMF AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scomf_address"
-                                                            name="scomf_address" placeholder="COMF Address"
-                                                            value="{{ old('scomf_address') }}" />
-                                                        @error('scomf_address')
+                                                        <input type="text" class="form-control" id="scomf_addms"
+                                                            name="scomf_addms" placeholder="COMF AddMs"
+                                                            value="{{ old('scomf_addms') }}" />
+                                                        @error('scomf_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="slruf_address">LRUF Address</label>
+                                                    <label for="slruf_addms">LRUF AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="slruf_address"
-                                                            name="slruf_address" placeholder="LRUF Address"
-                                                            value="{{ old('slruf_address') }}" />
-                                                        @error('slruf_address')
+                                                        <input type="text" class="form-control" id="slruf_addms"
+                                                            name="slruf_addms" placeholder="LRUF AddMs"
+                                                            value="{{ old('slruf_addms') }}" />
+                                                        @error('slruf_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-3">
+                                            <div class="col-12 col-lg-2">
                                                 <div class="form-group">
                                                     <label for="scb_open_objfrmt">CB Open OBJ/FRMT</label>
                                                     <div class="input-icon">
@@ -1946,347 +1946,842 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-12 col-lg-2 ">
+                                                <div class="form-group ">
+                                                    <label for="scb_open_addrtu">CB Open AddRtu</label>
+                                                    <div class="input-icon ">
+                                                        <input type="text" class="form-control" id="scb_open_addrtu"
+                                                            name="scb_open_addrtu" placeholder="CB Open AddRtu"
+                                                            value="{{ old('scb_open_addrtu') }}" />
+                                                        @error('scb_open_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_addrtu">CB Close AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_addrtu"
+                                                            name="scb_close_addrtu" placeholder="CB Close AddRtu"
+                                                            value="{{ old('scb_close_addrtu') }}" />
+                                                        @error('scb_close_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_open_addrtu">CB2 Open AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_open_addrtu"
+                                                            name="scb2_open_addrtu" placeholder="CB2 Open AddRtu"
+                                                            value="{{ old('scb2_open_addrtu') }}" />
+                                                        @error('scb2_open_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_close_addrtu">CB2 Close AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_close_addrtu"
+                                                            name="scb2_close_addrtu" placeholder="CB2 Close AddRtu"
+                                                            value="{{ old('scb2_close_addrtu') }}" />
+                                                        @error('scb2_close_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slr_local_addrtu">Local AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slr_local_addrtu"
+                                                            name="slr_local_addrtu" placeholder="Local AddRtu"
+                                                            value="{{ old('slr_local_addrtu') }}" />
+                                                        @error('slr_local_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slr_remote_addrtu">Remote AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slr_remote_addrtu"
+                                                            name="slr_remote_addrtu" placeholder="Remote AddRtu"
+                                                            value="{{ old('slr_remote_addrtu') }}" />
+                                                        @error('slr_remote_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdoor_open_addrtu">Door Open AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdoor_open_addrtu"
+                                                            name="sdoor_open_addrtu" placeholder="Door Open AddRtu"
+                                                            value="{{ old('sdoor_open_addrtu') }}" />
+                                                        @error('sdoor_open_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdoor_close_addrtu">Door Close AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdoor_close_addrtu"
+                                                            name="sdoor_close_addrtu" placeholder="Door Close AddRtu"
+                                                            value="{{ old('sdoor_close_addrtu') }}" />
+                                                        @error('sdoor_close_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sacf_normal_addrtu">AC Normal AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sacf_normal_addrtu"
+                                                            name="sacf_normal_addrtu" placeholder="AC Normal AddRtu"
+                                                            value="{{ old('sacf_normal_addrtu') }}" />
+                                                        @error('sacf_normal_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sacf_fail_addrtu">AC Fail AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sacf_fail_addrtu"
+                                                            name="sacf_fail_addrtu" placeholder="AC Fail AddRtu"
+                                                            value="{{ old('sacf_fail_addrtu') }}" />
+                                                        @error('sacf_fail_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcf_normal_addrtu">DC Normal AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcf_normal_addrtu"
+                                                            name="sdcf_normal_addrtu" placeholder="DC Normal AddRtu"
+                                                            value="{{ old('sdcf_normal_addrtu') }}" />
+                                                        @error('sdcf_normal_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcf_fail_addrtu">DC Fail AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcf_fail_addrtu"
+                                                            name="sdcf_fail_addrtu" placeholder="DC Fail AddRtu"
+                                                            value="{{ old('sdcf_fail_addrtu') }}" />
+                                                        @error('sdcf_fail_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcd_normal_addrtu">DCD Normal AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcd_normal_addrtu"
+                                                            name="sdcd_normal_addrtu" placeholder="DCD Normal AddRtu"
+                                                            value="{{ old('sdcd_normal_addrtu') }}" />
+                                                        @error('sdcd_normal_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sdcd_fail_addrtu">DCD Fail AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sdcd_fail_addrtu"
+                                                            name="sdcd_fail_addrtu" placeholder="DCD Fail AddRtu"
+                                                            value="{{ old('sdcd_fail_addrtu') }}" />
+                                                        @error('sdcd_fail_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_on_addrtu">HLT On AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_on_addrtu"
+                                                            name="shlt_on_addrtu" placeholder="HLT On AddRtu"
+                                                            value="{{ old('shlt_on_addrtu') }}" />
+                                                        @error('shlt_on_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_off_addrtu">HLT Off AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_off_addrtu"
+                                                            name="shlt_off_addrtu" placeholder="HLT Off AddRtu"
+                                                            value="{{ old('shlt_off_addrtu') }}" />
+                                                        @error('shlt_off_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ssf6_normal_addrtu">SF6 Normal AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ssf6_normal_addrtu"
+                                                            name="ssf6_normal_addrtu" placeholder="SF6 Normal AddRtu"
+                                                            value="{{ old('ssf6_normal_addrtu') }}" />
+                                                        @error('ssf6_normal_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ssf6_fail_addrtu">SF6 Fail AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ssf6_fail_addrtu"
+                                                            name="ssf6_fail_addrtu" placeholder="SF6 Fail AddRtu"
+                                                            value="{{ old('ssf6_fail_addrtu') }}" />
+                                                        @error('ssf6_fail_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfir_normal_addrtu">FIR Normal AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfir_normal_addrtu"
+                                                            name="sfir_normal_addrtu" placeholder="FIR Normal AddRtu"
+                                                            value="{{ old('sfir_normal_addrtu') }}" />
+                                                        @error('sfir_normal_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfir_fail_addrtu">FIR Fail AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfir_fail_addrtu"
+                                                            name="sfir_fail_addrtu" placeholder="FIR Fail AddRtu"
+                                                            value="{{ old('sfir_fail_addrtu') }}" />
+                                                        @error('sfir_fail_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfis_normal_addrtu">FIS Normal AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfis_normal_addrtu"
+                                                            name="sfis_normal_addrtu" placeholder="FIS Normal AddRtu"
+                                                            value="{{ old('sfis_normal_addrtu') }}" />
+                                                        @error('sfis_normal_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfis_fail_addrtu">FIS Fail AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfis_fail_addrtu"
+                                                            name="sfis_fail_addrtu" placeholder="FIS Fail AddRtu"
+                                                            value="{{ old('sfis_fail_addrtu') }}" />
+                                                        @error('sfis_fail_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfit_normal_addrtu">FIT Normal AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfit_normal_addrtu"
+                                                            name="sfit_normal_addrtu" placeholder="FIT Normal AddRtu"
+                                                            value="{{ old('sfit_normal_addrtu') }}" />
+                                                        @error('sfit_normal_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfit_fail_addrtu">FIT Fail AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfit_fail_addrtu"
+                                                            name="sfit_fail_addrtu" placeholder="FIT Fail AddRtu"
+                                                            value="{{ old('sfit_fail_addrtu') }}" />
+                                                        @error('sfit_fail_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfin_normal_addrtu">FIN Normal AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfin_normal_addrtu"
+                                                            name="sfin_normal_addrtu" placeholder="FIN Normal AddRtu"
+                                                            value="{{ old('sfin_normal_addrtu') }}" />
+                                                        @error('sfin_normal_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sfin_fail_addrtu">FIN Fail AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="sfin_fail_addrtu"
+                                                            name="sfin_fail_addrtu" placeholder="FIN Fail AddRtu"
+                                                            value="{{ old('sfin_fail_addrtu') }}" />
+                                                        @error('sfin_fail_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scomf_addrtu">COMF AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scomf_addrtu"
+                                                            name="scomf_addrtu" placeholder="COMF AddRtu"
+                                                            value="{{ old('scomf_addrtu') }}" />
+                                                        @error('scomf_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="slruf_addrtu">LRUF AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="slruf_addrtu"
+                                                            name="slruf_addrtu" placeholder="LRUF AddRtu"
+                                                            value="{{ old('slruf_addrtu') }}" />
+                                                        @error('slruf_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Form Telecontrol Tab -->
                                     <div class="tab-pane fade" id="v-pills-formtelecontrol-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelecontrol-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-12 col-lg-6">
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Open</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="ccb_checkall_ok"
-                                                                        value="cbctrl_op_checkall_ok"
-                                                                        id="ccb_open_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_op_1" id="ccb_open_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_op_2" id="ccb_open_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_op_3" id="ccb_open_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_op_4" id="ccb_open_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_op_5" id="ccb_open_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">TDK UJI</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">CB Open</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="ccb_open_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_op_1"
+                                                                    id="ccb_open_1" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_op_2"
+                                                                    id="ccb_open_2" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_op_3"
+                                                                    id="ccb_open_3" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_op_4"
+                                                                    id="ccb_open_4" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_op_5"
+                                                                    id="ccb_open_5" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB Close</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="ccb_checkall_ok"
-                                                                        value="cbctrl_cl_checkall_ok"
-                                                                        id="ccb_close_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_cl_1" id="ccb_close_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_cl_2" id="ccb_close_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_cl_3" id="ccb_close_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_cl_4" id="ccb_close_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb[]"
-                                                                        value="cbctrl_cl_5" id="ccb_close_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">TDK UJI</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">CB Close</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="ccb_close_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_cl_1"
+                                                                    id="ccb_close_1" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_cl_2"
+                                                                    id="ccb_close_2" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_cl_3"
+                                                                    id="ccb_close_3" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_cl_4"
+                                                                    id="ccb_close_4" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb[]" value="cbctrl_cl_5"
+                                                                    id="ccb_close_5" class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB2 Open</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="ccb2_checkall_ok"
-                                                                        value="cbctrl2_op_checkall_ok"
-                                                                        id="ccb2_open_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_op_1" id="ccb2_open_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_op_2" id="ccb2_open_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_op_3" id="ccb2_open_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_op_4" id="ccb2_open_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_op_5" id="ccb2_open_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">TDK UJI</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">CB2 Open</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="ccb2_open_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_op_1" id="ccb2_open_1"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_op_2" id="ccb2_open_2"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_op_3" id="ccb2_open_3"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_op_4" id="ccb2_open_4"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_op_5" id="ccb2_open_5"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">CB2 Close</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="ccb2_checkall_ok"
-                                                                        value="cbctrl2_cl_checkall_ok"
-                                                                        id="ccb2_close_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_cl_1" id="ccb2_close_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_cl_2" id="ccb2_close_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_cl_3" id="ccb2_close_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_cl_4" id="ccb2_close_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_cb2[]"
-                                                                        value="cbctrl2_cl_5" id="ccb2_close_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">TDK UJI</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">CB2 Close</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="ccb2_close_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_cl_1" id="ccb2_close_1"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_cl_2" id="ccb2_close_2"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_cl_3" id="ccb2_close_3"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_cl_4" id="ccb2_close_4"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_cb2[]"
+                                                                    value="cbctrl2_cl_5" id="ccb2_close_5"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">HLT Off</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="chlt_checkall_ok"
-                                                                        value="hltctrl_off_checkall_ok"
-                                                                        id="chlt_off_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_off_1" id="chlt_off_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_off_2" id="chlt_off_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_off_3" id="chlt_off_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_off_4" id="chlt_off_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_off_5" id="chlt_off_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">TDK UJI</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">HLT Off</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="chlt_off_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_off_1" id="chlt_off_1"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_off_2" id="chlt_off_2"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_off_3" id="chlt_off_3"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_off_4" id="chlt_off_4"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_off_5" id="chlt_off_5"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">HLT On</label>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="chlt_checkall_ok"
-                                                                        value="hltctrl_on_checkall_ok"
-                                                                        id="chlt_on_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_on_1" id="chlt_on_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_on_2" id="chlt_on_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_on_3" id="chlt_on_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_on_4" id="chlt_on_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_hlt[]"
-                                                                        value="hltctrl_on_5" id="chlt_on_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">TDK UJI</span>
-                                                                </label>
-                                                            </div>
+                                                        <label class="form-label t-bold">HLT On</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="chlt_on_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_on_1" id="chlt_on_1"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_on_2" id="chlt_on_2"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_on_3" id="chlt_on_3"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_on_4" id="chlt_on_4"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_hlt[]"
+                                                                    value="hltctrl_on_5" id="chlt_on_5"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-1">
-                                                            <label class="form-label t-bold">Reset</label>
+                                                        <label class="form-label t-bold">Reset</label>
+                                                        <div class="selectgroup w-100 flex-wrap">
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" id="crst_on_checkAll_ok"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Normal</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_1" id="crst_on_1"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">OK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_2" id="crst_on_2"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">NOK</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_3" id="crst_on_3"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">LOG</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_4" id="crst_on_4"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">SLD</span>
+                                                            </label>
+                                                            <label class="selectgroup-item mb-2 mb-sm-0">
+                                                                <input type="checkbox" name="c_rst[]"
+                                                                    value="rrctrl_on_5" id="crst_on_5"
+                                                                    class="selectgroup-input" />
+                                                                <span class="selectgroup-button">Tidak Uji</span>
+                                                            </label>
                                                         </div>
-                                                        <div class="col-md-10">
-                                                            <div class="selectgroup w-100">
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="crst_checkall_ok"
-                                                                        value="rrctrl_on_checkall_ok"
-                                                                        id="crst_on_checkAll_ok"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">Normal</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_1" id="crst_on_1"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">OK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_2" id="crst_on_2"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">NOK</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_3" id="crst_on_3"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">LOG</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_4" id="crst_on_4"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">SLD</span>
-                                                                </label>
-                                                                <label class="selectgroup-item">
-                                                                    <input type="checkbox" name="c_rst[]"
-                                                                        value="rrctrl_on_5" id="crst_on_5"
-                                                                        class="selectgroup-input" />
-                                                                    <span class="selectgroup-button">TDK UJI</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="scb_open_addms">CB Open AddMs</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_open_addms"
+                                                            name="scb_open_addms" placeholder="CB Open AddMs"
+                                                            value="{{ old('scb_open_addms') }}" />
+                                                        @error('scb_open_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_addms">CB Close AddMs</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_addms"
+                                                            name="scb_close_addms" placeholder="CB Close AddMs"
+                                                            value="{{ old('scb_close_addms') }}" />
+                                                        @error('scb_close_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_open_addms">CB2 Open AddMs</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_open_addms"
+                                                            name="scb2_open_addms" placeholder="CB2 Open AddMs"
+                                                            value="{{ old('scb2_open_addms') }}" />
+                                                        @error('scb2_open_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_close_addms">CB2 Close AddMs</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_close_addms"
+                                                            name="scb2_close_addms" placeholder="CB2 Close AddMs"
+                                                            value="{{ old('scb2_close_addms') }}" />
+                                                        @error('scb2_close_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_on_addms">HLT On AddMs</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_on_addms"
+                                                            name="shlt_on_addms" placeholder="HLT On AddMs"
+                                                            value="{{ old('shlt_on_addms') }}" />
+                                                        @error('shlt_on_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_off_addms">HLT Off AddMs</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_off_addms"
+                                                            name="shlt_off_addms" placeholder="HLT Off AddMs"
+                                                            value="{{ old('shlt_off_addms') }}" />
+                                                        @error('shlt_off_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="srst_addms">Reset AddMs</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="srst_addms"
+                                                            name="srst_addms" placeholder="Reset AddMs"
+                                                            value="{{ old('srst_addms') }}" />
+                                                        @error('srst_addms')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="scb_open_addrtu">CB Open AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_open_addrtu"
+                                                            name="scb_open_addrtu" placeholder="CB Open AddRtu"
+                                                            value="{{ old('scb_open_addrtu') }}" />
+                                                        @error('scb_open_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_addrtu">CB Close AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_addrtu"
+                                                            name="scb_close_addrtu" placeholder="CB Close AddRtu"
+                                                            value="{{ old('scb_close_addrtu') }}" />
+                                                        @error('scb_close_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_open_addrtu">CB2 Open AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_open_addrtu"
+                                                            name="scb2_open_addrtu" placeholder="CB2 Open AddRtu"
+                                                            value="{{ old('scb2_open_addrtu') }}" />
+                                                        @error('scb2_open_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_close_addrtu">CB2 Close AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_close_addrtu"
+                                                            name="scb2_close_addrtu" placeholder="CB2 Close AddRtu"
+                                                            value="{{ old('scb2_close_addrtu') }}" />
+                                                        @error('scb2_close_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_on_addrtu">HLT On AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_on_addrtu"
+                                                            name="shlt_on_addrtu" placeholder="HLT On AddRtu"
+                                                            value="{{ old('shlt_on_addrtu') }}" />
+                                                        @error('shlt_on_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_off_addrtu">HLT Off AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_off_addrtu"
+                                                            name="shlt_off_addrtu" placeholder="HLT Off AddRtu"
+                                                            value="{{ old('shlt_off_addrtu') }}" />
+                                                        @error('shlt_off_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="srst_addrtu">Reset AddRtu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="srst_addrtu"
+                                                            name="srst_addrtu" placeholder="Reset AddRtu"
+                                                            value="{{ old('srst_addrtu') }}" />
+                                                        @error('srst_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="scb_open_objfrmt">CB Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_open_objfrmt"
+                                                            name="scb_open_objfrmt" placeholder="CB Open OBJ/FRMT"
+                                                            value="{{ old('scb_open_objfrmt') }}" />
+                                                        @error('scb_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb_close_objfrmt">CB Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb_close_objfrmt"
+                                                            name="scb_close_objfrmt" placeholder="CB Close OBJ/FRMT"
+                                                            value="{{ old('scb_close_objfrmt') }}" />
+                                                        @error('scb_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_open_objfrmt">CB2 Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_open_objfrmt"
+                                                            name="scb2_open_objfrmt" placeholder="CB2 Open OBJ/FRMT"
+                                                            value="{{ old('scb2_open_objfrmt') }}" />
+                                                        @error('scb2_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="scb2_close_objfrmt">CB2 Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="scb2_close_objfrmt"
+                                                            name="scb2_close_objfrmt" placeholder="CB2 Close OBJ/FRMT"
+                                                            value="{{ old('scb2_close_objfrmt') }}" />
+                                                        @error('scb2_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_on_objfrmt">HLT On OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_on_objfrmt"
+                                                            name="shlt_on_objfrmt" placeholder="HLT On OBJ/FRMT"
+                                                            value="{{ old('shlt_on_objfrmt') }}" />
+                                                        @error('shlt_on_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="shlt_off_objfrmt">HLT Off OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="shlt_off_objfrmt"
+                                                            name="shlt_off_objfrmt" placeholder="HLT Off OBJ/FRMT"
+                                                            value="{{ old('shlt_off_objfrmt') }}" />
+                                                        @error('shlt_off_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="srst_objfrmt">Reset OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="srst_objfrmt"
+                                                            name="srst_objfrmt" placeholder="Reset OBJ/FRMT"
+                                                            value="{{ old('srst_objfrmt') }}" />
+                                                        @error('srst_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
