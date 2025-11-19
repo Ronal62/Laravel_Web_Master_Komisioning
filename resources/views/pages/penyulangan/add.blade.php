@@ -64,13 +64,23 @@
                                                         required>
                                                         <option value="">Pilih Gardu Induk</option>
                                                         @foreach ($garduinduk as $gi)
-                                                        <option value="{{ $gi->id_gi }}"
-                                                            {{ old('id_gi') == $gi->id_gi ? 'selected' : '' }}>
-                                                            {{ $gi->nama_gi }}
+                                                        <option value="{{ $gi->gardu_induk }}"
+                                                            {{ old('id_gi') == $gi->gardu_induk ? 'selected' : '' }}>
+                                                            {{ $gi->gardu_induk }}
                                                         </option>
                                                         @endforeach
                                                     </select>
                                                     @error('id_gi')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nama_peny">Nama Penyulangan</label>
+                                                    <select class="form-select form-control" id="nama_peny"
+                                                        name="nama_peny" required>
+                                                        <option value="">Pilih Nama Penyulangan</option>
+                                                    </select>
+                                                    @error('nama_peny')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -84,17 +94,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="nama_peny">Nama Penyulangan</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="nama_peny"
-                                                            name="nama_peny" placeholder="Nama Penyulangan"
-                                                            value="{{ old('nama_peny') }}" required />
-                                                        @error('nama_peny')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+
 
                                             </div>
                                             <div class="col-md-6">
@@ -2110,5 +2110,34 @@ initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-
 
 // For Pelaksana RTU II
 initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#id_gi').change(function() {
+        var garduInduk = $(this).val();
+        if (garduInduk) {
+            var urlTemplate = '{{ route("get.kubikels", "PLACEHOLDER") }}';
+            var url = urlTemplate.replace('PLACEHOLDER', encodeURIComponent(garduInduk));
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_peny').empty();
+                    $('#nama_peny').append(
+                        '<option value="">Pilih Nama Penyulangan</option>');
+                    $.each(data, function(key, value) {
+                        $('#nama_peny').append('<option value="' + value + '">' +
+                            value + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#nama_peny').empty();
+            $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
+        }
+    });
+});
 </script>
 @endsection

@@ -280,11 +280,19 @@ class PenyulanganController extends Controller
     {
         $rtugi = DB::table('tb_merkrtugi')->get();
         $medkom = DB::table('tb_medkom')->get();
-        $garduinduk = DB::table('tb_garduinduk')->get();
+        // $garduinduk = DB::table('tb_garduinduk')->get();
+        $garduinduk = DB::connection('masterdata')->table('dg_mvcell')->select('gardu_induk')->distinct()->get();
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
         $pelrtus = DB::table('tb_pelaksana_rtu')->get();
-        return view('pages.penyulangan.add', compact('rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'pelrtus'));
+        return view('pages.penyulangan.add', compact('rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'pelrtus', ));
+    }
+    public function getKubikels($gardu_induk)
+    {
+        $kubikels = DB::connection('masterdata')->table('dg_mvcell')
+            ->where('gardu_induk', urldecode($gardu_induk))
+            ->pluck('nama_kubikel');
+        return response()->json($kubikels);
     }
 
     public function store(Request $request)
@@ -448,7 +456,12 @@ class PenyulanganController extends Controller
         $validated = $request->validate([
             'tgl_kom' => 'required|date',
             'nama_peny' => 'required|string|max:50',
-            'id_gi' => 'required|string|max:25|exists:tb_garduinduk,id_gi',
+            // 'id_gi' => 'required|string|max:25|exists:tb_garduinduk,id_gi',
+            'id_gi' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                if (!DB::connection('masterdata')->table('dg_mvcell')->where('gardu_induk', $value)->exists()) {
+                    $fail('The selected Gardu Induk is invalid.');
+                }
+            }],
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',

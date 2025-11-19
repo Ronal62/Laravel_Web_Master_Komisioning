@@ -80,6 +80,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/penyulangan/data', [PenyulanganController::class, 'data'])->name('penyulangan.data');
     Route::get('/penyulangan/export/pdf', [PenyulanganController::class, 'exportPdfFiltered'])->name('penyulangan.exportpdfall');
     Route::get('/penyulangan/export/excel', [PenyulanganController::class, 'exportExcelFiltered'])->name('penyulangan.exportexcelall');
+    Route::get('/get-kubikels/{gardu_induk}', [PenyulanganController::class, 'getKubikels'])->name('get.kubikels');
 
 
 

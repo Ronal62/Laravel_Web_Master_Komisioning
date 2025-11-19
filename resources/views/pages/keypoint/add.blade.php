@@ -61,6 +61,22 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                    <label for="id_gi">Gardu Induk</label>
+                                                    <select class="form-select form-control" id="id_gi" name="id_gi"
+                                                        required>
+                                                        <option value="">Pilih Gardu Induk</option>
+                                                        @foreach ($garduinduk as $gi)
+                                                        <option value="{{ $gi->id_gi }}"
+                                                            {{ old('id_gi') == $gi->id_gi ? 'selected' : '' }}>
+                                                            {{ $gi->nama_gi }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('id_gi')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="tgl_komisioning">Tanggal Komisioning</label>
                                                     <div class="input-icon">
                                                         <input type="date" class="form-control" id="tgl_komisioning"
@@ -154,22 +170,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="id_gi">Gardu Induk</label>
-                                                    <select class="form-select form-control" id="id_gi" name="id_gi"
-                                                        required>
-                                                        <option value="">Pilih Gardu Induk</option>
-                                                        @foreach ($garduinduk as $gi)
-                                                        <option value="{{ $gi->id_gi }}"
-                                                            {{ old('id_gi') == $gi->id_gi ? 'selected' : '' }}>
-                                                            {{ $gi->nama_gi }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('id_gi')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+
                                                 <div class="form-group">
                                                     <label for="nama_peny">Penyulang</label>
                                                     <div class="input-icon">
