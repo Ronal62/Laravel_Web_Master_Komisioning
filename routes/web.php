@@ -62,15 +62,14 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/keypoint/clone', [KeypointController::class, 'storeClone'])->name('keypoint.clone.store');
     Route::get('/keypoint/data', [KeypointController::class, 'data'])->name('keypoint.data');
     Route::post('/keypoint/data', [KeypointController::class, 'data'])->name('keypoint.data');
-
-
     Route::get('/keypoint/export/pdf', [KeypointController::class, 'exportPdfFiltered'])->name('keypoint.exportpdfall');
     Route::get('/keypoint/export/excel', [KeypointController::class, 'exportExcelFiltered'])->name('keypoint.exportexcelall');
-
-
     Route::get('/keypoint/{id}/exportpdf', [ExportPdfController::class, 'exportsinglepdfkeypoint'])->name('keypoint.exportpdf');
-
-
+    Route::get('/get-penyulang/{gardu_induk}', [KeypointController::class, 'getKeypoint'])->name('get.penyulang');
+    Route::get('/keypoint/{gardu_induk}/{penyulang}', [KeypointController::class, 'getNamaKeypoint'])->name('get.nama_keypoint');
+    Route::get('/penyulang/{gardu_induk}', [KeypointController::class, 'getKeypoint'])->name('get.penyulang');
+    Route::get('/penyulang/{gardu_induk}', [KeypointController::class, 'getPenyulang'])->name('get.penyulang');
+    Route::get('/sektoral/{gardu_induk}/{penyulang}', [KeypointController::class, 'getSektoral'])->name('get.sektoral');
 
     // Penyulangan routes
     Route::resource('penyulangan', PenyulanganController::class);

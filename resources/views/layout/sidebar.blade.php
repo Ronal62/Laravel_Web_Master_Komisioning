@@ -54,11 +54,11 @@
                                 <a href="{{ route('keypoint.create') }}"><span class="sub-item">Keypoint Form</span></a>
                             </li>
                             <li class="@if(Route::is('penyulangan.create')) active @endif">
-                                <a href="{{ route('penyulangan.create') }}"><span
-                                        class="sub-item">Penyulangan</span></a>
+                                <a href="{{ route('penyulangan.create') }}"><span class="sub-item">Penyulangan
+                                        Form</span></a>
                             </li>
                             <li class="@if(Route::is('absen.create')) active @endif">
-                                <a href="{{ route('absen.create') }}"><span class="sub-item">Absen</span></a>
+                                <a href="{{ route('absen.create') }}"><span class="sub-item">Absen Form</span></a>
                             </li>
                         </ul>
                     </div>

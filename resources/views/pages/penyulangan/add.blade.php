@@ -2111,7 +2111,7 @@ initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-
 // For Pelaksana RTU II
 initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
 <script>
 $(document).ready(function() {
     $('#id_gi').change(function() {

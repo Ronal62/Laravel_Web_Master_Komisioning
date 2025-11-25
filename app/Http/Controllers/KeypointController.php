@@ -59,7 +59,7 @@ class KeypointController extends Controller
                 'tb_formkp.id_formkp',
                 'tb_formkp.tgl_komisioning',
                 'tb_formkp.nama_lbs as nama_keypoint',
-                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
+                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) as gi_penyulang"),
                 'tb_formkp.id_merkrtu',
                 'tb_formkp.id_modem',
                 'tb_formkp.ketkp as keterangan',
@@ -81,9 +81,9 @@ class KeypointController extends Controller
             $query->where(function ($q) use ($searchValue) {
                 $q->where('tb_formkp.nama_lbs', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.ketkp', 'like', "%{$searchValue}%")
-                    ->orWhere('tb_formkp.nama_peny', 'like', "%{$searchValue}%")
+                    ->orWhere('tb_formkp.penyulang', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.nama_user', 'like', "%{$searchValue}%")
-                    ->orWhereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$searchValue}%"])
+                    ->orWhereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) LIKE ?", ["%{$searchValue}%"])
                     ->orWhere('tb_formkp.id_merkrtu', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.id_modem', 'like', "%{$searchValue}%");
             });
@@ -101,7 +101,7 @@ class KeypointController extends Controller
                         $query->where('tb_formkp.nama_lbs', 'like', "%{$colSearchValue}%");
                         break;
                     case 2:
-                        $query->whereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$colSearchValue}%"]);
+                        $query->whereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) LIKE ?", ["%{$colSearchValue}%"]);
                         break;
                     case 3:
                         $query->where('tb_formkp.id_merkrtu', 'like', "%{$colSearchValue}%")
@@ -125,7 +125,7 @@ class KeypointController extends Controller
 
         // Apply ordering
         if (strpos($orderColumn, 'gi_penyulang') !== false) {
-            $query->orderByRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) {$orderDir}");
+            $query->orderByRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) {$orderDir}");
         } elseif (strpos($orderColumn, 'merk_modem_rtu') !== false) {
             $query->orderBy('tb_formkp.id_merkrtu', $orderDir);
         } else {
@@ -196,7 +196,7 @@ class KeypointController extends Controller
             ->select(
                 'tb_formkp.tgl_komisioning',
                 'tb_formkp.nama_lbs as nama_keypoint',
-                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
+                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) as gi_penyulang"),
                 DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
                 'tb_formkp.ketkp as keterangan',
                 'tb_formkp.nama_user as master'
@@ -244,7 +244,7 @@ class KeypointController extends Controller
             ->select(
                 DB::raw("DATE_FORMAT(tb_formkp.tgl_komisioning, '%d-%m-%Y') as tgl_komisioning"),
                 'tb_formkp.nama_lbs as nama_keypoint',
-                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
+                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) as gi_penyulang"),
                 DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
                 'tb_formkp.ketkp as keterangan',
                 'tb_formkp.nama_user as master'
@@ -282,7 +282,8 @@ class KeypointController extends Controller
         $merklbs = DB::table('tb_merklbs')->get();
         $modems = DB::table('tb_modem')->get();
         $medkom = DB::table('tb_medkom')->get();
-        $garduinduk = DB::table('tb_garduinduk')->get();
+        // $garduinduk = DB::table('tb_garduinduk')->get();
+        $garduinduk = DB::connection('masterdata')->table('dg_keypoint')->select('gardu_induk')->distinct()->get();
         $sectoral = DB::table('tb_sectoral')->get();
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
@@ -290,7 +291,36 @@ class KeypointController extends Controller
 
         return view('pages.keypoint.add', compact('merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'pelms', 'pelrtus'));
     }
+    public function getNamaKeypoint($gardu_induk, $penyulang)
+    {
+        $keypoints = DB::connection('masterdata')->table('dg_keypoint')
+            ->where('gardu_induk', urldecode($gardu_induk))
+            ->where('penyulang', urldecode($penyulang))
+            ->select('nama_keypoint as id', DB::raw("CONCAT(type_keypoint, ' ', nama_keypoint) as name"))
+            ->get()
+            ->pluck('name', 'id');
+        return response()->json($keypoints);
+    }
 
+    public function getPenyulang($gardu_induk)
+    {
+        $penyulang = DB::connection('masterdata')->table('dg_keypoint')
+            ->where('gardu_induk', urldecode($gardu_induk))
+            ->pluck('penyulang')
+            ->unique();
+        return response()->json($penyulang);
+    }
+    public function getSektoral($gardu_induk, $penyulang)
+    {
+        $sektoral = DB::connection('masterdata')->table('dg_keypoint')
+            ->where('gardu_induk', urldecode($gardu_induk))
+            ->where('penyulang', urldecode($penyulang))
+            ->select('sektoral as id', DB::raw("CONCAT(up3, ' ', sektoral) as name"))
+            ->distinct()
+            ->get()
+            ->pluck('name', 'id');
+        return response()->json($sektoral);
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -500,15 +530,41 @@ class KeypointController extends Controller
         // Validation rules
         $validated = $request->validate([
             'tgl_komisioning' => 'required|date',
-            'nama_lbs' => 'required|string|max:50',
+            'nama_lbs' => ['required', 'string', 'max:50', function ($attribute, $value, $fail) use ($request) {
+                $gi = $request->id_gi;
+                $peny = $request->nama_peny;
+                if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('nama_keypoint', $value)->exists()) {
+                    $fail('Invalid Nama Keypoint.');
+                }
+            }],
             'id_merkrtu' => 'required|integer|exists:tb_merklbs,id_merkrtu',
             'id_modem' => 'required|integer|exists:tb_modem,id_modem',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
             'ip_kp' => 'required|string|max:255',
-            'id_gi' => 'required|string|max:25',
-            'nama_peny' => 'required|string|max:25',
-            'id_sec' => 'required|integer|exists:tb_sectoral,id_sec',
+            // 'id_gi' => 'required|string|max:25',
+            'id_gi' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $value)->exists()) {
+                    $fail('The selected Gardu Induk is invalid.');
+                }
+            }],
+            'nama_peny' => ['required', 'string', 'max:25', function ($attribute, $value, $fail) use ($request) {
+                $gi = $request->id_gi;
+                if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $value)->exists()) {
+                    $fail('Invalid Nama Penyulangan for selected Gardu Induk.');
+                }
+            }],
+            'nama_sec' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($request) {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('sektoral', $value)->exists()) {
+                        $fail('Invalid Sectoral.');
+                    }
+                }],
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
             'ir_scale' => 'required|string|max:10',
@@ -895,7 +951,7 @@ class KeypointController extends Controller
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
             'ip_kp' => 'required|string|max:255',
             'id_gi' => 'required|string|max:25',
-            'nama_peny' => 'required|string|max:25',
+            'penyulang' => 'required|string|max:25',
             'id_sec' => 'required|integer|exists:tb_sectoral,id_sec',
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
@@ -1192,7 +1248,7 @@ class KeypointController extends Controller
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
             'ip_kp' => 'required|string|max:255',
             'id_gi' => 'required|string|max:25',
-            'nama_peny' => 'required|string|max:25',
+            'penyulang' => 'required|string|max:25',
             'id_sec' => 'required|integer|exists:tb_sectoral,id_sec',
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
