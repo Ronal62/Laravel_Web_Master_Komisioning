@@ -60,6 +60,7 @@
                                         aria-labelledby="v-pills-formdata-tab-nobd">
                                         <div class="row">
                                             <div class="col-md-6">
+                                                <input type="hidden" name="mode_input" id="mode_input" value="0">
                                                 <div class="form-group">
                                                     <label for="id_gi">Gardu Induk</label>
                                                     <select class="form-select form-control" id="id_gi" name="id_gi"
@@ -87,21 +88,50 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
+                                                    <label class="form-label t-bold">Changer</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="changer_select"
+                                                                class="selectgroup-input" checked />
+                                                            <span class="selectgroup-button">Select Form Group</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="changer_input"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Input Form Group</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="nama_lbs">Nama Keypoint</label>
-                                                    <select class="form-select form-control" id="nama_lbs"
-                                                        name="nama_lbs" required>
-                                                        <option value="">Pilih Nama Keypoint</option>
-                                                    </select>
+                                                    <div id="nama_lbs_select_container">
+                                                        <select class="form-select form-control" id="nama_lbs_select"
+                                                            name="nama_lbs" required>
+                                                            <option value="">Pilih Nama Keypoint</option>
+                                                        </select>
+                                                    </div>
+                                                    <div id="nama_lbs_input_container" style="display:none;">
+                                                        <input type="text" class="form-control" id="nama_lbs_input"
+                                                            placeholder="Nama Keypoint" value="{{ old('nama_lbs') }}"
+                                                            required />
+                                                    </div>
                                                     @error('nama_lbs')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="nama_sec">Sectoral</label>
-                                                    <select class="form-select form-control" id="nama_sec"
-                                                        name="nama_sec" required>
-                                                        <option value="">Pilih Sectoral</option>
-                                                    </select>
+                                                    <div id="nama_sec_select_container">
+                                                        <select class="form-select form-control" id="nama_sec_select"
+                                                            name="nama_sec" required>
+                                                            <option value="">Pilih Sectoral</option>
+                                                        </select>
+                                                    </div>
+                                                    <div id="nama_sec_input_container" style="display:none;">
+                                                        <input type="text" class="form-control" id="nama_sec_input"
+                                                            placeholder="Sectoral" value="{{ old('nama_sec') }}"
+                                                            required />
+                                                    </div>
                                                     @error('nama_sec')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -3121,6 +3151,62 @@ initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdo
 <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
 <script>
 $(document).ready(function() {
+    var oldGi = "{{ old('id_gi') }}";
+    var oldPeny = "{{ old('nama_peny') }}";
+    var oldLbs = "{{ old('nama_lbs') }}";
+    var oldSec = "{{ old('nama_sec') }}";
+
+    if (oldGi) {
+        $('#id_gi').val(oldGi).change();
+    }
+
+    // Make checkboxes exclusive
+    $('#changer_select').change(function() {
+        if (this.checked) {
+            $('#changer_input').prop('checked', false);
+        }
+        toggleMode();
+    });
+
+    $('#changer_input').change(function() {
+        if (this.checked) {
+            $('#changer_select').prop('checked', false);
+        }
+        toggleMode();
+    });
+
+    function toggleMode() {
+        // Set mode_input value: 1 for input mode (true), 0 for select mode (false)
+        $('#mode_input').val($('#changer_input').is(':checked') ? 1 : 0);
+
+        if ($('#changer_input').is(':checked')) {
+            // Input mode
+            $('#nama_lbs_select_container').hide();
+            $('#nama_lbs_input_container').show();
+            $('#nama_sec_select_container').hide();
+            $('#nama_sec_input_container').show();
+            $('#nama_lbs_select').attr('name', '').removeAttr('required');
+            $('#nama_lbs_input').attr('name', 'nama_lbs').attr('required', 'required');
+            $('#nama_sec_select').attr('name', '').removeAttr('required');
+            $('#nama_sec_input').attr('name', 'nama_sec').attr('required', 'required');
+            $('#nama_lbs_input').val(oldLbs);
+            $('#nama_sec_input').val(oldSec);
+        } else {
+            // Select mode (default)
+            $('#nama_lbs_select_container').show();
+            $('#nama_lbs_input_container').hide();
+            $('#nama_sec_select_container').show();
+            $('#nama_sec_input_container').hide();
+            $('#nama_lbs_select').attr('name', 'nama_lbs').attr('required', 'required');
+            $('#nama_lbs_input').attr('name', '').removeAttr('required');
+            $('#nama_sec_select').attr('name', 'nama_sec').attr('required', 'required');
+            $('#nama_sec_input').attr('name', '').removeAttr('required');
+            $('#nama_lbs_select').val(oldLbs);
+            $('#nama_sec_select').val(oldSec);
+        }
+    }
+
+    toggleMode(); // Initial toggle
     $('#id_gi').change(function() {
         var garduInduk = $(this).val();
         if (garduInduk) {
@@ -3138,10 +3224,16 @@ $(document).ready(function() {
                         $('#nama_peny').append('<option value="' + value + '">' +
                             value + '</option>');
                     });
-                    $('#nama_lbs').empty();
-                    $('#nama_lbs').append('<option value="">Pilih Nama Keypoint</option>');
-                    $('#nama_sec').empty();
-                    $('#nama_sec').append('<option value="">Pilih Sectoral</option>');
+                    if (oldPeny) {
+                        $('#nama_peny').val(oldPeny).change();
+                        oldPeny = '';
+                    }
+                    $('#nama_lbs_select').empty();
+                    $('#nama_lbs_select').append(
+                        '<option value="">Pilih Nama Keypoint</option>');
+                    $('#nama_sec_select').empty();
+                    $('#nama_sec_select').append(
+                        '<option value="">Pilih Sectoral</option>');
                 },
                 error: function(xhr, status, error) {
                     console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
@@ -3152,17 +3244,17 @@ $(document).ready(function() {
         } else {
             $('#nama_peny').empty();
             $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
-            $('#nama_lbs').empty();
-            $('#nama_lbs').append('<option value="">Pilih Nama Keypoint</option>');
-            $('#nama_sec').empty();
-            $('#nama_sec').append('<option value="">Pilih Sectoral</option>');
+            $('#nama_lbs_select').empty();
+            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty();
+            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
         }
     });
 
     $('#nama_peny').change(function() {
         var penyulang = $(this).val();
         var garduInduk = $('#id_gi').val();
-        if (penyulang && garduInduk) {
+        if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
             var urlTemplateKey =
                 '{{ route("get.nama_keypoint", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
             var urlKey = urlTemplateKey.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
@@ -3172,12 +3264,17 @@ $(document).ready(function() {
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                    $('#nama_lbs').empty();
-                    $('#nama_lbs').append('<option value="">Pilih Nama Keypoint</option>');
+                    $('#nama_lbs_select').empty();
+                    $('#nama_lbs_select').append(
+                        '<option value="">Pilih Nama Keypoint</option>');
                     $.each(data, function(key, value) {
-                        $('#nama_lbs').append('<option value="' + key + '">' +
-                            value + '</option>');
+                        $('#nama_lbs_select').append('<option value="' + key +
+                            '">' + value + '</option>');
                     });
+                    if (oldLbs) {
+                        $('#nama_lbs_select').val(oldLbs);
+                        oldLbs = '';
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
@@ -3195,12 +3292,17 @@ $(document).ready(function() {
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                    $('#nama_sec').empty();
-                    $('#nama_sec').append('<option value="">Pilih Sectoral</option>');
+                    $('#nama_sec_select').empty();
+                    $('#nama_sec_select').append(
+                        '<option value="">Pilih Sectoral</option>');
                     $.each(data, function(key, value) {
-                        $('#nama_sec').append('<option value="' + key + '">' +
-                            value + '</option>');
+                        $('#nama_sec_select').append('<option value="' + key +
+                            '">' + value + '</option>');
                     });
+                    if (oldSec) {
+                        $('#nama_sec_select').val(oldSec);
+                        oldSec = '';
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
@@ -3209,14 +3311,13 @@ $(document).ready(function() {
                 }
             });
         } else {
-            $('#nama_lbs').empty();
-            $('#nama_lbs').append('<option value="">Pilih Nama Keypoint</option>');
-            $('#nama_sec').empty();
-            $('#nama_sec').append('<option value="">Pilih Sectoral</option>');
+            $('#nama_lbs_select').empty();
+            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty();
+            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
         }
     });
 });
 </script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
 @endsection

@@ -59,7 +59,7 @@ class KeypointController extends Controller
                 'tb_formkp.id_formkp',
                 'tb_formkp.tgl_komisioning',
                 'tb_formkp.nama_lbs as nama_keypoint',
-                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) as gi_penyulang"),
+                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
                 'tb_formkp.id_merkrtu',
                 'tb_formkp.id_modem',
                 'tb_formkp.ketkp as keterangan',
@@ -81,9 +81,9 @@ class KeypointController extends Controller
             $query->where(function ($q) use ($searchValue) {
                 $q->where('tb_formkp.nama_lbs', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.ketkp', 'like', "%{$searchValue}%")
-                    ->orWhere('tb_formkp.penyulang', 'like', "%{$searchValue}%")
+                    ->orWhere('tb_formkp.nama_peny', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.nama_user', 'like', "%{$searchValue}%")
-                    ->orWhereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) LIKE ?", ["%{$searchValue}%"])
+                    ->orWhereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$searchValue}%"])
                     ->orWhere('tb_formkp.id_merkrtu', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.id_modem', 'like', "%{$searchValue}%");
             });
@@ -101,7 +101,7 @@ class KeypointController extends Controller
                         $query->where('tb_formkp.nama_lbs', 'like', "%{$colSearchValue}%");
                         break;
                     case 2:
-                        $query->whereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) LIKE ?", ["%{$colSearchValue}%"]);
+                        $query->whereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$colSearchValue}%"]);
                         break;
                     case 3:
                         $query->where('tb_formkp.id_merkrtu', 'like', "%{$colSearchValue}%")
@@ -531,10 +531,12 @@ class KeypointController extends Controller
         $validated = $request->validate([
             'tgl_komisioning' => 'required|date',
             'nama_lbs' => ['required', 'string', 'max:50', function ($attribute, $value, $fail) use ($request) {
-                $gi = $request->id_gi;
-                $peny = $request->nama_peny;
-                if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('nama_keypoint', $value)->exists()) {
-                    $fail('Invalid Nama Keypoint.');
+                if (!$request->mode_input) {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('nama_keypoint', $value)->exists()) {
+                        $fail('Invalid Nama Keypoint.');
+                    }
                 }
             }],
             'id_merkrtu' => 'required|integer|exists:tb_merklbs,id_merkrtu',
@@ -554,17 +556,15 @@ class KeypointController extends Controller
                     $fail('Invalid Nama Penyulangan for selected Gardu Induk.');
                 }
             }],
-            'nama_sec' => [
-                'required',
-                'string',
-                'max:255',
-                function ($attribute, $value, $fail) use ($request) {
+            'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255', function ($attribute, $value, $fail) use ($request) {
+                if (!$request->mode_input) {
                     $gi = $request->id_gi;
                     $peny = $request->nama_peny;
                     if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('sektoral', $value)->exists()) {
                         $fail('Invalid Sectoral.');
                     }
-                }],
+                }
+            }],
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
             'ir_scale' => 'required|string|max:10',
@@ -704,10 +704,28 @@ class KeypointController extends Controller
                 ? implode(',', array_filter($request->input($field)))
                 : '';
         }
+        // Convert nama_sec (string from select2/AJAX) → id_sec (integer FK)
+        if (!empty($request->nama_sec)) {
+            $namaSec = $request->nama_sec;
+            $idSec = DB::table('tb_sectoral')
+                ->where('nama_sec', $namaSec)  // Changed from 'sektoral' to 'nama_sec' to match likely table schema
+                ->value('id_sec');
+
+            if (!$idSec) {
+                // For manual input mode, insert new sectoral if not exists
+                $idSec = DB::table('tb_sectoral')->insertGetId(['nama_sec' => $namaSec]);  // Assuming 'nama_sec' is the name column; add other required fields if any
+            }
+
+            // This is the only thing we save to tb_formkp
+            $validated['id_sec'] = $idSec;
+        }
+
+        // Completely remove nama_sec from the insert (it doesn't exist in the table anyway)
+        unset($validated['nama_sec']);
 
         // Merge preprocessed id_pelms array into validated data
-        $validated['id_pelms'] = json_encode($request->input('id_pelms', []));
-        $validated['id_pelrtu'] = json_encode($request->input('id_pelrtu', []));
+        $validated['id_pelms'] = json_encode(array_filter(explode(',', $request->input('id_pelms', ''))));
+        $validated['id_pelrtu'] = json_encode(array_filter(explode(',', $request->input('id_pelrtu', ''))));
 
         // Log validated data before creating the record
 

@@ -21,7 +21,7 @@ class Keypoint extends Model
         'id_medkom',
         'ip_kp',
         'id_gi',
-        'penyulang',
+        'nama_peny',
         'id_sec',
         'ir_rtu',
         'ir_ms',
