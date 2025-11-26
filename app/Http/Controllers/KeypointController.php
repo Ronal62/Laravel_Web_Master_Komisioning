@@ -743,13 +743,18 @@ class KeypointController extends Controller
         $merklbs = DB::table('tb_merklbs')->get();
         $modems = DB::table('tb_modem')->get();
         $medkom = DB::table('tb_medkom')->get();
-        $garduinduk = DB::table('tb_garduinduk')->get();
+        // $garduinduk = DB::table('tb_garduinduk')->get();
+        $garduinduk = DB::connection('masterdata')->table('dg_keypoint')->select('gardu_induk')->distinct()->get();
         $sectoral = DB::table('tb_sectoral')->get();
         $komkp = DB::table('tb_komkp')->get();
-        $picmaster = DB::table('tb_picmaster')->get();
-        $selectedPicms = json_decode($keypoint->id_picms, true) ?? [];
+        $pelms = DB::table('tb_picmaster')->get();
+        $pelrtus = DB::table('tb_pelaksana_rtu')->get();
+        $decoded = json_decode($keypoint->id_pelms, true);
+        $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
+        $decodedRtu = json_decode($keypoint->id_pelrtu, true);
+        $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : ($decodedRtu ? [$decodedRtu] : []);
 
-        return view('pages.keypoint.edit', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'picmaster', 'selectedPicms'));
+        return view('pages.keypoint.edit', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'pelms', 'selectedPelms', 'pelrtus', 'selectedPelrtus'));
     }
 
     /**
@@ -761,8 +766,11 @@ class KeypointController extends Controller
         $keypoint = Keypoint::findOrFail($id);
 
         // Preprocess id_picms to ensure it's an array
-        $idPicmsInput = $request->input('id_picms', '');
-        $idPicmsArray = !empty($idPicmsInput) ? array_filter(array_map('trim', explode(',', $idPicmsInput))) : [];
+        $idPelmsInput = $request->input('id_pelms', '');
+        $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
+
+        $idPelrtuInput = $request->input('id_pelrtu', '');
+        $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
 
         // Define array fields that come from checkboxes
         $arrayFields = [
@@ -962,15 +970,40 @@ class KeypointController extends Controller
         $validated = $request->validate([
             'id_formkp' => 'required|integer|exists:tb_formkp,id_formkp',
             'tgl_komisioning' => 'required|date',
-            'nama_lbs' => 'required|string|max:50',
+            'nama_lbs' => ['required', 'string', 'max:50', function ($attribute, $value, $fail) use ($request) {
+                if (!$request->mode_input) {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('nama_keypoint', $value)->exists()) {
+                        $fail('Invalid Nama Keypoint.');
+                    }
+                }
+            }],
             'id_merkrtu' => 'required|integer|exists:tb_merklbs,id_merkrtu',
             'id_modem' => 'required|integer|exists:tb_modem,id_modem',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
             'ip_kp' => 'required|string|max:255',
-            'id_gi' => 'required|string|max:25',
-            'penyulang' => 'required|string|max:25',
-            'id_sec' => 'required|integer|exists:tb_sectoral,id_sec',
+            'id_gi' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $value)->exists()) {
+                    $fail('The selected Gardu Induk is invalid.');
+                }
+            }],
+            'nama_peny' => ['required', 'string', 'max:25', function ($attribute, $value, $fail) use ($request) {
+                $gi = $request->id_gi;
+                if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $value)->exists()) {
+                    $fail('Invalid Nama Penyulangan for selected Gardu Induk.');
+                }
+            }],
+            'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255', function ($attribute, $value, $fail) use ($request) {
+                if (!$request->mode_input) {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('sektoral', $value)->exists()) {
+                        $fail('Invalid Sectoral.');
+                    }
+                }
+            }],
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
             'ir_scale' => 'required|string|max:10',
@@ -992,9 +1025,24 @@ class KeypointController extends Controller
             'sign_kp' => 'required|string|max:10',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'required|string|max:10',
-            'id_picms' => ['required', function ($attribute, $value, $fail) use ($idPicmsArray) {
-                if (empty($idPicmsArray)) {
-                    $fail('The id picms field must be an array and cannot be empty.');
+            'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
+                if (empty($idPelmsArray)) {
+                    $fail('The id pelms field must be an array and cannot be empty.');
+                }
+                foreach ($idPelmsArray as $id) {
+                    if (!DB::table('tb_picmaster')->where('id_picmaster', $id)->exists()) {
+                        $fail("Invalid id_pelms: $id");
+                    }
+                }
+            }],
+            'id_pelrtu' => ['required', function ($attribute, $value, $fail) use ($idPelrtuArray) {
+                if (empty($idPelrtuArray)) {
+                    $fail('The id pelrtu field must be an array and cannot be empty.');
+                }
+                foreach ($idPelrtuArray as $id) {
+                    if (!DB::table('tb_pelaksana_rtu')->where('id_pelrtu', $id)->exists()) {
+                        $fail("Invalid id_pelrtu: $id");
+                    }
                 }
             }],
             'id_pelrtu' => 'required|string|max:25',
@@ -1013,8 +1061,29 @@ class KeypointController extends Controller
                 : '';
         }
 
+        // Convert nama_sec (string from select2/AJAX) → id_sec (integer FK)
+        if (!empty($request->nama_sec)) {
+            $namaSec = $request->nama_sec;
+            $idSec = DB::table('tb_sectoral')
+                ->where('nama_sec', $namaSec)  // Changed from 'sektoral' to 'nama_sec' to match likely table schema
+                ->value('id_sec');
+
+            if (!$idSec) {
+                // For manual input mode, insert new sectoral if not exists
+                $idSec = DB::table('tb_sectoral')->insertGetId(['nama_sec' => $namaSec]);  // Assuming 'nama_sec' is the name column; add other required fields if any
+            }
+
+            // This is the only thing we save to tb_formkp
+            $validated['id_sec'] = $idSec;
+        }
+
+        // Completely remove nama_sec from the insert (it doesn't exist in the table anyway)
+        unset($validated['nama_sec']);
+
+
         // Merge preprocessed id_picms array into validated data
-        $validated['id_picms'] = json_encode($idPicmsArray);
+        $validated['id_pelms'] = json_encode(array_filter(explode(',', $request->input('id_pelms', ''))));
+        $validated['id_pelrtu'] = json_encode(array_filter(explode(',', $request->input('id_pelrtu', ''))));
 
         // Update the record
         $keypoint->update($validated);

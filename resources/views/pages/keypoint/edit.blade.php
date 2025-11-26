@@ -63,6 +63,82 @@
                                         aria-labelledby="v-pills-formdata-tab-nobd">
                                         <div class="row">
                                             <div class="col-md-6">
+                                                <input type="hidden" name="mode_input" id="mode_input" value="0">
+                                                <div class="form-group">
+                                                    <label for="id_gi">Gardu Induk</label>
+                                                    <select class="form-select form-control" id="id_gi" name="id_gi"
+                                                        required>
+                                                        <option value="">Pilih Gardu Induk</option>
+                                                        @foreach ($garduinduk as $gi)
+                                                        <option value="{{ $gi->gardu_induk }}"
+                                                            {{ old('id_gi') == $gi->gardu_induk ? 'selected' : '' }}>
+                                                            {{ $gi->gardu_induk }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('id_gi')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nama_peny">Nama Penyulangan</label>
+                                                    <select class="form-select form-control" id="nama_peny"
+                                                        name="nama_peny" required>
+                                                        <option value="">Pilih Nama Penyulangan</option>
+                                                    </select>
+                                                    @error('nama_peny')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">Changer</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="changer_select"
+                                                                class="selectgroup-input" checked />
+                                                            <span class="selectgroup-button">Select Form Group</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" id="changer_input"
+                                                                class="selectgroup-input" />
+                                                            <span class="selectgroup-button">Input Form Group</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nama_lbs">Nama Keypoint</label>
+                                                    <div id="nama_lbs_select_container">
+                                                        <select class="form-select form-control" id="nama_lbs_select"
+                                                            name="nama_lbs" required>
+                                                            <option value="">Pilih Nama Keypoint</option>
+                                                        </select>
+                                                    </div>
+                                                    <div id="nama_lbs_input_container" style="display:none;">
+                                                        <input type="text" class="form-control" id="nama_lbs_input"
+                                                            placeholder="Nama Keypoint" value="{{ old('nama_lbs') }}"
+                                                            required />
+                                                    </div>
+                                                    @error('nama_lbs')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nama_sec">Sectoral</label>
+                                                    <div id="nama_sec_select_container">
+                                                        <select class="form-select form-control" id="nama_sec_select"
+                                                            name="nama_sec" required>
+                                                            <option value="">Pilih Sectoral</option>
+                                                        </select>
+                                                    </div>
+                                                    <div id="nama_sec_input_container" style="display:none;">
+                                                        <input type="text" class="form-control" id="nama_sec_input"
+                                                            placeholder="Sectoral" value="{{ old('nama_sec') }}"
+                                                            required />
+                                                    </div>
+                                                    @error('nama_sec')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="tgl_komisioning">Tanggal Komisioning</label>
                                                     <div class="input-icon">
@@ -75,18 +151,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="nama_lbs">Nama Keypoint</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="nama_lbs"
-                                                            name="nama_lbs" placeholder="Nama Keypoint"
-                                                            value="{{ old('nama_lbs', $keypoint->nama_lbs) }}"
-                                                            required />
-                                                        @error('nama_lbs')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+
                                                 <div class="form-group">
                                                     <label for="id_merkrtu">Merk RTU</label>
                                                     <select class="form-select form-control" id="id_merkrtu"
@@ -158,49 +223,6 @@
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="id_gi">Gardu Induk</label>
-                                                    <select class="form-select form-control" id="id_gi" name="id_gi"
-                                                        required>
-                                                        <option value="">Pilih Gardu Induk</option>
-                                                        @foreach ($garduinduk as $gi)
-                                                        <option value="{{ $gi->id_gi }}"
-                                                            {{ old('id_gi', $keypoint->id_gi) == $gi->id_gi ? 'selected' : '' }}>
-                                                            {{ $gi->nama_gi }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('id_gi')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="nama_peny">Penyulang</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="nama_peny"
-                                                            name="nama_peny" placeholder="Penyulang"
-                                                            value="{{ old('nama_peny', $keypoint->nama_peny) }}" />
-                                                        @error('nama_peny')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="id_sec">Sectoral</label>
-                                                    <select class="form-select form-control" id="id_sec" name="id_sec"
-                                                        required>
-                                                        <option value="">Pilih Sectoral</option>
-                                                        @foreach ($sectoral as $sec)
-                                                        <option value="{{ $sec->id_sec }}"
-                                                            {{ old('id_sec', $keypoint->id_sec) == $sec->id_sec ? 'selected' : '' }}>
-                                                            {{ $sec->nama_sec }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('id_sec')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -2043,38 +2065,53 @@
                                         </div>
                                         <div class="custom-form-container">
                                             <div class="custom-form-group">
-                                                <label for="id_picms" class="custom-label">Pelaksana Master II</label>
-                                                <div class="custom-select-wrapper">
-                                                    <div class="selected-items" id="selected-items"></div>
-                                                    <input type="hidden" id="id_picms" name="id_picms"
-                                                        value="{{ old('id_picms', implode(',', $selectedPicms ?? [])) }}">
-                                                    <div class="dropdown" id="dropdown-options">
-                                                        @foreach ($picmaster as $item)
-                                                        <div class="dropdown-item" data-id="{{ $item->id_picmaster }}"
-                                                            {{ in_array($item->id_picmaster, $selectedPicms ?? []) ? 'class=selected' : '' }}>
+                                                <label for="id_pelms" class="custom-label">Pelaksana Master II</label>
+                                                <div class="custom-select-wrapper" id="ms-wrapper">
+                                                    <div class="selected-items" id="selected-items-ms"></div>
+                                                    <input type="hidden" id="id_pelms" name="id_pelms"
+                                                        value="{{ old('id_pelms', implode(',', $selectedPelms)) }}">
+                                                    <div class="dropdown" id="dropdown-options-ms">
+                                                        @foreach ($pelms as $item)
+                                                        <div class="dropdown-item" data-id="{{ $item->id_picmaster }}">
                                                             {{ $item->nama_picmaster }}
                                                         </div>
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="invalid-feedback" id="error-message" style="display: none;">
+                                                <div class="invalid-feedback" id="error-message-ms"
+                                                    style="display: none;">
                                                     Please select at least one option.
                                                 </div>
-                                                @error('id_picms')
+                                                @error('id_pelms')
                                                 <div class="invalid-feedback" style="display: block;">{{ $message }}
                                                 </div>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="pelrtu">Pelaksana RTU</label>
-                                            <input type="text"
-                                                class="form-control text-uppercase @error('pelrtu') is-invalid @enderror"
-                                                id="pelrtu" name="pelrtu"
-                                                value="{{ old('pelrtu', $keypoint->pelrtu) }}">
-                                            @error('pelrtu')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <div class="custom-form-container">
+                                            <div class="custom-form-group">
+                                                <label for="id_pelrtu" class="custom-label">Pelaksana RTU II</label>
+                                                <div class="custom-select-wrapper" id="rtu-wrapper">
+                                                    <div class="selected-items" id="selected-items-rtu"></div>
+                                                    <input type="hidden" id="id_pelrtu" name="id_pelrtu"
+                                                        value="{{ old('id_pelrtu', implode(',', $selectedPelrtus)) }}">
+                                                    <div class="dropdown" id="dropdown-options-rtu">
+                                                        @foreach ($pelrtus as $item)
+                                                        <div class="dropdown-item" data-id="{{ $item->id_pelrtu }}">
+                                                            {{ $item->nama_pelrtu }}
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                <div class="invalid-feedback" id="error-message-rtu"
+                                                    style="display: none;">
+                                                    Please select at least one option.
+                                                </div>
+                                                @error('id_pelrtu')
+                                                <div class="invalid-feedback" style="display: block;">{{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -2106,101 +2143,277 @@
 </div>
 
 <script>
-const hiddenInput = document.getElementById("id_picms");
-let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
+function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropdownId, errorId) {
+    const wrapper = document.getElementById(wrapperId);
+    const selectedItems = document.getElementById(selectedItemsId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    const dropdown = document.getElementById(dropdownId);
+    const errorMessage = document.getElementById(errorId);
+    const maxSelections = 2;
 
-const selectedItems = document.getElementById("selected-items");
-const dropdown = document.getElementById("dropdown-options");
-const errorMessage = document.getElementById("error-message");
-const wrapper = document.querySelector(".custom-select-wrapper");
+    let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
 
-function handleSelection() {
-    selectedItems.innerHTML = "";
-    hiddenInput.value = selectedValues.join(",");
-
-    selectedValues.forEach((value) => {
-        const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
-        if (option) {
-            const div = document.createElement("div");
-            div.className = "selected-item";
-            div.innerHTML =
-                `${option.textContent} <button class="remove-item" onclick="removeSelection('${value}')">×</button>`;
-            selectedItems.appendChild(div);
-        }
-    });
-
-    updateDropdown();
-    checkValidation();
-}
-
-function removeSelection(value) {
-    selectedValues = selectedValues.filter(val => val !== value);
-    handleSelection();
-}
-
-function toggleSelection(value) {
-    if (selectedValues.includes(value)) {
-        selectedValues = selectedValues.filter(val => val !== value);
-    } else {
-        selectedValues.push(value);
-    }
-    handleSelection();
-}
-
-function updateDropdown() {
-    const items = dropdown.getElementsByClassName("dropdown-item");
-    Array.from(items).forEach((item) => {
-        const value = item.getAttribute("data-id");
-        if (selectedValues.includes(value)) {
-            item.classList.add("selected");
-        } else {
-            item.classList.remove("selected");
-        }
-    });
-
-    dropdown.classList.toggle("active", items.length > 0);
-}
-
-function checkValidation() {
-    const hasSelection = selectedValues.length > 0;
-    errorMessage.style.display = hasSelection ? "none" : "block";
-}
-
-// Toggle dropdown on click
-wrapper.addEventListener("click", (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle("active");
-});
-
-// Close dropdown when clicking outside
-document.addEventListener("click", (e) => {
-    if (!wrapper.contains(e.target)) {
-        dropdown.classList.remove("active");
-    }
-});
-
-// Initialize
-document.addEventListener("DOMContentLoaded", handleSelection);
-
-// Add click event to dropdown items
-dropdown.addEventListener("click", (e) => {
-    const item = e.target.closest(".dropdown-item");
-    if (item) {
-        const value = item.getAttribute("data-id");
-        toggleSelection(value);
-    }
-});
-
-// Checkbox "Normal" select-all functionality
-document.querySelectorAll('.selectgroup input[id$="_checkAll"]').forEach((checkAll) => {
-    checkAll.addEventListener('change', function() {
-        const group = this.closest('.selectgroup');
-        const checkboxes = group.querySelectorAll('input[type="checkbox"]:not([id$="_checkAll"])');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
+    function handleSelection() {
+        selectedItems.innerHTML = "";
+        hiddenInput.value = selectedValues.join(",");
+        selectedValues.forEach((value) => {
+            const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
+            if (option) {
+                const div = document.createElement("div");
+                div.className = "selected-item";
+                div.innerHTML = `${option.textContent} <button class="remove-item">×</button>`;
+                selectedItems.appendChild(div);
+                div.querySelector('.remove-item').addEventListener('click', () => removeSelection(value));
+            }
         });
+        updateDropdown();
+        checkValidation();
+    }
+
+    function removeSelection(value) {
+        selectedValues = selectedValues.filter(val => val !== value);
+        handleSelection();
+    }
+
+    function toggleSelection(value) {
+        if (selectedValues.includes(value)) {
+            selectedValues = selectedValues.filter(val => val !== value);
+        } else if (selectedValues.length < maxSelections) {
+            selectedValues.push(value);
+        }
+        handleSelection();
+    }
+
+    function updateDropdown() {
+        const items = dropdown.getElementsByClassName("dropdown-item");
+        Array.from(items).forEach((item) => {
+            const value = item.getAttribute("data-id");
+            if (selectedValues.includes(value)) {
+                item.classList.add("selected");
+            } else {
+                item.classList.remove("selected");
+            }
+        });
+        dropdown.classList.toggle("active", items.length > 0);
+    }
+
+    function checkValidation() {
+        const hasSelection = selectedValues.length > 0;
+        errorMessage.style.display = hasSelection ? "none" : "block";
+    }
+
+    // Toggle dropdown on click
+    wrapper.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!wrapper.contains(e.target)) {
+            dropdown.classList.remove("active");
+        }
+    });
+
+    // Add click event to dropdown items
+    dropdown.addEventListener("click", (e) => {
+        const item = e.target.closest(".dropdown-item");
+        if (item) {
+            const value = item.getAttribute("data-id");
+            toggleSelection(value);
+        }
+    });
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", handleSelection);
+}
+
+// For PIC Master II
+initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms', 'error-message-ms');
+
+// For Pelaksana RTU II
+initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
+</script>
+
+<script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+    var oldGi = "{{ old('id_gi') }}";
+    var oldPeny = "{{ old('nama_peny') }}";
+    var oldLbs = "{{ old('nama_lbs') }}";
+    var oldSec = "{{ old('nama_sec') }}";
+
+    if (oldGi) {
+        $('#id_gi').val(oldGi).change();
+    }
+
+    // Make checkboxes exclusive and prevent both from being unchecked
+    $('#changer_select').change(function() {
+        if (this.checked) {
+            $('#changer_input').prop('checked', false);
+        } else {
+            if (!$('#changer_input').is(':checked')) {
+                this.checked = true; // Prevent unchecking if the other is not checked
+            }
+        }
+        toggleMode();
+    });
+
+    $('#changer_input').change(function() {
+        if (this.checked) {
+            $('#changer_select').prop('checked', false);
+        } else {
+            if (!$('#changer_select').is(':checked')) {
+                this.checked = true; // Prevent unchecking if the other is not checked
+            }
+        }
+        toggleMode();
+    });
+
+    function toggleMode() {
+        // Set mode_input value: 1 for input mode (true), 0 for select mode (false)
+        $('#mode_input').val($('#changer_input').is(':checked') ? 1 : 0);
+
+        if ($('#changer_input').is(':checked')) {
+            // Input mode
+            $('#nama_lbs_select_container').hide();
+            $('#nama_lbs_input_container').show();
+            $('#nama_sec_select_container').hide();
+            $('#nama_sec_input_container').show();
+            $('#nama_lbs_select').attr('name', '').removeAttr('required');
+            $('#nama_lbs_input').attr('name', 'nama_lbs').attr('required', 'required');
+            $('#nama_sec_select').attr('name', '').removeAttr('required');
+            $('#nama_sec_input').attr('name', 'nama_sec').attr('required', 'required');
+            $('#nama_lbs_input').val(oldLbs);
+            $('#nama_sec_input').val(oldSec);
+        } else {
+            // Select mode (default)
+            $('#nama_lbs_select_container').show();
+            $('#nama_lbs_input_container').hide();
+            $('#nama_sec_select_container').show();
+            $('#nama_sec_input_container').hide();
+            $('#nama_lbs_select').attr('name', 'nama_lbs').attr('required', 'required');
+            $('#nama_lbs_input').attr('name', '').removeAttr('required');
+            $('#nama_sec_select').attr('name', 'nama_sec').attr('required', 'required');
+            $('#nama_sec_input').attr('name', '').removeAttr('required');
+            $('#nama_lbs_select').val(oldLbs);
+            $('#nama_sec_select').val(oldSec);
+        }
+    }
+
+    toggleMode(); // Initial toggle
+    $('#id_gi').change(function() {
+        var garduInduk = $(this).val();
+        if (garduInduk) {
+            var urlTemplate = '{{ route("get.penyulang", "PLACEHOLDER") }}';
+            var url = urlTemplate.replace('PLACEHOLDER', encodeURIComponent(garduInduk));
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_peny').empty();
+                    $('#nama_peny').append(
+                        '<option value="">Pilih Nama Penyulangan</option>');
+                    $.each(data, function(key, value) {
+                        $('#nama_peny').append('<option value="' + value + '">' +
+                            value + '</option>');
+                    });
+                    if (oldPeny) {
+                        $('#nama_peny').val(oldPeny).change();
+                        oldPeny = '';
+                    }
+                    $('#nama_lbs_select').empty();
+                    $('#nama_lbs_select').append(
+                        '<option value="">Pilih Nama Keypoint</option>');
+                    $('#nama_sec_select').empty();
+                    $('#nama_sec_select').append(
+                        '<option value="">Pilih Sectoral</option>');
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
+                        error);
+                    console.log(xhr.responseText);
+                }
+            });
+        } else {
+            $('#nama_peny').empty();
+            $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
+            $('#nama_lbs_select').empty();
+            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty();
+            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+        }
+    });
+
+    $('#nama_peny').change(function() {
+        var penyulang = $(this).val();
+        var garduInduk = $('#id_gi').val();
+        if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
+            var urlTemplateKey =
+                '{{ route("get.nama_keypoint", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
+            var urlKey = urlTemplateKey.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
+                .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
+            $.ajax({
+                url: urlKey,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_lbs_select').empty();
+                    $('#nama_lbs_select').append(
+                        '<option value="">Pilih Nama Keypoint</option>');
+                    $.each(data, function(key, value) {
+                        $('#nama_lbs_select').append('<option value="' + key +
+                            '">' + value + '</option>');
+                    });
+                    if (oldLbs) {
+                        $('#nama_lbs_select').val(oldLbs);
+                        oldLbs = '';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
+                        error);
+                    console.log(xhr.responseText);
+                }
+            });
+
+            var urlTemplateSec =
+                '{{ route("get.sektoral", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
+            var urlSec = urlTemplateSec.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
+                .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
+            $.ajax({
+                url: urlSec,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_sec_select').empty();
+                    $('#nama_sec_select').append(
+                        '<option value="">Pilih Sectoral</option>');
+                    $.each(data, function(key, value) {
+                        $('#nama_sec_select').append('<option value="' + key +
+                            '">' + value + '</option>');
+                    });
+                    if (oldSec) {
+                        $('#nama_sec_select').val(oldSec);
+                        oldSec = '';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
+                        error);
+                    console.log(xhr.responseText);
+                }
+            });
+        } else {
+            $('#nama_lbs_select').empty();
+            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty();
+            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+        }
     });
 });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
 
 @endsection

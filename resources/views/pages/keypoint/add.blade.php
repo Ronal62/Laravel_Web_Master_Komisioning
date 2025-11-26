@@ -3160,10 +3160,14 @@ $(document).ready(function() {
         $('#id_gi').val(oldGi).change();
     }
 
-    // Make checkboxes exclusive
+    // Make checkboxes exclusive and prevent both from being unchecked
     $('#changer_select').change(function() {
         if (this.checked) {
             $('#changer_input').prop('checked', false);
+        } else {
+            if (!$('#changer_input').is(':checked')) {
+                this.checked = true; // Prevent unchecking if the other is not checked
+            }
         }
         toggleMode();
     });
@@ -3171,6 +3175,10 @@ $(document).ready(function() {
     $('#changer_input').change(function() {
         if (this.checked) {
             $('#changer_select').prop('checked', false);
+        } else {
+            if (!$('#changer_select').is(':checked')) {
+                this.checked = true; // Prevent unchecking if the other is not checked
+            }
         }
         toggleMode();
     });
