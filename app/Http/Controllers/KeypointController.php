@@ -1403,5 +1403,4 @@ class KeypointController extends Controller
 
         return redirect()->route('keypoint.index')->with('success', 'Keypoint deleted successfully!');
     }
-
 }
