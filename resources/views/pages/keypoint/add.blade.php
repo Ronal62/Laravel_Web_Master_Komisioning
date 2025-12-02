@@ -137,6 +137,19 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="ip_kp">IP Address/No. Kartu</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ip_kp" name="ip_kp"
+                                                            placeholder="IP Address/No. Kartu"
+                                                            value="{{ old('ip_kp') }}" />
+                                                        @error('ip_kp')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
                                                     <label for="tgl_komisioning">Tanggal Komisioning</label>
                                                     <div class="input-icon">
                                                         <input type="date" class="form-control" id="tgl_komisioning"
@@ -191,8 +204,6 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="id_medkom">Media Komunikasi</label>
                                                     <select class="form-select form-control" id="id_medkom"
@@ -209,17 +220,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="ip_kp">IP Address/No. Kartu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ip_kp" name="ip_kp"
-                                                            placeholder="IP Address/No. Kartu"
-                                                            value="{{ old('ip_kp') }}" />
-                                                        @error('ip_kp')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+
 
 
 
@@ -1430,10 +1431,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcf_normal_addms">DC Normal AddMs</label>
+                                                    <label for="sdcf_normal_addms">DCF Normal AddMs</label>
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="sdcf_normal_addms"
-                                                            name="sdcf_normal_addms" placeholder="DC Normal AddMs"
+                                                            name="sdcf_normal_addms" placeholder="DCF Normal AddMs"
                                                             value="{{ old('sdcf_normal_addms') }}" />
                                                         @error('sdcf_normal_addms')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -1441,10 +1442,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcf_fail_addms">DC Fail AddMs</label>
+                                                    <label for="sdcf_fail_addms">DCF Fail AddMs</label>
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="sdcf_fail_addms"
-                                                            name="sdcf_fail_addms" placeholder="DC Fail AddMs"
+                                                            name="sdcf_fail_addms" placeholder="DCF Fail AddMs"
                                                             value="{{ old('sdcf_fail_addms') }}" />
                                                         @error('sdcf_fail_addms')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -1740,10 +1741,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcf_normal_objfrmt">DC Normal OBJ/FRMT</label>
+                                                    <label for="sdcf_normal_objfrmt">DCF Normal OBJ/FRMT</label>
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="sdcf_normal_objfrmt"
-                                                            name="sdcf_normal_objfrmt" placeholder="DC Normal OBJ/FRMT"
+                                                            name="sdcf_normal_objfrmt" placeholder="DCF Normal OBJ/FRMT"
                                                             value="{{ old('sdcf_normal_objfrmt') }}" />
                                                         @error('sdcf_normal_objfrmt')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -1751,7 +1752,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcf_fail_objfrmt">DC Fail OBJ/FRMT</label>
+                                                    <label for="sdcf_fail_objfrmt">DCF Fail OBJ/FRMT</label>
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="sdcf_fail_objfrmt"
                                                             name="sdcf_fail_objfrmt" placeholder="DC Fail OBJ/FRMT"
@@ -2050,10 +2051,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcf_normal_addrtu">DC Normal AddRtu</label>
+                                                    <label for="sdcf_normal_addrtu">DCF Normal AddRtu</label>
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="sdcf_normal_addrtu"
-                                                            name="sdcf_normal_addrtu" placeholder="DC Normal AddRtu"
+                                                            name="sdcf_normal_addrtu" placeholder="DCF Normal AddRtu"
                                                             value="{{ old('sdcf_normal_addrtu') }}" />
                                                         @error('sdcf_normal_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -2061,10 +2062,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sdcf_fail_addrtu">DC Fail AddRtu</label>
+                                                    <label for="sdcf_fail_addrtu">DCF Fail AddRtu</label>
                                                     <div class="input-icon">
                                                         <input type="text" class="form-control" id="sdcf_fail_addrtu"
-                                                            name="sdcf_fail_addrtu" placeholder="DC Fail AddRtu"
+                                                            name="sdcf_fail_addrtu" placeholder="DCF Fail AddRtu"
                                                             value="{{ old('sdcf_fail_addrtu') }}" />
                                                         @error('sdcf_fail_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -2542,157 +2543,78 @@
                                             </div>
                                             <div class="col-12 col-lg-2">
                                                 <div class="form-group">
-                                                    <label for="scb_open_addms">CB Open AddMs</label>
+                                                    <label for="ccb_open_addms">CB Open AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_open_addms"
-                                                            name="scb_open_addms" placeholder="CB Open AddMs"
-                                                            value="{{ old('scb_open_addms') }}" />
-                                                        @error('scb_open_addms')
+                                                        <input type="text" class="form-control" id="ccb_open_addms"
+                                                            name="ccb_open_addms" placeholder="CB Open AddMs"
+                                                            value="{{ old('ccb_open_addms') }}" />
+                                                        @error('ccb_open_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb_close_addms">CB Close AddMs</label>
+                                                    <label for="ccb_close_addms">CB Close AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_close_addms"
-                                                            name="scb_close_addms" placeholder="CB Close AddMs"
-                                                            value="{{ old('scb_close_addms') }}" />
-                                                        @error('scb_close_addms')
+                                                        <input type="text" class="form-control" id="ccb_close_addms"
+                                                            name="ccb_close_addms" placeholder="CB Close AddMs"
+                                                            value="{{ old('ccb_close_addms') }}" />
+                                                        @error('ccb_close_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb2_open_addms">CB2 Open AddMs</label>
+                                                    <label for="ccb2_open_addms">CB2 Open AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb2_open_addms"
-                                                            name="scb2_open_addms" placeholder="CB2 Open AddMs"
-                                                            value="{{ old('scb2_open_addms') }}" />
-                                                        @error('scb2_open_addms')
+                                                        <input type="text" class="form-control" id="ccb2_open_addms"
+                                                            name="ccb2_open_addms" placeholder="CB2 Open AddMs"
+                                                            value="{{ old('ccb2_open_addms') }}" />
+                                                        @error('ccb2_open_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb2_close_addms">CB2 Close AddMs</label>
+                                                    <label for="ccb2_close_addms">CB2 Close AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb2_close_addms"
-                                                            name="scb2_close_addms" placeholder="CB2 Close AddMs"
-                                                            value="{{ old('scb2_close_addms') }}" />
-                                                        @error('scb2_close_addms')
+                                                        <input type="text" class="form-control" id="ccb2_close_addms"
+                                                            name="ccb2_close_addms" placeholder="CB2 Close AddMs"
+                                                            value="{{ old('ccb2_close_addms') }}" />
+                                                        @error('ccb2_close_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="shlt_on_addms">HLT On AddMs</label>
+                                                    <label for="chlt_on_addms">HLT On AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="shlt_on_addms"
-                                                            name="shlt_on_addms" placeholder="HLT On AddMs"
-                                                            value="{{ old('shlt_on_addms') }}" />
-                                                        @error('shlt_on_addms')
+                                                        <input type="text" class="form-control" id="chlt_on_addms"
+                                                            name="chlt_on_addms" placeholder="HLT On AddMs"
+                                                            value="{{ old('chlt_on_addms') }}" />
+                                                        @error('chlt_on_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="shlt_off_addms">HLT Off AddMs</label>
+                                                    <label for="chlt_off_addms">HLT Off AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="shlt_off_addms"
-                                                            name="shlt_off_addms" placeholder="HLT Off AddMs"
-                                                            value="{{ old('shlt_off_addms') }}" />
-                                                        @error('shlt_off_addms')
+                                                        <input type="text" class="form-control" id="chlt_off_addms"
+                                                            name="chlt_off_addms" placeholder="HLT Off AddMs"
+                                                            value="{{ old('chlt_off_addms') }}" />
+                                                        @error('chlt_off_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="srst_addms">Reset AddMs</label>
+                                                    <label for="crst_addms">Reset AddMs</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="srst_addms"
-                                                            name="srst_addms" placeholder="Reset AddMs"
-                                                            value="{{ old('srst_addms') }}" />
-                                                        @error('srst_addms')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-lg-2">
-                                                <div class="form-group">
-                                                    <label for="scb_open_addrtu">CB Open AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_open_addrtu"
-                                                            name="scb_open_addrtu" placeholder="CB Open AddRtu"
-                                                            value="{{ old('scb_open_addrtu') }}" />
-                                                        @error('scb_open_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="scb_close_addrtu">CB Close AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_close_addrtu"
-                                                            name="scb_close_addrtu" placeholder="CB Close AddRtu"
-                                                            value="{{ old('scb_close_addrtu') }}" />
-                                                        @error('scb_close_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="scb2_open_addrtu">CB2 Open AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb2_open_addrtu"
-                                                            name="scb2_open_addrtu" placeholder="CB2 Open AddRtu"
-                                                            value="{{ old('scb2_open_addrtu') }}" />
-                                                        @error('scb2_open_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="scb2_close_addrtu">CB2 Close AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb2_close_addrtu"
-                                                            name="scb2_close_addrtu" placeholder="CB2 Close AddRtu"
-                                                            value="{{ old('scb2_close_addrtu') }}" />
-                                                        @error('scb2_close_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="shlt_on_addrtu">HLT On AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="shlt_on_addrtu"
-                                                            name="shlt_on_addrtu" placeholder="HLT On AddRtu"
-                                                            value="{{ old('shlt_on_addrtu') }}" />
-                                                        @error('shlt_on_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="shlt_off_addrtu">HLT Off AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="shlt_off_addrtu"
-                                                            name="shlt_off_addrtu" placeholder="HLT Off AddRtu"
-                                                            value="{{ old('shlt_off_addrtu') }}" />
-                                                        @error('shlt_off_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="srst_addrtu">Reset AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="srst_addrtu"
-                                                            name="srst_addrtu" placeholder="Reset AddRtu"
-                                                            value="{{ old('srst_addrtu') }}" />
-                                                        @error('srst_addrtu')
+                                                        <input type="text" class="form-control" id="crst_addms"
+                                                            name="crst_addms" placeholder="Reset AddMs"
+                                                            value="{{ old('crst_addms') }}" />
+                                                        @error('crst_addms')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -2700,78 +2622,157 @@
                                             </div>
                                             <div class="col-12 col-lg-2">
                                                 <div class="form-group">
-                                                    <label for="scb_open_objfrmt">CB Open OBJ/FRMT</label>
+                                                    <label for="ccb_open_addrtu">CB Open AddRtu</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_open_objfrmt"
-                                                            name="scb_open_objfrmt" placeholder="CB Open OBJ/FRMT"
-                                                            value="{{ old('scb_open_objfrmt') }}" />
-                                                        @error('scb_open_objfrmt')
+                                                        <input type="text" class="form-control" id="ccb_open_addrtu"
+                                                            name="ccb_open_addrtu" placeholder="CB Open AddRtu"
+                                                            value="{{ old('ccb_open_addrtu') }}" />
+                                                        @error('ccb_open_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb_close_objfrmt">CB Close OBJ/FRMT</label>
+                                                    <label for="ccb_close_addrtu">CB Close AddRtu</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb_close_objfrmt"
-                                                            name="scb_close_objfrmt" placeholder="CB Close OBJ/FRMT"
-                                                            value="{{ old('scb_close_objfrmt') }}" />
-                                                        @error('scb_close_objfrmt')
+                                                        <input type="text" class="form-control" id="ccb_close_addrtu"
+                                                            name="ccb_close_addrtu" placeholder="CB Close AddRtu"
+                                                            value="{{ old('ccb_close_addrtu') }}" />
+                                                        @error('ccb_close_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb2_open_objfrmt">CB2 Open OBJ/FRMT</label>
+                                                    <label for="ccb2_open_addrtu">CB2 Open AddRtu</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb2_open_objfrmt"
-                                                            name="scb2_open_objfrmt" placeholder="CB2 Open OBJ/FRMT"
-                                                            value="{{ old('scb2_open_objfrmt') }}" />
-                                                        @error('scb2_open_objfrmt')
+                                                        <input type="text" class="form-control" id="ccb2_open_addrtu"
+                                                            name="ccb2_open_addrtu" placeholder="CB2 Open AddRtu"
+                                                            value="{{ old('ccb2_open_addrtu') }}" />
+                                                        @error('ccb2_open_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="scb2_close_objfrmt">CB2 Close OBJ/FRMT</label>
+                                                    <label for="ccb2_close_addrtu">CB2 Close AddRtu</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scb2_close_objfrmt"
-                                                            name="scb2_close_objfrmt" placeholder="CB2 Close OBJ/FRMT"
-                                                            value="{{ old('scb2_close_objfrmt') }}" />
-                                                        @error('scb2_close_objfrmt')
+                                                        <input type="text" class="form-control" id="ccb2_close_addrtu"
+                                                            name="ccb2_close_addrtu" placeholder="CB2 Close AddRtu"
+                                                            value="{{ old('ccb2_close_addrtu') }}" />
+                                                        @error('ccb2_close_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="shlt_on_objfrmt">HLT On OBJ/FRMT</label>
+                                                    <label for="chlt_on_addrtu">HLT On AddRtu</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="shlt_on_objfrmt"
-                                                            name="shlt_on_objfrmt" placeholder="HLT On OBJ/FRMT"
-                                                            value="{{ old('shlt_on_objfrmt') }}" />
-                                                        @error('shlt_on_objfrmt')
+                                                        <input type="text" class="form-control" id="chlt_on_addrtu"
+                                                            name="chlt_on_addrtu" placeholder="HLT On AddRtu"
+                                                            value="{{ old('chlt_on_addrtu') }}" />
+                                                        @error('chlt_on_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="shlt_off_objfrmt">HLT Off OBJ/FRMT</label>
+                                                    <label for="chlt_off_addrtu">HLT Off AddRtu</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="shlt_off_objfrmt"
-                                                            name="shlt_off_objfrmt" placeholder="HLT Off OBJ/FRMT"
-                                                            value="{{ old('shlt_off_objfrmt') }}" />
-                                                        @error('shlt_off_objfrmt')
+                                                        <input type="text" class="form-control" id="chlt_off_addrtu"
+                                                            name="chlt_off_addrtu" placeholder="HLT Off AddRtu"
+                                                            value="{{ old('chlt_off_addrtu') }}" />
+                                                        @error('chlt_off_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="srst_objfrmt">Reset OBJ/FRMT</label>
+                                                    <label for="crst_addrtu">Reset AddRtu</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="srst_objfrmt"
-                                                            name="srst_objfrmt" placeholder="Reset OBJ/FRMT"
-                                                            value="{{ old('srst_objfrmt') }}" />
-                                                        @error('srst_objfrmt')
+                                                        <input type="text" class="form-control" id="crst_addrtu"
+                                                            name="crst_addrtu" placeholder="Reset AddRtu"
+                                                            value="{{ old('crst_addrtu') }}" />
+                                                        @error('crst_addrtu')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-2">
+                                                <div class="form-group">
+                                                    <label for="ccb_open_objfrmt">CB Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb_open_objfrmt"
+                                                            name="ccb_open_objfrmt" placeholder="CB Open OBJ/FRMT"
+                                                            value="{{ old('ccb_open_objfrmt') }}" />
+                                                        @error('ccb_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ccb_close_objfrmt">CB Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb_close_objfrmt"
+                                                            name="ccb_close_objfrmt" placeholder="CB Close OBJ/FRMT"
+                                                            value="{{ old('ccb_close_objfrmt') }}" />
+                                                        @error('ccb_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ccb2_open_objfrmt">CB2 Open OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb2_open_objfrmt"
+                                                            name="ccb2_open_objfrmt" placeholder="CB2 Open OBJ/FRMT"
+                                                            value="{{ old('ccb2_open_objfrmt') }}" />
+                                                        @error('ccb2_open_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ccb2_close_objfrmt">CB2 Close OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ccb2_close_objfrmt"
+                                                            name="ccb2_close_objfrmt" placeholder="CB2 Close OBJ/FRMT"
+                                                            value="{{ old('ccb2_close_objfrmt') }}" />
+                                                        @error('ccb2_close_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="chlt_on_objfrmt">HLT On OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="chlt_on_objfrmt"
+                                                            name="chlt_on_objfrmt" placeholder="HLT On OBJ/FRMT"
+                                                            value="{{ old('chlt_on_objfrmt') }}" />
+                                                        @error('chlt_on_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="chlt_off_objfrmt">HLT Off OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="chlt_off_objfrmt"
+                                                            name="chlt_off_objfrmt" placeholder="HLT Off OBJ/FRMT"
+                                                            value="{{ old('chlt_off_objfrmt') }}" />
+                                                        @error('chlt_off_objfrmt')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="crst_objfrmt">Reset OBJ/FRMT</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="crst_objfrmt"
+                                                            name="crst_objfrmt" placeholder="Reset OBJ/FRMT"
+                                                            value="{{ old('crst_objfrmt') }}" />
+                                                        @error('crst_objfrmt')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -3022,276 +3023,276 @@
 </div>
 
 <script>
-    function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropdownId, errorId) {
-        const wrapper = document.getElementById(wrapperId);
-        const selectedItems = document.getElementById(selectedItemsId);
-        const hiddenInput = document.getElementById(hiddenInputId);
-        const dropdown = document.getElementById(dropdownId);
-        const errorMessage = document.getElementById(errorId);
-        const maxSelections = 2;
+function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropdownId, errorId) {
+    const wrapper = document.getElementById(wrapperId);
+    const selectedItems = document.getElementById(selectedItemsId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    const dropdown = document.getElementById(dropdownId);
+    const errorMessage = document.getElementById(errorId);
+    const maxSelections = 2;
 
-        let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
+    let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
 
-        function handleSelection() {
-            selectedItems.innerHTML = "";
-            hiddenInput.value = selectedValues.join(",");
-            selectedValues.forEach((value) => {
-                const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
-                if (option) {
-                    const div = document.createElement("div");
-                    div.className = "selected-item";
-                    div.innerHTML = `${option.textContent} <button class="remove-item">×</button>`;
-                    selectedItems.appendChild(div);
-                    div.querySelector('.remove-item').addEventListener('click', () => removeSelection(value));
-                }
-            });
-            updateDropdown();
-            checkValidation();
-        }
-
-        function removeSelection(value) {
-            selectedValues = selectedValues.filter(val => val !== value);
-            handleSelection();
-        }
-
-        function toggleSelection(value) {
-            if (selectedValues.includes(value)) {
-                selectedValues = selectedValues.filter(val => val !== value);
-            } else if (selectedValues.length < maxSelections) {
-                selectedValues.push(value);
-            }
-            handleSelection();
-        }
-
-        function updateDropdown() {
-            const items = dropdown.getElementsByClassName("dropdown-item");
-            Array.from(items).forEach((item) => {
-                const value = item.getAttribute("data-id");
-                if (selectedValues.includes(value)) {
-                    item.classList.add("selected");
-                } else {
-                    item.classList.remove("selected");
-                }
-            });
-            dropdown.classList.toggle("active", items.length > 0);
-        }
-
-        function checkValidation() {
-            const hasSelection = selectedValues.length > 0;
-            errorMessage.style.display = hasSelection ? "none" : "block";
-        }
-
-        // Toggle dropdown on click
-        wrapper.addEventListener("click", (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle("active");
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", (e) => {
-            if (!wrapper.contains(e.target)) {
-                dropdown.classList.remove("active");
+    function handleSelection() {
+        selectedItems.innerHTML = "";
+        hiddenInput.value = selectedValues.join(",");
+        selectedValues.forEach((value) => {
+            const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
+            if (option) {
+                const div = document.createElement("div");
+                div.className = "selected-item";
+                div.innerHTML = `${option.textContent} <button class="remove-item">×</button>`;
+                selectedItems.appendChild(div);
+                div.querySelector('.remove-item').addEventListener('click', () => removeSelection(value));
             }
         });
-
-        // Add click event to dropdown items
-        dropdown.addEventListener("click", (e) => {
-            const item = e.target.closest(".dropdown-item");
-            if (item) {
-                const value = item.getAttribute("data-id");
-                toggleSelection(value);
-            }
-        });
-
-        // Initialize
-        document.addEventListener("DOMContentLoaded", handleSelection);
+        updateDropdown();
+        checkValidation();
     }
 
-    // For PIC Master II
-    initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms', 'error-message-ms');
+    function removeSelection(value) {
+        selectedValues = selectedValues.filter(val => val !== value);
+        handleSelection();
+    }
 
-    // For Pelaksana RTU II
-    initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
+    function toggleSelection(value) {
+        if (selectedValues.includes(value)) {
+            selectedValues = selectedValues.filter(val => val !== value);
+        } else if (selectedValues.length < maxSelections) {
+            selectedValues.push(value);
+        }
+        handleSelection();
+    }
+
+    function updateDropdown() {
+        const items = dropdown.getElementsByClassName("dropdown-item");
+        Array.from(items).forEach((item) => {
+            const value = item.getAttribute("data-id");
+            if (selectedValues.includes(value)) {
+                item.classList.add("selected");
+            } else {
+                item.classList.remove("selected");
+            }
+        });
+        dropdown.classList.toggle("active", items.length > 0);
+    }
+
+    function checkValidation() {
+        const hasSelection = selectedValues.length > 0;
+        errorMessage.style.display = hasSelection ? "none" : "block";
+    }
+
+    // Toggle dropdown on click
+    wrapper.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!wrapper.contains(e.target)) {
+            dropdown.classList.remove("active");
+        }
+    });
+
+    // Add click event to dropdown items
+    dropdown.addEventListener("click", (e) => {
+        const item = e.target.closest(".dropdown-item");
+        if (item) {
+            const value = item.getAttribute("data-id");
+            toggleSelection(value);
+        }
+    });
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", handleSelection);
+}
+
+// For PIC Master II
+initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms', 'error-message-ms');
+
+// For Pelaksana RTU II
+initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
 </script>
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
 <script>
-    $(document).ready(function() {
-        var oldGi = "{{ old('id_gi') }}";
-        var oldPeny = "{{ old('nama_peny') }}";
-        var oldLbs = "{{ old('nama_lbs') }}";
-        var oldSec = "{{ old('nama_sec') }}";
+$(document).ready(function() {
+    var oldGi = "{{ old('id_gi') }}";
+    var oldPeny = "{{ old('nama_peny') }}";
+    var oldLbs = "{{ old('nama_lbs') }}";
+    var oldSec = "{{ old('nama_sec') }}";
 
-        if (oldGi) {
-            $('#id_gi').val(oldGi).change();
-        }
+    if (oldGi) {
+        $('#id_gi').val(oldGi).change();
+    }
 
-        // Make checkboxes exclusive and prevent both from being unchecked
-        $('#changer_select').change(function() {
-            if (this.checked) {
-                $('#changer_input').prop('checked', false);
-            } else {
-                if (!$('#changer_input').is(':checked')) {
-                    this.checked = true; // Prevent unchecking if the other is not checked
-                }
-            }
-            toggleMode();
-        });
-
-        $('#changer_input').change(function() {
-            if (this.checked) {
-                $('#changer_select').prop('checked', false);
-            } else {
-                if (!$('#changer_select').is(':checked')) {
-                    this.checked = true; // Prevent unchecking if the other is not checked
-                }
-            }
-            toggleMode();
-        });
-
-        function toggleMode() {
-            // Set mode_input value: 1 for input mode (true), 0 for select mode (false)
-            $('#mode_input').val($('#changer_input').is(':checked') ? 1 : 0);
-
-            if ($('#changer_input').is(':checked')) {
-                // Input mode
-                $('#nama_lbs_select_container').hide();
-                $('#nama_lbs_input_container').show();
-                $('#nama_sec_select_container').hide();
-                $('#nama_sec_input_container').show();
-                $('#nama_lbs_select').attr('name', '').removeAttr('required');
-                $('#nama_lbs_input').attr('name', 'nama_lbs').attr('required', 'required');
-                $('#nama_sec_select').attr('name', '').removeAttr('required');
-                $('#nama_sec_input').attr('name', 'nama_sec').attr('required', 'required');
-                $('#nama_lbs_input').val(oldLbs);
-                $('#nama_sec_input').val(oldSec);
-            } else {
-                // Select mode (default)
-                $('#nama_lbs_select_container').show();
-                $('#nama_lbs_input_container').hide();
-                $('#nama_sec_select_container').show();
-                $('#nama_sec_input_container').hide();
-                $('#nama_lbs_select').attr('name', 'nama_lbs').attr('required', 'required');
-                $('#nama_lbs_input').attr('name', '').removeAttr('required');
-                $('#nama_sec_select').attr('name', 'nama_sec').attr('required', 'required');
-                $('#nama_sec_input').attr('name', '').removeAttr('required');
-                $('#nama_lbs_select').val(oldLbs);
-                $('#nama_sec_select').val(oldSec);
+    // Make checkboxes exclusive and prevent both from being unchecked
+    $('#changer_select').change(function() {
+        if (this.checked) {
+            $('#changer_input').prop('checked', false);
+        } else {
+            if (!$('#changer_input').is(':checked')) {
+                this.checked = true; // Prevent unchecking if the other is not checked
             }
         }
-
-        toggleMode(); // Initial toggle
-        $('#id_gi').change(function() {
-            var garduInduk = $(this).val();
-            if (garduInduk) {
-                var urlTemplate = '{{ route("get.penyulang", "PLACEHOLDER") }}';
-                var url = urlTemplate.replace('PLACEHOLDER', encodeURIComponent(garduInduk));
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        $('#nama_peny').empty();
-                        $('#nama_peny').append(
-                            '<option value="">Pilih Nama Penyulangan</option>');
-                        $.each(data, function(key, value) {
-                            $('#nama_peny').append('<option value="' + value + '">' +
-                                value + '</option>');
-                        });
-                        if (oldPeny) {
-                            $('#nama_peny').val(oldPeny).change();
-                            oldPeny = '';
-                        }
-                        $('#nama_lbs_select').empty();
-                        $('#nama_lbs_select').append(
-                            '<option value="">Pilih Nama Keypoint</option>');
-                        $('#nama_sec_select').empty();
-                        $('#nama_sec_select').append(
-                            '<option value="">Pilih Sectoral</option>');
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
-                            error);
-                        console.log(xhr.responseText);
-                    }
-                });
-            } else {
-                $('#nama_peny').empty();
-                $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
-                $('#nama_lbs_select').empty();
-                $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
-                $('#nama_sec_select').empty();
-                $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
-            }
-        });
-
-        $('#nama_peny').change(function() {
-            var penyulang = $(this).val();
-            var garduInduk = $('#id_gi').val();
-            if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
-                var urlTemplateKey =
-                    '{{ route("get.nama_keypoint", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
-                var urlKey = urlTemplateKey.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
-                    .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
-                $.ajax({
-                    url: urlKey,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        $('#nama_lbs_select').empty();
-                        $('#nama_lbs_select').append(
-                            '<option value="">Pilih Nama Keypoint</option>');
-                        $.each(data, function(key, value) {
-                            $('#nama_lbs_select').append('<option value="' + key +
-                                '">' + value + '</option>');
-                        });
-                        if (oldLbs) {
-                            $('#nama_lbs_select').val(oldLbs);
-                            oldLbs = '';
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
-                            error);
-                        console.log(xhr.responseText);
-                    }
-                });
-
-                var urlTemplateSec =
-                    '{{ route("get.sektoral", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
-                var urlSec = urlTemplateSec.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
-                    .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
-                $.ajax({
-                    url: urlSec,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        $('#nama_sec_select').empty();
-                        $('#nama_sec_select').append(
-                            '<option value="">Pilih Sectoral</option>');
-                        $.each(data, function(key, value) {
-                            $('#nama_sec_select').append('<option value="' + key +
-                                '">' + value + '</option>');
-                        });
-                        if (oldSec) {
-                            $('#nama_sec_select').val(oldSec);
-                            oldSec = '';
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
-                            error);
-                        console.log(xhr.responseText);
-                    }
-                });
-            } else {
-                $('#nama_lbs_select').empty();
-                $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
-                $('#nama_sec_select').empty();
-                $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
-            }
-        });
+        toggleMode();
     });
+
+    $('#changer_input').change(function() {
+        if (this.checked) {
+            $('#changer_select').prop('checked', false);
+        } else {
+            if (!$('#changer_select').is(':checked')) {
+                this.checked = true; // Prevent unchecking if the other is not checked
+            }
+        }
+        toggleMode();
+    });
+
+    function toggleMode() {
+        // Set mode_input value: 1 for input mode (true), 0 for select mode (false)
+        $('#mode_input').val($('#changer_input').is(':checked') ? 1 : 0);
+
+        if ($('#changer_input').is(':checked')) {
+            // Input mode
+            $('#nama_lbs_select_container').hide();
+            $('#nama_lbs_input_container').show();
+            $('#nama_sec_select_container').hide();
+            $('#nama_sec_input_container').show();
+            $('#nama_lbs_select').attr('name', '').removeAttr('required');
+            $('#nama_lbs_input').attr('name', 'nama_lbs').attr('required', 'required');
+            $('#nama_sec_select').attr('name', '').removeAttr('required');
+            $('#nama_sec_input').attr('name', 'nama_sec').attr('required', 'required');
+            $('#nama_lbs_input').val(oldLbs);
+            $('#nama_sec_input').val(oldSec);
+        } else {
+            // Select mode (default)
+            $('#nama_lbs_select_container').show();
+            $('#nama_lbs_input_container').hide();
+            $('#nama_sec_select_container').show();
+            $('#nama_sec_input_container').hide();
+            $('#nama_lbs_select').attr('name', 'nama_lbs').attr('required', 'required');
+            $('#nama_lbs_input').attr('name', '').removeAttr('required');
+            $('#nama_sec_select').attr('name', 'nama_sec').attr('required', 'required');
+            $('#nama_sec_input').attr('name', '').removeAttr('required');
+            $('#nama_lbs_select').val(oldLbs);
+            $('#nama_sec_select').val(oldSec);
+        }
+    }
+
+    toggleMode(); // Initial toggle
+    $('#id_gi').change(function() {
+        var garduInduk = $(this).val();
+        if (garduInduk) {
+            var urlTemplate = '{{ route("get.penyulang", "PLACEHOLDER") }}';
+            var url = urlTemplate.replace('PLACEHOLDER', encodeURIComponent(garduInduk));
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_peny').empty();
+                    $('#nama_peny').append(
+                        '<option value="">Pilih Nama Penyulangan</option>');
+                    $.each(data, function(key, value) {
+                        $('#nama_peny').append('<option value="' + value + '">' +
+                            value + '</option>');
+                    });
+                    if (oldPeny) {
+                        $('#nama_peny').val(oldPeny).change();
+                        oldPeny = '';
+                    }
+                    $('#nama_lbs_select').empty();
+                    $('#nama_lbs_select').append(
+                        '<option value="">Pilih Nama Keypoint</option>');
+                    $('#nama_sec_select').empty();
+                    $('#nama_sec_select').append(
+                        '<option value="">Pilih Sectoral</option>');
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
+                        error);
+                    console.log(xhr.responseText);
+                }
+            });
+        } else {
+            $('#nama_peny').empty();
+            $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
+            $('#nama_lbs_select').empty();
+            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty();
+            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+        }
+    });
+
+    $('#nama_peny').change(function() {
+        var penyulang = $(this).val();
+        var garduInduk = $('#id_gi').val();
+        if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
+            var urlTemplateKey =
+                '{{ route("get.nama_keypoint", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
+            var urlKey = urlTemplateKey.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
+                .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
+            $.ajax({
+                url: urlKey,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_lbs_select').empty();
+                    $('#nama_lbs_select').append(
+                        '<option value="">Pilih Nama Keypoint</option>');
+                    $.each(data, function(key, value) {
+                        $('#nama_lbs_select').append('<option value="' + key +
+                            '">' + value + '</option>');
+                    });
+                    if (oldLbs) {
+                        $('#nama_lbs_select').val(oldLbs);
+                        oldLbs = '';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
+                        error);
+                    console.log(xhr.responseText);
+                }
+            });
+
+            var urlTemplateSec =
+                '{{ route("get.sektoral", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
+            var urlSec = urlTemplateSec.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
+                .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
+            $.ajax({
+                url: urlSec,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_sec_select').empty();
+                    $('#nama_sec_select').append(
+                        '<option value="">Pilih Sectoral</option>');
+                    $.each(data, function(key, value) {
+                        $('#nama_sec_select').append('<option value="' + key +
+                            '">' + value + '</option>');
+                    });
+                    if (oldSec) {
+                        $('#nama_sec_select').val(oldSec);
+                        oldSec = '';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
+                        error);
+                    console.log(xhr.responseText);
+                }
+            });
+        } else {
+            $('#nama_lbs_select').empty();
+            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty();
+            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+        }
+    });
+});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
 @endsection

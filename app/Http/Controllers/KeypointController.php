@@ -670,6 +670,30 @@ class KeypointController extends Controller
             'ssf6_normal_addms' => 'nullable|string|max:100',
             'ssf6_normal_addrtu' => 'nullable|string|max:100',
             'ssf6_normal_objfrmt' => 'nullable|string|max:100',
+
+            // Add control field validations (from Document 2)
+            'ccb_open_addms' => 'nullable|string|max:100',
+            'ccb_open_addrtu' => 'nullable|string|max:100',
+            'ccb_open_objfrmt' => 'nullable|string|max:100',
+            'ccb_close_addms' => 'nullable|string|max:100',
+            'ccb_close_addrtu' => 'nullable|string|max:100',
+            'ccb_close_objfrmt' => 'nullable|string|max:100',
+            'ccb2_open_addms' => 'nullable|string|max:100',
+            'ccb2_open_addrtu' => 'nullable|string|max:100',
+            'ccb2_open_objfrmt' => 'nullable|string|max:100',
+            'ccb2_close_addms' => 'nullable|string|max:100',
+            'ccb2_close_addrtu' => 'nullable|string|max:100',
+            'ccb2_close_objfrmt' => 'nullable|string|max:100',
+            'chlt_on_addms' => 'nullable|string|max:100',
+            'chlt_on_addrtu' => 'nullable|string|max:100',
+            'chlt_on_objfrmt' => 'nullable|string|max:100',
+            'chlt_off_addms' => 'nullable|string|max:100',
+            'chlt_off_addrtu' => 'nullable|string|max:100',
+            'chlt_off_objfrmt' => 'nullable|string|max:100',
+            'crst_addms' => 'nullable|string|max:100',
+            'crst_addrtu' => 'nullable|string|max:100',
+            'crst_objfrmt' => 'nullable|string|max:100',
+
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
                 if (empty($idPelmsArray)) {
                     $fail('The id pelms field must be an array and cannot be empty.');
@@ -749,6 +773,7 @@ class KeypointController extends Controller
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
         $pelrtus = DB::table('tb_pelaksana_rtu')->get();
+
         $decoded = json_decode($keypoint->id_pelms, true);
         $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
         $decodedRtu = json_decode($keypoint->id_pelrtu, true);
@@ -1025,6 +1050,114 @@ class KeypointController extends Controller
             'sign_kp' => 'required|string|max:10',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'required|string|max:10',
+            'sacf_fail_addms' => 'nullable|string|max:100',
+            'sacf_fail_addrtu' => 'nullable|string|max:100',
+            'sacf_fail_objfrmt' => 'nullable|string|max:100',
+            'sacf_normal_addms' => 'nullable|string|max:100',
+            'sacf_normal_addrtu' => 'nullable|string|max:100',
+            'sacf_normal_objfrmt' => 'nullable|string|max:100',
+            'scb2_close_addms' => 'nullable|string|max:100',
+            'scb2_close_addrtu' => 'nullable|string|max:100',
+            'scb2_close_objfrmt' => 'nullable|string|max:100',
+            'scb2_open_addms' => 'nullable|string|max:100',
+            'scb2_open_addrtu' => 'nullable|string|max:100',
+            'scb2_open_objfrmt' => 'nullable|string|max:100',
+            'scb_close_addms' => 'nullable|string|max:100',
+            'scb_close_addrtu' => 'nullable|string|max:100',
+            'scb_close_objfrmt' => 'nullable|string|max:100',
+            'scb_open_addms' => 'nullable|string|max:100',
+            'scb_open_addrtu' => 'nullable|string|max:100',
+            'scb_open_objfrmt' => 'nullable|string|max:100',
+            'scomf_addms' => 'nullable|string|max:100',
+            'scomf_addrtu' => 'nullable|string|max:100',
+            'scomf_objfrmt' => 'nullable|string|max:100',
+            'sdcd_fail_addms' => 'nullable|string|max:100',
+            'sdcd_fail_addrtu' => 'nullable|string|max:100',
+            'sdcd_fail_objfrmt' => 'nullable|string|max:100',
+            'sdcd_normal_addms' => 'nullable|string|max:100',
+            'sdcd_normal_addrtu' => 'nullable|string|max:100',
+            'sdcd_normal_objfrmt' => 'nullable|string|max:100',
+            'sdcf_fail_addms' => 'nullable|string|max:100',
+            'sdcf_fail_addrtu' => 'nullable|string|max:100',
+            'sdcf_fail_objfrmt' => 'nullable|string|max:100',
+            'sdcf_normal_addms' => 'nullable|string|max:100',
+            'sdcf_normal_addrtu' => 'nullable|string|max:100',
+            'sdcf_normal_objfrmt' => 'nullable|string|max:100',
+            'sdoor_close_addms' => 'nullable|string|max:100',
+            'sdoor_close_addrtu' => 'nullable|string|max:100',
+            'sdoor_close_objfrmt' => 'nullable|string|max:100',
+            'sdoor_open_addms' => 'nullable|string|max:100',
+            'sdoor_open_addrtu' => 'nullable|string|max:100',
+            'sdoor_open_objfrmt' => 'nullable|string|max:100',
+            'sfin_fail_addms' => 'nullable|string|max:100',
+            'sfin_fail_addrtu' => 'nullable|string|max:100',
+            'sfin_fail_objfrmt' => 'nullable|string|max:100',
+            'sfin_normal_addms' => 'nullable|string|max:100',
+            'sfin_normal_addrtu' => 'nullable|string|max:100',
+            'sfin_normal_objfrmt' => 'nullable|string|max:100',
+            'sfir_fail_addms' => 'nullable|string|max:100',
+            'sfir_fail_addrtu' => 'nullable|string|max:100',
+            'sfir_fail_objfrmt' => 'nullable|string|max:100',
+            'sfir_normal_addms' => 'nullable|string|max:100',
+            'sfir_normal_addrtu' => 'nullable|string|max:100',
+            'sfir_normal_objfrmt' => 'nullable|string|max:100',
+            'sfis_fail_addms' => 'nullable|string|max:100',
+            'sfis_fail_addrtu' => 'nullable|string|max:100',
+            'sfis_fail_objfrmt' => 'nullable|string|max:100',
+            'sfis_normal_addms' => 'nullable|string|max:100',
+            'sfis_normal_addrtu' => 'nullable|string|max:100',
+            'sfis_normal_objfrmt' => 'nullable|string|max:100',
+            'sfit_fail_addms' => 'nullable|string|max:100',
+            'sfit_fail_addrtu' => 'nullable|string|max:100',
+            'sfit_fail_objfrmt' => 'nullable|string|max:100',
+            'sfit_normal_addms' => 'nullable|string|max:100',
+            'sfit_normal_addrtu' => 'nullable|string|max:100',
+            'sfit_normal_objfrmt' => 'nullable|string|max:100',
+            'shlt_off_addms' => 'nullable|string|max:100',
+            'shlt_off_addrtu' => 'nullable|string|max:100',
+            'shlt_off_objfrmt' => 'nullable|string|max:100',
+            'shlt_on_addms' => 'nullable|string|max:100',
+            'shlt_on_addrtu' => 'nullable|string|max:100',
+            'shlt_on_objfrmt' => 'nullable|string|max:100',
+            'slr_local_addms' => 'nullable|string|max:100',
+            'slr_local_addrtu' => 'nullable|string|max:100',
+            'slr_local_objfrmt' => 'nullable|string|max:100',
+            'slr_remote_addms' => 'nullable|string|max:100',
+            'slr_remote_addrtu' => 'nullable|string|max:100',
+            'slr_remote_objfrmt' => 'nullable|string|max:100',
+            'slruf_addms' => 'nullable|string|max:100',
+            'slruf_addrtu' => 'nullable|string|max:100',
+            'slruf_objfrmt' => 'nullable|string|max:100',
+            'ssf6_fail_addms' => 'nullable|string|max:100',
+            'ssf6_fail_addrtu' => 'nullable|string|max:100',
+            'ssf6_fail_objfrmt' => 'nullable|string|max:100',
+            'ssf6_normal_addms' => 'nullable|string|max:100',
+            'ssf6_normal_addrtu' => 'nullable|string|max:100',
+            'ssf6_normal_objfrmt' => 'nullable|string|max:100',
+
+            // Add control field validations (from Document 2)
+            'ccb_open_addms' => 'nullable|string|max:100',
+            'ccb_open_addrtu' => 'nullable|string|max:100',
+            'ccb_open_objfrmt' => 'nullable|string|max:100',
+            'ccb_close_addms' => 'nullable|string|max:100',
+            'ccb_close_addrtu' => 'nullable|string|max:100',
+            'ccb_close_objfrmt' => 'nullable|string|max:100',
+            'ccb2_open_addms' => 'nullable|string|max:100',
+            'ccb2_open_addrtu' => 'nullable|string|max:100',
+            'ccb2_open_objfrmt' => 'nullable|string|max:100',
+            'ccb2_close_addms' => 'nullable|string|max:100',
+            'ccb2_close_addrtu' => 'nullable|string|max:100',
+            'ccb2_close_objfrmt' => 'nullable|string|max:100',
+            'chlt_on_addms' => 'nullable|string|max:100',
+            'chlt_on_addrtu' => 'nullable|string|max:100',
+            'chlt_on_objfrmt' => 'nullable|string|max:100',
+            'chlt_off_addms' => 'nullable|string|max:100',
+            'chlt_off_addrtu' => 'nullable|string|max:100',
+            'chlt_off_objfrmt' => 'nullable|string|max:100',
+            'crst_addms' => 'nullable|string|max:100',
+            'crst_addrtu' => 'nullable|string|max:100',
+            'crst_objfrmt' => 'nullable|string|max:100',
+
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
                 if (empty($idPelmsArray)) {
                     $fail('The id pelms field must be an array and cannot be empty.');
@@ -1047,6 +1180,7 @@ class KeypointController extends Controller
             }],
             'id_pelrtu' => 'required|string|max:25',
             'ketkp' => 'required|string|max:500',
+
         ]);
 
         // Validate array fields separately
@@ -1094,42 +1228,36 @@ class KeypointController extends Controller
 
     public function clone($id)
     {
-        try {
-            $keypoint = Keypoint::findOrFail($id);
-            $merklbs = DB::table('tb_merklbs')->get();
-            $modems = DB::table('tb_modem')->get();
-            $medkom = DB::table('tb_medkom')->get();
-            $garduinduk = DB::table('tb_garduinduk')->get();
-            $sectoral = DB::table('tb_sectoral')->get();
-            $komkp = DB::table('tb_komkp')->get();
-            $picmaster = DB::table('tb_picmaster')->get();
-            $selectedPicms = json_decode($keypoint->id_picms, true) ?? [];
+        $keypoint = Keypoint::findOrFail($id);
+        $merklbs = DB::table('tb_merklbs')->get();
+        $modems = DB::table('tb_modem')->get();
+        $medkom = DB::table('tb_medkom')->get();
+        // $garduinduk = DB::table('tb_garduinduk')->get();
+        $garduinduk = DB::connection('masterdata')->table('dg_keypoint')->select('gardu_induk')->distinct()->get();
+        $sectoral = DB::table('tb_sectoral')->get();
+        $komkp = DB::table('tb_komkp')->get();
+        $pelms = DB::table('tb_picmaster')->get();
+        $pelrtus = DB::table('tb_pelaksana_rtu')->get();
 
-            return view('pages.keypoint.clone', compact(
-                'keypoint',
-                'merklbs',
-                'modems',
-                'medkom',
-                'garduinduk',
-                'sectoral',
-                'komkp',
-                'picmaster',
-                'selectedPicms'
-            ));
-        } catch (\Exception $e) {
-            Log::error('Error in clone method: ' . $e->getMessage());
-            return redirect()->route('keypoint.index')->with('error', 'Failed to load clone form: ' . $e->getMessage());
-        }
+        $decoded = json_decode($keypoint->id_pelms, true);
+        $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
+        $decodedRtu = json_decode($keypoint->id_pelrtu, true);
+        $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : ($decodedRtu ? [$decodedRtu] : []);
+
+        return view('pages.keypoint.clone', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'pelms', 'selectedPelms', 'pelrtus', 'selectedPelrtus'));
     }
 
     /**
-     * Store a newly cloned keypoint in the database.
+     * Store a cloned resource in storage.
      */
     public function storeClone(Request $request)
     {
-        // Preprocess id_picms to ensure it's an array
-        $idPicmsInput = $request->input('id_picms', '');
-        $idPicmsArray = !empty($idPicmsInput) ? array_filter(array_map('trim', explode(',', $idPicmsInput))) : [];
+        // Preprocess id_pelms to ensure it's an array
+        $idPelmsInput = $request->input('id_pelms', '');
+        $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
+
+        $idPelrtuInput = $request->input('id_pelrtu', '');
+        $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
 
         // Define array fields that come from checkboxes
         $arrayFields = [
@@ -1325,18 +1453,44 @@ class KeypointController extends Controller
             'tidak_uji'
         ];
 
-        // Validation rules (aligned with store/update)
+        // Validation rules
         $validated = $request->validate([
+            'id_formkp' => 'required|integer|exists:tb_formkp,id_formkp',
             'tgl_komisioning' => 'required|date',
-            'nama_lbs' => 'required|string|max:50',
+            'nama_lbs' => ['required', 'string', 'max:50', function ($attribute, $value, $fail) use ($request) {
+                if (!$request->mode_input) {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('nama_keypoint', $value)->exists()) {
+                        $fail('Invalid Nama Keypoint.');
+                    }
+                }
+            }],
             'id_merkrtu' => 'required|integer|exists:tb_merklbs,id_merkrtu',
             'id_modem' => 'required|integer|exists:tb_modem,id_modem',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
             'ip_kp' => 'required|string|max:255',
-            'id_gi' => 'required|string|max:25',
-            'penyulang' => 'required|string|max:25',
-            'id_sec' => 'required|integer|exists:tb_sectoral,id_sec',
+            'id_gi' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $value)->exists()) {
+                    $fail('The selected Gardu Induk is invalid.');
+                }
+            }],
+            'nama_peny' => ['required', 'string', 'max:25', function ($attribute, $value, $fail) use ($request) {
+                $gi = $request->id_gi;
+                if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $value)->exists()) {
+                    $fail('Invalid Nama Penyulangan for selected Gardu Induk.');
+                }
+            }],
+            'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255', function ($attribute, $value, $fail) use ($request) {
+                if (!$request->mode_input) {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('sektoral', $value)->exists()) {
+                        $fail('Invalid Sectoral.');
+                    }
+                }
+            }],
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
             'ir_scale' => 'required|string|max:10',
@@ -1358,40 +1512,179 @@ class KeypointController extends Controller
             'sign_kp' => 'required|string|max:10',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'required|string|max:10',
-            'id_picms' => ['required', function ($attribute, $value, $fail) use ($idPicmsArray) {
-                if (empty($idPicmsArray)) {
-                    $fail('The id picms field must be an array and cannot be empty.');
+            'sacf_fail_addms' => 'nullable|string|max:100',
+            'sacf_fail_addrtu' => 'nullable|string|max:100',
+            'sacf_fail_objfrmt' => 'nullable|string|max:100',
+            'sacf_normal_addms' => 'nullable|string|max:100',
+            'sacf_normal_addrtu' => 'nullable|string|max:100',
+            'sacf_normal_objfrmt' => 'nullable|string|max:100',
+            'scb2_close_addms' => 'nullable|string|max:100',
+            'scb2_close_addrtu' => 'nullable|string|max:100',
+            'scb2_close_objfrmt' => 'nullable|string|max:100',
+            'scb2_open_addms' => 'nullable|string|max:100',
+            'scb2_open_addrtu' => 'nullable|string|max:100',
+            'scb2_open_objfrmt' => 'nullable|string|max:100',
+            'scb_close_addms' => 'nullable|string|max:100',
+            'scb_close_addrtu' => 'nullable|string|max:100',
+            'scb_close_objfrmt' => 'nullable|string|max:100',
+            'scb_open_addms' => 'nullable|string|max:100',
+            'scb_open_addrtu' => 'nullable|string|max:100',
+            'scb_open_objfrmt' => 'nullable|string|max:100',
+            'scomf_addms' => 'nullable|string|max:100',
+            'scomf_addrtu' => 'nullable|string|max:100',
+            'scomf_objfrmt' => 'nullable|string|max:100',
+            'sdcd_fail_addms' => 'nullable|string|max:100',
+            'sdcd_fail_addrtu' => 'nullable|string|max:100',
+            'sdcd_fail_objfrmt' => 'nullable|string|max:100',
+            'sdcd_normal_addms' => 'nullable|string|max:100',
+            'sdcd_normal_addrtu' => 'nullable|string|max:100',
+            'sdcd_normal_objfrmt' => 'nullable|string|max:100',
+            'sdcf_fail_addms' => 'nullable|string|max:100',
+            'sdcf_fail_addrtu' => 'nullable|string|max:100',
+            'sdcf_fail_objfrmt' => 'nullable|string|max:100',
+            'sdcf_normal_addms' => 'nullable|string|max:100',
+            'sdcf_normal_addrtu' => 'nullable|string|max:100',
+            'sdcf_normal_objfrmt' => 'nullable|string|max:100',
+            'sdoor_close_addms' => 'nullable|string|max:100',
+            'sdoor_close_addrtu' => 'nullable|string|max:100',
+            'sdoor_close_objfrmt' => 'nullable|string|max:100',
+            'sdoor_open_addms' => 'nullable|string|max:100',
+            'sdoor_open_addrtu' => 'nullable|string|max:100',
+            'sdoor_open_objfrmt' => 'nullable|string|max:100',
+            'sfin_fail_addms' => 'nullable|string|max:100',
+            'sfin_fail_addrtu' => 'nullable|string|max:100',
+            'sfin_fail_objfrmt' => 'nullable|string|max:100',
+            'sfin_normal_addms' => 'nullable|string|max:100',
+            'sfin_normal_addrtu' => 'nullable|string|max:100',
+            'sfin_normal_objfrmt' => 'nullable|string|max:100',
+            'sfir_fail_addms' => 'nullable|string|max:100',
+            'sfir_fail_addrtu' => 'nullable|string|max:100',
+            'sfir_fail_objfrmt' => 'nullable|string|max:100',
+            'sfir_normal_addms' => 'nullable|string|max:100',
+            'sfir_normal_addrtu' => 'nullable|string|max:100',
+            'sfir_normal_objfrmt' => 'nullable|string|max:100',
+            'sfis_fail_addms' => 'nullable|string|max:100',
+            'sfis_fail_addrtu' => 'nullable|string|max:100',
+            'sfis_fail_objfrmt' => 'nullable|string|max:100',
+            'sfis_normal_addms' => 'nullable|string|max:100',
+            'sfis_normal_addrtu' => 'nullable|string|max:100',
+            'sfis_normal_objfrmt' => 'nullable|string|max:100',
+            'sfit_fail_addms' => 'nullable|string|max:100',
+            'sfit_fail_addrtu' => 'nullable|string|max:100',
+            'sfit_fail_objfrmt' => 'nullable|string|max:100',
+            'sfit_normal_addms' => 'nullable|string|max:100',
+            'sfit_normal_addrtu' => 'nullable|string|max:100',
+            'sfit_normal_objfrmt' => 'nullable|string|max:100',
+            'shlt_off_addms' => 'nullable|string|max:100',
+            'shlt_off_addrtu' => 'nullable|string|max:100',
+            'shlt_off_objfrmt' => 'nullable|string|max:100',
+            'shlt_on_addms' => 'nullable|string|max:100',
+            'shlt_on_addrtu' => 'nullable|string|max:100',
+            'shlt_on_objfrmt' => 'nullable|string|max:100',
+            'slr_local_addms' => 'nullable|string|max:100',
+            'slr_local_addrtu' => 'nullable|string|max:100',
+            'slr_local_objfrmt' => 'nullable|string|max:100',
+            'slr_remote_addms' => 'nullable|string|max:100',
+            'slr_remote_addrtu' => 'nullable|string|max:100',
+            'slr_remote_objfrmt' => 'nullable|string|max:100',
+            'slruf_addms' => 'nullable|string|max:100',
+            'slruf_addrtu' => 'nullable|string|max:100',
+            'slruf_objfrmt' => 'nullable|string|max:100',
+            'ssf6_fail_addms' => 'nullable|string|max:100',
+            'ssf6_fail_addrtu' => 'nullable|string|max:100',
+            'ssf6_fail_objfrmt' => 'nullable|string|max:100',
+            'ssf6_normal_addms' => 'nullable|string|max:100',
+            'ssf6_normal_addrtu' => 'nullable|string|max:100',
+            'ssf6_normal_objfrmt' => 'nullable|string|max:100',
+
+            // Add control field validations (from Document 2)
+            'ccb_open_addms' => 'nullable|string|max:100',
+            'ccb_open_addrtu' => 'nullable|string|max:100',
+            'ccb_open_objfrmt' => 'nullable|string|max:100',
+            'ccb_close_addms' => 'nullable|string|max:100',
+            'ccb_close_addrtu' => 'nullable|string|max:100',
+            'ccb_close_objfrmt' => 'nullable|string|max:100',
+            'ccb2_open_addms' => 'nullable|string|max:100',
+            'ccb2_open_addrtu' => 'nullable|string|max:100',
+            'ccb2_open_objfrmt' => 'nullable|string|max:100',
+            'ccb2_close_addms' => 'nullable|string|max:100',
+            'ccb2_close_addrtu' => 'nullable|string|max:100',
+            'ccb2_close_objfrmt' => 'nullable|string|max:100',
+            'chlt_on_addms' => 'nullable|string|max:100',
+            'chlt_on_addrtu' => 'nullable|string|max:100',
+            'chlt_on_objfrmt' => 'nullable|string|max:100',
+            'chlt_off_addms' => 'nullable|string|max:100',
+            'chlt_off_addrtu' => 'nullable|string|max:100',
+            'chlt_off_objfrmt' => 'nullable|string|max:100',
+            'crst_addms' => 'nullable|string|max:100',
+            'crst_addrtu' => 'nullable|string|max:100',
+            'crst_objfrmt' => 'nullable|string|max:100',
+
+            'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
+                if (empty($idPelmsArray)) {
+                    $fail('The id pelms field must be an array and cannot be empty.');
+                }
+                foreach ($idPelmsArray as $id) {
+                    if (!DB::table('tb_picmaster')->where('id_picmaster', $id)->exists()) {
+                        $fail("Invalid id_pelms: $id");
+                    }
                 }
             }],
-            'id_pelrtu' => 'required|string|max:25',
+            'id_pelrtu' => ['required', function ($attribute, $value, $fail) use ($idPelrtuArray) {
+                if (empty($idPelrtuArray)) {
+                    $fail('The id pelrtu field must be an array and cannot be empty.');
+                }
+                foreach ($idPelrtuArray as $id) {
+                    if (!DB::table('tb_pelaksana_rtu')->where('id_pelrtu', $id)->exists()) {
+                        $fail("Invalid id_pelrtu: $id");
+                    }
+                }
+            }],
             'ketkp' => 'required|string|max:500',
+
         ]);
 
-        // Validate and process array fields
+        // Validate array fields separately
         foreach ($arrayFields as $field) {
             $request->validate([
                 $field => 'nullable|array',
                 $field . '.*' => 'string|in:' . implode(',', $validCheckboxValues),
             ]);
-            $value = $request->input($field);
-            $validated[$field] = (is_array($value) && !empty(array_filter($value)))
-                ? implode(',', array_filter($value))
+            // Set empty string for array fields if not present or empty
+            $validated[$field] = $request->has($field) && is_array($request->input($field)) && !empty($request->input($field))
+                ? implode(',', array_filter($request->input($field)))
                 : '';
         }
 
-        // Merge preprocessed id_picms array into validated data
-        $validated['id_picms'] = json_encode($idPicmsArray);
-        $validated['nama_user'] = Auth::user()->nama_admin;
+        // Convert nama_sec (string from select2/AJAX) → id_sec (integer FK)
+        if (!empty($request->nama_sec)) {
+            $namaSec = $request->nama_sec;
+            $idSec = DB::table('tb_sectoral')
+                ->where('nama_sec', $namaSec)  // Changed from 'sektoral' to 'nama_sec' to match likely table schema
+                ->value('id_sec');
 
-        try {
-            Keypoint::create($validated); // Create new record instead of update
-            return redirect()->route('keypoint.index')->with('success', 'Keypoint cloned successfully.');
-        } catch (\Exception $e) {
-            Log::error('Error in storeClone method: ' . $e->getMessage());
-            return redirect()->back()->withInput()->with('error', 'Failed to clone keypoint: ' . $e->getMessage());
+            if (!$idSec) {
+                // For manual input mode, insert new sectoral if not exists
+                $idSec = DB::table('tb_sectoral')->insertGetId(['nama_sec' => $namaSec]);  // Assuming 'nama_sec' is the name column; add other required fields if any
+            }
+
+            // This is the only thing we save to tb_formkp
+            $validated['id_sec'] = $idSec;
         }
-    }
 
+        // Completely remove nama_sec from the insert (it doesn't exist in the table anyway)
+        unset($validated['nama_sec']);
+
+
+        // Merge preprocessed id_pelms array into validated data
+        $validated['id_pelms'] = json_encode(array_filter(explode(',', $request->input('id_pelms', ''))));
+        $validated['id_pelrtu'] = json_encode(array_filter(explode(',', $request->input('id_pelrtu', ''))));
+
+        // Create the new record
+        Keypoint::create($validated);
+
+        return redirect()->route('keypoint.index')->with('success', 'Keypoint cloned successfully!');
+    }
 
     /**
      * Remove the specified resource from storage.
