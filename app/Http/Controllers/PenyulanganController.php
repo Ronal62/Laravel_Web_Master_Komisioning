@@ -1014,22 +1014,56 @@ class PenyulanganController extends Controller
 
     public function clone($id)
     {
+        // 1. Ambil data sumber yang akan diclone
         $penyulang = Penyulangan::findOrFail($id);
+
+        // 2. Master Data
         $rtugi = DB::table('tb_merkrtugi')->get();
         $medkom = DB::table('tb_medkom')->get();
-        $garduinduk = DB::table('tb_garduinduk')->get();
+
+        // Ambil list Gardu Induk
+        $garduinduk = DB::connection('masterdata')->table('dg_mvcell')
+            ->select('gardu_induk')
+            ->distinct()
+            ->get();
+
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
         $pelrtus = DB::table('tb_pelaksana_rtu')->get();
-        $decoded = json_decode($penyulang->id_pelms, true);
-        $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
+
+        // 3. LOGIKA KUNCI: Ambil list 'nama_peny' (kubikel) berdasarkan Gardu Induk dari data sumber
+        $availableKubikels = [];
+        if ($penyulang->id_gi) {
+            $availableKubikels = DB::connection('masterdata')->table('dg_mvcell')
+                ->where('gardu_induk', $penyulang->id_gi)
+                ->pluck('nama_kubikel');
+        }
+
+        // 4. Decode JSON fields untuk Custom Select
+        $decodedPelms = json_decode($penyulang->id_pelms, true);
+        $selectedPelms = is_array($decodedPelms) ? $decodedPelms : [];
+
         $decodedRtu = json_decode($penyulang->id_pelrtu, true);
-        $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : ($decodedRtu ? [$decodedRtu] : []);
-        return view('pages.penyulangan.clone', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'pelrtus', 'selectedPelms', 'selectedPelrtus'));
+        $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : [];
+
+        // Return view clone
+        return view('pages.penyulangan.clone', compact(
+            'penyulang',
+            'rtugi',
+            'medkom',
+            'garduinduk',
+            'komkp',
+            'pelms',
+            'pelrtus',
+            'selectedPelms',
+            'selectedPelrtus',
+            'availableKubikels' // Variable ini PENTING agar dropdown tidak kosong
+        ));
     }
 
     public function storeClone(Request $request)
     {
+        // 1. Pre-process Input Strings to Arrays (for validation logic)
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
 
@@ -1052,6 +1086,7 @@ class PenyulanganController extends Controller
             'c_tc'
         ];
 
+        // List value valid untuk checkbox (disingkat agar tidak terlalu panjang di sini, gunakan list lengkap Anda)
         $validCheckboxValues = [
             'open_1',
             'open_2',
@@ -1189,7 +1224,12 @@ class PenyulanganController extends Controller
         $validated = $request->validate([
             'tgl_kom' => 'required|date',
             'nama_peny' => 'required|string|max:50',
-            'id_gi' => 'required|string|max:25|exists:tb_garduinduk,id_gi',
+            // Gunakan validasi strict ke masterdata agar konsisten
+            'id_gi' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                if (!DB::connection('masterdata')->table('dg_mvcell')->where('gardu_induk', $value)->exists()) {
+                    $fail('The selected Gardu Induk is invalid.');
+                }
+            }],
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
@@ -1292,7 +1332,11 @@ class PenyulanganController extends Controller
             'creset_on_objfrmt' => 'nullable|string|max:100',
             'ctc_raiser_objfrmt' => 'nullable|string|max:100',
             'ctc_lower_objfrmt' => 'nullable|string|max:100',
-
+            'ketfd' => 'nullable|string|max:100',
+            'ketfts' => 'nullable|string|max:100',
+            'ketftc' => 'nullable|string|max:100',
+            'ketftm' => 'nullable|string|max:100',
+            'ketpk' => 'nullable|string|max:100',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'nullable|string|max:10',
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
@@ -1331,6 +1375,7 @@ class PenyulanganController extends Controller
         $validated['id_pelms'] = json_encode($idPelmsArray);
         $validated['id_pelrtu'] = json_encode($idPelrtuArray);
 
+        // CREATE NEW RECORD
         Penyulangan::create($validated);
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan cloned successfully!');
