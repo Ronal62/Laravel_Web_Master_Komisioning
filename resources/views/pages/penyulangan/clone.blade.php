@@ -2034,11 +2034,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="ketpeny">Keterangan</label>
-                            <textarea class="form-control text-uppercase @error('ketpeny') is-invalid @enderror"
-                                id="ketpeny" name="ketpeny"
-                                style="height: 155px;">{{ old('ketpeny', $penyulang->ketpeny) }}</textarea>
-                            @error('ketpeny')
+                            <label for="catatanpeny">Catatan Penyulangan</label>
+                            <textarea class="form-control text-uppercase @error('catatanpeny') is-invalid @enderror"
+                                id="catatanpeny" name="catatanpeny"
+                                style="height: 155px;">{{ old('catatanpeny', $penyulang->catatanpeny) }}</textarea>
+                            @error('catatanpeny')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

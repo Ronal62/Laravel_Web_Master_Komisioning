@@ -59,7 +59,7 @@ class Penyulangan extends Model
         'nama_user',
         'id_pelms',
         'id_pelrtu',
-        'ketpeny',
+        'catatanpeny',
         'lastupdate',
         'scb_open_address',
         'scb_close_address',
@@ -111,5 +111,10 @@ class Penyulangan extends Model
         'creset_on_objfrmt',
         'ctc_raiser_objfrmt',
         'ctc_lower_objfrmt',
+        'ketfd',
+        'ketfts',
+        'ketftc',
+        'ketftm',
+        'ketfpk',
     ];
 }

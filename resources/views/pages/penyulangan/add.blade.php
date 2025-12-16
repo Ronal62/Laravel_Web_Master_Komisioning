@@ -142,6 +142,16 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="ketfd">Keterangan Form Data</label>
+                                                <textarea
+                                                    class="form-control text-uppercase @error('ketfd') is-invalid @enderror"
+                                                    id="ketfd" name="ketfd"
+                                                    style="height: 155px;">{{ old('ketfd') }}</textarea>
+                                                @error('ketfd')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Form Telestatus Tab -->
@@ -1270,6 +1280,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="ketfts">Keterangan Form Telestatus</label>
+                                                <textarea
+                                                    class="form-control text-uppercase @error('ketfts') is-invalid @enderror"
+                                                    id="ketfts" name="ketfts"
+                                                    style="height: 155px;">{{ old('ketfts') }}</textarea>
+                                                @error('ketfts')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Form Telecontrol Tab -->
@@ -1740,6 +1760,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="ketftc">Keterangan Form Telecontrol</label>
+                                                <textarea
+                                                    class="form-control text-uppercase @error('ketftc') is-invalid @enderror"
+                                                    id="ketftc" name="ketftc"
+                                                    style="height: 155px;">{{ old('ketftc') }}</textarea>
+                                                @error('ketftc')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Form Telemetering Tab -->
@@ -1911,6 +1941,16 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="ketftm">Keterangan Form Telemetering</label>
+                                                <textarea
+                                                    class="form-control text-uppercase @error('ketftm') is-invalid @enderror"
+                                                    id="ketftm" name="ketftm"
+                                                    style="height: 155px;">{{ old('ketftm') }}</textarea>
+                                                @error('ketftm')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- PIC Komisioning Tab -->
@@ -1992,15 +2032,26 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="ketpk">Keterangan Form PIC Kom</label>
+                                            <textarea
+                                                class="form-control text-uppercase @error('ketpk') is-invalid @enderror"
+                                                id="ketpk" name="ketpk"
+                                                style="height: 155px;">{{ old('ketpk') }}</textarea>
+                                            @error('ketpk')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="ketpeny">Keterangan</label>
-                            <textarea class="form-control text-uppercase @error('ketpeny') is-invalid @enderror"
-                                id="ketpeny" name="ketpeny" style="height: 155px;">{{ old('ketpeny') }}</textarea>
-                            @error('ketpeny')
+                            <label for="catatanpeny">Catatan Penyulangan</label>
+                            <textarea class="form-control text-uppercase @error('catatanpeny') is-invalid @enderror"
+                                id="catatanpeny" name="catatanpeny"
+                                style="height: 155px;">{{ old('catatanpeny') }}</textarea>
+                            @error('catatanpeny')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

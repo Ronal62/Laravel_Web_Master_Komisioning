@@ -39,7 +39,7 @@ class PenyulanganController extends Controller
                 'tb_formpeny.nama_peny',
                 'tb_formpeny.id_gi',
                 'tb_formpeny.id_rtugi',
-                'tb_formpeny.ketpeny',
+                'tb_formpeny.catatanpeny',
                 'tb_formpeny.nama_user',
                 'tb_formpeny.id_pelrtu'
             );
@@ -72,7 +72,7 @@ class PenyulanganController extends Controller
                 return stripos($row->nama_peny, $searchValue) !== false ||
                     stripos($row->id_gi, $searchValue) !== false ||
                     stripos($row->id_rtugi, $searchValue) !== false ||
-                    stripos($row->ketpeny, $searchValue) !== false ||
+                    stripos($row->catatanpeny, $searchValue) !== false ||
                     stripos($row->nama_user, $searchValue) !== false ||
                     stripos($row->pic_rtu_names, $searchValue) !== false;
             });
@@ -92,7 +92,7 @@ class PenyulanganController extends Controller
                         case 3:
                             return stripos($row->id_rtugi, $colSearchValue) !== false;
                         case 4:
-                            return stripos($row->ketpeny, $colSearchValue) !== false;
+                            return stripos($row->catatanpeny, $colSearchValue) !== false;
                         case 5:
                             return stripos($row->nama_user, $colSearchValue) !== false;
                         case 6:
@@ -108,7 +108,7 @@ class PenyulanganController extends Controller
             1 => 'nama_peny',
             2 => 'id_gi',
             3 => 'id_rtugi',
-            4 => 'ketpeny',
+            4 => 'catatanpeny',
             5 => 'nama_user',
             6 => 'pic_rtu_names',
         ];
@@ -168,7 +168,7 @@ class PenyulanganController extends Controller
                 'tb_formpeny.nama_peny',
                 'tb_garduinduk.nama_gi as id_gi',
                 'tb_merkrtugi.merk_rtugi as id_rtugi',
-                'tb_formpeny.ketpeny',
+                'tb_formpeny.catatanpeny',
                 'tb_formpeny.nama_user',
                 'tb_formpeny.id_pelrtu'
             );
@@ -226,7 +226,7 @@ class PenyulanganController extends Controller
                 'tb_formpeny.nama_peny',
                 'tb_garduinduk.nama_gi as id_gi',
                 'tb_merkrtugi.merk_rtugi as id_rtugi',
-                'tb_formpeny.ketpeny',
+                'tb_formpeny.catatanpeny',
                 'tb_formpeny.nama_user',
                 'tb_formpeny.id_pelrtu'
             );
@@ -267,7 +267,7 @@ class PenyulanganController extends Controller
                     $row->nama_peny,
                     $row->id_gi,
                     $row->id_rtugi,
-                    $row->ketpeny,
+                    $row->catatanpeny,
                     $row->nama_user,
                     $row->id_pelrtu
                 ]);
@@ -564,6 +564,11 @@ class PenyulanganController extends Controller
             'creset_on_objfrmt' => 'nullable|string|max:100',
             'ctc_raiser_objfrmt' => 'nullable|string|max:100',
             'ctc_lower_objfrmt' => 'nullable|string|max:100',
+            'ketfd' => 'nullable|string|max:100',
+            'ketfts' => 'nullable|string|max:100',
+            'ketftc' => 'nullable|string|max:100',
+            'ketftm' => 'nullable|string|max:100',
+            'ketpk' => 'nullable|string|max:100',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'nullable|string|max:10',
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
@@ -586,7 +591,7 @@ class PenyulanganController extends Controller
                     }
                 }
             }],
-            'ketpeny' => 'required|string|max:500',
+            'catatanpeny' => 'required|string|max:500',
         ]);
 
         foreach ($arrayFields as $field) {
@@ -610,25 +615,82 @@ class PenyulanganController extends Controller
     public function edit(string $id)
     {
         $penyulang = Penyulangan::findOrFail($id);
+
+        // 1. Get Master Data lists
         $rtugi = DB::table('tb_merkrtugi')->get();
         $medkom = DB::table('tb_medkom')->get();
-        $garduinduk = DB::table('tb_garduinduk')->get();
+
+        // Get distinct Gardu Induk list for the first dropdown
+        $garduinduk = DB::connection('masterdata')->table('dg_mvcell')
+            ->select('gardu_induk')
+            ->distinct()
+            ->get();
+
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
         $pelrtus = DB::table('tb_pelaksana_rtu')->get();
-        $decoded = json_decode($penyulang->id_pelms, true);
-        $selectedPelms = is_array($decoded) ? $decoded : ($decoded ? [$decoded] : []);
+
+        // --- KEY LOGIC HERE ---
+        // 2. Fetch 'nama_peny' list from masterdata, FILTERED by the saved Gardu Induk
+        $availableKubikels = [];
+        if ($penyulang->id_gi) {
+            $availableKubikels = DB::connection('masterdata')->table('dg_mvcell')
+                ->where('gardu_induk', $penyulang->id_gi) // <--- THIS FILTERS BY REFERENCE
+                ->pluck('nama_kubikel');
+        }
+        // ----------------------
+
+        // 3. Decode JSON data
+        $decodedPelms = json_decode($penyulang->id_pelms, true);
+        $selectedPelms = is_array($decodedPelms) ? $decodedPelms : [];
+
         $decodedRtu = json_decode($penyulang->id_pelrtu, true);
-        $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : ($decodedRtu ? [$decodedRtu] : []);
+        $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : [];
 
-        return view('pages.penyulangan.edit', compact('penyulang', 'rtugi', 'medkom', 'garduinduk', 'komkp', 'pelms', 'pelrtus', 'selectedPelms', 'selectedPelrtus'));
+        // 4. Decode Checkboxes
+        $arrayFields = [
+            's_cb',
+            's_lr',
+            's_ocr',
+            's_ocri',
+            's_dgr',
+            's_cbtr',
+            's_ar',
+            's_aru',
+            's_tc',
+            'c_cb',
+            'c_aru',
+            'c_rst',
+            'c_tc'
+        ];
+
+        $checkedValues = [];
+        foreach ($arrayFields as $field) {
+            $checkedValues[$field] = $penyulang->$field ? explode(',', $penyulang->$field) : [];
+        }
+
+        return view('pages.penyulangan.edit', compact(
+            'penyulang',
+            'rtugi',
+            'medkom',
+            'garduinduk',
+            'komkp',
+            'pelms',
+            'pelrtus',
+            'selectedPelms',
+            'selectedPelrtus',
+            'checkedValues',
+            'availableKubikels' // <--- Sending the filtered list to the view
+        ));
     }
-
     public function update(Request $request, string $id)
     {
         $penyulang = Penyulangan::findOrFail($id);
+
+        // 1. Pre-process Input Strings to Arrays (for validation logic)
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
+
         $idPelrtuInput = $request->input('id_pelrtu', '');
         $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
 
@@ -773,14 +835,25 @@ class PenyulanganController extends Controller
             'ctcl_2',
             'ctcl_3',
             'ctcl_4',
-            'ctcl_5'
+            'ctcl_5',
+            'normal',
+            'ok',
+            'nok',
+            'log',
+            'sld',
+            'tidak_uji'
         ];
 
         $validated = $request->validate([
-            'id_peny' => 'required|integer|exists:tb_formpeny,id_peny',
+            // Removed 'id_peny' validation (Primary Key should not be validated/updated here usually)
             'tgl_kom' => 'required|date',
             'nama_peny' => 'required|string|max:50',
-            'id_gi' => 'required|string|max:25|exists:tb_garduinduk,id_gi',
+            // Corrected validation for id_gi to match Store method logic
+            'id_gi' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                if (!DB::connection('masterdata')->table('dg_mvcell')->where('gardu_induk', $value)->exists()) {
+                    $fail('The selected Gardu Induk is invalid.');
+                }
+            }],
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
@@ -808,6 +881,7 @@ class PenyulanganController extends Controller
             'v_rtu' => 'nullable|string|max:50',
             'v_ms' => 'nullable|string|max:50',
             'v_scale' => 'nullable|string|max:50',
+            // ... (Addresses) ...
             'scb_open_address' => 'nullable|string|max:100',
             'scb_close_address' => 'nullable|string|max:100',
             'slocal_address' => 'nullable|string|max:100',
@@ -826,6 +900,7 @@ class PenyulanganController extends Controller
             'saru_app_address' => 'nullable|string|max:100',
             'stc_dis_address' => 'nullable|string|max:100',
             'stc_app_address' => 'nullable|string|max:100',
+            // ... (RTUs) ...
             'scb_open_rtu' => 'nullable|string|max:100',
             'scb_close_rtu' => 'nullable|string|max:100',
             'slocal_rtu' => 'nullable|string|max:100',
@@ -844,6 +919,7 @@ class PenyulanganController extends Controller
             'saru_app_rtu' => 'nullable|string|max:100',
             'stc_dis_rtu' => 'nullable|string|max:100',
             'stc_app_rtu' => 'nullable|string|max:100',
+            // ... (Obj Frmts) ...
             'scb_open_objfrmt' => 'nullable|string|max:100',
             'scb_close_objfrmt' => 'nullable|string|max:100',
             'slocal_objfrmt' => 'nullable|string|max:100',
@@ -862,6 +938,7 @@ class PenyulanganController extends Controller
             'saru_app_objfrmt' => 'nullable|string|max:100',
             'stc_dis_objfrmt' => 'nullable|string|max:100',
             'stc_app_objfrmt' => 'nullable|string|max:100',
+            // ... (Control Addresses/RTU/Frmt) ...
             'ccb_open_address' => 'nullable|string|max:100',
             'ccb_close_address' => 'nullable|string|max:100',
             'caru_use_address' => 'nullable|string|max:100',
@@ -883,6 +960,13 @@ class PenyulanganController extends Controller
             'creset_on_objfrmt' => 'nullable|string|max:100',
             'ctc_raiser_objfrmt' => 'nullable|string|max:100',
             'ctc_lower_objfrmt' => 'nullable|string|max:100',
+
+            'ketfd' => 'nullable|string|max:100',
+            'ketfts' => 'nullable|string|max:100',
+            'ketftc' => 'nullable|string|max:100',
+            'ketftm' => 'nullable|string|max:100',
+            'ketpk' => 'nullable|string|max:100',
+
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
             'nama_user' => 'nullable|string|max:10',
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
@@ -905,9 +989,10 @@ class PenyulanganController extends Controller
                     }
                 }
             }],
-            'ketpeny' => 'required|string|max:500',
+            'catatanpeny' => 'required|string|max:500',
         ]);
 
+        // Process Checkbox Fields (Array from Request -> String for DB)
         foreach ($arrayFields as $field) {
             $request->validate([
                 $field => 'nullable|array',
@@ -920,6 +1005,7 @@ class PenyulanganController extends Controller
 
         $validated['id_pelms'] = json_encode($idPelmsArray);
         $validated['id_pelrtu'] = json_encode($idPelrtuArray);
+
         $penyulang->update($validated);
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan updated successfully!');
@@ -1229,7 +1315,7 @@ class PenyulanganController extends Controller
                     }
                 }
             }],
-            'ketpeny' => 'required|string|max:500',
+            'catatanpeny' => 'required|string|max:500',
         ]);
 
         foreach ($arrayFields as $field) {

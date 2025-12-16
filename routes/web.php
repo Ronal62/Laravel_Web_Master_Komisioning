@@ -84,6 +84,7 @@ Route::middleware('auth:admin')->group(function () {
 
 
 
+
     //Absen Routes
     Route::get('absen', [AbsenController::class, 'index'])->name('absen.index');
     Route::get('absen/create', [AbsenController::class, 'create'])->name('absen.create');

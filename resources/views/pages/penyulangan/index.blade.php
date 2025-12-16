@@ -61,7 +61,7 @@
                                     <th>Nama Penyulang</th>
                                     <th>Gardu Induk</th>
                                     <th>Wilayah DCC</th>
-                                    <th>Keterangan</th>
+                                    <th>Catatan</th>
                                     <th>PIC Master</th>
                                     <th>PIC RTU</th>
                                     <th>Action</th>
@@ -74,7 +74,7 @@
                                     <th><input type="text" placeholder="Filter Nama" class="form-control" /></th>
                                     <th><input type="text" placeholder="Filter Gardu Induk" class="form-control" /></th>
                                     <th><input type="text" placeholder="Filter Wilayah DCC" class="form-control" /></th>
-                                    <th><input type="text" placeholder="Filter Keterangan" class="form-control" /></th>
+                                    <th><input type="text" placeholder="Filter Catatan" class="form-control" /></th>
                                     <th><input type="text" placeholder="Filter PIC Master" class="form-control" /></th>
                                     <th><input type="text" placeholder="Filter PIC RTU" class="form-control" /></th>
                                     <th></th>
@@ -138,8 +138,8 @@ $(document).ready(function() {
                 name: 'id_rtugi'
             },
             {
-                data: 'ketpeny',
-                name: 'ketpeny'
+                data: 'catatanpeny',
+                name: 'catatanpeny'
             },
             {
                 data: 'nama_user',

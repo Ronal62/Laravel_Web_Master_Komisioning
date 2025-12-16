@@ -60,40 +60,20 @@
                                     <div class="tab-pane fade show active" id="v-pills-formdata-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formdata-tab-nobd">
                                         <div class="row">
+                                            {{-- LEFT COLUMN --}}
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="tgl_kom">Tanggal Komisioning</label>
-                                                    <div class="input-icon">
-                                                        <input type="date" class="form-control" id="tgl_kom"
-                                                            name="tgl_kom"
-                                                            value="{{ old('tgl_kom', $penyulang->tgl_kom) }}"
-                                                            required />
-                                                        @error('tgl_kom')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="nama_peny">Nama Penyulangan</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="nama_peny"
-                                                            name="nama_peny" placeholder="Nama Penyulangan"
-                                                            value="{{ old('nama_peny', $penyulang->nama_peny) }}"
-                                                            required />
-                                                        @error('nama_peny')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+
+                                                {{-- Gardu Induk --}}
                                                 <div class="form-group">
                                                     <label for="id_gi">Gardu Induk</label>
-                                                    <select class="form-select form-control" id="id_gi" name="id_gi"
-                                                        required>
+                                                    <select
+                                                        class="form-select form-control @error('id_gi') is-invalid @enderror"
+                                                        id="id_gi" name="id_gi" required>
                                                         <option value="">Pilih Gardu Induk</option>
                                                         @foreach ($garduinduk as $gi)
-                                                        <option value="{{ $gi->id_gi }}"
-                                                            {{ old('id_gi', $penyulang->id_gi) == $gi->id_gi ? 'selected' : '' }}>
-                                                            {{ $gi->nama_gi }}
+                                                        <option value="{{ $gi->gardu_induk }}"
+                                                            {{ old('id_gi', $penyulang->id_gi) == $gi->gardu_induk ? 'selected' : '' }}>
+                                                            {{ $gi->gardu_induk }}
                                                         </option>
                                                         @endforeach
                                                     </select>
@@ -101,23 +81,74 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+
+                                                {{-- Nama Penyulangan (Dependent Dropdown) --}}
+                                                <div class="form-group">
+                                                    <label for="nama_peny">Nama Penyulangan</label>
+                                                    <select
+                                                        class="form-select form-control @error('nama_peny') is-invalid @enderror"
+                                                        id="nama_peny" name="nama_peny" required>
+
+                                                        <option value="">Pilih Nama Penyulangan</option>
+
+                                                        {{-- This variable $availableKubikels contains ONLY data where gardu_induk = current $penyulang->id_gi --}}
+                                                        @foreach($availableKubikels as $kubikel)
+                                                        <option value="{{ $kubikel }}"
+                                                            {{-- Logic: Use Old input if validation fails, otherwise use DB value --}}
+                                                            {{ old('nama_peny', $penyulang->nama_peny) == $kubikel ? 'selected' : '' }}>
+
+                                                            {{ $kubikel }}
+                                                        </option>
+                                                        @endforeach
+
+                                                    </select>
+
+                                                    @error('nama_peny')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                {{-- Tanggal Komisioning --}}
+                                                <div class="form-group">
+                                                    <label for="tgl_kom">Tanggal Komisioning</label>
+                                                    <div class="input-icon">
+                                                        <input type="date"
+                                                            class="form-control @error('tgl_kom') is-invalid @enderror"
+                                                            id="tgl_kom" name="tgl_kom"
+                                                            value="{{ old('tgl_kom', $penyulang->tgl_kom) }}"
+                                                            required />
+                                                        @error('tgl_kom')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
                                             </div>
+
+                                            {{-- RIGHT COLUMN --}}
                                             <div class="col-md-6">
+
+                                                {{-- RTU Address --}}
                                                 <div class="form-group">
                                                     <label for="rtu_addrs">Protocol/RTU Address</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="rtu_addrs"
-                                                            name="rtu_addrs" placeholder="Protocol/RTU Address"
+                                                        <input type="text"
+                                                            class="form-control @error('rtu_addrs') is-invalid @enderror"
+                                                            id="rtu_addrs" name="rtu_addrs"
+                                                            placeholder="Protocol/RTU Address"
                                                             value="{{ old('rtu_addrs', $penyulang->rtu_addrs) }}" />
                                                         @error('rtu_addrs')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
+
+                                                {{-- Media Komunikasi --}}
                                                 <div class="form-group">
                                                     <label for="id_medkom">Media Komunikasi</label>
-                                                    <select class="form-select form-control" id="id_medkom"
-                                                        name="id_medkom" required>
+                                                    <select
+                                                        class="form-select form-control @error('id_medkom') is-invalid @enderror"
+                                                        id="id_medkom" name="id_medkom" required>
                                                         <option value="">Pilih Media Komunikasi</option>
                                                         @foreach ($medkom as $media)
                                                         <option value="{{ $media->id_medkom }}"
@@ -130,10 +161,13 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+
+                                                {{-- Merk RTU --}}
                                                 <div class="form-group">
                                                     <label for="id_rtugi">Merk RTU</label>
-                                                    <select class="form-select form-control" id="id_rtugi"
-                                                        name="id_rtugi" required>
+                                                    <select
+                                                        class="form-select form-control @error('id_rtugi') is-invalid @enderror"
+                                                        id="id_rtugi" name="id_rtugi" required>
                                                         <option value="">Pilih Merk RTU</option>
                                                         @foreach ($rtugi as $merk)
                                                         <option value="{{ $merk->id_rtugi }}"
@@ -146,7 +180,23 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+
                                             </div>
+
+                                            {{-- FULL WIDTH --}}
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="ketfd">Keterangan Form Data</label>
+                                                    <textarea
+                                                        class="form-control text-uppercase @error('ketfd') is-invalid @enderror"
+                                                        id="ketfd" name="ketfd"
+                                                        style="height: 155px;">{{ old('ketfd', $penyulang->ketfd) }}</textarea>
+                                                    @error('ketfd')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <!-- Form Telestatus Tab -->
@@ -1295,6 +1345,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="ketfts">Keterangan Form Telestatus</label>
+                                                <textarea
+                                                    class="form-control text-uppercase @error('ketfts') is-invalid @enderror"
+                                                    id="ketfts" name="ketfts"
+                                                    style="height: 155px;">{{ old('ketfts', $penyulang->ketfts) }}</textarea>
+                                                @error('ketfts')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Form Telecontrol Tab -->
@@ -1773,6 +1833,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="ketftc">Keterangan Form Telecontrol</label>
+                                                <textarea
+                                                    class="form-control text-uppercase @error('ketftc') is-invalid @enderror"
+                                                    id="ketftc" name="ketftc"
+                                                    style="height: 155px;">{{ old('ketftc', $penyulang->ketftc) }}</textarea>
+                                                @error('ketftc')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Form Telemetering Tab -->
@@ -1953,6 +2023,16 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="ketftm">Keterangan Form Telemetering </label>
+                                                <textarea
+                                                    class="form-control text-uppercase @error('ketftm') is-invalid @enderror"
+                                                    id="ketftm" name="ketftm"
+                                                    style="height: 155px;">{{ old('ketftm', $penyulang->ketftm) }}</textarea>
+                                                @error('ketftm')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- PIC Komisioning Tab -->
@@ -2032,16 +2112,26 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="ketpk">Keterangan Form PIC Kom</label>
+                                            <textarea
+                                                class="form-control text-uppercase @error('ketpk') is-invalid @enderror"
+                                                id="ketpk" name="ketpk"
+                                                style="height: 155px;">{{ old('ketpk', $penyulang->ketpk) }}</textarea>
+                                            @error('ketpk')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="ketpeny">Keterangan</label>
-                            <textarea class="form-control text-uppercase @error('ketpeny') is-invalid @enderror"
-                                id="ketpeny" name="ketpeny"
-                                style="height: 155px;">{{ old('ketpeny', $penyulang->ketpeny) }}</textarea>
-                            @error('ketpeny')
+                            <label for="catatanpeny">Catatan Penyulangan</label>
+                            <textarea class="form-control text-uppercase @error('catatanpeny') is-invalid @enderror"
+                                id="catatanpeny" name="catatanpeny"
+                                style="height: 155px;">{{ old('catatanpeny', $penyulang->catatanpeny) }}</textarea>
+                            @error('catatanpeny')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -2060,16 +2150,59 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+// 1. AJAX Logic for Nama Penyulangan Filter
+$(document).ready(function() {
+    $('#id_gi').on('change', function() {
+        var garduInduk = $(this).val();
+
+        // Empty the dropdown first and show loading
+        $('#nama_peny').empty();
+        $('#nama_peny').append('<option value="">Loading...</option>');
+
+        if (garduInduk) {
+            $.ajax({
+                url: '/get-kubikels/' + encodeURIComponent(garduInduk),
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_peny').empty();
+                    $('#nama_peny').append(
+                        '<option value="">Pilih Nama Penyulangan</option>');
+
+                    $.each(data, function(key, value) {
+                        $('#nama_peny').append('<option value="' + value + '">' +
+                            value + '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    $('#nama_peny').empty();
+                    $('#nama_peny').append('<option value="">Gagal memuat data</option>');
+                }
+            });
+        } else {
+            $('#nama_peny').empty();
+            $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
+        }
+    });
+});
+
+// 2. Custom Select Logic (Updated for Max 2 Limit)
 function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropdownId, errorId) {
     const wrapper = document.getElementById(wrapperId);
     const selectedItems = document.getElementById(selectedItemsId);
     const hiddenInput = document.getElementById(hiddenInputId);
     const dropdown = document.getElementById(dropdownId);
     const errorMessage = document.getElementById(errorId);
-    const maxSelections = 2;
 
-    let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
+    // --- BATAS MAKSIMAL DISINI ---
+    const maxSelections = 2;
+    // -----------------------------
+
+    // Use split only if value is not empty to avoid creating [""]
+    let selectedValues = hiddenInput.value ? hiddenInput.value.split(",").filter(v => v) : [];
 
     function handleSelection() {
         selectedItems.innerHTML = "";
@@ -2079,9 +2212,14 @@ function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropd
             if (option) {
                 const div = document.createElement("div");
                 div.className = "selected-item";
-                div.innerHTML = `${option.textContent} <button class="remove-item">×</button>`;
+                div.innerHTML =
+                    `${option.textContent.trim()} <button type="button" class="remove-item" style="border:none; background:transparent; margin-left:5px; cursor:pointer;">×</button>`;
                 selectedItems.appendChild(div);
-                div.querySelector('.remove-item').addEventListener('click', () => removeSelection(value));
+                // Add click event to the button
+                div.querySelector('.remove-item').addEventListener('click', (e) => {
+                    e.stopPropagation(); // Stop bubbling
+                    removeSelection(value);
+                });
             }
         });
         updateDropdown();
@@ -2089,47 +2227,65 @@ function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropd
     }
 
     function removeSelection(value) {
-        selectedValues = selectedValues.filter(val => val !== value);
+        selectedValues = selectedValues.filter(val => val != value);
         handleSelection();
     }
 
     function toggleSelection(value) {
-        if (selectedValues.includes(value)) {
-            selectedValues = selectedValues.filter(val => val !== value);
-        } else if (selectedValues.length < maxSelections) {
-            selectedValues.push(value);
+        // Cek apakah item sudah dipilih sebelumnya
+        if (selectedValues.some(val => val == value)) {
+            // Jika sudah ada, maka HAPUS (unselect)
+            removeSelection(value);
+        } else {
+            // Jika belum ada, CEK LIMIT DULU
+            if (selectedValues.length < maxSelections) {
+                selectedValues.push(value.toString());
+                handleSelection();
+            } else {
+                // JIKA SUDAH 2, TAMPILKAN PERINGATAN
+                alert('Maksimal hanya dapat memilih ' + maxSelections + ' pelaksana!');
+            }
         }
-        handleSelection();
     }
 
     function updateDropdown() {
         const items = dropdown.getElementsByClassName("dropdown-item");
         Array.from(items).forEach((item) => {
             const value = item.getAttribute("data-id");
-            if (selectedValues.includes(value)) {
+            // Cek apakah value ada di array selectedValues
+            if (selectedValues.some(val => val == value)) {
                 item.classList.add("selected");
+                item.style.backgroundColor = "#e9ecef"; // Visual feedback (abu-abu)
+                item.style.color = "#495057";
             } else {
                 item.classList.remove("selected");
+                item.style.backgroundColor = ""; // Reset
+                item.style.color = "";
             }
         });
-        dropdown.classList.toggle("active", items.length > 0);
     }
 
     function checkValidation() {
+        // Validasi: Minimal harus ada 1 yang dipilih (opsional, sesuaikan kebutuhan)
         const hasSelection = selectedValues.length > 0;
-        errorMessage.style.display = hasSelection ? "none" : "block";
+        if (errorMessage) {
+            errorMessage.style.display = hasSelection ? "none" : "block";
+        }
     }
 
     // Toggle dropdown on click
     wrapper.addEventListener("click", (e) => {
+        if (e.target.classList.contains('remove-item')) return;
         e.stopPropagation();
         dropdown.classList.toggle("active");
+        dropdown.style.display = dropdown.classList.contains("active") ? "block" : "none";
     });
 
     // Close dropdown when clicking outside
     document.addEventListener("click", (e) => {
         if (!wrapper.contains(e.target)) {
             dropdown.classList.remove("active");
+            dropdown.style.display = "none";
         }
     });
 
@@ -2137,19 +2293,73 @@ function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropd
     dropdown.addEventListener("click", (e) => {
         const item = e.target.closest(".dropdown-item");
         if (item) {
+            e.stopPropagation();
             const value = item.getAttribute("data-id");
             toggleSelection(value);
         }
     });
 
-    // Initialize
-    document.addEventListener("DOMContentLoaded", handleSelection);
+    // Initialize on load
+    handleSelection();
 }
 
-// For PIC Master II
-initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms', 'error-message-ms');
-
-// For Pelaksana RTU II
-initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
+// Initialize Custom Selects
+document.addEventListener("DOMContentLoaded", function() {
+    if (document.getElementById('ms-wrapper')) {
+        initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms',
+            'error-message-ms');
+    }
+    if (document.getElementById('rtu-wrapper')) {
+        initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu',
+            'error-message-rtu');
+    }
+});
 </script>
+
+<style>
+/* Basic Styling for Custom Select (Optional if not in your CSS) */
+.custom-select-wrapper {
+    border: 1px solid #ced4da;
+    padding: 6px 12px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    min-height: 38px;
+    position: relative;
+}
+
+.selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.selected-item {
+    background: #e9ecef;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ced4da;
+    z-index: 1000;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+</style>
 @endsection
