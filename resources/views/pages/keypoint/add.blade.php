@@ -220,10 +220,17 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-
-
-
-
+                                                <div class="form-group">
+                                                    <label for="ketfd">Keterangan Form Data</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ketfd" name="ketfd"
+                                                            placeholder="Keterangan Form Data"
+                                                            value="{{ old('ketfd') }}" />
+                                                        @error('ketfd')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1316,6 +1323,17 @@
                                                                 {{ in_array('lruf_nrml_5', old('s_lruf', [])) ? 'checked' : '' }} />
                                                             <span class="selectgroup-button">Tidak ada</span>
                                                         </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ketfts">Keterangan Form Telestatus</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ketfts"
+                                                            name="ketfts" placeholder="Keterangan Form Data"
+                                                            value="{{ old('ketfts') }}" />
+                                                        @error('ketfts')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -2540,6 +2558,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="ketftc">Keterangan Form Telecontrol</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ketftc"
+                                                            name="ketftc" placeholder="Keterangan Form Data"
+                                                            value="{{ old('ketftc') }}" />
+                                                        @error('ketftc')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-12 col-lg-2">
                                                 <div class="form-group">
@@ -2912,6 +2941,17 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="ketftm">Keterangan Form Telemetering</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="ketftm"
+                                                            name="ketftm" placeholder="Keterangan Form Data"
+                                                            value="{{ old('ketftm') }}" />
+                                                        @error('ketftm')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2970,7 +3010,7 @@
                                         </div>
                                         <div class="custom-form-container">
                                             <div class="custom-form-group">
-                                                <label for="id_pelrtu" class="custom-label">Pelaksana RTU
+                                                <label for="id_pelrtu" class="custom-label">Pelaksana RTU II
                                                     II</label>
                                                 <div class="custom-select-wrapper" id="rtu-wrapper">
                                                     <div class="selected-items" id="selected-items-rtu"></div>
@@ -2994,15 +3034,25 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="ketpk">Keterangan PIC Kom</label>
+                                            <div class="input-icon">
+                                                <input type="text" class="form-control" id="ketpk" name="ketpk"
+                                                    placeholder="Keterangan Form Data" value="{{ old('ketpk') }}" />
+                                                @error('ketpk')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="ketkp">Keterangan</label>
-                            <textarea class="form-control text-uppercase @error('ketkp') is-invalid @enderror"
-                                id="ketkp" name="ketkp" style="height: 155px;">{{ old('ketkp') }}</textarea>
-                            @error('ketkp')
+                            <label for="catatankp">Catatan</label>
+                            <textarea class="form-control text-uppercase @error('catatankp') is-invalid @enderror"
+                                id="catatankp" name="catatankp" style="height: 155px;">{{ old('catatankp') }}</textarea>
+                            @error('catatankp')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

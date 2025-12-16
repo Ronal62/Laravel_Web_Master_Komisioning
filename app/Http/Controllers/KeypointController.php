@@ -46,7 +46,7 @@ class KeypointController extends Controller
             1 => 'tb_formkp.nama_lbs',
             2 => 'gi_penyulang',
             3 => 'merk_modem_rtu',
-            4 => 'tb_formkp.ketkp',
+            4 => 'tb_formkp.catatankp',
             5 => 'tb_formkp.nama_user',
             6 => 'pelaksana_rtu',
         ];
@@ -62,7 +62,7 @@ class KeypointController extends Controller
                 DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
                 'tb_formkp.id_merkrtu',
                 'tb_formkp.id_modem',
-                'tb_formkp.ketkp as keterangan',
+                'tb_formkp.catatankp as keterangan',
                 'tb_formkp.nama_user as master',
                 'tb_formkp.id_pelrtu'
             );
@@ -80,7 +80,7 @@ class KeypointController extends Controller
         if (!empty($searchValue)) {
             $query->where(function ($q) use ($searchValue) {
                 $q->where('tb_formkp.nama_lbs', 'like', "%{$searchValue}%")
-                    ->orWhere('tb_formkp.ketkp', 'like', "%{$searchValue}%")
+                    ->orWhere('tb_formkp.catatankp', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.nama_peny', 'like', "%{$searchValue}%")
                     ->orWhere('tb_formkp.nama_user', 'like', "%{$searchValue}%")
                     ->orWhereRaw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) LIKE ?", ["%{$searchValue}%"])
@@ -108,7 +108,7 @@ class KeypointController extends Controller
                             ->orWhere('tb_formkp.id_modem', 'like', "%{$colSearchValue}%");
                         break;
                     case 4:
-                        $query->where('tb_formkp.ketkp', 'like', "%{$colSearchValue}%");
+                        $query->where('tb_formkp.catatankp', 'like', "%{$colSearchValue}%");
                         break;
                     case 5:
                         $query->where('tb_formkp.nama_user', 'like', "%{$colSearchValue}%");
@@ -198,7 +198,7 @@ class KeypointController extends Controller
                 'tb_formkp.nama_lbs as nama_keypoint',
                 DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) as gi_penyulang"),
                 DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
-                'tb_formkp.ketkp as keterangan',
+                'tb_formkp.catatankp as keterangan',
                 'tb_formkp.nama_user as master'
             );
 
@@ -246,7 +246,7 @@ class KeypointController extends Controller
                 'tb_formkp.nama_lbs as nama_keypoint',
                 DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) as gi_penyulang"),
                 DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
-                'tb_formkp.ketkp as keterangan',
+                'tb_formkp.catatankp as keterangan',
                 'tb_formkp.nama_user as master'
             );
 
@@ -714,7 +714,12 @@ class KeypointController extends Controller
                     }
                 }
             }],
-            'ketkp' => 'required|string|max:500',
+            'catatankp' => 'required|string|max:500',
+            'ketfd' => 'nullable|string|max:500',
+            'ketfts' => 'nullable|string|max:500',
+            'ketftc' => 'nullable|string|max:500',
+            'ketftm' => 'nullable|string|max:500',
+            'ketpk' => 'nullable|string|max:500',
         ]);
 
         // Validate array fields separately
@@ -1179,7 +1184,12 @@ class KeypointController extends Controller
                 }
             }],
             'id_pelrtu' => 'required|string|max:25',
-            'ketkp' => 'required|string|max:500',
+            'catatankp' => 'required|string|max:500',
+            'ketfd' => 'nullable|string|max:500',
+            'ketfts' => 'nullable|string|max:500',
+            'ketftc' => 'nullable|string|max:500',
+            'ketftm' => 'nullable|string|max:500',
+            'ketpk' => 'nullable|string|max:500',
 
         ]);
 
@@ -1640,7 +1650,12 @@ class KeypointController extends Controller
                     }
                 }
             }],
-            'ketkp' => 'required|string|max:500',
+            'catatankp' => 'required|string|max:500',
+            'ketfd' => 'nullable|string|max:500',
+            'ketfts' => 'nullable|string|max:500',
+            'ketftc' => 'nullable|string|max:500',
+            'ketftm' => 'nullable|string|max:500',
+            'ketpk' => 'nullable|string|max:500',
 
         ]);
 

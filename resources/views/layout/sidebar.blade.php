@@ -95,9 +95,9 @@
                     <div class="collapse @if(Route::is('gardu*') || Route::is('merk*') || Route::is('modem*') ||Route::is('picmaster*') || Route::is('sectoral*')) show @endif"
                         id="datapengusahaan" data-bs-parent="#sidebarMenu">
                         <ul class="nav nav-collapse">
-                            <li class="@if(Route::is('gardu*')) active @endif">
+                            <!-- <li class="@if(Route::is('gardu*')) active @endif">
                                 <a href="{{ route('gardu.index') }}"><span class="sub-item">Gardu Induk</span></a>
-                            </li>
+                            </li> -->
                             <li class="@if(Route::is('merk*')) active @endif">
                                 <a href="{{ route('merk.index') }}"><span class="sub-item">Merk Lbs</span></a>
                             </li>
@@ -111,9 +111,9 @@
                                 <a href="{{ route('pelrtu.index') }}"><span class="sub-item">Pelaksana
                                         RTU</span></a>
                             </li>
-                            <li class="@if(Route::is('sectoral*')) active @endif">
+                            <!-- <li class="@if(Route::is('sectoral*')) active @endif">
                                 <a href="{{ route('sectoral.index') }}"><span class="sub-item">Sectoral</span></a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </li>

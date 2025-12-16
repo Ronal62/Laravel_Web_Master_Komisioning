@@ -151,63 +151,62 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="tgl_komisioning">Tanggal Komisioning</label>
-                                                <div class="input-icon">
-                                                    <input type="date" class="form-control" id="tgl_komisioning"
-                                                        name="tgl_komisioning"
-                                                        value="{{ old('tgl_komisioning', $keypoint->tgl_komisioning) }}"
-                                                        required />
-                                                    @error('tgl_komisioning')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="id_merkrtu">Merk RTU</label>
-                                                <select class="form-select form-control" id="id_merkrtu"
-                                                    name="id_merkrtu" required>
-                                                    <option value="">Pilih Merk RTU</option>
-                                                    @foreach ($merklbs as $merk)
-                                                    <option value="{{ $merk->id_merkrtu }}"
-                                                        {{ old('id_merkrtu', $keypoint->id_merkrtu) == $merk->id_merkrtu ? 'selected' : '' }}>
-                                                        {{ $merk->nama_merklbs }}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
-                                                @error('id_merkrtu')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="id_modem">Merk Modem</label>
-                                                <select class="form-select form-control" id="id_modem" name="id_modem"
-                                                    required>
-                                                    <option value="">Pilih Merk Modem</option>
-                                                    @foreach ($modems as $modem)
-                                                    <option value="{{ $modem->id_modem }}"
-                                                        {{ old('id_modem', $keypoint->id_modem) == $modem->id_modem ? 'selected' : '' }}>
-                                                        {{ $modem->nama_modem }}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
-                                                @error('id_modem')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="rtu_addrs">Protocol/RTU Address</label>
-                                                <div class="input-icon">
-                                                    <input type="text" class="form-control" id="rtu_addrs"
-                                                        name="rtu_addrs" placeholder="Protocol/RTU Address"
-                                                        value="{{ old('rtu_addrs', $keypoint->rtu_addrs) }}" />
-                                                    @error('rtu_addrs')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
                                             <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="tgl_komisioning">Tanggal Komisioning</label>
+                                                    <div class="input-icon">
+                                                        <input type="date" class="form-control" id="tgl_komisioning"
+                                                            name="tgl_komisioning"
+                                                            value="{{ old('tgl_komisioning', $keypoint->tgl_komisioning) }}"
+                                                            required />
+                                                        @error('tgl_komisioning')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="id_merkrtu">Merk RTU</label>
+                                                    <select class="form-select form-control" id="id_merkrtu"
+                                                        name="id_merkrtu" required>
+                                                        <option value="">Pilih Merk RTU</option>
+                                                        @foreach ($merklbs as $merk)
+                                                        <option value="{{ $merk->id_merkrtu }}"
+                                                            {{ old('id_merkrtu', $keypoint->id_merkrtu) == $merk->id_merkrtu ? 'selected' : '' }}>
+                                                            {{ $merk->nama_merklbs }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('id_merkrtu')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="id_modem">Merk Modem</label>
+                                                    <select class="form-select form-control" id="id_modem"
+                                                        name="id_modem" required>
+                                                        <option value="">Pilih Merk Modem</option>
+                                                        @foreach ($modems as $modem)
+                                                        <option value="{{ $modem->id_modem }}"
+                                                            {{ old('id_modem', $keypoint->id_modem) == $modem->id_modem ? 'selected' : '' }}>
+                                                            {{ $modem->nama_modem }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('id_modem')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="rtu_addrs">Protocol/RTU Address</label>
+                                                    <div class="input-icon">
+                                                        <input type="text" class="form-control" id="rtu_addrs"
+                                                            name="rtu_addrs" placeholder="Protocol/RTU Address"
+                                                            value="{{ old('rtu_addrs', $keypoint->rtu_addrs) }}" />
+                                                        @error('rtu_addrs')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="id_medkom">Media Komunikasi</label>
                                                     <select class="form-select form-control" id="id_medkom"
@@ -224,8 +223,19 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-
+                                                <div class="form-group ">
+                                                    <label for="ketfd">Keterangan Form Data</label>
+                                                    <div class="input-icon ">
+                                                        <input type="text" class="form-control" id="ketfd" name="ketfd"
+                                                            placeholder="Keterangan"
+                                                            value="{{ old('ketfd', $keypoint->ketfd) }}" />
+                                                        @error('ketfd')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
                                     <!-- Form Telestatus Tab -->
@@ -1336,6 +1346,17 @@
                                                                 {{ in_array('lruf_nrml_5', $checkboxValues['s_lruf']) ? 'checked' : '' }} />
                                                             <span class="selectgroup-button">Tidak ada</span>
                                                         </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ketfts">Keterangan Form Telestatus</label>
+                                                    <div class="input-icon ">
+                                                        <input type="text" class="form-control" id="ketfts"
+                                                            name="ketfts" placeholder="Keterangan"
+                                                            value="{{ old('ketfts', $keypoint->ketfts) }}" />
+                                                        @error('ketfts')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -2603,6 +2624,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="form-group ">
+                                                    <label for="ketftc">Keterangan Form Telecontrol</label>
+                                                    <div class="input-icon ">
+                                                        <input type="text" class="form-control" id="ketftc"
+                                                            name="ketftc" placeholder="Keterangan"
+                                                            value="{{ old('ketftc', $keypoint->ketftc) }}" />
+                                                        @error('ketftc')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-12 col-lg-2">
                                                 <div class="form-group">
@@ -2988,6 +3020,17 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                            <div class="form-group ">
+                                                <label for="ketftm">Keterangan Form Telemetering</label>
+                                                <div class="input-icon ">
+                                                    <input type="text" class="form-control" id="ketftm" name="ketftm"
+                                                        placeholder="Keterangan"
+                                                        value="{{ old('ketftm', $keypoint->ketftm) }}" />
+                                                    @error('ketftm')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- PIC Komisioning Tab -->
@@ -3068,16 +3111,27 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="form-group ">
+                                            <label for="ketpk">Keterangan Form Telemetering</label>
+                                            <div class="input-icon ">
+                                                <input type="text" class="form-control" id="ketpk" name="ketpk"
+                                                    placeholder="Keterangan"
+                                                    value="{{ old('ketpk', $keypoint->ketpk) }}" />
+                                                @error('ketpk')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="ketkp">Keterangan</label>
-                            <textarea class="form-control text-uppercase @error('ketkp') is-invalid @enderror"
-                                id="ketkp" name="ketkp"
-                                style="height: 155px;">{{ old('ketkp', $keypoint->ketkp) }}</textarea>
-                            @error('ketkp')
+                            <label for="catatankp">Catatan</label>
+                            <textarea class="form-control text-uppercase @error('catatankp') is-invalid @enderror"
+                                id="catatankp" name="catatankp"
+                                style="height: 155px;">{{ old('catatankp', $keypoint->catatankp) }}</textarea>
+                            @error('catatankp')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

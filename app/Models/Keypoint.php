@@ -46,7 +46,7 @@ class Keypoint extends Model
         'nama_user',
         'id_pelms',
         'id_pelrtu',
-        'ketkp',
+        'catatankp',
         's_cb',
         's_cb2',
         's_lr',
@@ -172,5 +172,11 @@ class Keypoint extends Model
         'crst_addms',
         'crst_addrtu',
         'crst_objfrmt',
+
+        'ketfd',
+        'ketfts',
+        'ketftc',
+        'ketftm',
+        'ketpk',
     ];
 }
