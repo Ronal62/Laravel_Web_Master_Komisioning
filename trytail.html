@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Form Keypoint PLN - Tailwind Full</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap");
+
+            /* Aturan @page harus tetap di CSS karena mengontrol settingan printer browser */
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body class="bg-white font-['Arial'] flex justify-center p-5 print:block print:p-0 print:m-0 print:bg-transparent print:[zoom:75%]">
+
+        <div class="w-[297mm] min-h-[210mm] p-[5mm] bg-white shadow-lg print:shadow-none print:w-full print:h-auto print:m-0 print:border-none flex flex-col">
+
+            <div class="flex border border-black h-[3.0cm] mb-2">
+                <div class="w-[50%] flex border-r border-black">
+                    <div class="w-[25%] flex items-center justify-center p-2">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/2/20/Logo_PLN.svg"
+                            alt="PLN Logo"
+                            class="h-16 w-auto object-contain"
+                        />
+                    </div>
+
+                    <div class="w-[55%] flex flex-col justify-center px-2 leading-tight">
+                        <h1 class="font-bold text-sm">PT PLN (PERSERO)</h1>
+                        <h2 class="font-bold text-sm">DISTRIBUSI JAWA TIMUR</h2>
+                        <p class="text-[10px] mt-1 font-bold">
+                            JL. EMBONG TRENGGULI NO. 19 - 21
+                        </p>
+                        <p class="text-[10px] font-bold">SURABAYA</p>
+                        <p class="text-[10px]">
+                            TLP : (031) 53406531, FAX : (031) 5310057
+                        </p>
+                    </div>
+                </div>
+
+                <div class="w-[25%] flex flex-col items-center justify-center border-r border-black">
+                    <div class="font-bold text-xs text-center leading-tight">
+                        FORM <br />
+                        STANDART
+                    </div>
+                </div>
+
+                <div class="w-[35%] flex text-[9px]">
+                    <div class="w-[60%] flex flex-col border-r border-black">
+                        <div class="h-[25%] flex items-center justify-center font-bold border-b border-black bg-gray-50">
+                            NO. DOKUMEN
+                        </div>
+                        <div class="h-[75%] flex items-center justify-center font-bold text-lg">
+                            FS.SCA.01.17
+                        </div>
+                    </div>
+
+                    <div class="w-[40%] flex flex-col">
+                        <div class="h-[25%] flex flex-col justify-center pl-2 border-b border-black">
+                            <span>HAL : 1 - 3</span>
+                        </div>
+                        <div class="h-1/3 flex flex-col justify-center pl-2 border-b border-black">
+                            <span>TGL :</span>
+                        </div>
+                        <div class="h-1/3 flex flex-col justify-center pl-2">
+                            <span>REV : 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-3">
+                <h2 class="font-bold text-sm underline tracking-wide">
+                    TES POINT TO POINT LBS
+                </h2>
+                <h3 class="font-bold text-[10px] mt-0.5">
+                    FORM KOMISIONING KEYPOINT
+                </h3>
+            </div>
+
+            <div class="border border-black p-2 mb-2 text-[10px]">
+                <div class="flex flex-wrap">
+                    <div class="w-full sm:w-[33%] pr-4 border-r-0 sm:border-r border-black print:w-[33%] print:border-r">
+                        <div class="flex items-end mb-1">
+                            <span class="w-24 shrink-0">Nama LBS / REC.</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                        <div class="flex items-end mb-1">
+                            <span class="w-24 shrink-0">Merk LBS / REC.</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                        <div class="flex items-end">
+                            <span class="w-24 shrink-0">Protocol / Address</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                    </div>
+                    <div class="w-full sm:w-[33%] px-0 sm:px-4 print:w-[33%] print:px-4">
+                        <div class="flex items-end mb-1">
+                            <span class="w-24 shrink-0">Modem</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                        <div class="flex items-end mb-1">
+                            <span class="w-24 shrink-0">IP / No. Kartu</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                        <div class="flex items-end">
+                            <span class="w-24 shrink-0">Koordinat</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                    </div>
+                    <div class="w-full sm:w-[34%] pl-0 sm:pl-4 print:w-[34%] print:pl-4">
+                        <div class="flex items-end mb-1">
+                            <span class="w-24 shrink-0">Gardu Induk / Sect</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                        <div class="flex items-end mb-1">
+                            <span class="w-24 shrink-0">Penyulang</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                        <div class="flex items-end">
+                            <span class="w-24 shrink-0">Tanggal</span>:
+                            <div class="border-b border-black border-dotted grow ml-1 h-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-1 gap-1 h-full items-stretch">
+
+                <div class="w-[58%] flex flex-col">
+                    <table class="w-full text-center border-collapse table-fixed text-[9px]">
+                        <thead>
+                            <tr class="h-[15px] bg-gray-100">
+                                <th class="border border-black w-[5%] p-0.5">ADD-MS</th>
+                                <th class="border border-black w-[5%] p-0.5">ADD-RTU</th>
+                                <th class="border border-black w-[6%] p-0.5">OBJ/FRMT</th>
+                                <th class="border border-black w-[8%] p-0.5">STATUS</th>
+                                <th class="border border-black w-[8%] p-0.5">VALUE</th>
+                                <th class="border border-black w-[3%] p-0.5">OK</th>
+                                <th class="border border-black w-[3%] p-0.5">NOK</th>
+                                <th class="border border-black w-[3%] p-0.5">LOG</th>
+                                <th class="border border-black w-[3%] p-0.5">SLD</th>
+                                <th class="border border-black w-[15%] p-0.5">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-[7px] leading-[1.1]">
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">CB</td>
+                                <td class="border border-black p-0.5">Open</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="27"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Close</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">CB 2</td>
+                                <td class="border border-black p-0.5">Open</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Close</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                             <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">L / R</td>
+                                <td class="border border-black p-0.5">Local</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Remote</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                             <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">DOOR</td>
+                                <td class="border border-black p-0.5">Open</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Close</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">ACF</td>
+                                <td class="border border-black p-0.5">Normal</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Failed</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                             <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">DCF</td>
+                                <td class="border border-black p-0.5">Normal</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Failed</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                             <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">DCD</td>
+                                <td class="border border-black p-0.5">Normal</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Failed</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">HLT</td>
+                                <td class="border border-black p-0.5">Active</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Inactive</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                             <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">SF6</td>
+                                <td class="border border-black p-0.5">Normal</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Low</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                             <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">FIR</td>
+                                <td class="border border-black p-0.5">Normal</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Failed</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                             <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">FIS</td>
+                                <td class="border border-black p-0.5">Normal</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Failed</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                             <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">FIT</td>
+                                <td class="border border-black p-0.5">Normal</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Failed</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="w-full text-center border-collapse table-fixed mt-2 text-[9px]">
+                        <thead>
+                            <tr class="bg-gray-100 h-[15px]">
+                                <th class="border border-black w-[5%] p-0.5">ADD-MS</th>
+                                <th class="border border-black w-[5%] p-0.5">ADD-RTU</th>
+                                <th class="border border-black w-[6%] p-0.5">OBJ/FRMT</th>
+                                <th class="border border-black w-[8%] p-0.5">CTRL</th>
+                                <th class="border border-black w-[8%] p-0.5">VALUE</th>
+                                <th class="border border-black w-[3%] p-0.5">OK</th>
+                                <th class="border border-black w-[3%] p-0.5">NOK</th>
+                                <th class="border border-black w-[3%] p-0.5">LOG</th>
+                                <th class="border border-black w-[3%] p-0.5">SLD</th>
+                                <th class="border border-black w-[15%] p-0.5">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-[7px] leading-[1.1]">
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">CB</td>
+                                <td class="border border-black p-0.5">Open</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="7"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Close</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">CB 2</td>
+                                <td class="border border-black p-0.5">Open</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Close</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="2">HLT</td>
+                                <td class="border border-black p-0.5">On</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">Off</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">RR</td>
+                                <td class="border border-black p-0.5">Reset</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="w-full text-center border-collapse table-fixed mt-2 text-[9px]">
+                        <thead>
+                            <tr class="bg-gray-100 h-[15px]">
+                                <th class="border border-black w-[5%] p-0.5">ADD-MS</th>
+                                <th class="border border-black w-[5%] p-0.5">ADD-RTU</th>
+                                <th class="border border-black w-[6%] p-0.5">OBJ/FRMT</th>
+                                <th class="border border-black w-[8%] p-0.5">METERING</th>
+                                <th class="border border-black w-[5%] p-0.5">FIELD</th>
+                                <th class="border border-black w-[5%] p-0.5">MS</th>
+                                <th class="border border-black w-[3%] p-0.5">SCALE</th>
+                                <th class="border border-black w-[4%] p-0.5">OK/NOK</th>
+                                <th class="border border-black w-[3%] p-0.5">SLD</th>
+                                <th class="border border-black w-[15%] p-0.5">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-[7px] leading-[1.1]">
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">HZ</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5" rowspan="18"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">I AVG</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">IR</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">IS</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">IT</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">IN</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5 bg-gray-300">Pseudo</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">IFR</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5 bg-gray-300">Pseudo</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">IFS</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5 bg-gray-300">Pseudo</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">IFT</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5 bg-gray-300">Pseudo</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">IFN</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">PF</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">V AVG</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">V-R_IN</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">V-S_IN</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">V-T_IN</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">V-R_OUT</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">V-S_OUT</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5">V-T_OUT</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="w-[42%] flex flex-col h-full text-[9px]">
+                    <table class="mb-1 w-full border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-[40%] border border-black p-0.5 bg-gray-100">Hardware</th>
+                                <th class="w-[15%] border border-black p-0.5 bg-gray-100">OK/NOK</th>
+                                <th class="w-[15%] border border-black p-0.5 bg-gray-100">Value</th>
+                                <th class="w-[30%] border border-black p-0.5 bg-gray-100">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-[7px] leading-[1.1]">
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">Batere</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">PS 220</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">Charger</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">Limit Switch</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="mb-1 w-full border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-[40%] border border-black p-0.5 bg-gray-100">System</th>
+                                <th class="w-[15%] border border-black p-0.5 bg-gray-100">OK/NOK</th>
+                                <th class="w-[15%] border border-black p-0.5 bg-gray-100">Value</th>
+                                <th class="w-[30%] border border-black p-0.5 bg-gray-100">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-[7px] leading-[1.1]">
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">COMF</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">LRUF</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">SIGN S</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">Limit Switch</td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="mb-1 w-full border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-[30%] border border-black p-0.5 bg-gray-100">RECLOSER</th>
+                                <th class="w-[20%] border border-black p-0.5 bg-gray-100">Value</th>
+                                <th class="w-[15%] border border-black p-0.5 bg-gray-100">OK/NOK</th>
+                                <th class="w-[35%] border border-black p-0.5 bg-gray-100">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-[7px] leading-[1.1]">
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">AR</td>
+                                <td class="text-center p-0 border border-black">
+                                    <div class="border-b border-black">On</div>
+                                    <div>Off</div>
+                                </td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                            <tr>
+                                <td class="pl-1 border border-black p-0.5">CTRL AR</td>
+                                <td class="text-center p-0 border border-black">
+                                    <div class="border-b border-black">On</div>
+                                    <div>Off</div>
+                                </td>
+                                <td class="border border-black p-0.5"></td>
+                                <td class="border border-black p-0.5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="w-full mb-1 border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="text-[9px] p-0.5 border-b border-black text-left">
+                                    CATATAN
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-black h-[4.5cm] align-top p-1 text-[8px]">
+                                    Value of Catatan
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="border border-black flex flex-col grow">
+                        <div class="font-bold p-0.5 text-[9px] pl-2 border-b border-black bg-gray-50">
+                            PELAKSANA :
+                        </div>
+
+                        <div class="flex flex-col flex-1">
+                            <div class="flex flex-1 border-b border-black">
+                                <div class="w-1/3 border-r border-black flex flex-col justify-end items-center p-1">
+                                    <div class="border-b border-black w-3/4 mb-1"></div>
+                                    <span class="text-[8px] font-bold">Field Eng. 01</span>
+                                </div>
+                                <div class="w-1/3 border-r border-black flex flex-col justify-end items-center p-1">
+                                    <div class="border-b border-black w-3/4 mb-1"></div>
+                                    <span class="text-[8px] font-bold">MS Eng. 01</span>
+                                </div>
+                                <div class="w-1/3 flex flex-col justify-end items-center p-1">
+                                    <div class="border-b border-black w-3/4 mb-1"></div>
+                                    <span class="text-[8px] font-bold">Dispatcher 01</span>
+                                </div>
+                            </div>
+
+                             <div class="flex flex-1">
+                                <div class="w-1/3 border-r border-black flex flex-col justify-end items-center p-1">
+                                    <div class="border-b border-black w-3/4 mb-1"></div>
+                                    <span class="text-[8px] font-bold">Field Eng. 02</span>
+                                </div>
+                                <div class="w-1/3 border-r border-black flex flex-col justify-end items-center p-1">
+                                    <div class="border-b border-black w-3/4 mb-1"></div>
+                                    <span class="text-[8px] font-bold">MS Eng. 02</span>
+                                </div>
+                                <div class="w-1/3 flex flex-col justify-end items-center p-1">
+                                    <div class="border-b border-black w-3/4 mb-1"></div>
+                                    <span class="text-[8px] font-bold">Dispatcher 02</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full mt-1">
+                <div class="border border-black text-center italic text-[8px] py-1">
+                    Apabila dokumen ini didownload / dicetak maka akan menjadi
+                    <br />
+                    "DOKUMEN TIDAK TERKENDALI"
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
