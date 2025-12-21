@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
         // Create an admin user (avoids duplicates if run multiple times)
         if (!Admin::where('username', 'admin')->exists()) {
             Admin::create([
-                'nama_admin' => 'Admin User',
+                'nama_admin' => 'RONALD',
                 'username' => 'admin',
                 'password' => Hash::make('admin'), // Change in production!
                 'temp_password' => 'admin', // Optional temporary password

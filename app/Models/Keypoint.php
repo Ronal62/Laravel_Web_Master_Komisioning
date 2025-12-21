@@ -23,6 +23,8 @@ class Keypoint extends Model
         'id_gi',
         'nama_peny',
         'id_sec',
+
+        // --- ARUS BEBAN (Existing) ---
         'ir_rtu',
         'ir_ms',
         'ir_scale',
@@ -32,21 +34,76 @@ class Keypoint extends Model
         'it_rtu',
         'it_ms',
         'it_scale',
-        'vr_rtu',
-        'vr_ms',
-        'vr_scale',
-        'vs_rtu',
-        'vs_ms',
-        'vs_scale',
-        'vt_rtu',
-        'vt_ms',
-        'vt_scale',
-        'sign_kp',
+
+        // --- TEGANGAN INPUT (Updated vr -> vrin) ---
+        'vrin_rtu',
+        'vrin_ms',
+        'vrin_scale',
+        'vsin_rtu',
+        'vsin_ms',
+        'vsin_scale',
+        'vtin_rtu',
+        'vtin_ms',
+        'vtin_scale',
+
+        // --- TEGANGAN OUTPUT (New) ---
+        'vrout_rtu',
+        'vrout_ms',
+        'vrout_scale',
+        'vsout_rtu',
+        'vsout_ms',
+        'vsout_scale',
+        'vtout_rtu',
+        'vtout_ms',
+        'vtout_scale',
+
+        // --- FREKUENSI, ARUS RATA2, PF (New) ---
+        'hz_rtu',
+        'hz_ms',
+        'hz_scale',
+        'iavg_rtu',
+        'iavg_ms',
+        'iavg_scale',
+        'pf_rtu',
+        'pf_ms',
+        'pf_scale',
+
+        // --- ARUS GANGGUAN / FAULT (New) ---
+        'ifr_rtu',
+        'ifr_ms',
+        'ifr_scale',
+        'ifs_rtu',
+        'ifs_ms',
+        'ifs_scale',
+        'ift_rtu',
+        'ift_ms',
+        'ift_scale',
+        'ifn_rtu',
+        'ifn_ms',
+        'ifn_scale',
+
+        // --- ARUS GANGGUAN PSEUDO (New) ---
+        'ifr_psuedo_rtu',
+        'ifr_psuedo_ms',
+        'ifr_psuedo_scale',
+        'ifs_psuedo_rtu',
+        'ifs_psuedo_ms',
+        'ifs_psuedo_scale',
+        'ift_psuedo_rtu',
+        'ift_psuedo_ms',
+        'ift_psuedo_scale',
+        'ifn_psuedo_rtu',
+        'ifn_psuedo_ms',
+        'ifn_psuedo_scale',
+
+        // --- Data Lainnya ---
         'id_komkp',
         'nama_user',
         'id_pelms',
         'id_pelrtu',
         'catatankp',
+
+        // --- Checkbox Groups ---
         's_cb',
         's_cb2',
         's_lr',
@@ -66,6 +123,8 @@ class Keypoint extends Model
         'c_cb2',
         'c_hlt',
         'c_rst',
+
+        // --- Strings for MS/RTU/ObjFrmt ---
         'sacf_fail_addms',
         'sacf_fail_addrtu',
         'sacf_fail_objfrmt',
@@ -84,9 +143,6 @@ class Keypoint extends Model
         'scb_open_addms',
         'scb_open_addrtu',
         'scb_open_objfrmt',
-        'scomf_addms',
-        'scomf_addrtu',
-        'scomf_objfrmt',
         'sdcd_fail_addms',
         'sdcd_fail_addrtu',
         'sdcd_fail_objfrmt',
@@ -150,7 +206,8 @@ class Keypoint extends Model
         'ssf6_normal_addms',
         'ssf6_normal_addrtu',
         'ssf6_normal_objfrmt',
-        // Add these control fields
+
+        // Control Fields
         'ccb_open_addms',
         'ccb_open_addrtu',
         'ccb_open_objfrmt',
@@ -173,10 +230,51 @@ class Keypoint extends Model
         'crst_addrtu',
         'crst_objfrmt',
 
+        // Keterangan Fields
         'ketfd',
         'ketfts',
         'ketftc',
         'ketftm',
         'ketpk',
+
+        // SYS Group
+        'sys_comf',
+        'sys_lruf',
+        'sys_signs',
+        'sys_limitswith',
+        'sys_comf_input',
+        'sys_lruf_input',
+        'sys_signs_input',
+        'sys_limitswith_input',
+        'ketsys',
+
+        // HARD Group
+        'hard_batere',
+        'hard_ps220',
+        'hard_charger',
+        'hard_limitswith',
+        'hard_batere_input',
+        'hard_ps220_input',
+        'hard_charger_input',
+        'hard_limitswith_input',
+        'kethard',
+
+        // RE Group
+        're_ar_on',
+        're_ar_off',
+        're_ctrl_ar_on',
+        're_ctrl_ar_off',
+        'ketre',
+
+        // IN & VAVG Group
+        'iavg_rtu',
+        'iavg_ms',
+        'iavg_scale',
+        'in_rtu',
+        'in_ms',
+        'in_scale',
+        'vavg_rtu',
+        'vavg_ms',
+        'vavg_scale',
     ];
 }
