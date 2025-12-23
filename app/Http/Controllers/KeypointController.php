@@ -296,9 +296,12 @@ class KeypointController extends Controller
         $keypoints = DB::connection('masterdata')->table('dg_keypoint')
             ->where('gardu_induk', urldecode($gardu_induk))
             ->where('penyulang', urldecode($penyulang))
-            ->select('nama_keypoint as id', DB::raw("CONCAT(type_keypoint, ' ', nama_keypoint) as name"))
+            ->select(
+                DB::raw("CONCAT(type_keypoint, ' ', nama_keypoint) as full_name")
+            )
             ->get()
-            ->pluck('name', 'id');
+            ->pluck('full_name', 'full_name'); // Gunakan full_name sebagai key DAN value
+
         return response()->json($keypoints);
     }
 
@@ -310,15 +313,21 @@ class KeypointController extends Controller
             ->unique();
         return response()->json($penyulang);
     }
+
+
+
     public function getSektoral($gardu_induk, $penyulang)
     {
         $sektoral = DB::connection('masterdata')->table('dg_keypoint')
             ->where('gardu_induk', urldecode($gardu_induk))
             ->where('penyulang', urldecode($penyulang))
-            ->select('sektoral as id', DB::raw("CONCAT(up3, ' ', sektoral) as name"))
+            ->select(
+                DB::raw("CONCAT(up3, ' ', sektoral) as full_name")
+            )
             ->distinct()
             ->get()
-            ->pluck('name', 'id');
+            ->pluck('full_name', 'full_name');
+
         return response()->json($sektoral);
     }
     /**
@@ -552,16 +561,21 @@ class KeypointController extends Controller
         // 3. Define Validation Rules
         $rules = [
             'tgl_komisioning' => 'required|date',
-            'nama_lbs' => ['required', 'string', 'max:50', function ($attribute, $value, $fail) use ($request) {
-                if (!$request->mode_input) {
+            'nama_lbs' => ['required', 'string', 'max:100', function ($attribute, $value, $fail) use ($request) {
+                $modeInput = $request->input('mode_input', 0);
+
+                if ($modeInput == 0 || $modeInput == '0') {
                     $gi = $request->id_gi;
                     $peny = $request->nama_peny;
-                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('nama_keypoint', $value)->doesntExist()) {
-                        // Logic: Assuming validation passes if record exists. If logic is reversed, adjust accordingly.
-                        // The original code checked !exists -> fail.
-                        if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('nama_keypoint', $value)->exists()) {
-                            $fail('Invalid Nama Keypoint.');
-                        }
+
+                    $exists = DB::connection('masterdata')->table('dg_keypoint')
+                        ->where('gardu_induk', $gi)
+                        ->where('penyulang', $peny)
+                        ->whereRaw("CONCAT(type_keypoint, ' ', nama_keypoint) = ?", [$value])
+                        ->exists();
+
+                    if (!$exists) {
+                        $fail('Nama Keypoint tidak valid.');
                     }
                 }
             }],
@@ -581,8 +595,25 @@ class KeypointController extends Controller
                     $fail('Invalid Nama Penyulangan for selected Gardu Induk.');
                 }
             }],
-            'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255'], // Simplified for brevity
+            // Validasi nama_sec untuk format up3 + sektoral (akan disimpan ke id_sec)
+            'nama_sec' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) use ($request) {
+                $modeInput = $request->input('mode_input', 0);
 
+                if ($modeInput == 0 || $modeInput == '0') {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+
+                    $exists = DB::connection('masterdata')->table('dg_keypoint')
+                        ->where('gardu_induk', $gi)
+                        ->where('penyulang', $peny)
+                        ->whereRaw("CONCAT(up3, ' ', sektoral) = ?", [$value])
+                        ->exists();
+
+                    if (!$exists) {
+                        $fail('Sectoral tidak valid.');
+                    }
+                }
+            }],
             // --- TELEMETERING FIELDS ---
 
             // Arus (Existing)
@@ -851,9 +882,7 @@ class KeypointController extends Controller
         ];
 
         foreach ($checkboxFields as $field) {
-            // "nullable|array" allows the field to be null (unchecked) or an array
             $rules[$field] = 'nullable|array';
-            // ".*" validates every item INSIDE the array against the valid list
             $rules[$field . '.*'] = 'string|in:' . implode(',', $validCheckboxValues);
         }
 
@@ -869,18 +898,25 @@ class KeypointController extends Controller
         }
 
         // 7. Handle Sectoral Logic
-        if (!empty($request->nama_sec)) {
-            $namaSec = $request->nama_sec;
-            // Try to find existing ID
-            $idSec = DB::table('tb_sectoral')->where('nama_sec', $namaSec)->value('id_sec');
+        if (!empty($validated['nama_sec'])) {
+            $namaSec = $validated['nama_sec']; // Ini sudah berisi "up3 sektoral"
 
-            if (!$idSec) {
-                // Insert new if not found (Optional: remove if you don't want auto-create)
-                $idSec = DB::table('tb_sectoral')->insertGetId(['nama_sec' => $namaSec]);
+            // Cek apakah sudah ada di tb_sectoral
+            $existingSec = DB::table('tb_sectoral')->where('nama_sec', $namaSec)->first();
+
+            if ($existingSec) {
+                // Use existing sectoral ID
+                $validated['id_sec'] = $existingSec->id_sec; // or use the actual ID column
+            } else {
+                // Option A: Still use nama_sec as id_sec
+                $validated['id_sec'] = $namaSec;
+
+                // Option B: Create new entry in tb_sectoral first
+                // $newId = DB::table('tb_sectoral')->insertGetId(['nama_sec' => $namaSec]);
+                // $validated['id_sec'] = $newId;
             }
-            $validated['id_sec'] = $idSec;
         }
-        unset($validated['nama_sec']); // Remove raw name, we only save ID
+        unset($validated['nama_sec']); // Hapus nama_sec, hanya simpan id_sec
 
         // 8. Handle JSON encoded IDs
         $validated['id_pelms'] = json_encode($idPelmsArray);
@@ -958,9 +994,8 @@ class KeypointController extends Controller
         $merklbs = DB::table('tb_merklbs')->get();
         $modems = DB::table('tb_modem')->get();
         $medkom = DB::table('tb_medkom')->get();
-        // $garduinduk = DB::table('tb_garduinduk')->get();
         $garduinduk = DB::connection('masterdata')->table('dg_keypoint')->select('gardu_induk')->distinct()->get();
-        $sectoral = DB::table('tb_sectoral')->get();
+
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
         $pelrtus = DB::table('tb_pelaksana_rtu')->get();
@@ -970,8 +1005,14 @@ class KeypointController extends Controller
         $decodedRtu = json_decode($keypoint->id_pelrtu, true);
         $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : ($decodedRtu ? [$decodedRtu] : []);
 
-        return view('pages.keypoint.edit', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'pelms', 'selectedPelms', 'pelrtus', 'selectedPelrtus'));
+        // ✅ SIMPLE: id_sec sudah menyimpan nama sektoral langsung
+        $keypoint->nama_sec = $keypoint->id_sec;
+
+
+        return view('pages.keypoint.edit', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms', 'pelrtus', 'selectedPelrtus'));
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -1516,13 +1557,7 @@ class KeypointController extends Controller
 
         // 7. Handle Sectoral Logic
         if (!empty($request->nama_sec)) {
-            $namaSec = $request->nama_sec;
-            $idSec = DB::table('tb_sectoral')->where('nama_sec', $namaSec)->value('id_sec');
-
-            if (!$idSec) {
-                $idSec = DB::table('tb_sectoral')->insertGetId(['nama_sec' => $namaSec]);
-            }
-            $validated['id_sec'] = $idSec;
+            $validated['id_sec'] = $request->nama_sec; // Simpan langsung ke id_sec
         }
         unset($validated['nama_sec']);
 
@@ -1537,15 +1572,18 @@ class KeypointController extends Controller
     }
 
 
+    /**
+     * Show the form for cloning a resource.
+     * (Same as edit, but for creating a new record)
+     */
     public function clone($id)
     {
         $keypoint = Keypoint::findOrFail($id);
         $merklbs = DB::table('tb_merklbs')->get();
         $modems = DB::table('tb_modem')->get();
         $medkom = DB::table('tb_medkom')->get();
-        // $garduinduk = DB::table('tb_garduinduk')->get();
         $garduinduk = DB::connection('masterdata')->table('dg_keypoint')->select('gardu_induk')->distinct()->get();
-        $sectoral = DB::table('tb_sectoral')->get();
+
         $komkp = DB::table('tb_komkp')->get();
         $pelms = DB::table('tb_picmaster')->get();
         $pelrtus = DB::table('tb_pelaksana_rtu')->get();
@@ -1555,46 +1593,34 @@ class KeypointController extends Controller
         $decodedRtu = json_decode($keypoint->id_pelrtu, true);
         $selectedPelrtus = is_array($decodedRtu) ? $decodedRtu : ($decodedRtu ? [$decodedRtu] : []);
 
-        return view('pages.keypoint.clone', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'sectoral', 'komkp', 'pelms', 'selectedPelms', 'pelrtus', 'selectedPelrtus'));
+        // ✅ SIMPLE: id_sec sudah menyimpan nama sektoral langsung
+        $keypoint->nama_sec = $keypoint->id_sec;
+
+        return view('pages.keypoint.clone', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms', 'pelrtus', 'selectedPelrtus'));
     }
 
     /**
      * Store a cloned resource in storage.
+     * (Same as update, but creates new record instead of updating)
      */
     public function storeClone(Request $request)
     {
-        // Preprocess id_pelms to ensure it's an array
+        // 1. Prepare Arrays for ID fields
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
 
         $idPelrtuInput = $request->input('id_pelrtu', '');
         $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
 
-        // Define array fields that come from checkboxes
-        $arrayFields = [
-            's_cb',
-            's_cb2',
-            's_lr',
-            's_door',
-            's_acf',
-            's_dcf',
-            's_dcd',
-            's_hlt',
-            's_sf6',
-            's_fir',
-            's_fis',
-            's_fit',
-            's_fin',
-            's_comf',
-            's_lruf',
-            'c_cb',
-            'c_cb2',
-            'c_hlt',
-            'c_rst'
-        ];
-
-        // Define valid checkbox values
+        // 2. Define ALL valid checkbox values (Must match value="..." in Blade)
         $validCheckboxValues = [
+            // --- Common Values ---
+            'normal',
+            'ok',
+            'nok',
+            'log',
+            'sld',
+            'tidak_uji',
             'open_1',
             'open_2',
             'open_3',
@@ -1721,6 +1747,8 @@ class KeypointController extends Controller
             'lruf_nrml_1',
             'lruf_nrml_2',
             'lruf_nrml_5',
+
+            // --- Telecontrol (FormTelecontrol) ---
             'cbctrl_op_1',
             'cbctrl_op_2',
             'cbctrl_op_3',
@@ -1756,23 +1784,62 @@ class KeypointController extends Controller
             'rrctrl_on_3',
             'rrctrl_on_4',
             'rrctrl_on_5',
-            'normal',
-            'ok',
-            'nok',
-            'log',
-            'sld',
-            'tidak_uji'
+
+            // --- System (FormSystem) ---
+            'sys_comf1',
+            'sys_comf2',
+            'sys_comf5',
+            'sys_lruf1',
+            'sys_lruf2',
+            'sys_lruf5',
+            'sys_signs1',
+            'sys_signs2',
+            'sys_signs5',
+            'sys_limitswith1',
+            'sys_limitswith2',
+            'sys_limitswith5',
+
+            // --- Hardware (FormHardware) ---
+            'hard_batere1',
+            'hard_batere2',
+            'hard_batere5',
+            'hard_ps2201',
+            'hard_ps2202',
+            'hard_ps2205',
+            'hard_charger1',
+            'hard_charger2',
+            'hard_charger5',
+            'hard_limitswith1',
+            'hard_limitswith2',
+            'hard_limitswith5',
+
+            // --- Recloser (FormRecloser) ---
+            're_ar_on1',
+            're_ar_on2',
+            're_ar_on5',
+            're_ar_off1',
+            're_ar_off2',
+            're_ar_off5',
+            're_ctrl_ar_on1',
+            're_ctrl_ar_on2',
+            're_ctrl_ar_on5',
+            're_ctrl_ar_off1',
+            're_ctrl_ar_off2',
+            're_ctrl_ar_off5',
         ];
 
-        // Validation rules
-        $validated = $request->validate([
-            'id_formkp' => 'required|integer|exists:tb_formkp,id_formkp',
+        // 3. Define Validation Rules
+        $rules = [
             'tgl_komisioning' => 'required|date',
             'nama_lbs' => ['required', 'string', 'max:50', function ($attribute, $value, $fail) use ($request) {
                 if (!$request->mode_input) {
                     $gi = $request->id_gi;
                     $peny = $request->nama_peny;
-                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('nama_keypoint', $value)->exists()) {
+                    if (!DB::connection('masterdata')->table('dg_keypoint')
+                        ->where('gardu_induk', $gi)
+                        ->where('penyulang', $peny)
+                        ->where('nama_keypoint', $value)
+                        ->exists()) {
                         $fail('Invalid Nama Keypoint.');
                     }
                 }
@@ -1793,15 +1860,11 @@ class KeypointController extends Controller
                     $fail('Invalid Nama Penyulangan for selected Gardu Induk.');
                 }
             }],
-            'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255', function ($attribute, $value, $fail) use ($request) {
-                if (!$request->mode_input) {
-                    $gi = $request->id_gi;
-                    $peny = $request->nama_peny;
-                    if (!DB::connection('masterdata')->table('dg_keypoint')->where('gardu_induk', $gi)->where('penyulang', $peny)->where('sektoral', $value)->exists()) {
-                        $fail('Invalid Sectoral.');
-                    }
-                }
-            }],
+            'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255'],
+
+            // --- TELEMETERING FIELDS ---
+
+            // Arus (Existing)
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
             'ir_scale' => 'required|string|max:10',
@@ -1811,18 +1874,98 @@ class KeypointController extends Controller
             'it_rtu' => 'required|integer',
             'it_ms' => 'required|integer',
             'it_scale' => 'required|string|max:10',
-            'vr_rtu' => 'required|string|max:10',
-            'vr_ms' => 'required|string|max:10',
-            'vr_scale' => 'required|string|max:10',
-            'vs_rtu' => 'required|string|max:10',
-            'vs_ms' => 'required|string|max:10',
-            'vs_scale' => 'required|string|max:10',
-            'vt_rtu' => 'required|string|max:10',
-            'vt_ms' => 'required|string|max:10',
-            'vt_scale' => 'required|string|max:10',
-            'sys_signs' => 'required|string|max:10',
+
+            // Tegangan Input (Existing)
+            'vrin_rtu' => 'required|string|max:10',
+            'vrin_ms' => 'required|string|max:10',
+            'vrin_scale' => 'required|string|max:10',
+            'vsin_rtu' => 'required|string|max:10',
+            'vsin_ms' => 'required|string|max:10',
+            'vsin_scale' => 'required|string|max:10',
+            'vtin_rtu' => 'required|string|max:10',
+            'vtin_ms' => 'required|string|max:10',
+            'vtin_scale' => 'required|string|max:10',
+
+            // Tegangan Output (BARU DITAMBAHKAN)
+            'vrout_rtu' => 'nullable|string|max:10',
+            'vrout_ms' => 'nullable|string|max:10',
+            'vrout_scale' => 'nullable|string|max:10',
+            'vsout_rtu' => 'nullable|string|max:10',
+            'vsout_ms' => 'nullable|string|max:10',
+            'vsout_scale' => 'nullable|string|max:10',
+            'vtout_rtu' => 'nullable|string|max:10',
+            'vtout_ms' => 'nullable|string|max:10',
+            'vtout_scale' => 'nullable|string|max:10',
+
+            // Frekuensi, Arus Rata2, Power Factor
+            'hz_rtu' => 'nullable|string|max:10',
+            'hz_ms' => 'nullable|string|max:10',
+            'hz_scale' => 'nullable|string|max:10',
+            'iavg_rtu' => 'nullable|string|max:100',
+            'iavg_ms' => 'nullable|string|max:100',
+            'iavg_scale' => 'nullable|string|max:100',
+            'pf_rtu' => 'nullable|string|max:10',
+            'pf_ms' => 'nullable|string|max:10',
+            'pf_scale' => 'nullable|string|max:10',
+
+            // Arus Gangguan / Fault Current
+            'ifr_rtu' => 'nullable|string|max:10',
+            'ifr_ms' => 'nullable|string|max:10',
+            'ifr_scale' => 'nullable|string|max:10',
+            'ifs_rtu' => 'nullable|string|max:10',
+            'ifs_ms' => 'nullable|string|max:10',
+            'ifs_scale' => 'nullable|string|max:10',
+            'ift_rtu' => 'nullable|string|max:10',
+            'ift_ms' => 'nullable|string|max:10',
+            'ift_scale' => 'nullable|string|max:10',
+            'ifn_rtu' => 'nullable|string|max:10',
+            'ifn_ms' => 'nullable|string|max:10',
+            'ifn_scale' => 'nullable|string|max:10',
+
+            // Arus Gangguan Pseudo
+            'ifr_psuedo_rtu' => 'nullable|string|max:10',
+            'ifr_psuedo_ms' => 'nullable|string|max:10',
+            'ifr_psuedo_scale' => 'nullable|string|max:10',
+            'ifs_psuedo_rtu' => 'nullable|string|max:10',
+            'ifs_psuedo_ms' => 'nullable|string|max:10',
+            'ifs_psuedo_scale' => 'nullable|string|max:10',
+            'ift_psuedo_rtu' => 'nullable|string|max:10',
+            'ift_psuedo_ms' => 'nullable|string|max:10',
+            'ift_psuedo_scale' => 'nullable|string|max:10',
+            'ifn_psuedo_rtu' => 'nullable|string|max:10',
+            'ifn_psuedo_ms' => 'nullable|string|max:10',
+            'ifn_psuedo_scale' => 'nullable|string|max:10',
+
+            // --- IN & VAVG ---
+            'in_rtu' => 'nullable|string|max:100',
+            'in_ms' => 'nullable|string|max:100',
+            'in_scale' => 'nullable|string|max:100',
+            'vavg_rtu' => 'nullable|string|max:100',
+            'vavg_ms' => 'nullable|string|max:100',
+            'vavg_scale' => 'nullable|string|max:100',
+
+            // Notes and Text inputs
+            'ketsys' => 'nullable|string|max:500',
+            'kethard' => 'nullable|string|max:500',
+            'ketre' => 'nullable|string|max:500',
+            'catatankp' => 'required|string|max:500',
+            'ketfd' => 'nullable|string|max:500',
+            'ketfts' => 'nullable|string|max:500',
+            'ketftc' => 'nullable|string|max:500',
+            'ketftm' => 'nullable|string|max:500',
+            'ketpk' => 'nullable|string|max:500',
+            'sys_comf_input' => 'nullable|string|max:100',
+            'sys_lruf_input' => 'nullable|string|max:100',
+            'sys_signs_input' => 'nullable|string|max:100',
+            'sys_limitswith_input' => 'nullable|string|max:100',
+            'hard_batere_input' => 'nullable|string|max:100',
+            'hard_ps220_input' => 'nullable|string|max:100',
+            'hard_charger_input' => 'nullable|string|max:100',
+            'hard_limitswith_input' => 'nullable|string|max:100',
+            'nama_user' => 'required|string|max:50',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
-            'nama_user' => 'required|string|max:10',
+
+            // AddMs / AddRtu / ObjFrmt fields
             'sacf_fail_addms' => 'nullable|string|max:100',
             'sacf_fail_addrtu' => 'nullable|string|max:100',
             'sacf_fail_objfrmt' => 'nullable|string|max:100',
@@ -1841,9 +1984,6 @@ class KeypointController extends Controller
             'scb_open_addms' => 'nullable|string|max:100',
             'scb_open_addrtu' => 'nullable|string|max:100',
             'scb_open_objfrmt' => 'nullable|string|max:100',
-            'scomf_addms' => 'nullable|string|max:100',
-            'scomf_addrtu' => 'nullable|string|max:100',
-            'scomf_objfrmt' => 'nullable|string|max:100',
             'sdcd_fail_addms' => 'nullable|string|max:100',
             'sdcd_fail_addrtu' => 'nullable|string|max:100',
             'sdcd_fail_objfrmt' => 'nullable|string|max:100',
@@ -1898,9 +2038,6 @@ class KeypointController extends Controller
             'slr_remote_addms' => 'nullable|string|max:100',
             'slr_remote_addrtu' => 'nullable|string|max:100',
             'slr_remote_objfrmt' => 'nullable|string|max:100',
-            'slruf_addms' => 'nullable|string|max:100',
-            'slruf_addrtu' => 'nullable|string|max:100',
-            'slruf_objfrmt' => 'nullable|string|max:100',
             'ssf6_fail_addms' => 'nullable|string|max:100',
             'ssf6_fail_addrtu' => 'nullable|string|max:100',
             'ssf6_fail_objfrmt' => 'nullable|string|max:100',
@@ -1908,7 +2045,6 @@ class KeypointController extends Controller
             'ssf6_normal_addrtu' => 'nullable|string|max:100',
             'ssf6_normal_objfrmt' => 'nullable|string|max:100',
 
-            // Add control field validations (from Document 2)
             'ccb_open_addms' => 'nullable|string|max:100',
             'ccb_open_addrtu' => 'nullable|string|max:100',
             'ccb_open_objfrmt' => 'nullable|string|max:100',
@@ -1931,6 +2067,7 @@ class KeypointController extends Controller
             'crst_addrtu' => 'nullable|string|max:100',
             'crst_objfrmt' => 'nullable|string|max:100',
 
+            // Custom Validation for Array IDs
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
                 if (empty($idPelmsArray)) {
                     $fail('The id pelms field must be an array and cannot be empty.');
@@ -1951,52 +2088,67 @@ class KeypointController extends Controller
                     }
                 }
             }],
-            'catatankp' => 'required|string|max:500',
-            'ketfd' => 'nullable|string|max:500',
-            'ketfts' => 'nullable|string|max:500',
-            'ketftc' => 'nullable|string|max:500',
-            'ketftm' => 'nullable|string|max:500',
-            'ketpk' => 'nullable|string|max:500',
+        ];
 
-        ]);
+        // 4. Add Checkbox Array Validations Dynamically
+        $checkboxFields = [
+            's_cb',
+            's_cb2',
+            's_lr',
+            's_door',
+            's_acf',
+            's_dcf',
+            's_dcd',
+            's_hlt',
+            's_sf6',
+            's_fir',
+            's_fis',
+            's_fit',
+            's_fin',
+            'sys_comf',
+            'sys_lruf',
+            'sys_signs',
+            'sys_limitswith',
+            'hard_batere',
+            'hard_ps220',
+            'hard_charger',
+            'hard_limitswith',
+            're_ar_on',
+            're_ar_off',
+            're_ctrl_ar_on',
+            're_ctrl_ar_off',
+            'c_cb',
+            'c_cb2',
+            'c_hlt',
+            'c_rst'
+        ];
 
-        // Validate array fields separately
-        foreach ($arrayFields as $field) {
-            $request->validate([
-                $field => 'nullable|array',
-                $field . '.*' => 'string|in:' . implode(',', $validCheckboxValues),
-            ]);
-            // Set empty string for array fields if not present or empty
-            $validated[$field] = $request->has($field) && is_array($request->input($field)) && !empty($request->input($field))
+        foreach ($checkboxFields as $field) {
+            $rules[$field] = 'nullable|array';
+            $rules[$field . '.*'] = 'string|in:' . implode(',', $validCheckboxValues);
+        }
+
+        // 5. Run Validation
+        $validated = $request->validate($rules);
+
+        // 6. Post-Processing: Convert Arrays to Comma-Separated Strings for Database
+        foreach ($checkboxFields as $field) {
+            $validated[$field] = ($request->has($field) && is_array($request->input($field)))
                 ? implode(',', array_filter($request->input($field)))
                 : '';
         }
 
-        // Convert nama_sec (string from select2/AJAX) → id_sec (integer FK)
+        // 7. Handle Sectoral Logic
         if (!empty($request->nama_sec)) {
-            $namaSec = $request->nama_sec;
-            $idSec = DB::table('tb_sectoral')
-                ->where('nama_sec', $namaSec)  // Changed from 'sektoral' to 'nama_sec' to match likely table schema
-                ->value('id_sec');
-
-            if (!$idSec) {
-                // For manual input mode, insert new sectoral if not exists
-                $idSec = DB::table('tb_sectoral')->insertGetId(['nama_sec' => $namaSec]);  // Assuming 'nama_sec' is the name column; add other required fields if any
-            }
-
-            // This is the only thing we save to tb_formkp
-            $validated['id_sec'] = $idSec;
+            $validated['id_sec'] = $request->nama_sec; // Simpan langsung ke id_sec
         }
-
-        // Completely remove nama_sec from the insert (it doesn't exist in the table anyway)
         unset($validated['nama_sec']);
 
+        // 8. Handle JSON encoded IDs
+        $validated['id_pelms'] = json_encode($idPelmsArray);
+        $validated['id_pelrtu'] = json_encode($idPelrtuArray);
 
-        // Merge preprocessed id_pelms array into validated data
-        $validated['id_pelms'] = json_encode(array_filter(explode(',', $request->input('id_pelms', ''))));
-        $validated['id_pelrtu'] = json_encode(array_filter(explode(',', $request->input('id_pelrtu', ''))));
-
-        // Create the new record
+        // 9. Create new record in Database (instead of update)
         Keypoint::create($validated);
 
         return redirect()->route('keypoint.index')->with('success', 'Keypoint cloned successfully!');

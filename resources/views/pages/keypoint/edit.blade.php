@@ -75,7 +75,6 @@
                                         aria-labelledby="v-pills-formdata-tab-nobd">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <input type="hidden" name="mode_input" id="mode_input" value="0">
                                                 <div class="form-group">
                                                     <label for="id_gi">Gardu Induk</label>
                                                     <select class="form-select form-control" id="id_gi" name="id_gi"
@@ -156,10 +155,11 @@
                                                         <select class="form-select form-control" id="nama_sec_select"
                                                             name="nama_sec" required>
                                                             <option value="">Pilih Sectoral</option>
-                                                            {{-- Options will be loaded via AJAX, but we add the existing value as a fallback --}}
-                                                            @if($keypoint->nama_sec ?? false)
-                                                            <option value="{{ $keypoint->nama_sec }}" selected>
-                                                                {{ $keypoint->nama_sec }}
+                                                            {{-- ✅ PERBAIKAN: Tampilkan old value dari id_sec --}}
+                                                            @if(old('nama_sec', $keypoint->id_sec))
+                                                            <option value="{{ old('nama_sec', $keypoint->id_sec) }}"
+                                                                selected>
+                                                                {{ old('nama_sec', $keypoint->id_sec) }}
                                                             </option>
                                                             @endif
                                                         </select>
@@ -167,7 +167,7 @@
                                                     <div id="nama_sec_input_container" style="display:none;">
                                                         <input type="text" class="form-control" id="nama_sec_input"
                                                             placeholder="Sectoral"
-                                                            value="{{ old('nama_sec', $keypoint->nama_sec ?? '') }}" />
+                                                            value="{{ old('nama_sec', $keypoint->id_sec ?? '') }}" />
                                                     </div>
                                                     @error('nama_sec')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -4097,7 +4097,7 @@ $(document).ready(function() {
     var oldGi = "{{ old('id_gi', $keypoint->id_gi) }}";
     var oldPeny = "{{ old('nama_peny', $keypoint->nama_peny) }}";
     var oldLbs = "{{ old('nama_lbs', $keypoint->nama_lbs) }}";
-    var oldSec = "{{ old('nama_sec', $keypoint->nama_sec ?? '') }}";
+    var oldSec = "{{ old('nama_sec', $keypoint->id_sec ?? '') }}";
     var modeInput = "{{ old('mode_input', $keypoint->mode_input ?? 0) }}";
 
     // Make checkboxes exclusive and prevent both from being unchecked
@@ -4128,28 +4128,30 @@ $(document).ready(function() {
         $('#mode_input').val($('#changer_input').is(':checked') ? 1 : 0);
 
         if ($('#changer_input').is(':checked')) {
-            // Input mode
             $('#nama_lbs_select_container').hide();
             $('#nama_lbs_input_container').show();
             $('#nama_sec_select_container').hide();
             $('#nama_sec_input_container').show();
+
             $('#nama_lbs_select').attr('name', '').removeAttr('required');
             $('#nama_lbs_input').attr('name', 'nama_lbs').attr('required', 'required');
             $('#nama_sec_select').attr('name', '').removeAttr('required');
             $('#nama_sec_input').attr('name', 'nama_sec').attr('required', 'required');
-            // Set values for input fields
-            if (!$('#nama_lbs_input').val()) {
+
+
+            // ✅ Set nilai ke input field
+            if (!$('#nama_lbs_input').val() && oldLbs) {
                 $('#nama_lbs_input').val(oldLbs);
             }
-            if (!$('#nama_sec_input').val()) {
+            if (!$('#nama_sec_input').val() && oldSec) {
                 $('#nama_sec_input').val(oldSec);
             }
         } else {
-            // Select mode (default)
             $('#nama_lbs_select_container').show();
             $('#nama_lbs_input_container').hide();
             $('#nama_sec_select_container').show();
             $('#nama_sec_input_container').hide();
+
             $('#nama_lbs_select').attr('name', 'nama_lbs').attr('required', 'required');
             $('#nama_lbs_input').attr('name', '').removeAttr('required');
             $('#nama_sec_select').attr('name', 'nama_sec').attr('required', 'required');
@@ -4214,7 +4216,7 @@ $(document).ready(function() {
                     $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
                     $.each(data, function(key, value) {
                         var selected = (selectedLbs && key == selectedLbs) ? 'selected' :
-                        '';
+                            '';
                         $('#nama_lbs_select').append('<option value="' + key + '" ' +
                             selected + '>' + value + '</option>');
                     });
@@ -4227,13 +4229,14 @@ $(document).ready(function() {
         }
     }
 
-    // Function to load Sectoral options
+    // ✅ PERBAIKAN: Function loadSectoral dengan old value handling
     function loadSectoral(garduInduk, penyulang, selectedSec) {
         if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
             var urlTemplateSec =
                 '{{ route("get.sektoral", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
             var urlSec = urlTemplateSec.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
                 .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
+
             $.ajax({
                 url: urlSec,
                 type: "GET",
@@ -4241,26 +4244,56 @@ $(document).ready(function() {
                 success: function(data) {
                     $('#nama_sec_select').empty();
                     $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+
+                    var found = false;
                     $.each(data, function(key, value) {
-                        var selected = (selectedSec && key == selectedSec) ? 'selected' :
-                        '';
-                        $('#nama_sec_select').append('<option value="' + key + '" ' +
+                        // ✅ Cek match dengan key atau value
+                        var isSelected = selectedSec && (
+                            key == selectedSec ||
+                            value == selectedSec ||
+                            String(key).trim().toLowerCase() == String(selectedSec)
+                            .trim().toLowerCase() ||
+                            String(value).trim().toLowerCase() == String(selectedSec)
+                            .trim().toLowerCase()
+                        );
+
+                        if (isSelected) found = true;
+                        var selected = isSelected ? 'selected' : '';
+
+                        $('#nama_sec_select').append('<option value="' + value + '" ' +
                             selected + '>' + value + '</option>');
                     });
+
+                    // ✅ Jika old value tidak ditemukan, tambahkan sebagai option pertama (selected)
+                    if (!found && selectedSec && selectedSec.trim() !== '') {
+                        $('#nama_sec_select').prepend('<option value="' + selectedSec +
+                            '" selected>' + selectedSec + ' (data sebelumnya)</option>');
+                    }
                 },
                 error: function(xhr, status, error) {
-                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' + error);
-                    console.log(xhr.responseText);
+                    console.log('AJAX error sectoral: ' + xhr.status + ' - ' + status + ' - ' +
+                        error);
+                    // ✅ Fallback jika AJAX error
+                    if (selectedSec && selectedSec.trim() !== '') {
+                        $('#nama_sec_select').empty();
+                        $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+                        $('#nama_sec_select').append('<option value="' + selectedSec +
+                            '" selected>' + selectedSec + '</option>');
+                    }
                 }
             });
+        } else if (selectedSec && selectedSec.trim() !== '') {
+            // ✅ Jika tidak load AJAX, tetap tampilkan old value
+            $('#nama_sec_select').empty();
+            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+            $('#nama_sec_select').append('<option value="' + selectedSec + '" selected>' + selectedSec +
+                '</option>');
         }
     }
 
-    // Initial load on page ready - load existing data
+    // ✅ Initial load dengan old values
     if (oldGi) {
-        $('#id_gi').val(oldGi);
         loadPenyulang(oldGi, oldPeny, function() {
-            // After penyulang is loaded, load keypoint and sectoral
             if (oldPeny) {
                 loadKeypoint(oldGi, oldPeny, oldLbs);
                 loadSectoral(oldGi, oldPeny, oldSec);
@@ -4268,18 +4301,13 @@ $(document).ready(function() {
         });
     }
 
-    // Event handler for Gardu Induk change
     $('#id_gi').change(function() {
         var garduInduk = $(this).val();
         loadPenyulang(garduInduk, null, null);
-        // Clear dependent fields
-        $('#nama_lbs_select').empty();
-        $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
-        $('#nama_sec_select').empty();
-        $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+        $('#nama_lbs_select').empty().append('<option value="">Pilih Nama Keypoint</option>');
+        $('#nama_sec_select').empty().append('<option value="">Pilih Sectoral</option>');
     });
 
-    // Event handler for Penyulang change
     $('#nama_peny').change(function() {
         var penyulang = $(this).val();
         var garduInduk = $('#id_gi').val();
@@ -4287,13 +4315,14 @@ $(document).ready(function() {
             loadKeypoint(garduInduk, penyulang, null);
             loadSectoral(garduInduk, penyulang, null);
         } else {
-            $('#nama_lbs_select').empty();
-            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
-            $('#nama_sec_select').empty();
-            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+            $('#nama_lbs_select').empty().append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty().append('<option value="">Pilih Sectoral</option>');
         }
     });
 });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
+
+
+
 @endsection

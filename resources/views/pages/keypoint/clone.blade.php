@@ -48,6 +48,18 @@
                                         href="#v-pills-formtelemetering-nobd" role="tab"
                                         aria-controls="v-pills-formtelemetering-nobd" aria-selected="false">Form
                                         Telemetering</a>
+                                    <a class="nav-link" id="v-pills-formhardware-tab-nobd" data-bs-toggle="pill"
+                                        href="#v-pills-formhardware-nobd" role="tab"
+                                        aria-controls="v-pills-formhardware-nobd" aria-selected="false">Form
+                                        Hardware</a>
+                                    <a class="nav-link" id="v-pills-formsystem-tab-nobd" data-bs-toggle="pill"
+                                        href="#v-pills-formsystem-nobd" role="tab"
+                                        aria-controls="v-pills-formsystem-nobd" aria-selected="false">Form
+                                        System</a>
+                                    <a class="nav-link" id="v-pills-formrecloser-tab-nobd" data-bs-toggle="pill"
+                                        href="#v-pills-formrecloser-nobd" role="tab"
+                                        aria-controls="v-pills-formrecloser-nobd" aria-selected="false">Form
+                                        Recloser</a>
                                     <a class="nav-link" id="v-pills-pickomisioning-tab-nobd" data-bs-toggle="pill"
                                         href="#v-pills-pickomisioning-nobd" role="tab"
                                         aria-controls="v-pills-pickomisioning-nobd" aria-selected="false">PIC
@@ -61,7 +73,6 @@
                                         aria-labelledby="v-pills-formdata-tab-nobd">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <input type="hidden" name="mode_input" id="mode_input" value="0">
                                                 <div class="form-group">
                                                     <label for="id_gi">Gardu Induk</label>
                                                     <select class="form-select form-control" id="id_gi" name="id_gi"
@@ -69,7 +80,7 @@
                                                         <option value="">Pilih Gardu Induk</option>
                                                         @foreach ($garduinduk as $gi)
                                                         <option value="{{ $gi->gardu_induk }}"
-                                                            {{ old('id_gi') == $gi->gardu_induk ? 'selected' : '' }}>
+                                                            {{ old('id_gi', $keypoint->id_gi) == $gi->gardu_induk ? 'selected' : '' }}>
                                                             {{ $gi->gardu_induk }}
                                                         </option>
                                                         @endforeach
@@ -83,6 +94,12 @@
                                                     <select class="form-select form-control" id="nama_peny"
                                                         name="nama_peny" required>
                                                         <option value="">Pilih Nama Penyulangan</option>
+                                                        {{-- Options will be loaded via AJAX, but we add the existing value as a fallback --}}
+                                                        @if($keypoint->nama_peny)
+                                                        <option value="{{ $keypoint->nama_peny }}" selected>
+                                                            {{ $keypoint->nama_peny }}
+                                                        </option>
+                                                        @endif
                                                     </select>
                                                     @error('nama_peny')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -93,28 +110,38 @@
                                                     <div class="selectgroup w-100 flex-wrap">
                                                         <label class="selectgroup-item mb-2 mb-sm-0">
                                                             <input type="checkbox" id="changer_select"
-                                                                class="selectgroup-input" checked />
+                                                                class="selectgroup-input"
+                                                                {{ old('mode_input', $keypoint->mode_input ?? 0) == 0 ? 'checked' : '' }} />
                                                             <span class="selectgroup-button">Select Form Group</span>
                                                         </label>
                                                         <label class="selectgroup-item mb-2 mb-sm-0">
                                                             <input type="checkbox" id="changer_input"
-                                                                class="selectgroup-input" />
+                                                                class="selectgroup-input"
+                                                                {{ old('mode_input', $keypoint->mode_input ?? 0) == 1 ? 'checked' : '' }} />
                                                             <span class="selectgroup-button">Input Form Group</span>
                                                         </label>
                                                     </div>
                                                 </div>
+                                                <input type="hidden" name="mode_input" id="mode_input"
+                                                    value="{{ old('mode_input', $keypoint->mode_input ?? 0) }}">
                                                 <div class="form-group">
                                                     <label for="nama_lbs">Nama Keypoint</label>
                                                     <div id="nama_lbs_select_container">
                                                         <select class="form-select form-control" id="nama_lbs_select"
                                                             name="nama_lbs" required>
                                                             <option value="">Pilih Nama Keypoint</option>
+                                                            {{-- Options will be loaded via AJAX, but we add the existing value as a fallback --}}
+                                                            @if($keypoint->nama_lbs)
+                                                            <option value="{{ $keypoint->nama_lbs }}" selected>
+                                                                {{ $keypoint->nama_lbs }}
+                                                            </option>
+                                                            @endif
                                                         </select>
                                                     </div>
                                                     <div id="nama_lbs_input_container" style="display:none;">
                                                         <input type="text" class="form-control" id="nama_lbs_input"
-                                                            placeholder="Nama Keypoint" value="{{ old('nama_lbs') }}"
-                                                            required />
+                                                            placeholder="Nama Keypoint"
+                                                            value="{{ old('nama_lbs', $keypoint->nama_lbs) }}" />
                                                     </div>
                                                     @error('nama_lbs')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -126,12 +153,19 @@
                                                         <select class="form-select form-control" id="nama_sec_select"
                                                             name="nama_sec" required>
                                                             <option value="">Pilih Sectoral</option>
+                                                            {{-- ✅ PERBAIKAN: Tampilkan old value dari id_sec --}}
+                                                            @if(old('nama_sec', $keypoint->id_sec))
+                                                            <option value="{{ old('nama_sec', $keypoint->id_sec) }}"
+                                                                selected>
+                                                                {{ old('nama_sec', $keypoint->id_sec) }}
+                                                            </option>
+                                                            @endif
                                                         </select>
                                                     </div>
                                                     <div id="nama_sec_input_container" style="display:none;">
                                                         <input type="text" class="form-control" id="nama_sec_input"
-                                                            placeholder="Sectoral" value="{{ old('nama_sec') }}"
-                                                            required />
+                                                            placeholder="Sectoral"
+                                                            value="{{ old('nama_sec', $keypoint->id_sec ?? '') }}" />
                                                     </div>
                                                     @error('nama_sec')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -2878,7 +2912,7 @@
                                     <div class="tab-pane fade" id="v-pills-formtelemetering-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelemetering-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Arus Phase R</label>
                                                     <input class="form-control @error('ir_rtu') is-invalid @enderror"
@@ -2942,82 +2976,456 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+                                                <div class="form-group">
+                                                    <label>Arus Phase Netral</label>
+                                                    <input class="form-control @error('in_rtu') is-invalid @enderror"
+                                                        placeholder="IN RTU" name="in_rtu"
+                                                        value="{{ old('in_rtu', $keypoint->in_rtu) }}">
+                                                    @error('in_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('in_ms') is-invalid @enderror"
+                                                        placeholder="IN Master" name="in_ms"
+                                                        value="{{ old('in_ms', $keypoint->in_ms) }}">
+                                                    @error('in_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('in_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="in_scale"
+                                                        value="{{ old('in_scale', $keypoint->in_scale) }}">
+                                                    @error('in_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
+
+                                            <!-- Teg Input Phase -->
+                                            <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label>Teg Phase R</label>
-                                                    <input class="form-control @error('vr_rtu') is-invalid @enderror"
-                                                        placeholder="VR RTU" name="vr_rtu"
-                                                        value="{{ old('vr_rtu', $keypoint->vr_rtu) }}">
-                                                    @error('vr_rtu')
+                                                    <label>Teg Input Phase R</label>
+                                                    <input class="form-control @error('vrin_rtu') is-invalid @enderror"
+                                                        placeholder="VR RTU" name="vrin_rtu"
+                                                        value="{{ old('vrin_rtu', $keypoint->vrin_rtu) }}">
+                                                    @error('vrin_rtu')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('vr_ms') is-invalid @enderror"
-                                                        placeholder="VR Master" name="vr_ms"
-                                                        value="{{ old('vr_ms', $keypoint->vr_ms) }}">
-                                                    @error('vr_ms')
+                                                    <input class="form-control @error('vrin_ms') is-invalid @enderror"
+                                                        placeholder="VR Master" name="vrin_ms"
+                                                        value="{{ old('vrin_ms', $keypoint->vrin_ms) }}">
+                                                    @error('vrin_ms')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('vr_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vr_scale"
-                                                        value="{{ old('vr_scale', $keypoint->vr_scale) }}">
-                                                    @error('vr_scale')
+                                                    <input
+                                                        class="form-control @error('vrin_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="vrin_scale"
+                                                        value="{{ old('vrin_scale', $keypoint->vrin_scale) }}">
+                                                    @error('vrin_scale')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Teg Phase S</label>
-                                                    <input class="form-control @error('vs_rtu') is-invalid @enderror"
-                                                        placeholder="VS RTU" name="vs_rtu"
-                                                        value="{{ old('vs_rtu', $keypoint->vs_rtu) }}">
-                                                    @error('vs_rtu')
+                                                    <label>Teg Input Phase S</label>
+                                                    <input class="form-control @error('vsin_rtu') is-invalid @enderror"
+                                                        placeholder="VS RTU" name="vsin_rtu"
+                                                        value="{{ old('vsin_rtu', $keypoint->vsin_rtu) }}">
+                                                    @error('vsin_rtu')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('vs_ms') is-invalid @enderror"
-                                                        placeholder="VS Master" name="vs_ms"
-                                                        value="{{ old('vs_ms', $keypoint->vs_ms) }}">
-                                                    @error('vs_ms')
+                                                    <input class="form-control @error('vsin_ms') is-invalid @enderror"
+                                                        placeholder="VS Master" name="vsin_ms"
+                                                        value="{{ old('vsin_ms', $keypoint->vsin_ms) }}">
+                                                    @error('vsin_ms')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('vs_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vs_scale"
-                                                        value="{{ old('vs_scale', $keypoint->vs_scale) }}">
-                                                    @error('vs_scale')
+                                                    <input
+                                                        class="form-control @error('vsin_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="vsin_scale"
+                                                        value="{{ old('vsin_scale', $keypoint->vsin_scale) }}">
+                                                    @error('vsin_scale')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Teg Phase T</label>
-                                                    <input class="form-control @error('vt_rtu') is-invalid @enderror"
-                                                        placeholder="VT RTU" name="vt_rtu"
-                                                        value="{{ old('vt_rtu', $keypoint->vt_rtu) }}">
-                                                    @error('vt_rtu')
+                                                    <label>Teg Input Phase T</label>
+                                                    <input class="form-control @error('vtin_rtu') is-invalid @enderror"
+                                                        placeholder="VT RTU" name="vtin_rtu"
+                                                        value="{{ old('vtin_rtu', $keypoint->vtin_rtu) }}">
+                                                    @error('vtin_rtu')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('vt_ms') is-invalid @enderror"
-                                                        placeholder="VT Master" name="vt_ms"
-                                                        value="{{ old('vt_ms', $keypoint->vt_ms) }}">
-                                                    @error('vt_ms')
+                                                    <input class="form-control @error('vtin_ms') is-invalid @enderror"
+                                                        placeholder="VT Master" name="vtin_ms"
+                                                        value="{{ old('vtin_ms', $keypoint->vtin_ms) }}">
+                                                    @error('vtin_ms')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('vt_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vt_scale"
-                                                        value="{{ old('vt_scale', $keypoint->vt_scale) }}">
-                                                    @error('vt_scale')
+                                                    <input
+                                                        class="form-control @error('vtin_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="vtin_scale"
+                                                        value="{{ old('vtin_scale', $keypoint->vtin_scale) }}">
+                                                    @error('vtin_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Tegangan Rata Rata</label>
+                                                    <input class="form-control @error('vavg_rtu') is-invalid @enderror"
+                                                        placeholder="TEGANGAN RATA RATA RTU" name="vavg_rtu"
+                                                        value="{{ old('vavg_rtu', $keypoint->vavg_rtu) }}">
+                                                    @error('vavg_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('vavg_ms') is-invalid @enderror"
+                                                        placeholder="TEGANGAN RATA RATA Master" name="vavg_ms"
+                                                        value="{{ old('vavg_ms', $keypoint->vavg_ms) }}">
+                                                    @error('vavg_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input
+                                                        class="form-control @error('vavg_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="vavg_scale"
+                                                        value="{{ old('vavg_scale', $keypoint->vavg_scale) }}">
+                                                    @error('vavg_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <!-- Teg Output Phase -->
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Teg Output Phase R</label>
+                                                    <input class="form-control @error('vrout_rtu') is-invalid @enderror"
+                                                        placeholder="VR RTU" name="vrout_rtu"
+                                                        value="{{ old('vrout_rtu', $keypoint->vrout_rtu) }}">
+                                                    @error('vrout_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('vrout_ms') is-invalid @enderror"
+                                                        placeholder="VR Master" name="vrout_ms"
+                                                        value="{{ old('vrout_ms', $keypoint->vrout_ms) }}">
+                                                    @error('vrout_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input
+                                                        class="form-control @error('vrout_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="vrout_scale"
+                                                        value="{{ old('vrout_scale', $keypoint->vrout_scale) }}">
+                                                    @error('vrout_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Teg Output Phase S</label>
+                                                    <input class="form-control @error('vsout_rtu') is-invalid @enderror"
+                                                        placeholder="VS RTU" name="vsout_rtu"
+                                                        value="{{ old('vsout_rtu', $keypoint->vsout_rtu) }}">
+                                                    @error('vsout_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('vsout_ms') is-invalid @enderror"
+                                                        placeholder="VS Master" name="vsout_ms"
+                                                        value="{{ old('vsout_ms', $keypoint->vsout_ms) }}">
+                                                    @error('vsout_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input
+                                                        class="form-control @error('vsout_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="vsout_scale"
+                                                        value="{{ old('vsout_scale', $keypoint->vsout_scale) }}">
+                                                    @error('vsout_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Teg Output Phase T</label>
+                                                    <input class="form-control @error('vtout_rtu') is-invalid @enderror"
+                                                        placeholder="VT RTU" name="vtout_rtu"
+                                                        value="{{ old('vtout_rtu', $keypoint->vtout_rtu) }}">
+                                                    @error('vtout_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('vtout_ms') is-invalid @enderror"
+                                                        placeholder="VT Master" name="vtout_ms"
+                                                        value="{{ old('vtout_ms', $keypoint->vtout_ms) }}">
+                                                    @error('vtout_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input
+                                                        class="form-control @error('vtout_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="vtout_scale"
+                                                        value="{{ old('vtout_scale', $keypoint->vtout_scale) }}">
+                                                    @error('vtout_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <!-- Frekuensi, Arus Rata2, Faktor Daya -->
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Frekuensi</label>
+                                                    <input class="form-control @error('hz_rtu') is-invalid @enderror"
+                                                        placeholder="HZ RTU" name="hz_rtu"
+                                                        value="{{ old('hz_rtu', $keypoint->hz_rtu) }}">
+                                                    @error('hz_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('hz_ms') is-invalid @enderror"
+                                                        placeholder="HZ Master" name="hz_ms"
+                                                        value="{{ old('hz_ms', $keypoint->hz_ms) }}">
+                                                    @error('hz_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('hz_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="hz_scale"
+                                                        value="{{ old('hz_scale', $keypoint->hz_scale) }}">
+                                                    @error('hz_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Rata Rata</label>
+                                                    <input class="form-control @error('iavg_rtu') is-invalid @enderror"
+                                                        placeholder="IAVG RTU" name="iavg_rtu"
+                                                        value="{{ old('iavg_rtu', $keypoint->iavg_rtu) }}">
+                                                    @error('iavg_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('iavg_ms') is-invalid @enderror"
+                                                        placeholder="IAVG Master" name="iavg_ms"
+                                                        value="{{ old('iavg_ms', $keypoint->iavg_ms) }}">
+                                                    @error('iavg_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input
+                                                        class="form-control @error('iavg_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="iavg_scale"
+                                                        value="{{ old('iavg_scale', $keypoint->iavg_scale) }}">
+                                                    @error('iavg_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Fakto Daya</label>
+                                                    <input class="form-control @error('pf_rtu') is-invalid @enderror"
+                                                        placeholder="PF RTU" name="pf_rtu"
+                                                        value="{{ old('pf_rtu', $keypoint->pf_rtu) }}">
+                                                    @error('pf_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('pf_ms') is-invalid @enderror"
+                                                        placeholder="PF Master" name="pf_ms"
+                                                        value="{{ old('pf_ms', $keypoint->pf_ms) }}">
+                                                    @error('pf_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('pf_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="pf_scale"
+                                                        value="{{ old('pf_scale', $keypoint->pf_scale) }}">
+                                                    @error('pf_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <!-- Arus Gangguan Phase -->
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Phase R</label>
+                                                    <input class="form-control @error('ifr_rtu') is-invalid @enderror"
+                                                        placeholder="IFR RTU" name="ifr_rtu"
+                                                        value="{{ old('ifr_rtu', $keypoint->ifr_rtu) }}">
+                                                    @error('ifr_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('ifr_ms') is-invalid @enderror"
+                                                        placeholder="IFR Master" name="ifr_ms"
+                                                        value="{{ old('ifr_ms', $keypoint->ifr_ms) }}">
+                                                    @error('ifr_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('ifr_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="ifr_scale"
+                                                        value="{{ old('ifr_scale', $keypoint->ifr_scale) }}">
+                                                    @error('ifr_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Phase S</label>
+                                                    <input class="form-control @error('ifs_rtu') is-invalid @enderror"
+                                                        placeholder="IFS RTU" name="ifs_rtu"
+                                                        value="{{ old('ifs_rtu', $keypoint->ifs_rtu) }}">
+                                                    @error('ifs_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('ifs_ms') is-invalid @enderror"
+                                                        placeholder="IFS Master" name="ifs_ms"
+                                                        value="{{ old('ifs_ms', $keypoint->ifs_ms) }}">
+                                                    @error('ifs_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('ifs_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="ifs_scale"
+                                                        value="{{ old('ifs_scale', $keypoint->ifs_scale) }}">
+                                                    @error('ifs_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Phase T</label>
+                                                    <input class="form-control @error('ift_rtu') is-invalid @enderror"
+                                                        placeholder="IFT RTU" name="ift_rtu"
+                                                        value="{{ old('ift_rtu', $keypoint->ift_rtu) }}">
+                                                    @error('ift_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('ift_ms') is-invalid @enderror"
+                                                        placeholder="IFT Master" name="ift_ms"
+                                                        value="{{ old('ift_ms', $keypoint->ift_ms) }}">
+                                                    @error('ift_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('ift_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="ift_scale"
+                                                        value="{{ old('ift_scale', $keypoint->ift_scale) }}">
+                                                    @error('ift_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <!-- Arus Gangguan Netral -->
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Neutral (N)</label>
+                                                    <input class="form-control @error('ifn_rtu') is-invalid @enderror"
+                                                        placeholder="IFN RTU" name="ifn_rtu"
+                                                        value="{{ old('ifn_rtu', $keypoint->ifn_rtu) }}">
+                                                    @error('ifn_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input class="form-control @error('ifn_ms') is-invalid @enderror"
+                                                        placeholder="IFN Master" name="ifn_ms"
+                                                        value="{{ old('ifn_ms', $keypoint->ifn_ms) }}">
+                                                    @error('ifn_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input class="form-control @error('ifn_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="ifn_scale"
+                                                        value="{{ old('ifn_scale', $keypoint->ifn_scale) }}">
+                                                    @error('ifn_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <!-- Arus Gangguan Pseudo Phase   -->
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Pseudo Phase R</label>
+                                                    <input
+                                                        class="form-control @error('ifr_psuedo_rtu') is-invalid @enderror"
+                                                        placeholder="IFR Pseudo RTU" name="ifr_psuedo_rtu"
+                                                        value="{{ old('ifr_psuedo_rtu', $keypoint->ifr_psuedo_rtu) }}">
+                                                    @error('ifr_psuedo_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifr_psuedo_ms') is-invalid @enderror"
+                                                        placeholder="IFR Pseudo Master" name="ifr_psuedo_ms"
+                                                        value="{{ old('ifr_psuedo_ms', $keypoint->ifr_psuedo_ms) }}">
+                                                    @error('ifr_psuedo_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifr_psuedo_scale') is-invalid @enderror"
+                                                        placeholder="Pseudo Scale" name="ifr_psuedo_scale"
+                                                        value="{{ old('ifr_psuedo_scale', $keypoint->ifr_psuedo_scale) }}">
+                                                    @error('ifr_psuedo_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Pseudo Phase S</label>
+                                                    <input
+                                                        class="form-control @error('ifs_psuedo_rtu') is-invalid @enderror"
+                                                        placeholder="IFS Pseudo RTU" name="ifs_psuedo_rtu"
+                                                        value="{{ old('ifs_psuedo_rtu', $keypoint->ifs_psuedo_rtu) }}">
+                                                    @error('ifs_psuedo_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifs_psuedo_ms') is-invalid @enderror"
+                                                        placeholder="IFS Pseudo Master" name="ifs_psuedo_ms"
+                                                        value="{{ old('ifs_psuedo_ms', $keypoint->ifs_psuedo_ms) }}">
+                                                    @error('ifs_psuedo_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifs_psuedo_scale') is-invalid @enderror"
+                                                        placeholder="Pseudo Scale" name="ifs_psuedo_scale"
+                                                        value="{{ old('ifs_psuedo_scale', $keypoint->ifs_psuedo_scale) }}">
+                                                    @error('ifs_psuedo_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Pseudo Phase T</label>
+                                                    <input
+                                                        class="form-control @error('ift_psuedo_rtu') is-invalid @enderror"
+                                                        placeholder="IFT Pseudo RTU" name="ift_psuedo_rtu"
+                                                        value="{{ old('ift_psuedo_rtu', $keypoint->ift_psuedo_rtu) }}">
+                                                    @error('ift_psuedo_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ift_psuedo_ms') is-invalid @enderror"
+                                                        placeholder="IFT Pseudo Master" name="ift_psuedo_ms"
+                                                        value="{{ old('ift_psuedo_ms', $keypoint->ift_psuedo_ms) }}">
+                                                    @error('ift_psuedo_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ift_psuedo_scale') is-invalid @enderror"
+                                                        placeholder="Pseudo Scale" name="ift_psuedo_scale"
+                                                        value="{{ old('ift_psuedo_scale', $keypoint->ift_psuedo_scale) }}">
+                                                    @error('ift_psuedo_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <!-- Arus Gangguan Pseudo Netral -->
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Pseudo Neutral (N)</label>
+
+                                                    <input
+                                                        class="form-control @error('ifn_psuedo_rtu') is-invalid @enderror"
+                                                        placeholder="IFN Pseudo RTU" name="ifn_psuedo_rtu"
+                                                        value="{{ old('ifn_psuedo_rtu', $keypoint->ifn_psuedo_rtu) }}">
+                                                    @error('ifn_psuedo_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifn_psuedo_ms') is-invalid @enderror"
+                                                        placeholder="IFN Pseudo Master" name="ifn_psuedo_ms"
+                                                        value="{{ old('ifn_psuedo_ms', $keypoint->ifn_psuedo_ms) }}">
+                                                    @error('ifn_psuedo_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifn_psuedo_scale') is-invalid @enderror"
+                                                        placeholder="Pseudo Scale" name="ifn_psuedo_scale"
+                                                        value="{{ old('ifn_psuedo_scale', $keypoint->ifn_psuedo_scale) }}">
+                                                    @error('ifn_psuedo_scale')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="sign_kp">Sign Strength</label>
-                                                    <input class="form-control @error('sign_kp') is-invalid @enderror"
-                                                        id="sign_kp" placeholder="30 db" name="sign_kp"
-                                                        value="{{ old('sign_kp', $keypoint->sign_kp) }}">
-                                                    @error('sign_kp')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
                                                 <div class="form-group">
                                                     <label for="ketftm">Keterangan Form Telemetering</label>
                                                     <div class="input-icon">
@@ -3028,6 +3436,444 @@
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- HardWare -->
+                                    @php
+                                    $hardBatereValues = old('hard_batere', explode(',', $keypoint->hard_batere ?? ''));
+                                    $hardPs220Values = old('hard_ps220', explode(',', $keypoint->hard_ps220 ?? ''));
+                                    $hardChargerValues = old('hard_charger', explode(',', $keypoint->hard_charger ??
+                                    ''));
+                                    $hardLimitswitchValues = old('hard_limitswith', explode(',',
+                                    $keypoint->hard_limitswith ?? ''));
+                                    @endphp
+                                    <div class="tab-pane fade show" id="v-pills-formhardware-nobd" role="tabpanel"
+                                        aria-labelledby="v-pills-formhardware-tab-nobd">
+                                        <div class="row g-3 g-lg-4">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">Batere</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_batere[]"
+                                                                value="hard_batere1" class="selectgroup-input"
+                                                                {{ in_array('hard_batere1', $hardBatereValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_batere[]"
+                                                                value="hard_batere2" class="selectgroup-input"
+                                                                {{ in_array('hard_batere2', $hardBatereValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_batere[]"
+                                                                value="hard_batere5" class="selectgroup-input"
+                                                                {{ in_array('hard_batere5', $hardBatereValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">PS 220</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_ps220[]"
+                                                                value="hard_ps2201" class="selectgroup-input"
+                                                                {{ in_array('hard_ps2201', $hardPs220Values) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_ps220[]"
+                                                                value="hard_ps2202" class="selectgroup-input"
+                                                                {{ in_array('hard_ps2202', $hardPs220Values) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_ps220[]"
+                                                                value="hard_ps2205" class="selectgroup-input"
+                                                                {{ in_array('hard_ps2205', $hardPs220Values) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">Charger</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_charger[]"
+                                                                value="hard_charger1" class="selectgroup-input"
+                                                                {{ in_array('hard_charger1', $hardChargerValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_charger[]"
+                                                                value="hard_charger2" class="selectgroup-input"
+                                                                {{ in_array('hard_charger2', $hardChargerValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_charger[]"
+                                                                value="hard_charger5" class="selectgroup-input"
+                                                                {{ in_array('hard_charger5', $hardChargerValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">Limit Switch</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_limitswith[]"
+                                                                value="hard_limitswith1" class="selectgroup-input"
+                                                                {{ in_array('hard_limitswith1', $hardLimitswitchValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_limitswith[]"
+                                                                value="hard_limitswith2" class="selectgroup-input"
+                                                                {{ in_array('hard_limitswith2', $hardLimitswitchValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="hard_limitswith[]"
+                                                                value="hard_limitswith5" class="selectgroup-input"
+                                                                {{ in_array('hard_limitswith5', $hardLimitswitchValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="hard_batere_input">Batere</label>
+                                                    <input
+                                                        class="form-control @error('hard_batere_input') is-invalid @enderror"
+                                                        id="hard_batere_input" placeholder="30 db"
+                                                        name="hard_batere_input"
+                                                        value="{{ old('hard_batere_input', $keypoint->hard_batere_input) }}">
+                                                    @error('hard_batere_input')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="hard_ps220_input">PS 220</label>
+                                                    <input
+                                                        class="form-control @error('hard_ps220_input') is-invalid @enderror"
+                                                        id="hard_ps220_input" placeholder="30 db"
+                                                        name="hard_ps220_input"
+                                                        value="{{ old('hard_ps220_input', $keypoint->hard_ps220_input) }}">
+                                                    @error('hard_ps220_input')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="hard_charger_input">Charger</label>
+                                                    <input
+                                                        class="form-control @error('hard_charger_input') is-invalid @enderror"
+                                                        id="hard_charger_input" placeholder="30 db"
+                                                        name="hard_charger_input"
+                                                        value="{{ old('hard_charger_input', $keypoint->hard_charger_input) }}">
+                                                    @error('hard_charger_input')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="hard_limitswith_input">Limit Switch</label>
+                                                    <input
+                                                        class="form-control @error('hard_limitswith_input') is-invalid @enderror"
+                                                        id="hard_limitswith_input" placeholder="30 db"
+                                                        name="hard_limitswith_input"
+                                                        value="{{ old('hard_limitswith_input', $keypoint->hard_limitswith_input) }}">
+                                                    @error('hard_limitswith_input')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kethard">Keterangan Form Hardware</label>
+                                                    <input type="text" class="form-control" id="kethard" name="kethard"
+                                                        placeholder="Keterangan Form Hardware"
+                                                        value="{{ old('kethard', $keypoint->kethard) }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- System -->
+                                    @php
+                                    $sysComfValues = old('sys_comf', explode(',', $keypoint->sys_comf ?? ''));
+                                    $sysLrufValues = old('sys_lruf', explode(',', $keypoint->sys_lruf ?? ''));
+                                    $sysSignsValues = old('sys_signs', explode(',', $keypoint->sys_signs ?? ''));
+                                    $sysLimitswitchValues = old('sys_limitswith', explode(',', $keypoint->sys_limitswith
+                                    ?? ''));
+                                    @endphp
+                                    <div class="tab-pane fade show" id="v-pills-formsystem-nobd" role="tabpanel"
+                                        aria-labelledby="v-pills-formsystem-tab-nobd">
+                                        <div class="row g-3 g-lg-4">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">COMF</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_comf[]" value="sys_comf1"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_comf1', $sysComfValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_comf[]" value="sys_comf2"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_comf2', $sysComfValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_comf[]" value="sys_comf5"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_comf5', $sysComfValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">LRUF</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_lruf[]" value="sys_lruf1"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_lruf1', $sysLrufValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_lruf[]" value="sys_lruf2"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_lruf2', $sysLrufValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_lruf[]" value="sys_lruf5"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_lruf5', $sysLrufValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">Sign Strength</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_signs[]" value="sys_signs1"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_signs1', $sysSignsValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_signs[]" value="sys_signs2"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_signs2', $sysSignsValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_signs[]" value="sys_signs5"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('sys_signs5', $sysSignsValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">Limit Switch</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_limitswith[]"
+                                                                value="sys_limitswith1" class="selectgroup-input"
+                                                                {{ in_array('sys_limitswith1', $sysLimitswitchValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_limitswith[]"
+                                                                value="sys_limitswith2" class="selectgroup-input"
+                                                                {{ in_array('sys_limitswith2', $sysLimitswitchValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="sys_limitswith[]"
+                                                                value="sys_limitswith5" class="selectgroup-input"
+                                                                {{ in_array('sys_limitswith5', $sysLimitswitchValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="sys_comf_input">COMF</label>
+                                                    <input
+                                                        class="form-control @error('sys_comf_input') is-invalid @enderror"
+                                                        id="sys_comf_input" placeholder="30 db" name="sys_comf_input"
+                                                        value="{{ old('sys_comf_input', $keypoint->sys_comf_input) }}">
+                                                    @error('sys_comf_input')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="sys_lruf_input">LRUF</label>
+                                                    <input
+                                                        class="form-control @error('sys_lruf_input') is-invalid @enderror"
+                                                        id="sys_lruf_input" placeholder="30 db" name="sys_lruf_input"
+                                                        value="{{ old('sys_lruf_input', $keypoint->sys_lruf_input) }}">
+                                                    @error('sys_lruf_input')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="sys_signs_input">Sign Strength</label>
+                                                    <input
+                                                        class="form-control @error('sys_signs_input') is-invalid @enderror"
+                                                        id="sys_signs_input" placeholder="30 db" name="sys_signs_input"
+                                                        value="{{ old('sys_signs_input', $keypoint->sys_signs_input) }}">
+                                                    @error('sys_signs_input')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="sys_limitswith_input">Limit Switch</label>
+                                                    <input
+                                                        class="form-control @error('sys_limitswith_input') is-invalid @enderror"
+                                                        id="sys_limitswith_input" placeholder="30 db"
+                                                        name="sys_limitswith_input"
+                                                        value="{{ old('sys_limitswith_input', $keypoint->sys_limitswith_input) }}">
+                                                    @error('sys_limitswith_input')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="ketsys">Keterangan Form System</label>
+                                                    <input type="text" class="form-control" id="ketsys" name="ketsys"
+                                                        placeholder="Keterangan Form System"
+                                                        value="{{ old('ketsys', $keypoint->ketsys) }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Recloser -->
+                                    @php
+                                    $reArOnValues = old('re_ar_on', explode(',', $keypoint->re_ar_on ?? ''));
+                                    $reArOffValues = old('re_ar_off', explode(',', $keypoint->re_ar_off ?? ''));
+                                    $reCtrlArOnValues = old('re_ctrl_ar_on', explode(',', $keypoint->re_ctrl_ar_on ??
+                                    ''));
+                                    $reCtrlArOffValues = old('re_ctrl_ar_off', explode(',', $keypoint->re_ctrl_ar_off ??
+                                    ''));
+                                    @endphp
+                                    <div class="tab-pane fade show" id="v-pills-formrecloser-nobd" role="tabpanel"
+                                        aria-labelledby="v-pills-formrecloser-tab-nobd">
+                                        <div class="row g-3 g-lg-4">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">AR ON</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ar_on[]" value="re_ar_on1"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('re_ar_on1', $reArOnValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ar_on[]" value="re_ar_on2"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('re_ar_on2', $reArOnValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ar_on[]" value="re_ar_on5"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('re_ar_on5', $reArOnValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">AR OFF</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ar_off[]" value="re_ar_off1"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('re_ar_off1', $reArOffValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ar_off[]" value="re_ar_off2"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('re_ar_off2', $reArOffValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ar_off[]" value="re_ar_off5"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('re_ar_off5', $reArOffValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">CTRL AR ON</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ctrl_ar_on[]"
+                                                                value="re_ctrl_ar_on1" class="selectgroup-input"
+                                                                {{ in_array('re_ctrl_ar_on1', $reCtrlArOnValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ctrl_ar_on[]"
+                                                                value="re_ctrl_ar_on2" class="selectgroup-input"
+                                                                {{ in_array('re_ctrl_ar_on2', $reCtrlArOnValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ctrl_ar_on[]"
+                                                                value="re_ctrl_ar_on5" class="selectgroup-input"
+                                                                {{ in_array('re_ctrl_ar_on5', $reCtrlArOnValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label t-bold">CTRL AR OFF</label>
+                                                    <div class="selectgroup w-100 flex-wrap">
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ctrl_ar_off[]"
+                                                                value="re_ctrl_ar_off1" class="selectgroup-input"
+                                                                {{ in_array('re_ctrl_ar_off1', $reCtrlArOffValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ctrl_ar_off[]"
+                                                                value="re_ctrl_ar_off2" class="selectgroup-input"
+                                                                {{ in_array('re_ctrl_ar_off2', $reCtrlArOffValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-2 mb-sm-0">
+                                                            <input type="checkbox" name="re_ctrl_ar_off[]"
+                                                                value="re_ctrl_ar_off5" class="selectgroup-input"
+                                                                {{ in_array('re_ctrl_ar_off5', $reCtrlArOffValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Ada</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="ketre">Keterangan Form Recloser</label>
+                                                    <input type="text" class="form-control" id="ketre" name="ketre"
+                                                        placeholder="Keterangan Form Recloser"
+                                                        value="{{ old('ketre', $keypoint->ketre) }}" />
                                                 </div>
                                             </div>
                                         </div>
@@ -3246,14 +4092,12 @@ initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdo
 <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    var oldGi = "{{ old('id_gi') }}";
-    var oldPeny = "{{ old('nama_peny') }}";
-    var oldLbs = "{{ old('nama_lbs') }}";
-    var oldSec = "{{ old('nama_sec') }}";
-
-    if (oldGi) {
-        $('#id_gi').val(oldGi).change();
-    }
+    // Use existing keypoint values as defaults, with old() values taking priority
+    var oldGi = "{{ old('id_gi', $keypoint->id_gi) }}";
+    var oldPeny = "{{ old('nama_peny', $keypoint->nama_peny) }}";
+    var oldLbs = "{{ old('nama_lbs', $keypoint->nama_lbs) }}";
+    var oldSec = "{{ old('nama_sec', $keypoint->id_sec ?? '') }}";
+    var modeInput = "{{ old('mode_input', $keypoint->mode_input ?? 0) }}";
 
     // Make checkboxes exclusive and prevent both from being unchecked
     $('#changer_select').change(function() {
@@ -3283,35 +4127,49 @@ $(document).ready(function() {
         $('#mode_input').val($('#changer_input').is(':checked') ? 1 : 0);
 
         if ($('#changer_input').is(':checked')) {
-            // Input mode
             $('#nama_lbs_select_container').hide();
             $('#nama_lbs_input_container').show();
             $('#nama_sec_select_container').hide();
             $('#nama_sec_input_container').show();
+
             $('#nama_lbs_select').attr('name', '').removeAttr('required');
             $('#nama_lbs_input').attr('name', 'nama_lbs').attr('required', 'required');
             $('#nama_sec_select').attr('name', '').removeAttr('required');
             $('#nama_sec_input').attr('name', 'nama_sec').attr('required', 'required');
-            $('#nama_lbs_input').val(oldLbs);
-            $('#nama_sec_input').val(oldSec);
+
+
+            // ✅ Set nilai ke input field
+            if (!$('#nama_lbs_input').val() && oldLbs) {
+                $('#nama_lbs_input').val(oldLbs);
+            }
+            if (!$('#nama_sec_input').val() && oldSec) {
+                $('#nama_sec_input').val(oldSec);
+            }
         } else {
-            // Select mode (default)
             $('#nama_lbs_select_container').show();
             $('#nama_lbs_input_container').hide();
             $('#nama_sec_select_container').show();
             $('#nama_sec_input_container').hide();
+
             $('#nama_lbs_select').attr('name', 'nama_lbs').attr('required', 'required');
             $('#nama_lbs_input').attr('name', '').removeAttr('required');
             $('#nama_sec_select').attr('name', 'nama_sec').attr('required', 'required');
             $('#nama_sec_input').attr('name', '').removeAttr('required');
-            $('#nama_lbs_select').val(oldLbs);
-            $('#nama_sec_select').val(oldSec);
         }
     }
 
-    toggleMode(); // Initial toggle
-    $('#id_gi').change(function() {
-        var garduInduk = $(this).val();
+    // Initialize toggle mode based on saved data
+    if (modeInput == 1) {
+        $('#changer_input').prop('checked', true);
+        $('#changer_select').prop('checked', false);
+    } else {
+        $('#changer_select').prop('checked', true);
+        $('#changer_input').prop('checked', false);
+    }
+    toggleMode();
+
+    // Function to load Penyulang options
+    function loadPenyulang(garduInduk, selectedPeny, callback) {
         if (garduInduk) {
             var urlTemplate = '{{ route("get.penyulang", "PLACEHOLDER") }}';
             var url = urlTemplate.replace('PLACEHOLDER', encodeURIComponent(garduInduk));
@@ -3321,42 +4179,28 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(data) {
                     $('#nama_peny').empty();
-                    $('#nama_peny').append(
-                        '<option value="">Pilih Nama Penyulangan</option>');
+                    $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
                     $.each(data, function(key, value) {
-                        $('#nama_peny').append('<option value="' + value + '">' +
-                            value + '</option>');
+                        var selected = (selectedPeny && value == selectedPeny) ?
+                            'selected' : '';
+                        $('#nama_peny').append('<option value="' + value + '" ' + selected +
+                            '>' + value + '</option>');
                     });
-                    if (oldPeny) {
-                        $('#nama_peny').val(oldPeny).change();
-                        oldPeny = '';
-                    }
-                    $('#nama_lbs_select').empty();
-                    $('#nama_lbs_select').append(
-                        '<option value="">Pilih Nama Keypoint</option>');
-                    $('#nama_sec_select').empty();
-                    $('#nama_sec_select').append(
-                        '<option value="">Pilih Sectoral</option>');
+                    if (callback) callback();
                 },
                 error: function(xhr, status, error) {
-                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
-                        error);
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' + error);
                     console.log(xhr.responseText);
                 }
             });
         } else {
             $('#nama_peny').empty();
             $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
-            $('#nama_lbs_select').empty();
-            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
-            $('#nama_sec_select').empty();
-            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
         }
-    });
+    }
 
-    $('#nama_peny').change(function() {
-        var penyulang = $(this).val();
-        var garduInduk = $('#id_gi').val();
+    // Function to load Keypoint options
+    function loadKeypoint(garduInduk, penyulang, selectedLbs) {
         if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
             var urlTemplateKey =
                 '{{ route("get.nama_keypoint", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
@@ -3368,56 +4212,110 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(data) {
                     $('#nama_lbs_select').empty();
-                    $('#nama_lbs_select').append(
-                        '<option value="">Pilih Nama Keypoint</option>');
+                    $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
                     $.each(data, function(key, value) {
-                        $('#nama_lbs_select').append('<option value="' + key +
-                            '">' + value + '</option>');
+                        var selected = (selectedLbs && key == selectedLbs) ? 'selected' :
+                            '';
+                        $('#nama_lbs_select').append('<option value="' + key + '" ' +
+                            selected + '>' + value + '</option>');
                     });
-                    if (oldLbs) {
-                        $('#nama_lbs_select').val(oldLbs);
-                        oldLbs = '';
-                    }
                 },
                 error: function(xhr, status, error) {
-                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
-                        error);
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' + error);
                     console.log(xhr.responseText);
                 }
             });
+        }
+    }
 
+    // ✅ PERBAIKAN: Function loadSectoral dengan old value handling
+    function loadSectoral(garduInduk, penyulang, selectedSec) {
+        if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
             var urlTemplateSec =
                 '{{ route("get.sektoral", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
             var urlSec = urlTemplateSec.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
                 .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
+
             $.ajax({
                 url: urlSec,
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
                     $('#nama_sec_select').empty();
-                    $('#nama_sec_select').append(
-                        '<option value="">Pilih Sectoral</option>');
+                    $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+
+                    var found = false;
                     $.each(data, function(key, value) {
-                        $('#nama_sec_select').append('<option value="' + key +
-                            '">' + value + '</option>');
+                        // ✅ Cek match dengan key atau value
+                        var isSelected = selectedSec && (
+                            key == selectedSec ||
+                            value == selectedSec ||
+                            String(key).trim().toLowerCase() == String(selectedSec)
+                            .trim().toLowerCase() ||
+                            String(value).trim().toLowerCase() == String(selectedSec)
+                            .trim().toLowerCase()
+                        );
+
+                        if (isSelected) found = true;
+                        var selected = isSelected ? 'selected' : '';
+
+                        $('#nama_sec_select').append('<option value="' + value + '" ' +
+                            selected + '>' + value + '</option>');
                     });
-                    if (oldSec) {
-                        $('#nama_sec_select').val(oldSec);
-                        oldSec = '';
+
+                    // ✅ Jika old value tidak ditemukan, tambahkan sebagai option pertama (selected)
+                    if (!found && selectedSec && selectedSec.trim() !== '') {
+                        $('#nama_sec_select').prepend('<option value="' + selectedSec +
+                            '" selected>' + selectedSec + ' (data sebelumnya)</option>');
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' +
+                    console.log('AJAX error sectoral: ' + xhr.status + ' - ' + status + ' - ' +
                         error);
-                    console.log(xhr.responseText);
+                    // ✅ Fallback jika AJAX error
+                    if (selectedSec && selectedSec.trim() !== '') {
+                        $('#nama_sec_select').empty();
+                        $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+                        $('#nama_sec_select').append('<option value="' + selectedSec +
+                            '" selected>' + selectedSec + '</option>');
+                    }
                 }
             });
-        } else {
-            $('#nama_lbs_select').empty();
-            $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
+        } else if (selectedSec && selectedSec.trim() !== '') {
+            // ✅ Jika tidak load AJAX, tetap tampilkan old value
             $('#nama_sec_select').empty();
             $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+            $('#nama_sec_select').append('<option value="' + selectedSec + '" selected>' + selectedSec +
+                '</option>');
+        }
+    }
+
+    // ✅ Initial load dengan old values
+    if (oldGi) {
+        loadPenyulang(oldGi, oldPeny, function() {
+            if (oldPeny) {
+                loadKeypoint(oldGi, oldPeny, oldLbs);
+                loadSectoral(oldGi, oldPeny, oldSec);
+            }
+        });
+    }
+
+    $('#id_gi').change(function() {
+        var garduInduk = $(this).val();
+        loadPenyulang(garduInduk, null, null);
+        $('#nama_lbs_select').empty().append('<option value="">Pilih Nama Keypoint</option>');
+        $('#nama_sec_select').empty().append('<option value="">Pilih Sectoral</option>');
+    });
+
+    $('#nama_peny').change(function() {
+        var penyulang = $(this).val();
+        var garduInduk = $('#id_gi').val();
+        if (penyulang && garduInduk) {
+            loadKeypoint(garduInduk, penyulang, null);
+            loadSectoral(garduInduk, penyulang, null);
+        } else {
+            $('#nama_lbs_select').empty().append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty().append('<option value="">Pilih Sectoral</option>');
         }
     });
 });

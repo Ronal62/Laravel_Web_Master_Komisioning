@@ -71,6 +71,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/penyulang/{gardu_induk}', [KeypointController::class, 'getPenyulang'])->name('get.penyulang');
     Route::get('/sektoral/{gardu_induk}/{penyulang}', [KeypointController::class, 'getSektoral'])->name('get.sektoral');
 
+    // Your existing route
+    Route::get('/get-sektoral/{gardu_induk}/{penyulang}', [KeypointController::class, 'getSektoral'])->name('get.sektoral');
+
+    // Add new route for edit
+    Route::get('/get-sektoral-by-id/{id_sec}', [KeypointController::class, 'getSektoralById'])->name('get.sektoral.by.id');
+
     // Penyulangan routes
     Route::resource('penyulangan', PenyulanganController::class);
     Route::get('/penyulangan/{id}/clone', [PenyulanganController::class, 'clone'])->name('penyulangan.clone');
