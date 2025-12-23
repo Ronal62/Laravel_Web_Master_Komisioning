@@ -2724,7 +2724,7 @@ return is_array($val) ? $val : explode(',', $val);
                                     <div class="tab-pane fade" id="v-pills-formtelemetering-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelemetering-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Arus Phase R</label>
                                                     <input class="form-control @error('ir_rtu') is-invalid @enderror"
@@ -2801,10 +2801,8 @@ return is_array($val) ? $val : explode(',', $val);
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                            </div>
 
-                                            <!-- Teg Input Phase -->
-                                            <div class="col-md-3">
+                                                <!-- Teg Input Phase -->
                                                 <div class="form-group">
                                                     <label>Teg Input Phase R</label>
                                                     <input class="form-control @error('vrin_rtu') is-invalid @enderror"
@@ -2871,31 +2869,9 @@ return is_array($val) ? $val : explode(',', $val);
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Tegangan Rata Rata</label>
-                                                    <input class="form-control @error('vavg_rtu') is-invalid @enderror"
-                                                        placeholder="TEGANGAN RATA RATA RTU" name="vavg_rtu"
-                                                        value="{{ old('vavg_rtu') }}">
-                                                    @error('vavg_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vavg_ms') is-invalid @enderror"
-                                                        placeholder="TEGANGAN RATA RATA Master" name="vavg_ms"
-                                                        value="{{ old('vavg_ms') }}">
-                                                    @error('vavg_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input
-                                                        class="form-control @error('vavg_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vavg_scale"
-                                                        value="{{ old('vavg_scale') }}">
-                                                    @error('vavg_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <!-- Teg Output Phase -->
-                                            <div class="col-md-3">
+
+
+                                                <!-- Teg Output Phase -->
                                                 <div class="form-group">
                                                     <label>Teg Output Phase R</label>
                                                     <input class="form-control @error('vrout_rtu') is-invalid @enderror"
@@ -2962,72 +2938,32 @@ return is_array($val) ? $val : explode(',', $val);
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                            </div>
-                                            <!-- Frekuensi, Arus Rata2, Faktor Daya -->
-                                            <div class="col-md-3">
+
+                                                <!-- Tegangan Rata2 -->
                                                 <div class="form-group">
-                                                    <label>Frekuensi</label>
-                                                    <input class="form-control @error('hz_rtu') is-invalid @enderror"
-                                                        placeholder="HZ RTU" name="hz_rtu" value="{{ old('hz_rtu') }}">
-                                                    @error('hz_rtu')
+                                                    <label>Tegangan Rata Rata</label>
+                                                    <input class="form-control @error('vavg_rtu') is-invalid @enderror"
+                                                        placeholder="TEGANGAN RATA RATA RTU" name="vavg_rtu"
+                                                        value="{{ old('vavg_rtu') }}">
+                                                    @error('vavg_rtu')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('hz_ms') is-invalid @enderror"
-                                                        placeholder="HZ Master" name="hz_ms" value="{{ old('hz_ms') }}">
-                                                    @error('hz_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('hz_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="hz_scale"
-                                                        value="{{ old('hz_scale') }}">
-                                                    @error('hz_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Rata Rata</label>
-                                                    <input class="form-control @error('iavg_rtu') is-invalid @enderror"
-                                                        placeholder="IAVG RTU" name="iavg_rtu"
-                                                        value="{{ old('iavg_rtu') }}">
-                                                    @error('iavg_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('iavg_ms') is-invalid @enderror"
-                                                        placeholder="IAVG Master" name="iavg_ms"
-                                                        value="{{ old('iavg_ms') }}">
-                                                    @error('iavg_ms')
+                                                    <input class="form-control @error('vavg_ms') is-invalid @enderror"
+                                                        placeholder="TEGANGAN RATA RATA Master" name="vavg_ms"
+                                                        value="{{ old('vavg_ms') }}">
+                                                    @error('vavg_ms')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                     <input
-                                                        class="form-control @error('iavg_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="iavg_scale"
-                                                        value="{{ old('iavg_scale') }}">
-                                                    @error('iavg_scale')
+                                                        class="form-control @error('vavg_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="vavg_scale"
+                                                        value="{{ old('vavg_scale') }}">
+                                                    @error('vavg_scale')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Fakto Daya</label>
-                                                    <input class="form-control @error('pf_rtu') is-invalid @enderror"
-                                                        placeholder="PF RTU" name="pf_rtu" value="{{ old('pf_rtu') }}">
-                                                    @error('pf_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('pf_ms') is-invalid @enderror"
-                                                        placeholder="PF Master" name="pf_ms" value="{{ old('pf_ms') }}">
-                                                    @error('pf_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('pf_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="pf_scale"
-                                                        value="{{ old('pf_scale') }}">
-                                                    @error('pf_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <!-- Arus Gangguan Phase -->
-                                            <div class="col-md-3">
+
+                                                <!-- Arus Gangguan Phase -->
                                                 <div class="form-group">
                                                     <label>Arus Gangguan Phase R</label>
                                                     <input class="form-control @error('ifr_rtu') is-invalid @enderror"
@@ -3115,9 +3051,8 @@ return is_array($val) ? $val : explode(',', $val);
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                            </div>
-                                            <!-- Arus Gangguan Pseudo Phase   -->
-                                            <div class="col-md-3    ">
+
+                                                <!-- Arus Gangguan Pseudo Phase   -->
                                                 <div class="form-group">
                                                     <label>Arus Gangguan Pseudo Phase R</label>
                                                     <input
@@ -3224,7 +3159,638 @@ return is_array($val) ? $val : explode(',', $val);
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+
+                                                <!-- Frekuensi, Arus Rata2, Faktor Daya -->
+                                                <div class="form-group">
+                                                    <label>Frekuensi</label>
+                                                    <input class="form-control @error('hz_rtu') is-invalid @enderror"
+                                                        placeholder="HZ RTU" name="hz_rtu" value="{{ old('hz_rtu') }}">
+                                                    @error('hz_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('hz_ms') is-invalid @enderror"
+                                                        placeholder="HZ Master" name="hz_ms" value="{{ old('hz_ms') }}">
+                                                    @error('hz_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('hz_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="hz_scale"
+                                                        value="{{ old('hz_scale') }}">
+                                                    @error('hz_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Rata Rata</label>
+                                                    <input class="form-control @error('iavg_rtu') is-invalid @enderror"
+                                                        placeholder="IAVG RTU" name="iavg_rtu"
+                                                        value="{{ old('iavg_rtu') }}">
+                                                    @error('iavg_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('iavg_ms') is-invalid @enderror"
+                                                        placeholder="IAVG Master" name="iavg_ms"
+                                                        value="{{ old('iavg_ms') }}">
+                                                    @error('iavg_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input
+                                                        class="form-control @error('iavg_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="iavg_scale"
+                                                        value="{{ old('iavg_scale') }}">
+                                                    @error('iavg_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Fakto Daya</label>
+                                                    <input class="form-control @error('pf_rtu') is-invalid @enderror"
+                                                        placeholder="PF RTU" name="pf_rtu" value="{{ old('pf_rtu') }}">
+                                                    @error('pf_rtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('pf_ms') is-invalid @enderror"
+                                                        placeholder="PF Master" name="pf_ms" value="{{ old('pf_ms') }}">
+                                                    @error('pf_ms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('pf_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="pf_scale"
+                                                        value="{{ old('pf_scale') }}">
+                                                    @error('pf_scale')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Arus Phase R</label>
+                                                    <input class="form-control @error('ir_addms') is-invalid @enderror"
+                                                        placeholder="IR ADDMS" name="ir_addms"
+                                                        value="{{ old('ir_addms') }}">
+                                                    @error('ir_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('ir_addrtu') is-invalid @enderror"
+                                                        placeholder="IR ADDRTU" name="ir_addrtu"
+                                                        value="{{ old('ir_addrtu') }}">
+                                                    @error('ir_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input
+                                                        class="form-control @error('ir_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IR OBJECT FORMAT" name="ir_addobjfrmt"
+                                                        value="{{ old('ir_addobjfrmt') }}">
+                                                    @error('ir_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Phase S</label>
+                                                    <input class="form-control @error('is_addms') is-invalid @enderror"
+                                                        placeholder="IS ADDMS" name="is_addms"
+                                                        value="{{ old('is_addms') }}">
+                                                    @error('is_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input class="form-control @error('is_addrtu') is-invalid @enderror"
+                                                        placeholder="IS ADDRTU" name="is_addrtu"
+                                                        value="{{ old('is_addrtu') }}">
+                                                    @error('is_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    <input
+                                                        class="form-control @error('is_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IS OBJECT FORMAT" name="is_addobjfrmt"
+                                                        value="{{ old('is_addobjfrmt') }}">
+                                                    @error('is_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Phase T</label>
+
+                                                    <input class="form-control @error('it_addms') is-invalid @enderror"
+                                                        placeholder="IT ADDMS" name="it_addms"
+                                                        value="{{ old('it_addms') }}">
+                                                    @error('it_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input class="form-control @error('it_addrtu') is-invalid @enderror"
+                                                        placeholder="IT ADDRTU" name="it_addrtu"
+                                                        value="{{ old('it_addrtu') }}">
+                                                    @error('it_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('it_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IT OBJECT FORMAT" name="it_addobjfrmt"
+                                                        value="{{ old('it_addobjfrmt') }}">
+                                                    @error('it_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arus Phase Netral</label>
+
+                                                    <input class="form-control @error('in_addms') is-invalid @enderror"
+                                                        placeholder="IN ADDMS" name="in_addms"
+                                                        value="{{ old('in_addms') }}">
+                                                    @error('in_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input class="form-control @error('in_addrtu') is-invalid @enderror"
+                                                        placeholder="IN ADDRTU" name="in_addrtu"
+                                                        value="{{ old('in_addrtu') }}">
+                                                    @error('in_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('in_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IN OBJECT FORMAT" name="in_addobjfrmt"
+                                                        value="{{ old('in_addobjfrmt') }}">
+                                                    @error('in_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <!-- Teg Input Phase -->
+                                                <div class="form-group">
+                                                    <label>Teg Input Phase R</label>
+
+                                                    <input
+                                                        class="form-control @error('vrin_addms') is-invalid @enderror"
+                                                        placeholder="VRIN ADDMS" name="vrin_addms"
+                                                        value="{{ old('vrin_addms') }}">
+                                                    @error('vrin_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('vrin_addrtu') is-invalid @enderror"
+                                                        placeholder="VRIN ADDRTU" name="vrin_addrtu"
+                                                        value="{{ old('vrin_addrtu') }}">
+                                                    @error('vrin_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('vrin_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="VRIN OBJECT FORMAT" name="vrin_addobjfrmt"
+                                                        value="{{ old('vrin_addobjfrmt') }}">
+                                                    @error('vrin_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Teg Input Phase S</label>
+
+                                                    <input
+                                                        class="form-control @error('vsin_addms') is-invalid @enderror"
+                                                        placeholder="VSIN ADDMS" name="vsin_addms"
+                                                        value="{{ old('vsin_addms') }}">
+                                                    @error('vsin_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('vsin_addrtu') is-invalid @enderror"
+                                                        placeholder="VSIN ADDRTU" name="vsin_addrtu"
+                                                        value="{{ old('vsin_addrtu') }}">
+                                                    @error('vsin_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('vsin_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="VSIN OBJECT FORMAT" name="vsin_addobjfrmt"
+                                                        value="{{ old('vsin_addobjfrmt') }}">
+                                                    @error('vsin_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Teg Input Phase T</label>
+
+                                                    <input
+                                                        class="form-control @error('vtin_addms') is-invalid @enderror"
+                                                        placeholder="VTIN ADDMS" name="vtin_addms"
+                                                        value="{{ old('vtin_addms') }}">
+                                                    @error('vtin_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('vtin_addrtu') is-invalid @enderror"
+                                                        placeholder="VTIN ADDRTU" name="vtin_addrtu"
+                                                        value="{{ old('vtin_addrtu') }}">
+                                                    @error('vtin_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('vtin_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="VTIN OBJECT FORMAT" name="vtin_addobjfrmt"
+                                                        value="{{ old('vtin_addobjfrmt') }}">
+                                                    @error('vtin_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+
+                                                <!-- Teg Output Phase -->
+                                                <div class="form-group">
+                                                    <label>Teg Output Phase R</label>
+                                                    <input
+                                                        class="form-control @error('vrout_addms') is-invalid @enderror"
+                                                        placeholder="VROUT ADDMS" name="vrout_addms"
+                                                        value="{{ old('vrout_addms') }}">
+                                                    @error('vrout_addms')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('vrout_addrtu') is-invalid @enderror"
+                                                        placeholder="VROUT ADDRTU" name="vrout_addrtu"
+                                                        value="{{ old('vrout_addrtu') }}">
+                                                    @error('vrout_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('vrout_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="VROUT OBJECT FORMAT" name="vrout_addobjfrmt"
+                                                        value="{{ old('vrout_addobjfrmt') }}">
+                                                    @error('vrout_addobjfrmt')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Teg Output Phase S</label>
+                                                    <input
+                                                        class="form-control @error('vsout_addms') is-invalid @enderror"
+                                                        placeholder="VSOUT ADDMS" name="vsout_addms"
+                                                        value="{{ old('vsout_addms') }}">
+                                                    @error('vsout_addms')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('vsout_addrtu') is-invalid @enderror"
+                                                        placeholder="VSOUT ADDRTU" name="vsout_addrtu"
+                                                        value="{{ old('vsout_addrtu') }}">
+                                                    @error('vsout_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('vsout_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="VSOUT OBJECT FORMAT" name="vsout_addobjfrmt"
+                                                        value="{{ old('vsout_addobjfrmt') }}">
+                                                    @error('vsout_addobjfrmt')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Teg Output Phase T</label>
+                                                    <input
+                                                        class="form-control @error('vtout_addms') is-invalid @enderror"
+                                                        placeholder="VTOUT ADDMS" name="vtout_addms"
+                                                        value="{{ old('vtout_addms') }}">
+                                                    @error('vtout_addms')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('vtout_addrtu') is-invalid @enderror"
+                                                        placeholder="VTOUT ADDRTU" name="vtout_addrtu"
+                                                        value="{{ old('vtout_addrtu') }}">
+                                                    @error('vtout_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('vtout_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="VTOUT OBJECT FORMAT" name="vtout_addobjfrmt"
+                                                        value="{{ old('vtout_addobjfrmt') }}">
+                                                    @error('vtout_addobjfrmt')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <!-- Tegangan Rata2 -->
+                                                <div class="form-group">
+                                                    <label>Tegangan Rata2</label>
+
+                                                    <input
+                                                        class="form-control @error('vavg_addms') is-invalid @enderror"
+                                                        placeholder="VAVG ADDMS" name="vavg_addms"
+                                                        value="{{ old('vavg_addms') }}">
+                                                    @error('vavg_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('vavg_addrtu') is-invalid @enderror"
+                                                        placeholder="VAVG ADDRTU" name="vavg_addrtu"
+                                                        value="{{ old('vavg_addrtu') }}">
+                                                    @error('vavg_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('vavg_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="VAVG OBJECT FORMAT" name="vavg_addobjfrmt"
+                                                        value="{{ old('vavg_addobjfrmt') }}">
+                                                    @error('vavg_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <!-- Arus Gangguan Phase -->
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Phase R</label>
+                                                    <input class="form-control @error('ifr_addms') is-invalid @enderror"
+                                                        placeholder="IFR ADDMS" name="ifr_addms"
+                                                        value="{{ old('ifr_addms') }}">
+                                                    @error('ifr_addms')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ifr_addrtu') is-invalid @enderror"
+                                                        placeholder="IFR ADDRTU" name="ifr_addrtu"
+                                                        value="{{ old('ifr_addrtu') }}">
+                                                    @error('ifr_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ifr_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IFR OBJECT FORMAT" name="ifr_addobjfrmt"
+                                                        value="{{ old('ifr_addobjfrmt') }}">
+                                                    @error('ifr_addobjfrmt')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Phase S</label>
+                                                    <input class="form-control @error('ifs_addms') is-invalid @enderror"
+                                                        placeholder="IFS ADDMS" name="ifs_addms"
+                                                        value="{{ old('ifs_addms') }}">
+                                                    @error('ifs_addms')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ifs_addrtu') is-invalid @enderror"
+                                                        placeholder="IFS ADDRTU" name="ifs_addrtu"
+                                                        value="{{ old('ifs_addrtu') }}">
+                                                    @error('ifs_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ifs_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IFS OBJECT FORMAT" name="ifs_addobjfrmt"
+                                                        value="{{ old('ifs_addobjfrmt') }}">
+                                                    @error('ifs_addobjfrmt')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Phase T</label>
+                                                    <input class="form-control @error('ift_addms') is-invalid @enderror"
+                                                        placeholder="IFT ADDMS" name="ift_addms"
+                                                        value="{{ old('ift_addms') }}">
+                                                    @error('ift_addms')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ift_addrtu') is-invalid @enderror"
+                                                        placeholder="IFT ADDRTU" name="ift_addrtu"
+                                                        value="{{ old('ift_addrtu') }}">
+                                                    @error('ift_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ift_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IFT OBJECT FORMAT" name="ift_addobjfrmt"
+                                                        value="{{ old('ift_addobjfrmt') }}">
+                                                    @error('ift_addobjfrmt')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+                                                </div>
+                                                <!-- Arus Gangguan Netral -->
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Netral</label>
+
+                                                    <input class="form-control @error('ifn_addms') is-invalid @enderror"
+                                                        placeholder="IFN ADDMS" name="ifn_addms"
+                                                        value="{{ old('ifn_addms') }}">
+                                                    @error('ifn_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifn_addrtu') is-invalid @enderror"
+                                                        placeholder="IFN ADDRTU" name="ifn_addrtu"
+                                                        value="{{ old('ifn_addrtu') }}">
+                                                    @error('ifn_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifn_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IFN OBJECT FORMAT" name="ifn_addobjfrmt"
+                                                        value="{{ old('ifn_addobjfrmt') }}">
+                                                    @error('ifn_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <!-- Arus Gangguan Pseudo Phase   -->
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Pseudo Phase R</label>
+                                                    <input
+                                                        class="form-control @error('ifr_psuedo_addms') is-invalid @enderror"
+                                                        placeholder="IFR PSUEDO ADDMS" name="ifr_psuedo_addms"
+                                                        value="{{ old('ifr_psuedo_addms') }}" readonly>
+                                                    @error('ifr_psuedo_addms')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ifr_psuedo_addrtu') is-invalid @enderror"
+                                                        placeholder="IFR PSUEDO ADDRTU" name="ifr_psuedo_addrtu"
+                                                        value="{{ old('ifr_psuedo_addrtu') }}">
+                                                    @error('ifr_psuedo_addrtu')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ifr_psuedo_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IFR PSUEDO OBJECT FORMAT"
+                                                        name="ifr_psuedo_addobjfrmt"
+                                                        value="{{ old('ifr_psuedo_addobjfrmt') }}">
+                                                    @error('ifr_psuedo_addobjfrmt')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Pseudo Phase S</label>
+                                                    <input
+                                                        class="form-control @error('ifs_psuedo_addms') is-invalid @enderror"
+                                                        placeholder="IFS PSUEDO ADDMS" name="ifs_psuedo_addms"
+                                                        value="{{ old('ifs_psuedo_addms') }}" readonly>
+                                                    @error('ifs_psuedo_addms')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ifs_psuedo_addrtu') is-invalid @enderror"
+                                                        placeholder="IFS PSUEDO ADDRTU" name="ifs_psuedo_addrtu"
+                                                        value="{{ old('ifs_psuedo_addrtu') }}">
+                                                    @error('ifs_psuedo_addrtu')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ifs_psuedo_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IFS PSUEDO OBJECT FORMAT"
+                                                        name="ifs_psuedo_addobjfrmt"
+                                                        value="{{ old('ifs_psuedo_addobjfrmt') }}">
+                                                    @error('ifs_psuedo_addobjfrmt')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Pseudo Phase T</label>
+                                                    <input
+                                                        class="form-control @error('ift_psuedo_addms') is-invalid @enderror"
+                                                        placeholder="IFT PSUEDO ADDMS" name="ift_psuedo_addms"
+                                                        value="{{ old('ift_psuedo_addms') }}" readonly>
+                                                    @error('ift_psuedo_addms')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ift_psuedo_addrtu') is-invalid @enderror"
+                                                        placeholder="IFT PSUEDO ADDRTU" name="ift_psuedo_addrtu"
+                                                        value="{{ old('ift_psuedo_addrtu') }}">
+                                                    @error('ift_psuedo_addrtu')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('ift_psuedo_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IFT PSUEDO OBJECT FORMAT"
+                                                        name="ift_psuedo_addobjfrmt"
+                                                        value="{{ old('ift_psuedo_addobjfrmt') }}">
+                                                    @error('ift_psuedo_addobjfrmt')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+                                                <!-- Arus Gangguan Pseudo Netral -->
+                                                <div class="form-group">
+                                                    <label>Arus Gangguan Pseudo Netral</label>
+
+                                                    <input
+                                                        class="form-control @error('ifn_psuedo_addms') is-invalid @enderror"
+                                                        placeholder="IFN PSUEDO ADDMS" name="ifn_psuedo_addms"
+                                                        value="{{ old('ifn_psuedo_addms') }}" readonly>
+                                                    @error('ifn_psuedo_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifn_psuedo_addrtu') is-invalid @enderror"
+                                                        placeholder="IFN PSUEDO ADDRTU" name="ifn_psuedo_addrtu"
+                                                        value="{{ old('ifn_psuedo_addrtu') }}">
+                                                    @error('ifn_psuedo_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input
+                                                        class="form-control @error('ifn_psuedo_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IFN PSUEDO OBJECT FORMAT"
+                                                        name="ifn_psuedo_addobjfrmt"
+                                                        value="{{ old('ifn_psuedo_addobjfrmt') }}">
+                                                    @error('ifn_psuedo_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <!-- Frekuensi, Arus Rata2, Faktor Daya -->
+                                                <div class="form-group">
+                                                    <label>Frekuensi</label>
+                                                    <input class="form-control @error('hz_addms') is-invalid @enderror"
+                                                        placeholder="HZ ADDMS" name="hz_addms"
+                                                        value="{{ old('hz_addms') }}">
+                                                    @error('hz_addms')<div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input class="form-control @error('hz_addrtu') is-invalid @enderror"
+                                                        placeholder="HZ ADDRTU" name="hz_addrtu"
+                                                        value="{{ old('hz_addrtu') }}">
+                                                    @error('hz_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('hz_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="HZ OBJECT FORMAT" name="hz_addobjfrmt"
+                                                        value="{{ old('hz_addobjfrmt') }}">
+                                                    @error('hz_addobjfrmt')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Arus Rata Rata</label>
+                                                    <input
+                                                        class="form-control @error('iavg_addms') is-invalid @enderror"
+                                                        placeholder="IAVG ADDMS" name="iavg_addms"
+                                                        value="{{ old('iavg_addms') }}">
+                                                    @error('iavg_addms')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('iavg_addrtu') is-invalid @enderror"
+                                                        placeholder="IAVG ADDRTU" name="iavg_addrtu"
+                                                        value="{{ old('iavg_addrtu') }}">
+                                                    @error('iavg_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('iavg_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="IAVG OBJECT FORMAT" name="iavg_addobjfrmt"
+                                                        value="{{ old('iavg_addobjfrmt') }}">
+                                                    @error('iavg_addobjfrmt')<div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>@enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Faktor Daya</label>
+                                                    <input class="form-control @error('pf_addms') is-invalid @enderror"
+                                                        placeholder="PF ADDMS" name="pf_addms"
+                                                        value="{{ old('pf_addms') }}">
+                                                    @error('pf_addms')<div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <input class="form-control @error('pf_addrtu') is-invalid @enderror"
+                                                        placeholder="PF ADDRTU" name="pf_addrtu"
+                                                        value="{{ old('pf_addrtu') }}">
+                                                    @error('pf_addrtu')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+
+                                                    <input
+                                                        class="form-control @error('pf_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="PF OBJECT FORMAT" name="pf_addobjfrmt"
+                                                        value="{{ old('pf_addobjfrmt') }}">
+                                                    @error('pf_addobjfrmt')<div class="invalid-feedback">{{ $message }}
+                                                    </div>@enderror
+                                                </div>
+                                            </div>
+
+
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="ketftm">Keterangan Form Telemetering</label>

@@ -627,6 +627,23 @@ class KeypointController extends Controller
             'it_ms' => 'required|integer',
             'it_scale' => 'required|string|max:10',
 
+            // --- 1. ARUS (Existing) ---
+            'ir_addrtu'     => 'required|integer',
+            'ir_addms'      => 'required|integer',
+            'ir_addobjfrmt' => 'required|string|max:10', // Sebelumnya ir_scale
+
+            'is_addrtu'     => 'required|integer',
+            'is_addms'      => 'required|integer',
+            'is_addobjfrmt' => 'required|string|max:10', // Sebelumnya is_scale
+
+            'it_addrtu'     => 'required|integer',
+            'it_addms'      => 'required|integer',
+            'it_addobjfrmt' => 'required|string|max:10', // Sebelumnya it_scale
+
+            'in_addrtu'     => 'nullable|string|max:100', // Ditambahkan dari section bawah
+            'in_addms'      => 'nullable|string|max:100',
+            'in_addobjfrmt' => 'nullable|string|max:100',
+
             // Tegangan Input (Existing)
             'vrin_rtu' => 'required|string|max:10',
             'vrin_ms' => 'required|string|max:10',
@@ -637,6 +654,19 @@ class KeypointController extends Controller
             'vtin_rtu' => 'required|string|max:10',
             'vtin_ms' => 'required|string|max:10',
             'vtin_scale' => 'required|string|max:10',
+
+            // --- 2. TEGANGAN INPUT (Existing) ---
+            'vrin_addrtu'     => 'required|string|max:10',
+            'vrin_addms'      => 'required|string|max:10',
+            'vrin_addobjfrmt' => 'required|string|max:10',
+
+            'vsin_addrtu'     => 'required|string|max:10',
+            'vsin_addms'      => 'required|string|max:10',
+            'vsin_addobjfrmt' => 'required|string|max:10',
+
+            'vtin_addrtu'     => 'required|string|max:10',
+            'vtin_addms'      => 'required|string|max:10',
+            'vtin_addobjfrmt' => 'required|string|max:10',
 
             // Tegangan Output (BARU DITAMBAHKAN)
             'vrout_rtu' => 'nullable|string|max:10',
@@ -649,6 +679,23 @@ class KeypointController extends Controller
             'vtout_ms' => 'nullable|string|max:10',
             'vtout_scale' => 'nullable|string|max:10',
 
+            // --- 3. TEGANGAN OUTPUT (BARU) ---
+            'vrout_addrtu'     => 'nullable|string|max:10',
+            'vrout_addms'      => 'nullable|string|max:10',
+            'vrout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vsout_addrtu'     => 'nullable|string|max:10',
+            'vsout_addms'      => 'nullable|string|max:10',
+            'vsout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vtout_addrtu'     => 'nullable|string|max:10',
+            'vtout_addms'      => 'nullable|string|max:10',
+            'vtout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vavg_addrtu'      => 'nullable|string|max:100', // Ditambahkan dari section bawah
+            'vavg_addms'       => 'nullable|string|max:100',
+            'vavg_addobjfrmt'  => 'nullable|string|max:100',
+
             // Frekuensi, Arus Rata2, Power Factor (BARU DITAMBAHKAN)
             'hz_rtu' => 'nullable|string|max:10',
             'hz_ms' => 'nullable|string|max:10',
@@ -659,6 +706,19 @@ class KeypointController extends Controller
             'pf_rtu' => 'nullable|string|max:10',
             'pf_ms' => 'nullable|string|max:10',
             'pf_scale' => 'nullable|string|max:10',
+
+            // --- 4. FREKUENSI, ARUS RATA2, POWER FACTOR (BARU) ---
+            'hz_addrtu'     => 'nullable|string|max:10',
+            'hz_addms'      => 'nullable|string|max:10',
+            'hz_addobjfrmt' => 'nullable|string|max:10',
+
+            'iavg_addrtu'     => 'nullable|string|max:100',
+            'iavg_addms'      => 'nullable|string|max:100',
+            'iavg_addobjfrmt' => 'nullable|string|max:100',
+
+            'pf_addrtu'     => 'nullable|string|max:10',
+            'pf_addms'      => 'nullable|string|max:10',
+            'pf_addobjfrmt' => 'nullable|string|max:10',
 
             // Arus Gangguan / Fault Current (BARU DITAMBAHKAN)
             'ifr_rtu' => 'nullable|string|max:10',
@@ -674,6 +734,23 @@ class KeypointController extends Controller
             'ifn_ms' => 'nullable|string|max:10',
             'ifn_scale' => 'nullable|string|max:10',
 
+            // --- 5. ARUS GANGGUAN / FAULT CURRENT (BARU) ---
+            'ifr_addrtu'     => 'nullable|string|max:10',
+            'ifr_addms'      => 'nullable|string|max:10',
+            'ifr_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifs_addrtu'     => 'nullable|string|max:10',
+            'ifs_addms'      => 'nullable|string|max:10',
+            'ifs_addobjfrmt' => 'nullable|string|max:10',
+
+            'ift_addrtu'     => 'nullable|string|max:10',
+            'ift_addms'      => 'nullable|string|max:10',
+            'ift_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifn_addrtu'     => 'nullable|string|max:10',
+            'ifn_addms'      => 'nullable|string|max:10',
+            'ifn_addobjfrmt' => 'nullable|string|max:10',
+
             // Arus Gangguan Pseudo (BARU DITAMBAHKAN)
             'ifr_psuedo_rtu' => 'nullable|string|max:10',
             'ifr_psuedo_ms' => 'nullable|string|max:10',
@@ -687,6 +764,24 @@ class KeypointController extends Controller
             'ifn_psuedo_rtu' => 'nullable|string|max:10',
             'ifn_psuedo_ms' => 'nullable|string|max:10',
             'ifn_psuedo_scale' => 'nullable|string|max:10',
+
+            // --- 6. ARUS GANGGUAN PSEUDO (BARU) ---
+            // Perhatikan penulisan 'psuedo' disesuaikan dengan gambar (bukan pseudo)
+            'ifr_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifr_psuedo_addms'      => 'nullable|string|max:10',
+            'ifr_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifs_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifs_psuedo_addms'      => 'nullable|string|max:10',
+            'ifs_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ift_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ift_psuedo_addms'      => 'nullable|string|max:10',
+            'ift_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifn_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifn_psuedo_addms'      => 'nullable|string|max:10',
+            'ifn_psuedo_addobjfrmt' => 'nullable|string|max:10',
 
             // --- IN & VAVG ---
             'iavg_rtu' => 'nullable|string|max:100',
@@ -1280,7 +1375,6 @@ class KeypointController extends Controller
             'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255'],
 
             // --- TELEMETERING FIELDS ---
-
             // Arus (Existing)
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
@@ -1291,6 +1385,23 @@ class KeypointController extends Controller
             'it_rtu' => 'required|integer',
             'it_ms' => 'required|integer',
             'it_scale' => 'required|string|max:10',
+
+            // --- 1. ARUS (Existing) ---
+            'ir_addrtu'     => 'required|integer',
+            'ir_addms'      => 'required|integer',
+            'ir_addobjfrmt' => 'required|string|max:10', // Sebelumnya ir_scale
+
+            'is_addrtu'     => 'required|integer',
+            'is_addms'      => 'required|integer',
+            'is_addobjfrmt' => 'required|string|max:10', // Sebelumnya is_scale
+
+            'it_addrtu'     => 'required|integer',
+            'it_addms'      => 'required|integer',
+            'it_addobjfrmt' => 'required|string|max:10', // Sebelumnya it_scale
+
+            'in_addrtu'     => 'nullable|string|max:100', // Ditambahkan dari section bawah
+            'in_addms'      => 'nullable|string|max:100',
+            'in_addobjfrmt' => 'nullable|string|max:100',
 
             // Tegangan Input (Existing)
             'vrin_rtu' => 'required|string|max:10',
@@ -1303,6 +1414,19 @@ class KeypointController extends Controller
             'vtin_ms' => 'required|string|max:10',
             'vtin_scale' => 'required|string|max:10',
 
+            // --- 2. TEGANGAN INPUT (Existing) ---
+            'vrin_addrtu'     => 'required|string|max:10',
+            'vrin_addms'      => 'required|string|max:10',
+            'vrin_addobjfrmt' => 'required|string|max:10',
+
+            'vsin_addrtu'     => 'required|string|max:10',
+            'vsin_addms'      => 'required|string|max:10',
+            'vsin_addobjfrmt' => 'required|string|max:10',
+
+            'vtin_addrtu'     => 'required|string|max:10',
+            'vtin_addms'      => 'required|string|max:10',
+            'vtin_addobjfrmt' => 'required|string|max:10',
+
             // Tegangan Output (BARU DITAMBAHKAN)
             'vrout_rtu' => 'nullable|string|max:10',
             'vrout_ms' => 'nullable|string|max:10',
@@ -1314,18 +1438,48 @@ class KeypointController extends Controller
             'vtout_ms' => 'nullable|string|max:10',
             'vtout_scale' => 'nullable|string|max:10',
 
-            // Frekuensi, Arus Rata2, Power Factor
+            // --- 3. TEGANGAN OUTPUT (BARU) ---
+            'vrout_addrtu'     => 'nullable|string|max:10',
+            'vrout_addms'      => 'nullable|string|max:10',
+            'vrout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vsout_addrtu'     => 'nullable|string|max:10',
+            'vsout_addms'      => 'nullable|string|max:10',
+            'vsout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vtout_addrtu'     => 'nullable|string|max:10',
+            'vtout_addms'      => 'nullable|string|max:10',
+            'vtout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vavg_addrtu'      => 'nullable|string|max:100', // Ditambahkan dari section bawah
+            'vavg_addms'       => 'nullable|string|max:100',
+            'vavg_addobjfrmt'  => 'nullable|string|max:100',
+
+            // Frekuensi, Arus Rata2, Power Factor (BARU DITAMBAHKAN)
             'hz_rtu' => 'nullable|string|max:10',
             'hz_ms' => 'nullable|string|max:10',
             'hz_scale' => 'nullable|string|max:10',
-            'iavg_rtu' => 'nullable|string|max:100',
-            'iavg_ms' => 'nullable|string|max:100',
-            'iavg_scale' => 'nullable|string|max:100',
+            'iavg_rtu' => 'nullable|string|max:10',
+            'iavg_ms' => 'nullable|string|max:10',
+            'iavg_scale' => 'nullable|string|max:10',
             'pf_rtu' => 'nullable|string|max:10',
             'pf_ms' => 'nullable|string|max:10',
             'pf_scale' => 'nullable|string|max:10',
 
-            // Arus Gangguan / Fault Current
+            // --- 4. FREKUENSI, ARUS RATA2, POWER FACTOR (BARU) ---
+            'hz_addrtu'     => 'nullable|string|max:10',
+            'hz_addms'      => 'nullable|string|max:10',
+            'hz_addobjfrmt' => 'nullable|string|max:10',
+
+            'iavg_addrtu'     => 'nullable|string|max:100',
+            'iavg_addms'      => 'nullable|string|max:100',
+            'iavg_addobjfrmt' => 'nullable|string|max:100',
+
+            'pf_addrtu'     => 'nullable|string|max:10',
+            'pf_addms'      => 'nullable|string|max:10',
+            'pf_addobjfrmt' => 'nullable|string|max:10',
+
+            // Arus Gangguan / Fault Current (BARU DITAMBAHKAN)
             'ifr_rtu' => 'nullable|string|max:10',
             'ifr_ms' => 'nullable|string|max:10',
             'ifr_scale' => 'nullable|string|max:10',
@@ -1339,7 +1493,24 @@ class KeypointController extends Controller
             'ifn_ms' => 'nullable|string|max:10',
             'ifn_scale' => 'nullable|string|max:10',
 
-            // Arus Gangguan Pseudo
+            // --- 5. ARUS GANGGUAN / FAULT CURRENT (BARU) ---
+            'ifr_addrtu'     => 'nullable|string|max:10',
+            'ifr_addms'      => 'nullable|string|max:10',
+            'ifr_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifs_addrtu'     => 'nullable|string|max:10',
+            'ifs_addms'      => 'nullable|string|max:10',
+            'ifs_addobjfrmt' => 'nullable|string|max:10',
+
+            'ift_addrtu'     => 'nullable|string|max:10',
+            'ift_addms'      => 'nullable|string|max:10',
+            'ift_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifn_addrtu'     => 'nullable|string|max:10',
+            'ifn_addms'      => 'nullable|string|max:10',
+            'ifn_addobjfrmt' => 'nullable|string|max:10',
+
+            // Arus Gangguan Pseudo (BARU DITAMBAHKAN)
             'ifr_psuedo_rtu' => 'nullable|string|max:10',
             'ifr_psuedo_ms' => 'nullable|string|max:10',
             'ifr_psuedo_scale' => 'nullable|string|max:10',
@@ -1353,7 +1524,28 @@ class KeypointController extends Controller
             'ifn_psuedo_ms' => 'nullable|string|max:10',
             'ifn_psuedo_scale' => 'nullable|string|max:10',
 
+            // --- 6. ARUS GANGGUAN PSEUDO (BARU) ---
+            // Perhatikan penulisan 'psuedo' disesuaikan dengan gambar (bukan pseudo)
+            'ifr_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifr_psuedo_addms'      => 'nullable|string|max:10',
+            'ifr_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifs_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifs_psuedo_addms'      => 'nullable|string|max:10',
+            'ifs_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ift_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ift_psuedo_addms'      => 'nullable|string|max:10',
+            'ift_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifn_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifn_psuedo_addms'      => 'nullable|string|max:10',
+            'ifn_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
             // --- IN & VAVG ---
+            'iavg_rtu' => 'nullable|string|max:100',
+            'iavg_ms' => 'nullable|string|max:100',
+            'iavg_scale' => 'nullable|string|max:100',
             'in_rtu' => 'nullable|string|max:100',
             'in_ms' => 'nullable|string|max:100',
             'in_scale' => 'nullable|string|max:100',
@@ -1599,10 +1791,7 @@ class KeypointController extends Controller
         return view('pages.keypoint.clone', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms', 'pelrtus', 'selectedPelrtus'));
     }
 
-    /**
-     * Store a cloned resource in storage.
-     * (Same as update, but creates new record instead of updating)
-     */
+
     public function storeClone(Request $request)
     {
         // 1. Prepare Arrays for ID fields
@@ -1863,7 +2052,6 @@ class KeypointController extends Controller
             'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255'],
 
             // --- TELEMETERING FIELDS ---
-
             // Arus (Existing)
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
@@ -1874,6 +2062,23 @@ class KeypointController extends Controller
             'it_rtu' => 'required|integer',
             'it_ms' => 'required|integer',
             'it_scale' => 'required|string|max:10',
+
+            // --- 1. ARUS (Existing) ---
+            'ir_addrtu'     => 'required|integer',
+            'ir_addms'      => 'required|integer',
+            'ir_addobjfrmt' => 'required|string|max:10', // Sebelumnya ir_scale
+
+            'is_addrtu'     => 'required|integer',
+            'is_addms'      => 'required|integer',
+            'is_addobjfrmt' => 'required|string|max:10', // Sebelumnya is_scale
+
+            'it_addrtu'     => 'required|integer',
+            'it_addms'      => 'required|integer',
+            'it_addobjfrmt' => 'required|string|max:10', // Sebelumnya it_scale
+
+            'in_addrtu'     => 'nullable|string|max:100', // Ditambahkan dari section bawah
+            'in_addms'      => 'nullable|string|max:100',
+            'in_addobjfrmt' => 'nullable|string|max:100',
 
             // Tegangan Input (Existing)
             'vrin_rtu' => 'required|string|max:10',
@@ -1886,6 +2091,19 @@ class KeypointController extends Controller
             'vtin_ms' => 'required|string|max:10',
             'vtin_scale' => 'required|string|max:10',
 
+            // --- 2. TEGANGAN INPUT (Existing) ---
+            'vrin_addrtu'     => 'required|string|max:10',
+            'vrin_addms'      => 'required|string|max:10',
+            'vrin_addobjfrmt' => 'required|string|max:10',
+
+            'vsin_addrtu'     => 'required|string|max:10',
+            'vsin_addms'      => 'required|string|max:10',
+            'vsin_addobjfrmt' => 'required|string|max:10',
+
+            'vtin_addrtu'     => 'required|string|max:10',
+            'vtin_addms'      => 'required|string|max:10',
+            'vtin_addobjfrmt' => 'required|string|max:10',
+
             // Tegangan Output (BARU DITAMBAHKAN)
             'vrout_rtu' => 'nullable|string|max:10',
             'vrout_ms' => 'nullable|string|max:10',
@@ -1897,18 +2115,48 @@ class KeypointController extends Controller
             'vtout_ms' => 'nullable|string|max:10',
             'vtout_scale' => 'nullable|string|max:10',
 
-            // Frekuensi, Arus Rata2, Power Factor
+            // --- 3. TEGANGAN OUTPUT (BARU) ---
+            'vrout_addrtu'     => 'nullable|string|max:10',
+            'vrout_addms'      => 'nullable|string|max:10',
+            'vrout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vsout_addrtu'     => 'nullable|string|max:10',
+            'vsout_addms'      => 'nullable|string|max:10',
+            'vsout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vtout_addrtu'     => 'nullable|string|max:10',
+            'vtout_addms'      => 'nullable|string|max:10',
+            'vtout_addobjfrmt' => 'nullable|string|max:10',
+
+            'vavg_addrtu'      => 'nullable|string|max:100', // Ditambahkan dari section bawah
+            'vavg_addms'       => 'nullable|string|max:100',
+            'vavg_addobjfrmt'  => 'nullable|string|max:100',
+
+            // Frekuensi, Arus Rata2, Power Factor (BARU DITAMBAHKAN)
             'hz_rtu' => 'nullable|string|max:10',
             'hz_ms' => 'nullable|string|max:10',
             'hz_scale' => 'nullable|string|max:10',
-            'iavg_rtu' => 'nullable|string|max:100',
-            'iavg_ms' => 'nullable|string|max:100',
-            'iavg_scale' => 'nullable|string|max:100',
+            'iavg_rtu' => 'nullable|string|max:10',
+            'iavg_ms' => 'nullable|string|max:10',
+            'iavg_scale' => 'nullable|string|max:10',
             'pf_rtu' => 'nullable|string|max:10',
             'pf_ms' => 'nullable|string|max:10',
             'pf_scale' => 'nullable|string|max:10',
 
-            // Arus Gangguan / Fault Current
+            // --- 4. FREKUENSI, ARUS RATA2, POWER FACTOR (BARU) ---
+            'hz_addrtu'     => 'nullable|string|max:10',
+            'hz_addms'      => 'nullable|string|max:10',
+            'hz_addobjfrmt' => 'nullable|string|max:10',
+
+            'iavg_addrtu'     => 'nullable|string|max:100',
+            'iavg_addms'      => 'nullable|string|max:100',
+            'iavg_addobjfrmt' => 'nullable|string|max:100',
+
+            'pf_addrtu'     => 'nullable|string|max:10',
+            'pf_addms'      => 'nullable|string|max:10',
+            'pf_addobjfrmt' => 'nullable|string|max:10',
+
+            // Arus Gangguan / Fault Current (BARU DITAMBAHKAN)
             'ifr_rtu' => 'nullable|string|max:10',
             'ifr_ms' => 'nullable|string|max:10',
             'ifr_scale' => 'nullable|string|max:10',
@@ -1922,7 +2170,24 @@ class KeypointController extends Controller
             'ifn_ms' => 'nullable|string|max:10',
             'ifn_scale' => 'nullable|string|max:10',
 
-            // Arus Gangguan Pseudo
+            // --- 5. ARUS GANGGUAN / FAULT CURRENT (BARU) ---
+            'ifr_addrtu'     => 'nullable|string|max:10',
+            'ifr_addms'      => 'nullable|string|max:10',
+            'ifr_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifs_addrtu'     => 'nullable|string|max:10',
+            'ifs_addms'      => 'nullable|string|max:10',
+            'ifs_addobjfrmt' => 'nullable|string|max:10',
+
+            'ift_addrtu'     => 'nullable|string|max:10',
+            'ift_addms'      => 'nullable|string|max:10',
+            'ift_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifn_addrtu'     => 'nullable|string|max:10',
+            'ifn_addms'      => 'nullable|string|max:10',
+            'ifn_addobjfrmt' => 'nullable|string|max:10',
+
+            // Arus Gangguan Pseudo (BARU DITAMBAHKAN)
             'ifr_psuedo_rtu' => 'nullable|string|max:10',
             'ifr_psuedo_ms' => 'nullable|string|max:10',
             'ifr_psuedo_scale' => 'nullable|string|max:10',
@@ -1936,7 +2201,28 @@ class KeypointController extends Controller
             'ifn_psuedo_ms' => 'nullable|string|max:10',
             'ifn_psuedo_scale' => 'nullable|string|max:10',
 
+            // --- 6. ARUS GANGGUAN PSEUDO (BARU) ---
+            // Perhatikan penulisan 'psuedo' disesuaikan dengan gambar (bukan pseudo)
+            'ifr_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifr_psuedo_addms'      => 'nullable|string|max:10',
+            'ifr_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifs_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifs_psuedo_addms'      => 'nullable|string|max:10',
+            'ifs_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ift_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ift_psuedo_addms'      => 'nullable|string|max:10',
+            'ift_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
+            'ifn_psuedo_addrtu'     => 'nullable|string|max:10',
+            'ifn_psuedo_addms'      => 'nullable|string|max:10',
+            'ifn_psuedo_addobjfrmt' => 'nullable|string|max:10',
+
             // --- IN & VAVG ---
+            'iavg_rtu' => 'nullable|string|max:100',
+            'iavg_ms' => 'nullable|string|max:100',
+            'iavg_scale' => 'nullable|string|max:100',
             'in_rtu' => 'nullable|string|max:100',
             'in_ms' => 'nullable|string|max:100',
             'in_scale' => 'nullable|string|max:100',
