@@ -343,6 +343,29 @@ class Keypoint extends Model
         'pf_addrtu',
         'pf_addms',
         'pf_addobjfrmt',
-        
+
+        't_ir',
+        't_is',
+        't_it',
+        't_in',
+        't_vrin',
+        't_vsin',
+        't_vtin',
+        't_vrout',
+        't_vsout',
+        't_vtout',
+        't_vavg',
+        't_ifr',
+        't_ifs',
+        't_ift',
+        't_ifn',
+        't_ifr_psuedo',
+        't_ifs_psuedo',
+        't_ift_psuedo',
+        't_ifn_psuedo',
+        't_hz',
+        't_iavg',
+        't_pf',
+
     ];
 }

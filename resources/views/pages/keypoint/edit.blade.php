@@ -291,8 +291,6 @@
                                             's_fis' => $keypoint->s_fis ? explode(',', $keypoint->s_fis) : [],
                                             's_fit' => $keypoint->s_fit ? explode(',', $keypoint->s_fit) : [],
                                             's_fin' => $keypoint->s_fin ? explode(',', $keypoint->s_fin) : [],
-                                            's_comf' => $keypoint->s_comf ? explode(',', $keypoint->s_comf) : [],
-                                            's_lruf' => $keypoint->s_lruf ? explode(',', $keypoint->s_lruf) : [],
                                             ];
                                             @endphp
                                             <div class="col-12 col-lg-6">
@@ -1336,52 +1334,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="form-label t-bold">COMF</label>
-                                                    <div class="selectgroup w-100 flex-wrap">
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_comf[]" value="comf_nrml_1"
-                                                                class="selectgroup-input"
-                                                                {{ in_array('comf_nrml_1', $checkboxValues['s_comf']) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">OK</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_comf[]" value="comf_nrml_2"
-                                                                class="selectgroup-input"
-                                                                {{ in_array('comf_nrml_2', $checkboxValues['s_comf']) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">NOK</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_comf[]" value="comf_nrml_5"
-                                                                class="selectgroup-input"
-                                                                {{ in_array('comf_nrml_5', $checkboxValues['s_comf']) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">Tidak Ada</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label t-bold">LRUF</label>
-                                                    <div class="selectgroup w-100 flex-wrap">
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_lruf[]" value="lruf_nrml_1"
-                                                                class="selectgroup-input"
-                                                                {{ in_array('lruf_nrml_1', $checkboxValues['s_lruf']) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">OK</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_lruf[]" value="lruf_nrml_2"
-                                                                class="selectgroup-input"
-                                                                {{ in_array('lruf_nrml_2', $checkboxValues['s_lruf']) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">NOK</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_lruf[]" value="lruf_nrml_5"
-                                                                class="selectgroup-input"
-                                                                {{ in_array('lruf_nrml_5', $checkboxValues['s_lruf']) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">Tidak ada</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+
                                                 <div class="form-group ">
                                                     <label for="ketfts">Keterangan Form Telestatus</label>
                                                     <div class="input-icon ">
@@ -1681,28 +1634,6 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="scomf_addms">COMF AddMs</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scomf_addms"
-                                                            name="scomf_addms" placeholder="COMF AddMs"
-                                                            value="{{ old('scomf_addms', $keypoint->scomf_addms) }}" />
-                                                        @error('scomf_addms')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="slruf_addms">LRUF AddMs</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="slruf_addms"
-                                                            name="slruf_addms" placeholder="LRUF AddMs"
-                                                            value="{{ old('slruf_addms', $keypoint->slruf_addms) }}" />
-                                                        @error('slruf_addms')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="col-12 col-lg-2">
                                                 <div class="form-group">
@@ -1991,28 +1922,6 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="scomf_objfrmt">COMF OBJ/FRMT</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scomf_objfrmt"
-                                                            name="scomf_objfrmt" placeholder="COMF OBJ/FRMT"
-                                                            value="{{ old('scomf_objfrmt', $keypoint->scomf_objfrmt) }}" />
-                                                        @error('scomf_objfrmt')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="slruf_objfrmt">LRUF OBJ/FRMT</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="slruf_objfrmt"
-                                                            name="slruf_objfrmt" placeholder="LRUF OBJ/FRMT"
-                                                            value="{{ old('slruf_objfrmt', $keypoint->slruf_objfrmt) }}" />
-                                                        @error('slruf_objfrmt')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="col-12 col-lg-2 ">
                                                 <div class="form-group ">
@@ -2297,28 +2206,6 @@
                                                             name="sfin_fail_addrtu" placeholder="FIN Fail AddRtu"
                                                             value="{{ old('sfin_fail_addrtu', $keypoint->sfin_fail_addrtu) }}" />
                                                         @error('sfin_fail_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="scomf_addrtu">COMF AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="scomf_addrtu"
-                                                            name="scomf_addrtu" placeholder="COMF AddRtu"
-                                                            value="{{ old('scomf_addrtu', $keypoint->scomf_addrtu) }}" />
-                                                        @error('scomf_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="slruf_addrtu">LRUF AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="slruf_addrtu"
-                                                            name="slruf_addrtu" placeholder="LRUF AddRtu"
-                                                            value="{{ old('slruf_addrtu', $keypoint->slruf_addrtu) }}" />
-                                                        @error('slruf_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -2913,758 +2800,174 @@
                                     <div class="tab-pane fade" id="v-pills-formtelemetering-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelemetering-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Arus Phase R</label>
-                                                    <input class="form-control @error('ir_rtu') is-invalid @enderror"
-                                                        placeholder="IR RTU" name="ir_rtu" value="{{ old('ir_rtu', $keypoint->ir_rtu) }}">
-                                                    @error('ir_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ir_ms') is-invalid @enderror"
-                                                        placeholder="IR Master" name="ir_ms" value="{{ old('ir_ms', $keypoint->ir_ms) }}">
-                                                    @error('ir_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ir_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="ir_scale" value="{{ old('ir_scale', $keypoint->ir_scale) }}">
-                                                    @error('ir_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase S</label>
-                                                    <input class="form-control @error('is_rtu') is-invalid @enderror"
-                                                        placeholder="IS RTU" name="is_rtu" value="{{ old('is_rtu', $keypoint->is_rtu) }}">
-                                                    @error('is_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('is_ms') is-invalid @enderror"
-                                                        placeholder="IS Master" name="is_ms" value="{{ old('is_ms', $keypoint->is_ms) }}">
-                                                    @error('is_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('is_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="is_scale" value="{{ old('is_scale', $keypoint->is_scale) }}">
-                                                    @error('is_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase T</label>
-                                                    <input class="form-control @error('it_rtu') is-invalid @enderror"
-                                                        placeholder="IT RTU" name="it_rtu" value="{{ old('it_rtu', $keypoint->it_rtu) }}">
-                                                    @error('it_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('it_ms') is-invalid @enderror"
-                                                        placeholder="IT Master" name="it_ms" value="{{ old('it_ms', $keypoint->it_ms) }}">
-                                                    @error('it_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('it_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="it_scale" value="{{ old('it_scale', $keypoint->it_scale) }}">
-                                                    @error('it_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase Netral</label>
-                                                    <input class="form-control @error('in_rtu') is-invalid @enderror"
-                                                        placeholder="IN RTU" name="in_rtu" value="{{ old('in_rtu', $keypoint->in_rtu) }}">
-                                                    @error('in_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('in_ms') is-invalid @enderror"
-                                                        placeholder="IN Master" name="in_ms" value="{{ old('in_ms', $keypoint->in_ms) }}">
-                                                    @error('in_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('in_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="in_scale" value="{{ old('in_scale', $keypoint->in_scale) }}">
-                                                    @error('in_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                            @php
+                                            // Daftar semua parameter berdasarkan kolom di database gambar
+                                            $params = [
+                                            't_ir', 't_is', 't_it', 't_in', // Arus
+                                            't_vrin', 't_vsin', 't_vtin', // Tegangan Masuk
+                                            't_vrout', 't_vsout', 't_vtout', // Tegangan Keluar
+                                            't_vavg', 't_iavg', 't_hz', 't_pf', // Rata-rata & Lainnya
+                                            't_ifr', 't_ifs', 't_ift', 't_ifn', // Faults
+                                            't_ifr_psuedo', 't_ifs_psuedo', 't_ift_psuedo', 't_ifn_psuedo' // Pseudo
+                                            ];
 
-                                                <div class="form-group">
-                                                    <label>Teg Input Phase R</label>
-                                                    <input class="form-control @error('vrin_rtu') is-invalid @enderror"
-                                                        placeholder="VR RTU" name="vrin_rtu" value="{{ old('vrin_rtu', $keypoint->vrin_rtu) }}">
-                                                    @error('vrin_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vrin_ms') is-invalid @enderror"
-                                                        placeholder="VR Master" name="vrin_ms" value="{{ old('vrin_ms', $keypoint->vrin_ms) }}">
-                                                    @error('vrin_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vrin_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vrin_scale" value="{{ old('vrin_scale', $keypoint->vrin_scale) }}">
-                                                    @error('vrin_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Teg Input Phase S</label>
-                                                    <input class="form-control @error('vsin_rtu') is-invalid @enderror"
-                                                        placeholder="VS RTU" name="vsin_rtu" value="{{ old('vsin_rtu', $keypoint->vsin_rtu) }}">
-                                                    @error('vsin_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vsin_ms') is-invalid @enderror"
-                                                        placeholder="VS Master" name="vsin_ms" value="{{ old('vsin_ms', $keypoint->vsin_ms) }}">
-                                                    @error('vsin_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vsin_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vsin_scale" value="{{ old('vsin_scale', $keypoint->vsin_scale) }}">
-                                                    @error('vsin_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Teg Input Phase T</label>
-                                                    <input class="form-control @error('vtin_rtu') is-invalid @enderror"
-                                                        placeholder="VT RTU" name="vtin_rtu" value="{{ old('vtin_rtu', $keypoint->vtin_rtu) }}">
-                                                    @error('vtin_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vtin_ms') is-invalid @enderror"
-                                                        placeholder="VT Master" name="vtin_ms" value="{{ old('vtin_ms', $keypoint->vtin_ms) }}">
-                                                    @error('vtin_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vtin_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vtin_scale" value="{{ old('vtin_scale', $keypoint->vtin_scale) }}">
-                                                    @error('vtin_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                            $checkboxValuesTM = [];
+                                            foreach ($params as $param) {
+                                            $checkboxValuesTM[$param] = $keypoint->$param ? explode(',',
+                                            $keypoint->$param) : [];
+                                            }
 
-                                                <div class="form-group">
-                                                    <label>Teg Output Phase R</label>
-                                                    <input class="form-control @error('vrout_rtu') is-invalid @enderror"
-                                                        placeholder="VR RTU" name="vrout_rtu" value="{{ old('vrout_rtu', $keypoint->vrout_rtu) }}">
-                                                    @error('vrout_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vrout_ms') is-invalid @enderror"
-                                                        placeholder="VR Master" name="vrout_ms" value="{{ old('vrout_ms', $keypoint->vrout_ms) }}">
-                                                    @error('vrout_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vrout_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vrout_scale" value="{{ old('vrout_scale', $keypoint->vrout_scale) }}">
-                                                    @error('vrout_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Teg Output Phase S</label>
-                                                    <input class="form-control @error('vsout_rtu') is-invalid @enderror"
-                                                        placeholder="VS RTU" name="vsout_rtu" value="{{ old('vsout_rtu', $keypoint->vsout_rtu) }}">
-                                                    @error('vsout_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vsout_ms') is-invalid @enderror"
-                                                        placeholder="VS Master" name="vsout_ms" value="{{ old('vsout_ms', $keypoint->vsout_ms) }}">
-                                                    @error('vsout_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vsout_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vsout_scale" value="{{ old('vsout_scale', $keypoint->vsout_scale) }}">
-                                                    @error('vsout_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Teg Output Phase T</label>
-                                                    <input class="form-control @error('vtout_rtu') is-invalid @enderror"
-                                                        placeholder="VT RTU" name="vtout_rtu" value="{{ old('vtout_rtu', $keypoint->vtout_rtu) }}">
-                                                    @error('vtout_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vtout_ms') is-invalid @enderror"
-                                                        placeholder="VT Master" name="vtout_ms" value="{{ old('vtout_ms', $keypoint->vtout_ms) }}">
-                                                    @error('vtout_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vtout_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vtout_scale" value="{{ old('vtout_scale', $keypoint->vtout_scale) }}">
-                                                    @error('vtout_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                            // Helper array untuk label agar kodingan lebih rapi
+                                            $fields = [
+                                            ['key' => 'ir', 'label' => 'Arus Phase R', 'db' => 't_ir'],
+                                            ['key' => 'is', 'label' => 'Arus Phase S', 'db' => 't_is'],
+                                            ['key' => 'it', 'label' => 'Arus Phase T', 'db' => 't_it'],
+                                            ['key' => 'in', 'label' => 'Arus Netral', 'db' => 't_in'],
+                                            ['key' => 'vrin', 'label' => 'Tegangan R (In)', 'db' => 't_vrin'],
+                                            ['key' => 'vsin', 'label' => 'Tegangan S (In)', 'db' => 't_vsin'],
+                                            ['key' => 'vtin', 'label' => 'Tegangan T (In)', 'db' => 't_vtin'],
+                                            ['key' => 'vrout', 'label' => 'Tegangan R (Out)', 'db' => 't_vrout'],
+                                            ['key' => 'vsout', 'label' => 'Tegangan S (Out)', 'db' => 't_vsout'],
+                                            ['key' => 'vtout', 'label' => 'Tegangan T (Out)', 'db' => 't_vtout'],
+                                            ['key' => 'vavg', 'label' => 'Tegangan Avg', 'db' => 't_vavg'],
+                                            ['key' => 'iavg', 'label' => 'Arus Avg', 'db' => 't_iavg'],
+                                            ['key' => 'hz', 'label' => 'Frekuensi (Hz)', 'db' => 't_hz'],
+                                            ['key' => 'pf', 'label' => 'Power Factor', 'db' => 't_pf'],
+                                            ['key' => 'ifr', 'label' => 'Arus Gangguan Phase R', 'db' => 't_ifr'],
+                                            ['key' => 'ifs', 'label' => 'Arus Gangguan Phase S', 'db' => 't_ifs'],
+                                            ['key' => 'ift', 'label' => 'Arus Gangguan Phase T', 'db' => 't_ift'],
+                                            ['key' => 'ifn', 'label' => 'Arus Gangguan Phase Netral', 'db' => 't_ifn'],
+                                            ['key' => 'ifr_psuedo', 'label' => 'Arus Gangguan Phase R Pseudo', 'db' =>
+                                            't_ifr_psuedo'],
+                                            ['key' => 'ifs_psuedo', 'label' => 'Arus Gangguan Phase S Pseudo', 'db' =>
+                                            't_ifs_psuedo'],
+                                            ['key' => 'ift_psuedo', 'label' => 'Arus Gangguan Phase T Pseudo', 'db' =>
+                                            't_ift_psuedo'],
+                                            ['key' => 'ifn_psuedo', 'label' => 'Arus Gangguan Phase N Pseudo', 'db' =>
+                                            't_ifn_psuedo'],
+                                            ];
+                                            @endphp
 
-                                                <div class="form-group">
-                                                    <label>Tegangan Rata Rata</label>
-                                                    <input class="form-control @error('vavg_rtu') is-invalid @enderror"
-                                                        placeholder="TEGANGAN RATA RATA RTU" name="vavg_rtu" value="{{ old('vavg_rtu', $keypoint->vavg_rtu) }}">
-                                                    @error('vavg_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vavg_ms') is-invalid @enderror"
-                                                        placeholder="TEGANGAN RATA RATA Master" name="vavg_ms" value="{{ old('vavg_ms', $keypoint->vavg_ms) }}">
-                                                    @error('vavg_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vavg_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="vavg_scale" value="{{ old('vavg_scale', $keypoint->vavg_scale) }}">
-                                                    @error('vavg_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
+                                            <div class="col-md-6" style="max-height: 800px; overflow-y: auto;">
+                                                <h1>Selector</h1>
+                                                @foreach($fields as $field)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label class="form-label t-bold">{{ $field['label'] }}</label>
+                                                    <div class="selectgroup w-100 flex-wrap mb-1">
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $field['db'] }}[]"
+                                                                value="{{ $field['db'] }}1" class="selectgroup-input"
+                                                                {{ in_array($field['db'].'1', $checkboxValuesTM[$field['db']]) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $field['db'] }}[]"
+                                                                value="{{ $field['db'] }}2" class="selectgroup-input"
+                                                                {{ in_array($field['db'].'2', $checkboxValuesTM[$field['db']]) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $field['db'] }}[]"
+                                                                value="{{ $field['db'] }}5" class="selectgroup-input"
+                                                                {{ in_array($field['db'].'5', $checkboxValuesTM[$field['db']]) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">Tidak Ada</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase R</label>
-                                                    <input class="form-control @error('ifr_rtu') is-invalid @enderror"
-                                                        placeholder="IFR RTU" name="ifr_rtu" value="{{ old('ifr_rtu', $keypoint->ifr_rtu) }}">
-                                                    @error('ifr_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifr_ms') is-invalid @enderror"
-                                                        placeholder="IFR Master" name="ifr_ms" value="{{ old('ifr_ms', $keypoint->ifr_ms) }}">
-                                                    @error('ifr_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifr_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="ifr_scale" value="{{ old('ifr_scale', $keypoint->ifr_scale) }}">
-                                                    @error('ifr_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase S</label>
-                                                    <input class="form-control @error('ifs_rtu') is-invalid @enderror"
-                                                        placeholder="IFS RTU" name="ifs_rtu" value="{{ old('ifs_rtu', $keypoint->ifs_rtu) }}">
-                                                    @error('ifs_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifs_ms') is-invalid @enderror"
-                                                        placeholder="IFS Master" name="ifs_ms" value="{{ old('ifs_ms', $keypoint->ifs_ms) }}">
-                                                    @error('ifs_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifs_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="ifs_scale" value="{{ old('ifs_scale', $keypoint->ifs_scale) }}">
-                                                    @error('ifs_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase T</label>
-                                                    <input class="form-control @error('ift_rtu') is-invalid @enderror"
-                                                        placeholder="IFT RTU" name="ift_rtu" value="{{ old('ift_rtu', $keypoint->ift_rtu) }}">
-                                                    @error('ift_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ift_ms') is-invalid @enderror"
-                                                        placeholder="IFT Master" name="ift_ms" value="{{ old('ift_ms', $keypoint->ift_ms) }}">
-                                                    @error('ift_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ift_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="ift_scale" value="{{ old('ift_scale', $keypoint->ift_scale) }}">
-                                                    @error('ift_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Neutral (N)</label>
-                                                    <input class="form-control @error('ifn_rtu') is-invalid @enderror"
-                                                        placeholder="IFN RTU" name="ifn_rtu" value="{{ old('ifn_rtu', $keypoint->ifn_rtu) }}">
-                                                    @error('ifn_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifn_ms') is-invalid @enderror"
-                                                        placeholder="IFN Master" name="ifn_ms" value="{{ old('ifn_ms', $keypoint->ifn_ms) }}">
-                                                    @error('ifn_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifn_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="ifn_scale" value="{{ old('ifn_scale', $keypoint->ifn_scale) }}">
-                                                    @error('ifn_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Pseudo Phase R</label>
-                                                    <input class="form-control @error('ifr_psuedo_rtu') is-invalid @enderror"
-                                                        placeholder="IFR Pseudo RTU" name="ifr_psuedo_rtu" value="{{ old('ifr_psuedo_rtu', $keypoint->ifr_psuedo_rtu) }}">
-                                                    @error('ifr_psuedo_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifr_psuedo_ms') is-invalid @enderror"
-                                                        placeholder="IFR Pseudo Master" name="ifr_psuedo_ms" value="{{ old('ifr_psuedo_ms', $keypoint->ifr_psuedo_ms) }}">
-                                                    @error('ifr_psuedo_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifr_psuedo_scale') is-invalid @enderror"
-                                                        placeholder="Pseudo Scale" name="ifr_psuedo_scale" value="{{ old('ifr_psuedo_scale', $keypoint->ifr_psuedo_scale) }}">
-                                                    @error('ifr_psuedo_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Pseudo Phase S</label>
-                                                    <input class="form-control @error('ifs_psuedo_rtu') is-invalid @enderror"
-                                                        placeholder="IFS Pseudo RTU" name="ifs_psuedo_rtu" value="{{ old('ifs_psuedo_rtu', $keypoint->ifs_psuedo_rtu) }}">
-                                                    @error('ifs_psuedo_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifs_psuedo_ms') is-invalid @enderror"
-                                                        placeholder="IFS Pseudo Master" name="ifs_psuedo_ms" value="{{ old('ifs_psuedo_ms', $keypoint->ifs_psuedo_ms) }}">
-                                                    @error('ifs_psuedo_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifs_psuedo_scale') is-invalid @enderror"
-                                                        placeholder="Pseudo Scale" name="ifs_psuedo_scale" value="{{ old('ifs_psuedo_scale', $keypoint->ifs_psuedo_scale) }}">
-                                                    @error('ifs_psuedo_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Pseudo Phase T</label>
-                                                    <input class="form-control @error('ift_psuedo_rtu') is-invalid @enderror"
-                                                        placeholder="IFT Pseudo RTU" name="ift_psuedo_rtu" value="{{ old('ift_psuedo_rtu', $keypoint->ift_psuedo_rtu) }}">
-                                                    @error('ift_psuedo_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ift_psuedo_ms') is-invalid @enderror"
-                                                        placeholder="IFT Pseudo Master" name="ift_psuedo_ms" value="{{ old('ift_psuedo_ms', $keypoint->ift_psuedo_ms) }}">
-                                                    @error('ift_psuedo_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ift_psuedo_scale') is-invalid @enderror"
-                                                        placeholder="Pseudo Scale" name="ift_psuedo_scale" value="{{ old('ift_psuedo_scale', $keypoint->ift_psuedo_scale) }}">
-                                                    @error('ift_psuedo_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Pseudo Neutral (N)</label>
-                                                    <input class="form-control @error('ifn_psuedo_rtu') is-invalid @enderror"
-                                                        placeholder="IFN Pseudo RTU" name="ifn_psuedo_rtu" value="{{ old('ifn_psuedo_rtu', $keypoint->ifn_psuedo_rtu) }}">
-                                                    @error('ifn_psuedo_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifn_psuedo_ms') is-invalid @enderror"
-                                                        placeholder="IFN Pseudo Master" name="ifn_psuedo_ms" value="{{ old('ifn_psuedo_ms', $keypoint->ifn_psuedo_ms) }}">
-                                                    @error('ifn_psuedo_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifn_psuedo_scale') is-invalid @enderror"
-                                                        placeholder="Pseudo Scale" name="ifn_psuedo_scale" value="{{ old('ifn_psuedo_scale', $keypoint->ifn_psuedo_scale) }}">
-                                                    @error('ifn_psuedo_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Frekuensi</label>
-                                                    <input class="form-control @error('hz_rtu') is-invalid @enderror"
-                                                        placeholder="HZ RTU" name="hz_rtu" value="{{ old('hz_rtu', $keypoint->hz_rtu) }}">
-                                                    @error('hz_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('hz_ms') is-invalid @enderror"
-                                                        placeholder="HZ Master" name="hz_ms" value="{{ old('hz_ms', $keypoint->hz_ms) }}">
-                                                    @error('hz_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('hz_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="hz_scale" value="{{ old('hz_scale', $keypoint->hz_scale) }}">
-                                                    @error('hz_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Rata Rata</label>
-                                                    <input class="form-control @error('iavg_rtu') is-invalid @enderror"
-                                                        placeholder="IAVG RTU" name="iavg_rtu" value="{{ old('iavg_rtu', $keypoint->iavg_rtu) }}">
-                                                    @error('iavg_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('iavg_ms') is-invalid @enderror"
-                                                        placeholder="IAVG Master" name="iavg_ms" value="{{ old('iavg_ms', $keypoint->iavg_ms) }}">
-                                                    @error('iavg_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('iavg_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="iavg_scale" value="{{ old('iavg_scale', $keypoint->iavg_scale) }}">
-                                                    @error('iavg_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Fakto Daya</label>
-                                                    <input class="form-control @error('pf_rtu') is-invalid @enderror"
-                                                        placeholder="PF RTU" name="pf_rtu" value="{{ old('pf_rtu', $keypoint->pf_rtu) }}">
-                                                    @error('pf_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('pf_ms') is-invalid @enderror"
-                                                        placeholder="PF Master" name="pf_ms" value="{{ old('pf_ms', $keypoint->pf_ms) }}">
-                                                    @error('pf_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('pf_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="pf_scale" value="{{ old('pf_scale', $keypoint->pf_scale) }}">
-                                                    @error('pf_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                                @endforeach
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Arus Phase R</label>
-                                                    <input class="form-control @error('ir_addms') is-invalid @enderror"
-                                                        placeholder="IR ADDMS" name="ir_addms" value="{{ old('ir_addms', $keypoint->ir_addms) }}">
-                                                    @error('ir_addms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ir_addrtu') is-invalid @enderror"
-                                                        placeholder="IR ADDRTU" name="ir_addrtu" value="{{ old('ir_addrtu', $keypoint->ir_addrtu) }}">
-                                                    @error('ir_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ir_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IR OBJECT FORMAT" name="ir_addobjfrmt" value="{{ old('ir_addobjfrmt', $keypoint->ir_addobjfrmt) }}">
-                                                    @error('ir_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase S</label>
-                                                    <input class="form-control @error('is_addms') is-invalid @enderror"
-                                                        placeholder="IS ADDMS" name="is_addms" value="{{ old('is_addms', $keypoint->is_addms) }}">
-                                                    @error('is_addms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('is_addrtu') is-invalid @enderror"
-                                                        placeholder="IS ADDRTU" name="is_addrtu" value="{{ old('is_addrtu', $keypoint->is_addrtu) }}">
-                                                    @error('is_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('is_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IS OBJECT FORMAT" name="is_addobjfrmt" value="{{ old('is_addobjfrmt', $keypoint->is_addobjfrmt) }}">
-                                                    @error('is_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase T</label>
-                                                    <input class="form-control @error('it_addms') is-invalid @enderror"
-                                                        placeholder="IT ADDMS" name="it_addms" value="{{ old('it_addms', $keypoint->it_addms) }}">
-                                                    @error('it_addms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('it_addrtu') is-invalid @enderror"
-                                                        placeholder="IT ADDRTU" name="it_addrtu" value="{{ old('it_addrtu', $keypoint->it_addrtu) }}">
-                                                    @error('it_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('it_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IT OBJECT FORMAT" name="it_addobjfrmt" value="{{ old('it_addobjfrmt', $keypoint->it_addobjfrmt) }}">
-                                                    @error('it_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase Netral</label>
-                                                    <input class="form-control @error('in_addms') is-invalid @enderror"
-                                                        placeholder="IN ADDMS" name="in_addms" value="{{ old('in_addms', $keypoint->in_addms) }}">
-                                                    @error('in_addms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('in_addrtu') is-invalid @enderror"
-                                                        placeholder="IN ADDRTU" name="in_addrtu" value="{{ old('in_addrtu', $keypoint->in_addrtu) }}">
-                                                    @error('in_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('in_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IN OBJECT FORMAT" name="in_addobjfrmt" value="{{ old('in_addobjfrmt', $keypoint->in_addobjfrmt) }}">
-                                                    @error('in_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                            <div class="col-md-3" style="max-height: 800px; overflow-y: auto;">
+                                                <h5>RTU, MASTER, and SCALE</h5>
+                                                @foreach($fields as $field)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label class="t-bold text-primary">{{ $field['label'] }}</label>
 
-                                                <div class="form-group">
-                                                    <label>Teg Input Phase R</label>
-                                                    <input class="form-control @error('vrin_addms') is-invalid @enderror"
-                                                        placeholder="VRIN ADDMS" name="vrin_addms" value="{{ old('vrin_addms', $keypoint->vrin_addms) }}">
-                                                    @error('vrin_addms')
+                                                    <input
+                                                        class="form-control mb-1 @error($field['key'].'_rtu') is-invalid @enderror"
+                                                        placeholder="{{ $field['key'] }} RTU"
+                                                        name="{{ $field['key'] }}_rtu"
+                                                        value="{{ old($field['key'].'_rtu', $keypoint->{$field['key'].'_rtu'} ?? '') }}">
+                                                    @error($field['key'].'_rtu')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('vrin_addrtu') is-invalid @enderror"
-                                                        placeholder="VRIN ADDRTU" name="vrin_addrtu" value="{{ old('vrin_addrtu', $keypoint->vrin_addrtu) }}">
-                                                    @error('vrin_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vrin_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="VRIN OBJECT FORMAT" name="vrin_addobjfrmt" value="{{ old('vrin_addobjfrmt', $keypoint->vrin_addobjfrmt) }}">
-                                                    @error('vrin_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Teg Input Phase S</label>
-                                                    <input class="form-control @error('vsin_addms') is-invalid @enderror"
-                                                        placeholder="VSIN ADDMS" name="vsin_addms" value="{{ old('vsin_addms', $keypoint->vsin_addms) }}">
-                                                    @error('vsin_addms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vsin_addrtu') is-invalid @enderror"
-                                                        placeholder="VSIN ADDRTU" name="vsin_addrtu" value="{{ old('vsin_addrtu', $keypoint->vsin_addrtu) }}">
-                                                    @error('vsin_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vsin_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="VSIN OBJECT FORMAT" name="vsin_addobjfrmt" value="{{ old('vsin_addobjfrmt', $keypoint->vsin_addobjfrmt) }}">
-                                                    @error('vsin_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Teg Input Phase T</label>
-                                                    <input class="form-control @error('vtin_addms') is-invalid @enderror"
-                                                        placeholder="VTIN ADDMS" name="vtin_addms" value="{{ old('vtin_addms', $keypoint->vtin_addms) }}">
-                                                    @error('vtin_addms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vtin_addrtu') is-invalid @enderror"
-                                                        placeholder="VTIN ADDRTU" name="vtin_addrtu" value="{{ old('vtin_addrtu', $keypoint->vtin_addrtu) }}">
-                                                    @error('vtin_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vtin_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="VTIN OBJECT FORMAT" name="vtin_addobjfrmt" value="{{ old('vtin_addobjfrmt', $keypoint->vtin_addobjfrmt) }}">
-                                                    @error('vtin_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label>Teg Output Phase R</label>
-                                                    <input class="form-control @error('vrout_addms') is-invalid @enderror"
-                                                        placeholder="VROUT ADDMS" name="vrout_addms" value="{{ old('vrout_addms', $keypoint->vrout_addms) }}">
-                                                    @error('vrout_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('vrout_addrtu') is-invalid @enderror"
-                                                        placeholder="VROUT ADDRTU" name="vrout_addrtu" value="{{ old('vrout_addrtu', $keypoint->vrout_addrtu) }}">
-                                                    @error('vrout_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('vrout_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="VROUT OBJECT FORMAT" name="vrout_addobjfrmt" value="{{ old('vrout_addobjfrmt', $keypoint->vrout_addobjfrmt) }}">
-                                                    @error('vrout_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Teg Output Phase S</label>
-                                                    <input class="form-control @error('vsout_addms') is-invalid @enderror"
-                                                        placeholder="VSOUT ADDMS" name="vsout_addms" value="{{ old('vsout_addms', $keypoint->vsout_addms) }}">
-                                                    @error('vsout_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('vsout_addrtu') is-invalid @enderror"
-                                                        placeholder="VSOUT ADDRTU" name="vsout_addrtu" value="{{ old('vsout_addrtu', $keypoint->vsout_addrtu) }}">
-                                                    @error('vsout_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('vsout_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="VSOUT OBJECT FORMAT" name="vsout_addobjfrmt" value="{{ old('vsout_addobjfrmt', $keypoint->vsout_addobjfrmt) }}">
-                                                    @error('vsout_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Teg Output Phase T</label>
-                                                    <input class="form-control @error('vtout_addms') is-invalid @enderror"
-                                                        placeholder="VTOUT ADDMS" name="vtout_addms" value="{{ old('vtout_addms', $keypoint->vtout_addms) }}">
-                                                    @error('vtout_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('vtout_addrtu') is-invalid @enderror"
-                                                        placeholder="VTOUT ADDRTU" name="vtout_addrtu" value="{{ old('vtout_addrtu', $keypoint->vtout_addrtu) }}">
-                                                    @error('vtout_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('vtout_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="VTOUT OBJECT FORMAT" name="vtout_addobjfrmt" value="{{ old('vtout_addobjfrmt', $keypoint->vtout_addobjfrmt) }}">
-                                                    @error('vtout_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Tegangan Rata2</label>
-                                                    <input class="form-control @error('vavg_addms') is-invalid @enderror"
-                                                        placeholder="VAVG ADDMS" name="vavg_addms" value="{{ old('vavg_addms', $keypoint->vavg_addms) }}">
-                                                    @error('vavg_addms')
+                                                    <input
+                                                        class="form-control mb-1 @error($field['key'].'_ms') is-invalid @enderror"
+                                                        placeholder="{{ $field['key'] }} Master"
+                                                        name="{{ $field['key'] }}_ms"
+                                                        value="{{ old($field['key'].'_ms', $keypoint->{$field['key'].'_ms'} ?? '') }}">
+                                                    @error($field['key'].'_ms')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('vavg_addrtu') is-invalid @enderror"
-                                                        placeholder="VAVG ADDRTU" name="vavg_addrtu" value="{{ old('vavg_addrtu', $keypoint->vavg_addrtu) }}">
-                                                    @error('vavg_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('vavg_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="VAVG OBJECT FORMAT" name="vavg_addobjfrmt" value="{{ old('vavg_addobjfrmt', $keypoint->vavg_addobjfrmt) }}">
-                                                    @error('vavg_addobjfrmt')
+
+                                                    <input
+                                                        class="form-control @error($field['key'].'_scale') is-invalid @enderror"
+                                                        placeholder="Scale" name="{{ $field['key'] }}_scale"
+                                                        value="{{ old($field['key'].'_scale', $keypoint->{$field['key'].'_scale'} ?? '') }}">
+                                                    @error($field['key'].'_scale')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase R</label>
-                                                    <input class="form-control @error('ifr_addms') is-invalid @enderror"
-                                                        placeholder="IFR ADDMS" name="ifr_addms" value="{{ old('ifr_addms', $keypoint->ifr_addms) }}">
-                                                    @error('ifr_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ifr_addrtu') is-invalid @enderror"
-                                                        placeholder="IFR ADDRTU" name="ifr_addrtu" value="{{ old('ifr_addrtu', $keypoint->ifr_addrtu) }}">
-                                                    @error('ifr_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ifr_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IFR OBJECT FORMAT" name="ifr_addobjfrmt" value="{{ old('ifr_addobjfrmt', $keypoint->ifr_addobjfrmt) }}">
-                                                    @error('ifr_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase S</label>
-                                                    <input class="form-control @error('ifs_addms') is-invalid @enderror"
-                                                        placeholder="IFS ADDMS" name="ifs_addms" value="{{ old('ifs_addms', $keypoint->ifs_addms) }}">
-                                                    @error('ifs_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ifs_addrtu') is-invalid @enderror"
-                                                        placeholder="IFS ADDRTU" name="ifs_addrtu" value="{{ old('ifs_addrtu', $keypoint->ifs_addrtu) }}">
-                                                    @error('ifs_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ifs_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IFS OBJECT FORMAT" name="ifs_addobjfrmt" value="{{ old('ifs_addobjfrmt', $keypoint->ifs_addobjfrmt) }}">
-                                                    @error('ifs_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase T</label>
-                                                    <input class="form-control @error('ift_addms') is-invalid @enderror"
-                                                        placeholder="IFT ADDMS" name="ift_addms" value="{{ old('ift_addms', $keypoint->ift_addms) }}">
-                                                    @error('ift_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ift_addrtu') is-invalid @enderror"
-                                                        placeholder="IFT ADDRTU" name="ift_addrtu" value="{{ old('ift_addrtu', $keypoint->ift_addrtu) }}">
-                                                    @error('ift_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ift_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IFT OBJECT FORMAT" name="ift_addobjfrmt" value="{{ old('ift_addobjfrmt', $keypoint->ift_addobjfrmt) }}">
-                                                    @error('ift_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Netral</label>
-                                                    <input class="form-control @error('ifn_addms') is-invalid @enderror"
-                                                        placeholder="IFN ADDMS" name="ifn_addms" value="{{ old('ifn_addms', $keypoint->ifn_addms) }}">
-                                                    @error('ifn_addms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifn_addrtu') is-invalid @enderror"
-                                                        placeholder="IFN ADDRTU" name="ifn_addrtu" value="{{ old('ifn_addrtu', $keypoint->ifn_addrtu) }}">
-                                                    @error('ifn_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifn_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IFN OBJECT FORMAT" name="ifn_addobjfrmt" value="{{ old('ifn_addobjfrmt', $keypoint->ifn_addobjfrmt) }}">
-                                                    @error('ifn_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Pseudo Phase R</label>
-                                                    <input class="form-control @error('ifr_psuedo_addms') is-invalid @enderror"
-                                                        placeholder="IFR PSUEDO ADDMS" name="ifr_psuedo_addms" value="{{ old('ifr_psuedo_addms', $keypoint->ifr_psuedo_addms) }}" readonly>
-                                                    @error('ifr_psuedo_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ifr_psuedo_addrtu') is-invalid @enderror"
-                                                        placeholder="IFR PSUEDO ADDRTU" name="ifr_psuedo_addrtu" value="{{ old('ifr_psuedo_addrtu', $keypoint->ifr_psuedo_addrtu) }}">
-                                                    @error('ifr_psuedo_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ifr_psuedo_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IFR PSUEDO OBJECT FORMAT" name="ifr_psuedo_addobjfrmt" value="{{ old('ifr_psuedo_addobjfrmt', $keypoint->ifr_psuedo_addobjfrmt) }}">
-                                                    @error('ifr_psuedo_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Pseudo Phase S</label>
-                                                    <input class="form-control @error('ifs_psuedo_addms') is-invalid @enderror"
-                                                        placeholder="IFS PSUEDO ADDMS" name="ifs_psuedo_addms" value="{{ old('ifs_psuedo_addms', $keypoint->ifs_psuedo_addms) }}" readonly>
-                                                    @error('ifs_psuedo_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ifs_psuedo_addrtu') is-invalid @enderror"
-                                                        placeholder="IFS PSUEDO ADDRTU" name="ifs_psuedo_addrtu" value="{{ old('ifs_psuedo_addrtu', $keypoint->ifs_psuedo_addrtu) }}">
-                                                    @error('ifs_psuedo_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ifs_psuedo_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IFS PSUEDO OBJECT FORMAT" name="ifs_psuedo_addobjfrmt" value="{{ old('ifs_psuedo_addobjfrmt', $keypoint->ifs_psuedo_addobjfrmt) }}">
-                                                    @error('ifs_psuedo_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Pseudo Phase T</label>
-                                                    <input class="form-control @error('ift_psuedo_addms') is-invalid @enderror"
-                                                        placeholder="IFT PSUEDO ADDMS" name="ift_psuedo_addms" value="{{ old('ift_psuedo_addms', $keypoint->ift_psuedo_addms) }}" readonly>
-                                                    @error('ift_psuedo_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ift_psuedo_addrtu') is-invalid @enderror"
-                                                        placeholder="IFT PSUEDO ADDRTU" name="ift_psuedo_addrtu" value="{{ old('ift_psuedo_addrtu', $keypoint->ift_psuedo_addrtu) }}">
-                                                    @error('ift_psuedo_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('ift_psuedo_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IFT PSUEDO OBJECT FORMAT" name="ift_psuedo_addobjfrmt" value="{{ old('ift_psuedo_addobjfrmt', $keypoint->ift_psuedo_addobjfrmt) }}">
-                                                    @error('ift_psuedo_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Pseudo Netral</label>
-                                                    <input class="form-control @error('ifn_psuedo_addms') is-invalid @enderror"
-                                                        placeholder="IFN PSUEDO ADDMS" name="ifn_psuedo_addms" value="{{ old('ifn_psuedo_addms', $keypoint->ifn_psuedo_addms) }}" readonly>
-                                                    @error('ifn_psuedo_addms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifn_psuedo_addrtu') is-invalid @enderror"
-                                                        placeholder="IFN PSUEDO ADDRTU" name="ifn_psuedo_addrtu" value="{{ old('ifn_psuedo_addrtu', $keypoint->ifn_psuedo_addrtu) }}">
-                                                    @error('ifn_psuedo_addrtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ifn_psuedo_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IFN PSUEDO OBJECT FORMAT" name="ifn_psuedo_addobjfrmt" value="{{ old('ifn_psuedo_addobjfrmt', $keypoint->ifn_psuedo_addobjfrmt) }}">
-                                                    @error('ifn_psuedo_addobjfrmt')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Frekuensi</label>
-                                                    <input class="form-control @error('hz_addms') is-invalid @enderror"
-                                                        placeholder="HZ ADDMS" name="hz_addms" value="{{ old('hz_addms', $keypoint->hz_addms) }}">
-                                                    @error('hz_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('hz_addrtu') is-invalid @enderror"
-                                                        placeholder="HZ ADDRTU" name="hz_addrtu" value="{{ old('hz_addrtu', $keypoint->hz_addrtu) }}">
-                                                    @error('hz_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('hz_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="HZ OBJECT FORMAT" name="hz_addobjfrmt" value="{{ old('hz_addobjfrmt', $keypoint->hz_addobjfrmt) }}">
-                                                    @error('hz_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Arus Rata Rata</label>
-                                                    <input class="form-control @error('iavg_addms') is-invalid @enderror"
-                                                        placeholder="IAVG ADDMS" name="iavg_addms" value="{{ old('iavg_addms', $keypoint->iavg_addms) }}">
-                                                    @error('iavg_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('iavg_addrtu') is-invalid @enderror"
-                                                        placeholder="IAVG ADDRTU" name="iavg_addrtu" value="{{ old('iavg_addrtu', $keypoint->iavg_addrtu) }}">
-                                                    @error('iavg_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('iavg_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="IAVG OBJECT FORMAT" name="iavg_addobjfrmt" value="{{ old('iavg_addobjfrmt', $keypoint->iavg_addobjfrmt) }}">
-                                                    @error('iavg_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Faktor Daya</label>
-                                                    <input class="form-control @error('pf_addms') is-invalid @enderror"
-                                                        placeholder="PF ADDMS" name="pf_addms" value="{{ old('pf_addms', $keypoint->pf_addms) }}">
-                                                    @error('pf_addms')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('pf_addrtu') is-invalid @enderror"
-                                                        placeholder="PF ADDRTU" name="pf_addrtu" value="{{ old('pf_addrtu', $keypoint->pf_addrtu) }}">
-                                                    @error('pf_addrtu')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                    <input class="form-control @error('pf_addobjfrmt') is-invalid @enderror"
-                                                        placeholder="PF OBJECT FORMAT" name="pf_addobjfrmt" value="{{ old('pf_addobjfrmt', $keypoint->pf_addobjfrmt) }}">
-                                                    @error('pf_addobjfrmt')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                                </div>
+                                                @endforeach
                                             </div>
 
-                                            <div class="col-md-12">
+                                            <div class="col-md-3" style="max-height: 800px; overflow-y: auto;">
+                                                <h5>ADDMS ADDRTU ADDOBJ/FRMT</h5>
+                                                @foreach($fields as $field)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label class="t-bold text-success">{{ $field['label'] }}</label>
+
+                                                    {{-- Logic Cek apakah ini kolom Psuedo --}}
+                                                    @php
+                                                    $isPsuedo = strpos($field['key'], 'psuedo') !== false;
+                                                    @endphp
+
+                                                    {{-- 1. Input Add MS --}}
+                                                    {{-- Logic Value: Prioritas old input, jika null ambil dari $keypoint->nama_field --}}
+                                                    <input type="text"
+                                                        class="form-control mb-1 @error($field['key'].'_addms') is-invalid @enderror"
+                                                        placeholder="{{ strtoupper($field['key']) }} ADDMS"
+                                                        name="{{ $field['key'] }}_addms"
+                                                        value="{{ old($field['key'].'_addms', $keypoint->{$field['key'].'_addms'} ?? '') }}"
+                                                        {{ $isPsuedo ? 'readonly' : '' }}>
+
+                                                    @error($field['key'].'_addms')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    {{-- 2. Input Add RTU --}}
+                                                    <input type="text"
+                                                        class="form-control mb-1 @error($field['key'].'_addrtu') is-invalid @enderror"
+                                                        placeholder="{{ strtoupper($field['key']) }} ADDRTU"
+                                                        name="{{ $field['key'] }}_addrtu"
+                                                        value="{{ old($field['key'].'_addrtu', $keypoint->{$field['key'].'_addrtu'} ?? '') }}">
+
+                                                    @error($field['key'].'_addrtu')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    {{-- 3. Input Obj Format --}}
+                                                    <input type="text"
+                                                        class="form-control @error($field['key'].'_addobjfrmt') is-invalid @enderror"
+                                                        placeholder="OBJECT FORMAT"
+                                                        name="{{ $field['key'] }}_addobjfrmt"
+                                                        value="{{ old($field['key'].'_addobjfrmt', $keypoint->{$field['key'].'_addobjfrmt'} ?? '') }}">
+
+                                                    @error($field['key'].'_addobjfrmt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                @endforeach
+                                            </div>
+
+                                            <div class="col-md-12 mt-3">
                                                 <div class="form-group">
                                                     <label for="ketftm">Keterangan Form Telemetering</label>
                                                     <div class="input-icon">
-                                                        <input type="text" class="form-control" id="ketftm" name="ketftm"
-                                                            placeholder="Keterangan Form Data" value="{{ old('ketftm', $keypoint->ketftm) }}" />
+                                                        <input type="text" class="form-control" id="ketftm"
+                                                            name="ketftm" placeholder="Keterangan Form Data"
+                                                            value="{{ old('ketftm', $keypoint->ketftm) }}" />
                                                         @error('ketftm')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -4230,328 +3533,328 @@
 </div>
 
 <script>
-    function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropdownId, errorId) {
-        const wrapper = document.getElementById(wrapperId);
-        const selectedItems = document.getElementById(selectedItemsId);
-        const hiddenInput = document.getElementById(hiddenInputId);
-        const dropdown = document.getElementById(dropdownId);
-        const errorMessage = document.getElementById(errorId);
-        const maxSelections = 2;
+function initializeCustomSelect(wrapperId, selectedItemsId, hiddenInputId, dropdownId, errorId) {
+    const wrapper = document.getElementById(wrapperId);
+    const selectedItems = document.getElementById(selectedItemsId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    const dropdown = document.getElementById(dropdownId);
+    const errorMessage = document.getElementById(errorId);
+    const maxSelections = 2;
 
-        let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
+    let selectedValues = (hiddenInput.value.split(",").filter(v => v)); // Remove empty strings
 
-        function handleSelection() {
-            selectedItems.innerHTML = "";
-            hiddenInput.value = selectedValues.join(",");
-            selectedValues.forEach((value) => {
-                const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
-                if (option) {
-                    const div = document.createElement("div");
-                    div.className = "selected-item";
-                    div.innerHTML = `${option.textContent} <button class="remove-item">×</button>`;
-                    selectedItems.appendChild(div);
-                    div.querySelector('.remove-item').addEventListener('click', () => removeSelection(value));
-                }
-            });
-            updateDropdown();
-            checkValidation();
-        }
-
-        function removeSelection(value) {
-            selectedValues = selectedValues.filter(val => val !== value);
-            handleSelection();
-        }
-
-        function toggleSelection(value) {
-            if (selectedValues.includes(value)) {
-                selectedValues = selectedValues.filter(val => val !== value);
-            } else if (selectedValues.length < maxSelections) {
-                selectedValues.push(value);
-            }
-            handleSelection();
-        }
-
-        function updateDropdown() {
-            const items = dropdown.getElementsByClassName("dropdown-item");
-            Array.from(items).forEach((item) => {
-                const value = item.getAttribute("data-id");
-                if (selectedValues.includes(value)) {
-                    item.classList.add("selected");
-                } else {
-                    item.classList.remove("selected");
-                }
-            });
-            dropdown.classList.toggle("active", items.length > 0);
-        }
-
-        function checkValidation() {
-            const hasSelection = selectedValues.length > 0;
-            errorMessage.style.display = hasSelection ? "none" : "block";
-        }
-
-        // Toggle dropdown on click
-        wrapper.addEventListener("click", (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle("active");
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", (e) => {
-            if (!wrapper.contains(e.target)) {
-                dropdown.classList.remove("active");
+    function handleSelection() {
+        selectedItems.innerHTML = "";
+        hiddenInput.value = selectedValues.join(",");
+        selectedValues.forEach((value) => {
+            const option = dropdown.querySelector(`.dropdown-item[data-id="${value}"]`);
+            if (option) {
+                const div = document.createElement("div");
+                div.className = "selected-item";
+                div.innerHTML = `${option.textContent} <button class="remove-item">×</button>`;
+                selectedItems.appendChild(div);
+                div.querySelector('.remove-item').addEventListener('click', () => removeSelection(value));
             }
         });
-
-        // Add click event to dropdown items
-        dropdown.addEventListener("click", (e) => {
-            const item = e.target.closest(".dropdown-item");
-            if (item) {
-                const value = item.getAttribute("data-id");
-                toggleSelection(value);
-            }
-        });
-
-        // Initialize
-        document.addEventListener("DOMContentLoaded", handleSelection);
+        updateDropdown();
+        checkValidation();
     }
 
-    // For PIC Master II
-    initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms', 'error-message-ms');
+    function removeSelection(value) {
+        selectedValues = selectedValues.filter(val => val !== value);
+        handleSelection();
+    }
 
-    // For Pelaksana RTU II
-    initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
+    function toggleSelection(value) {
+        if (selectedValues.includes(value)) {
+            selectedValues = selectedValues.filter(val => val !== value);
+        } else if (selectedValues.length < maxSelections) {
+            selectedValues.push(value);
+        }
+        handleSelection();
+    }
+
+    function updateDropdown() {
+        const items = dropdown.getElementsByClassName("dropdown-item");
+        Array.from(items).forEach((item) => {
+            const value = item.getAttribute("data-id");
+            if (selectedValues.includes(value)) {
+                item.classList.add("selected");
+            } else {
+                item.classList.remove("selected");
+            }
+        });
+        dropdown.classList.toggle("active", items.length > 0);
+    }
+
+    function checkValidation() {
+        const hasSelection = selectedValues.length > 0;
+        errorMessage.style.display = hasSelection ? "none" : "block";
+    }
+
+    // Toggle dropdown on click
+    wrapper.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!wrapper.contains(e.target)) {
+            dropdown.classList.remove("active");
+        }
+    });
+
+    // Add click event to dropdown items
+    dropdown.addEventListener("click", (e) => {
+        const item = e.target.closest(".dropdown-item");
+        if (item) {
+            const value = item.getAttribute("data-id");
+            toggleSelection(value);
+        }
+    });
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", handleSelection);
+}
+
+// For PIC Master II
+initializeCustomSelect('ms-wrapper', 'selected-items-ms', 'id_pelms', 'dropdown-options-ms', 'error-message-ms');
+
+// For Pelaksana RTU II
+initializeCustomSelect('rtu-wrapper', 'selected-items-rtu', 'id_pelrtu', 'dropdown-options-rtu', 'error-message-rtu');
 </script>
 
 <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
 <script>
-    $(document).ready(function() {
-        // Use existing keypoint values as defaults, with old() values taking priority
-        var oldGi = "{{ old('id_gi', $keypoint->id_gi) }}";
-        var oldPeny = "{{ old('nama_peny', $keypoint->nama_peny) }}";
-        var oldLbs = "{{ old('nama_lbs', $keypoint->nama_lbs) }}";
-        var oldSec = "{{ old('nama_sec', $keypoint->id_sec ?? '') }}";
-        var modeInput = "{{ old('mode_input', $keypoint->mode_input ?? 0) }}";
+$(document).ready(function() {
+    // Use existing keypoint values as defaults, with old() values taking priority
+    var oldGi = "{{ old('id_gi', $keypoint->id_gi) }}";
+    var oldPeny = "{{ old('nama_peny', $keypoint->nama_peny) }}";
+    var oldLbs = "{{ old('nama_lbs', $keypoint->nama_lbs) }}";
+    var oldSec = "{{ old('nama_sec', $keypoint->id_sec ?? '') }}";
+    var modeInput = "{{ old('mode_input', $keypoint->mode_input ?? 0) }}";
 
-        // Make checkboxes exclusive and prevent both from being unchecked
-        $('#changer_select').change(function() {
-            if (this.checked) {
-                $('#changer_input').prop('checked', false);
-            } else {
-                if (!$('#changer_input').is(':checked')) {
-                    this.checked = true; // Prevent unchecking if the other is not checked
-                }
-            }
-            toggleMode();
-        });
-
-        $('#changer_input').change(function() {
-            if (this.checked) {
-                $('#changer_select').prop('checked', false);
-            } else {
-                if (!$('#changer_select').is(':checked')) {
-                    this.checked = true; // Prevent unchecking if the other is not checked
-                }
-            }
-            toggleMode();
-        });
-
-        function toggleMode() {
-            // Set mode_input value: 1 for input mode (true), 0 for select mode (false)
-            $('#mode_input').val($('#changer_input').is(':checked') ? 1 : 0);
-
-            if ($('#changer_input').is(':checked')) {
-                $('#nama_lbs_select_container').hide();
-                $('#nama_lbs_input_container').show();
-                $('#nama_sec_select_container').hide();
-                $('#nama_sec_input_container').show();
-
-                $('#nama_lbs_select').attr('name', '').removeAttr('required');
-                $('#nama_lbs_input').attr('name', 'nama_lbs').attr('required', 'required');
-                $('#nama_sec_select').attr('name', '').removeAttr('required');
-                $('#nama_sec_input').attr('name', 'nama_sec').attr('required', 'required');
-
-
-                // ✅ Set nilai ke input field
-                if (!$('#nama_lbs_input').val() && oldLbs) {
-                    $('#nama_lbs_input').val(oldLbs);
-                }
-                if (!$('#nama_sec_input').val() && oldSec) {
-                    $('#nama_sec_input').val(oldSec);
-                }
-            } else {
-                $('#nama_lbs_select_container').show();
-                $('#nama_lbs_input_container').hide();
-                $('#nama_sec_select_container').show();
-                $('#nama_sec_input_container').hide();
-
-                $('#nama_lbs_select').attr('name', 'nama_lbs').attr('required', 'required');
-                $('#nama_lbs_input').attr('name', '').removeAttr('required');
-                $('#nama_sec_select').attr('name', 'nama_sec').attr('required', 'required');
-                $('#nama_sec_input').attr('name', '').removeAttr('required');
-            }
-        }
-
-        // Initialize toggle mode based on saved data
-        if (modeInput == 1) {
-            $('#changer_input').prop('checked', true);
-            $('#changer_select').prop('checked', false);
-        } else {
-            $('#changer_select').prop('checked', true);
+    // Make checkboxes exclusive and prevent both from being unchecked
+    $('#changer_select').change(function() {
+        if (this.checked) {
             $('#changer_input').prop('checked', false);
+        } else {
+            if (!$('#changer_input').is(':checked')) {
+                this.checked = true; // Prevent unchecking if the other is not checked
+            }
         }
         toggleMode();
+    });
 
-        // Function to load Penyulang options
-        function loadPenyulang(garduInduk, selectedPeny, callback) {
-            if (garduInduk) {
-                var urlTemplate = '{{ route("get.penyulang", "PLACEHOLDER") }}';
-                var url = urlTemplate.replace('PLACEHOLDER', encodeURIComponent(garduInduk));
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        $('#nama_peny').empty();
-                        $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
-                        $.each(data, function(key, value) {
-                            var selected = (selectedPeny && value == selectedPeny) ?
-                                'selected' : '';
-                            $('#nama_peny').append('<option value="' + value + '" ' + selected +
-                                '>' + value + '</option>');
-                        });
-                        if (callback) callback();
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' + error);
-                        console.log(xhr.responseText);
-                    }
-                });
-            } else {
-                $('#nama_peny').empty();
-                $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
+    $('#changer_input').change(function() {
+        if (this.checked) {
+            $('#changer_select').prop('checked', false);
+        } else {
+            if (!$('#changer_select').is(':checked')) {
+                this.checked = true; // Prevent unchecking if the other is not checked
             }
         }
+        toggleMode();
+    });
 
-        // Function to load Keypoint options
-        function loadKeypoint(garduInduk, penyulang, selectedLbs) {
-            if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
-                var urlTemplateKey =
-                    '{{ route("get.nama_keypoint", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
-                var urlKey = urlTemplateKey.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
-                    .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
-                $.ajax({
-                    url: urlKey,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        $('#nama_lbs_select').empty();
-                        $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
-                        $.each(data, function(key, value) {
-                            var selected = (selectedLbs && key == selectedLbs) ? 'selected' :
-                                '';
-                            $('#nama_lbs_select').append('<option value="' + key + '" ' +
-                                selected + '>' + value + '</option>');
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' + error);
-                        console.log(xhr.responseText);
-                    }
-                });
+    function toggleMode() {
+        // Set mode_input value: 1 for input mode (true), 0 for select mode (false)
+        $('#mode_input').val($('#changer_input').is(':checked') ? 1 : 0);
+
+        if ($('#changer_input').is(':checked')) {
+            $('#nama_lbs_select_container').hide();
+            $('#nama_lbs_input_container').show();
+            $('#nama_sec_select_container').hide();
+            $('#nama_sec_input_container').show();
+
+            $('#nama_lbs_select').attr('name', '').removeAttr('required');
+            $('#nama_lbs_input').attr('name', 'nama_lbs').attr('required', 'required');
+            $('#nama_sec_select').attr('name', '').removeAttr('required');
+            $('#nama_sec_input').attr('name', 'nama_sec').attr('required', 'required');
+
+
+            // ✅ Set nilai ke input field
+            if (!$('#nama_lbs_input').val() && oldLbs) {
+                $('#nama_lbs_input').val(oldLbs);
             }
-        }
-
-        // ✅ PERBAIKAN: Function loadSectoral dengan old value handling
-        function loadSectoral(garduInduk, penyulang, selectedSec) {
-            if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
-                var urlTemplateSec =
-                    '{{ route("get.sektoral", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
-                var urlSec = urlTemplateSec.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
-                    .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
-
-                $.ajax({
-                    url: urlSec,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        $('#nama_sec_select').empty();
-                        $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
-
-                        var found = false;
-                        $.each(data, function(key, value) {
-                            // ✅ Cek match dengan key atau value
-                            var isSelected = selectedSec && (
-                                key == selectedSec ||
-                                value == selectedSec ||
-                                String(key).trim().toLowerCase() == String(selectedSec)
-                                .trim().toLowerCase() ||
-                                String(value).trim().toLowerCase() == String(selectedSec)
-                                .trim().toLowerCase()
-                            );
-
-                            if (isSelected) found = true;
-                            var selected = isSelected ? 'selected' : '';
-
-                            $('#nama_sec_select').append('<option value="' + value + '" ' +
-                                selected + '>' + value + '</option>');
-                        });
-
-                        // ✅ Jika old value tidak ditemukan, tambahkan sebagai option pertama (selected)
-                        if (!found && selectedSec && selectedSec.trim() !== '') {
-                            $('#nama_sec_select').prepend('<option value="' + selectedSec +
-                                '" selected>' + selectedSec + ' (data sebelumnya)</option>');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX error sectoral: ' + xhr.status + ' - ' + status + ' - ' +
-                            error);
-                        // ✅ Fallback jika AJAX error
-                        if (selectedSec && selectedSec.trim() !== '') {
-                            $('#nama_sec_select').empty();
-                            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
-                            $('#nama_sec_select').append('<option value="' + selectedSec +
-                                '" selected>' + selectedSec + '</option>');
-                        }
-                    }
-                });
-            } else if (selectedSec && selectedSec.trim() !== '') {
-                // ✅ Jika tidak load AJAX, tetap tampilkan old value
-                $('#nama_sec_select').empty();
-                $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
-                $('#nama_sec_select').append('<option value="' + selectedSec + '" selected>' + selectedSec +
-                    '</option>');
+            if (!$('#nama_sec_input').val() && oldSec) {
+                $('#nama_sec_input').val(oldSec);
             }
-        }
+        } else {
+            $('#nama_lbs_select_container').show();
+            $('#nama_lbs_input_container').hide();
+            $('#nama_sec_select_container').show();
+            $('#nama_sec_input_container').hide();
 
-        // ✅ Initial load dengan old values
-        if (oldGi) {
-            loadPenyulang(oldGi, oldPeny, function() {
-                if (oldPeny) {
-                    loadKeypoint(oldGi, oldPeny, oldLbs);
-                    loadSectoral(oldGi, oldPeny, oldSec);
+            $('#nama_lbs_select').attr('name', 'nama_lbs').attr('required', 'required');
+            $('#nama_lbs_input').attr('name', '').removeAttr('required');
+            $('#nama_sec_select').attr('name', 'nama_sec').attr('required', 'required');
+            $('#nama_sec_input').attr('name', '').removeAttr('required');
+        }
+    }
+
+    // Initialize toggle mode based on saved data
+    if (modeInput == 1) {
+        $('#changer_input').prop('checked', true);
+        $('#changer_select').prop('checked', false);
+    } else {
+        $('#changer_select').prop('checked', true);
+        $('#changer_input').prop('checked', false);
+    }
+    toggleMode();
+
+    // Function to load Penyulang options
+    function loadPenyulang(garduInduk, selectedPeny, callback) {
+        if (garduInduk) {
+            var urlTemplate = '{{ route("get.penyulang", "PLACEHOLDER") }}';
+            var url = urlTemplate.replace('PLACEHOLDER', encodeURIComponent(garduInduk));
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_peny').empty();
+                    $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
+                    $.each(data, function(key, value) {
+                        var selected = (selectedPeny && value == selectedPeny) ?
+                            'selected' : '';
+                        $('#nama_peny').append('<option value="' + value + '" ' + selected +
+                            '>' + value + '</option>');
+                    });
+                    if (callback) callback();
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' + error);
+                    console.log(xhr.responseText);
+                }
+            });
+        } else {
+            $('#nama_peny').empty();
+            $('#nama_peny').append('<option value="">Pilih Nama Penyulangan</option>');
+        }
+    }
+
+    // Function to load Keypoint options
+    function loadKeypoint(garduInduk, penyulang, selectedLbs) {
+        if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
+            var urlTemplateKey =
+                '{{ route("get.nama_keypoint", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
+            var urlKey = urlTemplateKey.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
+                .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
+            $.ajax({
+                url: urlKey,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_lbs_select').empty();
+                    $('#nama_lbs_select').append('<option value="">Pilih Nama Keypoint</option>');
+                    $.each(data, function(key, value) {
+                        var selected = (selectedLbs && key == selectedLbs) ? 'selected' :
+                            '';
+                        $('#nama_lbs_select').append('<option value="' + key + '" ' +
+                            selected + '>' + value + '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error: ' + xhr.status + ' - ' + status + ' - ' + error);
+                    console.log(xhr.responseText);
                 }
             });
         }
+    }
 
-        $('#id_gi').change(function() {
-            var garduInduk = $(this).val();
-            loadPenyulang(garduInduk, null, null);
-            $('#nama_lbs_select').empty().append('<option value="">Pilih Nama Keypoint</option>');
-            $('#nama_sec_select').empty().append('<option value="">Pilih Sectoral</option>');
-        });
+    // ✅ PERBAIKAN: Function loadSectoral dengan old value handling
+    function loadSectoral(garduInduk, penyulang, selectedSec) {
+        if (penyulang && garduInduk && !$('#changer_input').is(':checked')) {
+            var urlTemplateSec =
+                '{{ route("get.sektoral", ["gardu_induk" => "GI_PLACEHOLDER", "penyulang" => "PENY_PLACEHOLDER"]) }}';
+            var urlSec = urlTemplateSec.replace('GI_PLACEHOLDER', encodeURIComponent(garduInduk))
+                .replace('PENY_PLACEHOLDER', encodeURIComponent(penyulang));
 
-        $('#nama_peny').change(function() {
-            var penyulang = $(this).val();
-            var garduInduk = $('#id_gi').val();
-            if (penyulang && garduInduk) {
-                loadKeypoint(garduInduk, penyulang, null);
-                loadSectoral(garduInduk, penyulang, null);
-            } else {
-                $('#nama_lbs_select').empty().append('<option value="">Pilih Nama Keypoint</option>');
-                $('#nama_sec_select').empty().append('<option value="">Pilih Sectoral</option>');
+            $.ajax({
+                url: urlSec,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('#nama_sec_select').empty();
+                    $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+
+                    var found = false;
+                    $.each(data, function(key, value) {
+                        // ✅ Cek match dengan key atau value
+                        var isSelected = selectedSec && (
+                            key == selectedSec ||
+                            value == selectedSec ||
+                            String(key).trim().toLowerCase() == String(selectedSec)
+                            .trim().toLowerCase() ||
+                            String(value).trim().toLowerCase() == String(selectedSec)
+                            .trim().toLowerCase()
+                        );
+
+                        if (isSelected) found = true;
+                        var selected = isSelected ? 'selected' : '';
+
+                        $('#nama_sec_select').append('<option value="' + value + '" ' +
+                            selected + '>' + value + '</option>');
+                    });
+
+                    // ✅ Jika old value tidak ditemukan, tambahkan sebagai option pertama (selected)
+                    if (!found && selectedSec && selectedSec.trim() !== '') {
+                        $('#nama_sec_select').prepend('<option value="' + selectedSec +
+                            '" selected>' + selectedSec + ' (data sebelumnya)</option>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX error sectoral: ' + xhr.status + ' - ' + status + ' - ' +
+                        error);
+                    // ✅ Fallback jika AJAX error
+                    if (selectedSec && selectedSec.trim() !== '') {
+                        $('#nama_sec_select').empty();
+                        $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+                        $('#nama_sec_select').append('<option value="' + selectedSec +
+                            '" selected>' + selectedSec + '</option>');
+                    }
+                }
+            });
+        } else if (selectedSec && selectedSec.trim() !== '') {
+            // ✅ Jika tidak load AJAX, tetap tampilkan old value
+            $('#nama_sec_select').empty();
+            $('#nama_sec_select').append('<option value="">Pilih Sectoral</option>');
+            $('#nama_sec_select').append('<option value="' + selectedSec + '" selected>' + selectedSec +
+                '</option>');
+        }
+    }
+
+    // ✅ Initial load dengan old values
+    if (oldGi) {
+        loadPenyulang(oldGi, oldPeny, function() {
+            if (oldPeny) {
+                loadKeypoint(oldGi, oldPeny, oldLbs);
+                loadSectoral(oldGi, oldPeny, oldSec);
             }
         });
+    }
+
+    $('#id_gi').change(function() {
+        var garduInduk = $(this).val();
+        loadPenyulang(garduInduk, null, null);
+        $('#nama_lbs_select').empty().append('<option value="">Pilih Nama Keypoint</option>');
+        $('#nama_sec_select').empty().append('<option value="">Pilih Sectoral</option>');
     });
+
+    $('#nama_peny').change(function() {
+        var penyulang = $(this).val();
+        var garduInduk = $('#id_gi').val();
+        if (penyulang && garduInduk) {
+            loadKeypoint(garduInduk, penyulang, null);
+            loadSectoral(garduInduk, penyulang, null);
+        } else {
+            $('#nama_lbs_select').empty().append('<option value="">Pilih Nama Keypoint</option>');
+            $('#nama_sec_select').empty().append('<option value="">Pilih Sectoral</option>');
+        }
+    });
+});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
 
