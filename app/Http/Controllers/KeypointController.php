@@ -1207,12 +1207,10 @@ class KeypointController extends Controller
 
 
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, $id)
     {
-        // Find the existing keypoint
+        // 0. Cari Data yang akan diupdate
         $keypoint = Keypoint::findOrFail($id);
 
         // 1. Prepare Arrays for ID fields
@@ -1222,7 +1220,7 @@ class KeypointController extends Controller
         $idPelrtuInput = $request->input('id_pelrtu', '');
         $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
 
-        // 2. Define ALL valid checkbox values (Must match value="..." in Blade)
+        // 2. Define ALL valid checkbox values
         $validCheckboxValues = [
             // --- Common Values ---
             'normal',
@@ -1436,21 +1434,94 @@ class KeypointController extends Controller
             're_ctrl_ar_off1',
             're_ctrl_ar_off2',
             're_ctrl_ar_off5',
+
+            // --- TELEMETERING NEW VALUES (ADDED) ---
+            't_ir1',
+            't_ir2',
+            't_ir5',
+            't_is1',
+            't_is2',
+            't_is5',
+            't_it1',
+            't_it2',
+            't_it5',
+            't_in1',
+            't_in2',
+            't_in5',
+            't_vrin1',
+            't_vrin2',
+            't_vrin5',
+            't_vsin1',
+            't_vsin2',
+            't_vsin5',
+            't_vtin1',
+            't_vtin2',
+            't_vtin5',
+            't_vrout1',
+            't_vrout2',
+            't_vrout5',
+            't_vsout1',
+            't_vsout2',
+            't_vsout5',
+            't_vtout1',
+            't_vtout2',
+            't_vtout5',
+            't_vavg1',
+            't_vavg2',
+            't_vavg5',
+            't_hz1',
+            't_hz2',
+            't_hz5',
+            't_iavg1',
+            't_iavg2',
+            't_iavg5',
+            't_pf1',
+            't_pf2',
+            't_pf5',
+            't_ifr1',
+            't_ifr2',
+            't_ifr5',
+            't_ifs1',
+            't_ifs2',
+            't_ifs5',
+            't_ift1',
+            't_ift2',
+            't_ift5',
+            't_ifn1',
+            't_ifn2',
+            't_ifn5',
+            't_ifr_psuedo1',
+            't_ifr_psuedo2',
+            't_ifr_psuedo5',
+            't_ifs_psuedo1',
+            't_ifs_psuedo2',
+            't_ifs_psuedo5',
+            't_ift_psuedo1',
+            't_ift_psuedo2',
+            't_ift_psuedo5',
+            't_ifn_psuedo1',
+            't_ifn_psuedo2',
+            't_ifn_psuedo5',
         ];
 
         // 3. Define Validation Rules
         $rules = [
             'tgl_komisioning' => 'required|date',
-            'nama_lbs' => ['required', 'string', 'max:50', function ($attribute, $value, $fail) use ($request, $keypoint) {
-                if (!$request->mode_input) {
+            'nama_lbs' => ['required', 'string', 'max:100', function ($attribute, $value, $fail) use ($request) {
+                $modeInput = $request->input('mode_input', 0);
+
+                if ($modeInput == 0 || $modeInput == '0') {
                     $gi = $request->id_gi;
                     $peny = $request->nama_peny;
-                    if (!DB::connection('masterdata')->table('dg_keypoint')
+
+                    $exists = DB::connection('masterdata')->table('dg_keypoint')
                         ->where('gardu_induk', $gi)
                         ->where('penyulang', $peny)
-                        ->where('nama_keypoint', $value)
-                        ->exists()) {
-                        $fail('Invalid Nama Keypoint.');
+                        ->whereRaw("CONCAT(type_keypoint, ' ', nama_keypoint) = ?", [$value])
+                        ->exists();
+
+                    if (!$exists) {
+                        $fail('Nama Keypoint tidak valid.');
                     }
                 }
             }],
@@ -1470,10 +1541,26 @@ class KeypointController extends Controller
                     $fail('Invalid Nama Penyulangan for selected Gardu Induk.');
                 }
             }],
-            'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255'],
+            'nama_sec' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) use ($request) {
+                $modeInput = $request->input('mode_input', 0);
+
+                if ($modeInput == 0 || $modeInput == '0') {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+
+                    $exists = DB::connection('masterdata')->table('dg_keypoint')
+                        ->where('gardu_induk', $gi)
+                        ->where('penyulang', $peny)
+                        ->whereRaw("CONCAT(up3, ' ', sektoral) = ?", [$value])
+                        ->exists();
+
+                    if (!$exists) {
+                        $fail('Sectoral tidak valid.');
+                    }
+                }
+            }],
 
             // --- TELEMETERING FIELDS ---
-            // Arus (Existing)
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
             'ir_scale' => 'required|string|max:10',
@@ -1483,25 +1570,18 @@ class KeypointController extends Controller
             'it_rtu' => 'required|integer',
             'it_ms' => 'required|integer',
             'it_scale' => 'required|string|max:10',
-
-            // --- 1. ARUS (Existing) ---
-            'ir_addrtu'     => 'required|integer',
-            'ir_addms'      => 'required|integer',
-            'ir_addobjfrmt' => 'required|string|max:10', // Sebelumnya ir_scale
-
-            'is_addrtu'     => 'required|integer',
-            'is_addms'      => 'required|integer',
-            'is_addobjfrmt' => 'required|string|max:10', // Sebelumnya is_scale
-
-            'it_addrtu'     => 'required|integer',
-            'it_addms'      => 'required|integer',
-            'it_addobjfrmt' => 'required|string|max:10', // Sebelumnya it_scale
-
-            'in_addrtu'     => 'nullable|string|max:100', // Ditambahkan dari section bawah
-            'in_addms'      => 'nullable|string|max:100',
+            'ir_addrtu' => 'required|integer',
+            'ir_addms' => 'required|integer',
+            'ir_addobjfrmt' => 'required|string|max:10',
+            'is_addrtu' => 'required|integer',
+            'is_addms' => 'required|integer',
+            'is_addobjfrmt' => 'required|string|max:10',
+            'it_addrtu' => 'required|integer',
+            'it_addms' => 'required|integer',
+            'it_addobjfrmt' => 'required|string|max:10',
+            'in_addrtu' => 'nullable|string|max:100',
+            'in_addms' => 'nullable|string|max:100',
             'in_addobjfrmt' => 'nullable|string|max:100',
-
-            // Tegangan Input (Existing)
             'vrin_rtu' => 'required|string|max:10',
             'vrin_ms' => 'required|string|max:10',
             'vrin_scale' => 'required|string|max:10',
@@ -1511,21 +1591,15 @@ class KeypointController extends Controller
             'vtin_rtu' => 'required|string|max:10',
             'vtin_ms' => 'required|string|max:10',
             'vtin_scale' => 'required|string|max:10',
-
-            // --- 2. TEGANGAN INPUT (Existing) ---
-            'vrin_addrtu'     => 'required|string|max:10',
-            'vrin_addms'      => 'required|string|max:10',
+            'vrin_addrtu' => 'required|string|max:10',
+            'vrin_addms' => 'required|string|max:10',
             'vrin_addobjfrmt' => 'required|string|max:10',
-
-            'vsin_addrtu'     => 'required|string|max:10',
-            'vsin_addms'      => 'required|string|max:10',
+            'vsin_addrtu' => 'required|string|max:10',
+            'vsin_addms' => 'required|string|max:10',
             'vsin_addobjfrmt' => 'required|string|max:10',
-
-            'vtin_addrtu'     => 'required|string|max:10',
-            'vtin_addms'      => 'required|string|max:10',
+            'vtin_addrtu' => 'required|string|max:10',
+            'vtin_addms' => 'required|string|max:10',
             'vtin_addobjfrmt' => 'required|string|max:10',
-
-            // Tegangan Output (BARU DITAMBAHKAN)
             'vrout_rtu' => 'nullable|string|max:10',
             'vrout_ms' => 'nullable|string|max:10',
             'vrout_scale' => 'nullable|string|max:10',
@@ -1535,25 +1609,18 @@ class KeypointController extends Controller
             'vtout_rtu' => 'nullable|string|max:10',
             'vtout_ms' => 'nullable|string|max:10',
             'vtout_scale' => 'nullable|string|max:10',
-
-            // --- 3. TEGANGAN OUTPUT (BARU) ---
-            'vrout_addrtu'     => 'nullable|string|max:10',
-            'vrout_addms'      => 'nullable|string|max:10',
+            'vrout_addrtu' => 'nullable|string|max:10',
+            'vrout_addms' => 'nullable|string|max:10',
             'vrout_addobjfrmt' => 'nullable|string|max:10',
-
-            'vsout_addrtu'     => 'nullable|string|max:10',
-            'vsout_addms'      => 'nullable|string|max:10',
+            'vsout_addrtu' => 'nullable|string|max:10',
+            'vsout_addms' => 'nullable|string|max:10',
             'vsout_addobjfrmt' => 'nullable|string|max:10',
-
-            'vtout_addrtu'     => 'nullable|string|max:10',
-            'vtout_addms'      => 'nullable|string|max:10',
+            'vtout_addrtu' => 'nullable|string|max:10',
+            'vtout_addms' => 'nullable|string|max:10',
             'vtout_addobjfrmt' => 'nullable|string|max:10',
-
-            'vavg_addrtu'      => 'nullable|string|max:100', // Ditambahkan dari section bawah
-            'vavg_addms'       => 'nullable|string|max:100',
-            'vavg_addobjfrmt'  => 'nullable|string|max:100',
-
-            // Frekuensi, Arus Rata2, Power Factor (BARU DITAMBAHKAN)
+            'vavg_addrtu' => 'nullable|string|max:100',
+            'vavg_addms' => 'nullable|string|max:100',
+            'vavg_addobjfrmt' => 'nullable|string|max:100',
             'hz_rtu' => 'nullable|string|max:10',
             'hz_ms' => 'nullable|string|max:10',
             'hz_scale' => 'nullable|string|max:10',
@@ -1563,21 +1630,15 @@ class KeypointController extends Controller
             'pf_rtu' => 'nullable|string|max:10',
             'pf_ms' => 'nullable|string|max:10',
             'pf_scale' => 'nullable|string|max:10',
-
-            // --- 4. FREKUENSI, ARUS RATA2, POWER FACTOR (BARU) ---
-            'hz_addrtu'     => 'nullable|string|max:10',
-            'hz_addms'      => 'nullable|string|max:10',
+            'hz_addrtu' => 'nullable|string|max:10',
+            'hz_addms' => 'nullable|string|max:10',
             'hz_addobjfrmt' => 'nullable|string|max:10',
-
-            'iavg_addrtu'     => 'nullable|string|max:100',
-            'iavg_addms'      => 'nullable|string|max:100',
+            'iavg_addrtu' => 'nullable|string|max:100',
+            'iavg_addms' => 'nullable|string|max:100',
             'iavg_addobjfrmt' => 'nullable|string|max:100',
-
-            'pf_addrtu'     => 'nullable|string|max:10',
-            'pf_addms'      => 'nullable|string|max:10',
+            'pf_addrtu' => 'nullable|string|max:10',
+            'pf_addms' => 'nullable|string|max:10',
             'pf_addobjfrmt' => 'nullable|string|max:10',
-
-            // Arus Gangguan / Fault Current (BARU DITAMBAHKAN)
             'ifr_rtu' => 'nullable|string|max:10',
             'ifr_ms' => 'nullable|string|max:10',
             'ifr_scale' => 'nullable|string|max:10',
@@ -1590,25 +1651,18 @@ class KeypointController extends Controller
             'ifn_rtu' => 'nullable|string|max:10',
             'ifn_ms' => 'nullable|string|max:10',
             'ifn_scale' => 'nullable|string|max:10',
-
-            // --- 5. ARUS GANGGUAN / FAULT CURRENT (BARU) ---
-            'ifr_addrtu'     => 'nullable|string|max:10',
-            'ifr_addms'      => 'nullable|string|max:10',
+            'ifr_addrtu' => 'nullable|string|max:10',
+            'ifr_addms' => 'nullable|string|max:10',
             'ifr_addobjfrmt' => 'nullable|string|max:10',
-
-            'ifs_addrtu'     => 'nullable|string|max:10',
-            'ifs_addms'      => 'nullable|string|max:10',
+            'ifs_addrtu' => 'nullable|string|max:10',
+            'ifs_addms' => 'nullable|string|max:10',
             'ifs_addobjfrmt' => 'nullable|string|max:10',
-
-            'ift_addrtu'     => 'nullable|string|max:10',
-            'ift_addms'      => 'nullable|string|max:10',
+            'ift_addrtu' => 'nullable|string|max:10',
+            'ift_addms' => 'nullable|string|max:10',
             'ift_addobjfrmt' => 'nullable|string|max:10',
-
-            'ifn_addrtu'     => 'nullable|string|max:10',
-            'ifn_addms'      => 'nullable|string|max:10',
+            'ifn_addrtu' => 'nullable|string|max:10',
+            'ifn_addms' => 'nullable|string|max:10',
             'ifn_addobjfrmt' => 'nullable|string|max:10',
-
-            // Arus Gangguan Pseudo (BARU DITAMBAHKAN)
             'ifr_psuedo_rtu' => 'nullable|string|max:10',
             'ifr_psuedo_ms' => 'nullable|string|max:10',
             'ifr_psuedo_scale' => 'nullable|string|max:10',
@@ -1621,26 +1675,18 @@ class KeypointController extends Controller
             'ifn_psuedo_rtu' => 'nullable|string|max:10',
             'ifn_psuedo_ms' => 'nullable|string|max:10',
             'ifn_psuedo_scale' => 'nullable|string|max:10',
-
-            // --- 6. ARUS GANGGUAN PSEUDO (BARU) ---
-            // Perhatikan penulisan 'psuedo' disesuaikan dengan gambar (bukan pseudo)
-            'ifr_psuedo_addrtu'     => 'nullable|string|max:10',
-            'ifr_psuedo_addms'      => 'nullable|string|max:10',
+            'ifr_psuedo_addrtu' => 'nullable|string|max:10',
+            'ifr_psuedo_addms' => 'nullable|string|max:10',
             'ifr_psuedo_addobjfrmt' => 'nullable|string|max:10',
-
-            'ifs_psuedo_addrtu'     => 'nullable|string|max:10',
-            'ifs_psuedo_addms'      => 'nullable|string|max:10',
+            'ifs_psuedo_addrtu' => 'nullable|string|max:10',
+            'ifs_psuedo_addms' => 'nullable|string|max:10',
             'ifs_psuedo_addobjfrmt' => 'nullable|string|max:10',
-
-            'ift_psuedo_addrtu'     => 'nullable|string|max:10',
-            'ift_psuedo_addms'      => 'nullable|string|max:10',
+            'ift_psuedo_addrtu' => 'nullable|string|max:10',
+            'ift_psuedo_addms' => 'nullable|string|max:10',
             'ift_psuedo_addobjfrmt' => 'nullable|string|max:10',
-
-            'ifn_psuedo_addrtu'     => 'nullable|string|max:10',
-            'ifn_psuedo_addms'      => 'nullable|string|max:10',
+            'ifn_psuedo_addrtu' => 'nullable|string|max:10',
+            'ifn_psuedo_addms' => 'nullable|string|max:10',
             'ifn_psuedo_addobjfrmt' => 'nullable|string|max:10',
-
-            // --- IN & VAVG ---
             'iavg_rtu' => 'nullable|string|max:100',
             'iavg_ms' => 'nullable|string|max:100',
             'iavg_scale' => 'nullable|string|max:100',
@@ -1672,7 +1718,6 @@ class KeypointController extends Controller
             'nama_user' => 'required|string|max:50',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
 
-            // AddMs / AddRtu / ObjFrmt fields
             'sacf_fail_addms' => 'nullable|string|max:100',
             'sacf_fail_addrtu' => 'nullable|string|max:100',
             'sacf_fail_objfrmt' => 'nullable|string|max:100',
@@ -1751,7 +1796,6 @@ class KeypointController extends Controller
             'ssf6_normal_addms' => 'nullable|string|max:100',
             'ssf6_normal_addrtu' => 'nullable|string|max:100',
             'ssf6_normal_objfrmt' => 'nullable|string|max:100',
-
             'ccb_open_addms' => 'nullable|string|max:100',
             'ccb_open_addrtu' => 'nullable|string|max:100',
             'ccb_open_objfrmt' => 'nullable|string|max:100',
@@ -1827,7 +1871,29 @@ class KeypointController extends Controller
             'c_cb',
             'c_cb2',
             'c_hlt',
-            'c_rst'
+            'c_rst',
+            't_ir',
+            't_is',
+            't_it',
+            't_in',
+            't_vrin',
+            't_vsin',
+            't_vtin',
+            't_vrout',
+            't_vsout',
+            't_vtout',
+            't_vavg',
+            't_ifr',
+            't_ifs',
+            't_ift',
+            't_ifn',
+            't_ifr_psuedo',
+            't_ifs_psuedo',
+            't_ift_psuedo',
+            't_ifn_psuedo',
+            't_hz',
+            't_iavg',
+            't_pf',
         ];
 
         foreach ($checkboxFields as $field) {
@@ -1840,22 +1906,31 @@ class KeypointController extends Controller
 
         // 6. Post-Processing: Convert Arrays to Comma-Separated Strings for Database
         foreach ($checkboxFields as $field) {
+            // If the field exists in request and is an array, implode it. Otherwise, empty string.
             $validated[$field] = ($request->has($field) && is_array($request->input($field)))
                 ? implode(',', array_filter($request->input($field)))
                 : '';
         }
 
         // 7. Handle Sectoral Logic
-        if (!empty($request->nama_sec)) {
-            $validated['id_sec'] = $request->nama_sec; // Simpan langsung ke id_sec
+        if (!empty($validated['nama_sec'])) {
+            $namaSec = $validated['nama_sec']; // Ini sudah berisi "up3 sektoral"
+            $existingSec = DB::table('tb_sectoral')->where('nama_sec', $namaSec)->first();
+
+            if ($existingSec) {
+                $validated['id_sec'] = $existingSec->id_sec;
+            } else {
+                // Option A: Still use nama_sec as id_sec
+                $validated['id_sec'] = $namaSec;
+            }
         }
-        unset($validated['nama_sec']);
+        unset($validated['nama_sec']); // Hapus nama_sec, hanya simpan id_sec
 
         // 8. Handle JSON encoded IDs
         $validated['id_pelms'] = json_encode($idPelmsArray);
         $validated['id_pelrtu'] = json_encode($idPelrtuArray);
 
-        // 9. Update the record in Database
+        // 9. Update Database
         $keypoint->update($validated);
 
         return redirect()->route('keypoint.index')->with('success', 'Keypoint updated successfully!');
@@ -1889,17 +1964,16 @@ class KeypointController extends Controller
         return view('pages.keypoint.clone', compact('keypoint', 'merklbs', 'modems', 'medkom', 'garduinduk', 'komkp', 'pelms', 'selectedPelms', 'pelrtus', 'selectedPelrtus'));
     }
 
-
     public function storeClone(Request $request)
     {
-        // 1. Prepare Arrays for ID fields
+        // 1. Prepare Arrays for ID fields (Personnel)
         $idPelmsInput = $request->input('id_pelms', '');
         $idPelmsArray = !empty($idPelmsInput) ? array_filter(array_map('trim', explode(',', $idPelmsInput))) : [];
 
         $idPelrtuInput = $request->input('id_pelrtu', '');
         $idPelrtuArray = !empty($idPelrtuInput) ? array_filter(array_map('trim', explode(',', $idPelrtuInput))) : [];
 
-        // 2. Define ALL valid checkbox values (Must match value="..." in Blade)
+        // 2. Define ALL valid checkbox values
         $validCheckboxValues = [
             // --- Common Values ---
             'normal',
@@ -2035,7 +2109,7 @@ class KeypointController extends Controller
             'lruf_nrml_2',
             'lruf_nrml_5',
 
-            // --- Telecontrol (FormTelecontrol) ---
+            // --- Telecontrol ---
             'cbctrl_op_1',
             'cbctrl_op_2',
             'cbctrl_op_3',
@@ -2072,7 +2146,7 @@ class KeypointController extends Controller
             'rrctrl_on_4',
             'rrctrl_on_5',
 
-            // --- System (FormSystem) ---
+            // --- System & Hardware ---
             'sys_comf1',
             'sys_comf2',
             'sys_comf5',
@@ -2085,8 +2159,6 @@ class KeypointController extends Controller
             'sys_limitswith1',
             'sys_limitswith2',
             'sys_limitswith5',
-
-            // --- Hardware (FormHardware) ---
             'hard_batere1',
             'hard_batere2',
             'hard_batere5',
@@ -2100,7 +2172,7 @@ class KeypointController extends Controller
             'hard_limitswith2',
             'hard_limitswith5',
 
-            // --- Recloser (FormRecloser) ---
+            // --- Recloser ---
             're_ar_on1',
             're_ar_on2',
             're_ar_on5',
@@ -2113,21 +2185,92 @@ class KeypointController extends Controller
             're_ctrl_ar_off1',
             're_ctrl_ar_off2',
             're_ctrl_ar_off5',
+
+            // --- TELEMETERING NEW VALUES ---
+            't_ir1',
+            't_ir2',
+            't_ir5',
+            't_is1',
+            't_is2',
+            't_is5',
+            't_it1',
+            't_it2',
+            't_it5',
+            't_in1',
+            't_in2',
+            't_in5',
+            't_vrin1',
+            't_vrin2',
+            't_vrin5',
+            't_vsin1',
+            't_vsin2',
+            't_vsin5',
+            't_vtin1',
+            't_vtin2',
+            't_vtin5',
+            't_vrout1',
+            't_vrout2',
+            't_vrout5',
+            't_vsout1',
+            't_vsout2',
+            't_vsout5',
+            't_vtout1',
+            't_vtout2',
+            't_vtout5',
+            't_vavg1',
+            't_vavg2',
+            't_vavg5',
+            't_hz1',
+            't_hz2',
+            't_hz5',
+            't_iavg1',
+            't_iavg2',
+            't_iavg5',
+            't_pf1',
+            't_pf2',
+            't_pf5',
+            't_ifr1',
+            't_ifr2',
+            't_ifr5',
+            't_ifs1',
+            't_ifs2',
+            't_ifs5',
+            't_ift1',
+            't_ift2',
+            't_ift5',
+            't_ifn1',
+            't_ifn2',
+            't_ifn5',
+            // Pseudo
+            't_ifr_psuedo1',
+            't_ifr_psuedo2',
+            't_ifr_psuedo5',
+            't_ifs_psuedo1',
+            't_ifs_psuedo2',
+            't_ifs_psuedo5',
+            't_ift_psuedo1',
+            't_ift_psuedo2',
+            't_ift_psuedo5',
+            't_ifn_psuedo1',
+            't_ifn_psuedo2',
+            't_ifn_psuedo5',
         ];
 
         // 3. Define Validation Rules
         $rules = [
             'tgl_komisioning' => 'required|date',
-            'nama_lbs' => ['required', 'string', 'max:50', function ($attribute, $value, $fail) use ($request) {
-                if (!$request->mode_input) {
+            'nama_lbs' => ['required', 'string', 'max:100', function ($attribute, $value, $fail) use ($request) {
+                $modeInput = $request->input('mode_input', 0);
+                if ($modeInput == 0 || $modeInput == '0') {
                     $gi = $request->id_gi;
                     $peny = $request->nama_peny;
-                    if (!DB::connection('masterdata')->table('dg_keypoint')
+                    $exists = DB::connection('masterdata')->table('dg_keypoint')
                         ->where('gardu_induk', $gi)
                         ->where('penyulang', $peny)
-                        ->where('nama_keypoint', $value)
-                        ->exists()) {
-                        $fail('Invalid Nama Keypoint.');
+                        ->whereRaw("CONCAT(type_keypoint, ' ', nama_keypoint) = ?", [$value])
+                        ->exists();
+                    if (!$exists) {
+                        $fail('Nama Keypoint tidak valid.');
                     }
                 }
             }],
@@ -2147,10 +2290,23 @@ class KeypointController extends Controller
                     $fail('Invalid Nama Penyulangan for selected Gardu Induk.');
                 }
             }],
-            'nama_sec' => ['required_if:mode_input,false', 'string', 'max:255'],
+            'nama_sec' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) use ($request) {
+                $modeInput = $request->input('mode_input', 0);
+                if ($modeInput == 0 || $modeInput == '0') {
+                    $gi = $request->id_gi;
+                    $peny = $request->nama_peny;
+                    $exists = DB::connection('masterdata')->table('dg_keypoint')
+                        ->where('gardu_induk', $gi)
+                        ->where('penyulang', $peny)
+                        ->whereRaw("CONCAT(up3, ' ', sektoral) = ?", [$value])
+                        ->exists();
+                    if (!$exists) {
+                        $fail('Sectoral tidak valid.');
+                    }
+                }
+            }],
 
             // --- TELEMETERING FIELDS ---
-            // Arus (Existing)
             'ir_rtu' => 'required|integer',
             'ir_ms' => 'required|integer',
             'ir_scale' => 'required|string|max:10',
@@ -2161,24 +2317,20 @@ class KeypointController extends Controller
             'it_ms' => 'required|integer',
             'it_scale' => 'required|string|max:10',
 
-            // --- 1. ARUS (Existing) ---
-            'ir_addrtu'     => 'required|integer',
-            'ir_addms'      => 'required|integer',
-            'ir_addobjfrmt' => 'required|string|max:10', // Sebelumnya ir_scale
-
-            'is_addrtu'     => 'required|integer',
-            'is_addms'      => 'required|integer',
-            'is_addobjfrmt' => 'required|string|max:10', // Sebelumnya is_scale
-
-            'it_addrtu'     => 'required|integer',
-            'it_addms'      => 'required|integer',
-            'it_addobjfrmt' => 'required|string|max:10', // Sebelumnya it_scale
-
-            'in_addrtu'     => 'nullable|string|max:100', // Ditambahkan dari section bawah
-            'in_addms'      => 'nullable|string|max:100',
+            // ADD Fields (Existing & New)
+            'ir_addrtu' => 'required|integer',
+            'ir_addms' => 'required|integer',
+            'ir_addobjfrmt' => 'required|string|max:10',
+            'is_addrtu' => 'required|integer',
+            'is_addms' => 'required|integer',
+            'is_addobjfrmt' => 'required|string|max:10',
+            'it_addrtu' => 'required|integer',
+            'it_addms' => 'required|integer',
+            'it_addobjfrmt' => 'required|string|max:10',
+            'in_addrtu' => 'nullable|string|max:100',
+            'in_addms' => 'nullable|string|max:100',
             'in_addobjfrmt' => 'nullable|string|max:100',
 
-            // Tegangan Input (Existing)
             'vrin_rtu' => 'required|string|max:10',
             'vrin_ms' => 'required|string|max:10',
             'vrin_scale' => 'required|string|max:10',
@@ -2189,20 +2341,16 @@ class KeypointController extends Controller
             'vtin_ms' => 'required|string|max:10',
             'vtin_scale' => 'required|string|max:10',
 
-            // --- 2. TEGANGAN INPUT (Existing) ---
-            'vrin_addrtu'     => 'required|string|max:10',
-            'vrin_addms'      => 'required|string|max:10',
+            'vrin_addrtu' => 'required|string|max:10',
+            'vrin_addms' => 'required|string|max:10',
             'vrin_addobjfrmt' => 'required|string|max:10',
-
-            'vsin_addrtu'     => 'required|string|max:10',
-            'vsin_addms'      => 'required|string|max:10',
+            'vsin_addrtu' => 'required|string|max:10',
+            'vsin_addms' => 'required|string|max:10',
             'vsin_addobjfrmt' => 'required|string|max:10',
-
-            'vtin_addrtu'     => 'required|string|max:10',
-            'vtin_addms'      => 'required|string|max:10',
+            'vtin_addrtu' => 'required|string|max:10',
+            'vtin_addms' => 'required|string|max:10',
             'vtin_addobjfrmt' => 'required|string|max:10',
 
-            // Tegangan Output (BARU DITAMBAHKAN)
             'vrout_rtu' => 'nullable|string|max:10',
             'vrout_ms' => 'nullable|string|max:10',
             'vrout_scale' => 'nullable|string|max:10',
@@ -2213,24 +2361,20 @@ class KeypointController extends Controller
             'vtout_ms' => 'nullable|string|max:10',
             'vtout_scale' => 'nullable|string|max:10',
 
-            // --- 3. TEGANGAN OUTPUT (BARU) ---
-            'vrout_addrtu'     => 'nullable|string|max:10',
-            'vrout_addms'      => 'nullable|string|max:10',
+            'vrout_addrtu' => 'nullable|string|max:10',
+            'vrout_addms' => 'nullable|string|max:10',
             'vrout_addobjfrmt' => 'nullable|string|max:10',
-
-            'vsout_addrtu'     => 'nullable|string|max:10',
-            'vsout_addms'      => 'nullable|string|max:10',
+            'vsout_addrtu' => 'nullable|string|max:10',
+            'vsout_addms' => 'nullable|string|max:10',
             'vsout_addobjfrmt' => 'nullable|string|max:10',
-
-            'vtout_addrtu'     => 'nullable|string|max:10',
-            'vtout_addms'      => 'nullable|string|max:10',
+            'vtout_addrtu' => 'nullable|string|max:10',
+            'vtout_addms' => 'nullable|string|max:10',
             'vtout_addobjfrmt' => 'nullable|string|max:10',
 
-            'vavg_addrtu'      => 'nullable|string|max:100', // Ditambahkan dari section bawah
-            'vavg_addms'       => 'nullable|string|max:100',
-            'vavg_addobjfrmt'  => 'nullable|string|max:100',
+            'vavg_addrtu' => 'nullable|string|max:100',
+            'vavg_addms' => 'nullable|string|max:100',
+            'vavg_addobjfrmt' => 'nullable|string|max:100',
 
-            // Frekuensi, Arus Rata2, Power Factor (BARU DITAMBAHKAN)
             'hz_rtu' => 'nullable|string|max:10',
             'hz_ms' => 'nullable|string|max:10',
             'hz_scale' => 'nullable|string|max:10',
@@ -2241,20 +2385,16 @@ class KeypointController extends Controller
             'pf_ms' => 'nullable|string|max:10',
             'pf_scale' => 'nullable|string|max:10',
 
-            // --- 4. FREKUENSI, ARUS RATA2, POWER FACTOR (BARU) ---
-            'hz_addrtu'     => 'nullable|string|max:10',
-            'hz_addms'      => 'nullable|string|max:10',
+            'hz_addrtu' => 'nullable|string|max:10',
+            'hz_addms' => 'nullable|string|max:10',
             'hz_addobjfrmt' => 'nullable|string|max:10',
-
-            'iavg_addrtu'     => 'nullable|string|max:100',
-            'iavg_addms'      => 'nullable|string|max:100',
+            'iavg_addrtu' => 'nullable|string|max:100',
+            'iavg_addms' => 'nullable|string|max:100',
             'iavg_addobjfrmt' => 'nullable|string|max:100',
-
-            'pf_addrtu'     => 'nullable|string|max:10',
-            'pf_addms'      => 'nullable|string|max:10',
+            'pf_addrtu' => 'nullable|string|max:10',
+            'pf_addms' => 'nullable|string|max:10',
             'pf_addobjfrmt' => 'nullable|string|max:10',
 
-            // Arus Gangguan / Fault Current (BARU DITAMBAHKAN)
             'ifr_rtu' => 'nullable|string|max:10',
             'ifr_ms' => 'nullable|string|max:10',
             'ifr_scale' => 'nullable|string|max:10',
@@ -2268,24 +2408,20 @@ class KeypointController extends Controller
             'ifn_ms' => 'nullable|string|max:10',
             'ifn_scale' => 'nullable|string|max:10',
 
-            // --- 5. ARUS GANGGUAN / FAULT CURRENT (BARU) ---
-            'ifr_addrtu'     => 'nullable|string|max:10',
-            'ifr_addms'      => 'nullable|string|max:10',
+            'ifr_addrtu' => 'nullable|string|max:10',
+            'ifr_addms' => 'nullable|string|max:10',
             'ifr_addobjfrmt' => 'nullable|string|max:10',
-
-            'ifs_addrtu'     => 'nullable|string|max:10',
-            'ifs_addms'      => 'nullable|string|max:10',
+            'ifs_addrtu' => 'nullable|string|max:10',
+            'ifs_addms' => 'nullable|string|max:10',
             'ifs_addobjfrmt' => 'nullable|string|max:10',
-
-            'ift_addrtu'     => 'nullable|string|max:10',
-            'ift_addms'      => 'nullable|string|max:10',
+            'ift_addrtu' => 'nullable|string|max:10',
+            'ift_addms' => 'nullable|string|max:10',
             'ift_addobjfrmt' => 'nullable|string|max:10',
-
-            'ifn_addrtu'     => 'nullable|string|max:10',
-            'ifn_addms'      => 'nullable|string|max:10',
+            'ifn_addrtu' => 'nullable|string|max:10',
+            'ifn_addms' => 'nullable|string|max:10',
             'ifn_addobjfrmt' => 'nullable|string|max:10',
 
-            // Arus Gangguan Pseudo (BARU DITAMBAHKAN)
+            // Psuedo fields
             'ifr_psuedo_rtu' => 'nullable|string|max:10',
             'ifr_psuedo_ms' => 'nullable|string|max:10',
             'ifr_psuedo_scale' => 'nullable|string|max:10',
@@ -2299,25 +2435,19 @@ class KeypointController extends Controller
             'ifn_psuedo_ms' => 'nullable|string|max:10',
             'ifn_psuedo_scale' => 'nullable|string|max:10',
 
-            // --- 6. ARUS GANGGUAN PSEUDO (BARU) ---
-            // Perhatikan penulisan 'psuedo' disesuaikan dengan gambar (bukan pseudo)
-            'ifr_psuedo_addrtu'     => 'nullable|string|max:10',
-            'ifr_psuedo_addms'      => 'nullable|string|max:10',
+            'ifr_psuedo_addrtu' => 'nullable|string|max:10',
+            'ifr_psuedo_addms' => 'nullable|string|max:10',
             'ifr_psuedo_addobjfrmt' => 'nullable|string|max:10',
-
-            'ifs_psuedo_addrtu'     => 'nullable|string|max:10',
-            'ifs_psuedo_addms'      => 'nullable|string|max:10',
+            'ifs_psuedo_addrtu' => 'nullable|string|max:10',
+            'ifs_psuedo_addms' => 'nullable|string|max:10',
             'ifs_psuedo_addobjfrmt' => 'nullable|string|max:10',
-
-            'ift_psuedo_addrtu'     => 'nullable|string|max:10',
-            'ift_psuedo_addms'      => 'nullable|string|max:10',
+            'ift_psuedo_addrtu' => 'nullable|string|max:10',
+            'ift_psuedo_addms' => 'nullable|string|max:10',
             'ift_psuedo_addobjfrmt' => 'nullable|string|max:10',
-
-            'ifn_psuedo_addrtu'     => 'nullable|string|max:10',
-            'ifn_psuedo_addms'      => 'nullable|string|max:10',
+            'ifn_psuedo_addrtu' => 'nullable|string|max:10',
+            'ifn_psuedo_addms' => 'nullable|string|max:10',
             'ifn_psuedo_addobjfrmt' => 'nullable|string|max:10',
 
-            // --- IN & VAVG ---
             'iavg_rtu' => 'nullable|string|max:100',
             'iavg_ms' => 'nullable|string|max:100',
             'iavg_scale' => 'nullable|string|max:100',
@@ -2328,7 +2458,6 @@ class KeypointController extends Controller
             'vavg_ms' => 'nullable|string|max:100',
             'vavg_scale' => 'nullable|string|max:100',
 
-            // Notes and Text inputs
             'ketsys' => 'nullable|string|max:500',
             'kethard' => 'nullable|string|max:500',
             'ketre' => 'nullable|string|max:500',
@@ -2349,7 +2478,7 @@ class KeypointController extends Controller
             'nama_user' => 'required|string|max:50',
             'id_komkp' => 'required|integer|exists:tb_komkp,id_komkp',
 
-            // AddMs / AddRtu / ObjFrmt fields
+            // Telestatus AddMS fields
             'sacf_fail_addms' => 'nullable|string|max:100',
             'sacf_fail_addrtu' => 'nullable|string|max:100',
             'sacf_fail_objfrmt' => 'nullable|string|max:100',
@@ -2428,7 +2557,6 @@ class KeypointController extends Controller
             'ssf6_normal_addms' => 'nullable|string|max:100',
             'ssf6_normal_addrtu' => 'nullable|string|max:100',
             'ssf6_normal_objfrmt' => 'nullable|string|max:100',
-
             'ccb_open_addms' => 'nullable|string|max:100',
             'ccb_open_addrtu' => 'nullable|string|max:100',
             'ccb_open_objfrmt' => 'nullable|string|max:100',
@@ -2451,7 +2579,7 @@ class KeypointController extends Controller
             'crst_addrtu' => 'nullable|string|max:100',
             'crst_objfrmt' => 'nullable|string|max:100',
 
-            // Custom Validation for Array IDs
+            // Custom ID validations
             'id_pelms' => ['required', function ($attribute, $value, $fail) use ($idPelmsArray) {
                 if (empty($idPelmsArray)) {
                     $fail('The id pelms field must be an array and cannot be empty.');
@@ -2504,7 +2632,30 @@ class KeypointController extends Controller
             'c_cb',
             'c_cb2',
             'c_hlt',
-            'c_rst'
+            'c_rst',
+            // New Telemetering & Psuedo Checkboxes
+            't_ir',
+            't_is',
+            't_it',
+            't_in',
+            't_vrin',
+            't_vsin',
+            't_vtin',
+            't_vrout',
+            't_vsout',
+            't_vtout',
+            't_vavg',
+            't_ifr',
+            't_ifs',
+            't_ift',
+            't_ifn',
+            't_ifr_psuedo',
+            't_ifs_psuedo',
+            't_ift_psuedo',
+            't_ifn_psuedo',
+            't_hz',
+            't_iavg',
+            't_pf',
         ];
 
         foreach ($checkboxFields as $field) {
@@ -2515,16 +2666,16 @@ class KeypointController extends Controller
         // 5. Run Validation
         $validated = $request->validate($rules);
 
-        // 6. Post-Processing: Convert Arrays to Comma-Separated Strings for Database
+        // 6. Post-Processing: Convert Arrays to Comma-Separated Strings
         foreach ($checkboxFields as $field) {
             $validated[$field] = ($request->has($field) && is_array($request->input($field)))
                 ? implode(',', array_filter($request->input($field)))
                 : '';
         }
 
-        // 7. Handle Sectoral Logic
+        // 7. Handle Sectoral Logic (nama_sec -> id_sec)
         if (!empty($request->nama_sec)) {
-            $validated['id_sec'] = $request->nama_sec; // Simpan langsung ke id_sec
+            $validated['id_sec'] = $request->nama_sec;
         }
         unset($validated['nama_sec']);
 
@@ -2532,11 +2683,12 @@ class KeypointController extends Controller
         $validated['id_pelms'] = json_encode($idPelmsArray);
         $validated['id_pelrtu'] = json_encode($idPelrtuArray);
 
-        // 9. Create new record in Database (instead of update)
+        // 9. Save to Database (Create New)
         Keypoint::create($validated);
 
         return redirect()->route('keypoint.index')->with('success', 'Keypoint cloned successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.

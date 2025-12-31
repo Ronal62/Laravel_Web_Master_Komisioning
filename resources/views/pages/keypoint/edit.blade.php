@@ -92,7 +92,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="nama_peny">Nama Penyulangan</label>
+                                                    <label for="nama_peny">Nama Penyulang</label>
                                                     <select class="form-select form-control" id="nama_peny"
                                                         name="nama_peny" required>
                                                         <option value="">Pilih Nama Penyulangan</option>

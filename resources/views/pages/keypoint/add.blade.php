@@ -259,7 +259,7 @@ return is_array($val) ? $val : explode(',', $val);
                                     <div class="tab-pane fade" id="v-pills-formtelestatus-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelestatus-tab-nobd">
                                         <div class="row g-3 g-lg-4">
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-6" style="max-height: 800px; overflow-y: auto;">
                                                 <div class="form-group">
                                                     <label class="form-label t-bold">CB Open</label>
                                                     <div class="selectgroup w-100 flex-wrap">
@@ -1220,89 +1220,10 @@ return is_array($val) ? $val : explode(',', $val);
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="form-label t-bold">FIN Normal</label>
-                                                    <div class="selectgroup w-100 flex-wrap">
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" id="fin_normal_checkAll"
-                                                                class="selectgroup-input" />
-                                                            <span class="selectgroup-button">Normal</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finnrml_1"
-                                                                id="fin_finnrml_1" class="selectgroup-input"
-                                                                {{ in_array('finnrml_1', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">OK</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finnrml_2"
-                                                                id="fin_finnrml_2" class="selectgroup-input"
-                                                                {{ in_array('finnrml_2', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">NOK</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finnrml_3"
-                                                                id="fin_finnrml_3" class="selectgroup-input"
-                                                                {{ in_array('finnrml_3', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">LOG</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finnrml_4"
-                                                                id="fin_finnrml_4" class="selectgroup-input"
-                                                                {{ in_array('finnrml_4', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">SLD</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finnrml_5"
-                                                                id="fin_finnrml_5" class="selectgroup-input"
-                                                                {{ in_array('finnrml_5', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">Tidak Uji</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label t-bold">FIN Failed</label>
-                                                    <div class="selectgroup w-100 flex-wrap">
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" id="fin_failed_checkAll"
-                                                                class="selectgroup-input" />
-                                                            <span class="selectgroup-button">Normal</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finfail_1"
-                                                                id="fin_finfail_1" class="selectgroup-input"
-                                                                {{ in_array('finfail_1', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">OK</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finfail_2"
-                                                                id="fin_finfail_2" class="selectgroup-input"
-                                                                {{ in_array('finfail_2', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">NOK</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finfail_3"
-                                                                id="fin_finfail_3" class="selectgroup-input"
-                                                                {{ in_array('finfail_3', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">LOG</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finfail_4"
-                                                                id="fin_finfail_4" class="selectgroup-input"
-                                                                {{ in_array('finfail_4', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">SLD</span>
-                                                        </label>
-                                                        <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="s_fin[]" value="finfail_5"
-                                                                id="fin_finfail_5" class="selectgroup-input"
-                                                                {{ in_array('finfail_5', old('s_fin', [])) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">Tidak Uji</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+
 
                                             </div>
-                                            <div class="col-12 col-lg-2 ">
+                                            <div class="col-12 col-lg-2 " style="max-height: 800px; overflow-y: auto;">
                                                 <div class="form-group ">
                                                     <label for="scb_open_addms">CB Open AddMs</label>
                                                     <div class="input-icon ">
@@ -1567,30 +1488,8 @@ return is_array($val) ? $val : explode(',', $val);
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sfin_normal_addms">FIN Normal AddMs</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfin_normal_addms"
-                                                            name="sfin_normal_addms" placeholder="FIN Normal AddMs"
-                                                            value="{{ old('sfin_normal_addms') }}" />
-                                                        @error('sfin_normal_addms')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sfin_fail_addms">FIN Fail AddMs</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfin_fail_addms"
-                                                            name="sfin_fail_addms" placeholder="FIN Fail AddMs"
-                                                            value="{{ old('sfin_fail_addms') }}" />
-                                                        @error('sfin_fail_addms')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-2">
+                                            <div class="col-12 col-lg-2" style="max-height: 800px; overflow-y: auto;">
                                                 <div class="form-group">
                                                     <label for="scb_open_objfrmt">CB Open OBJ/FRMT</label>
                                                     <div class="input-icon">
@@ -1855,30 +1754,8 @@ return is_array($val) ? $val : explode(',', $val);
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="sfin_normal_objfrmt">FIN Normal OBJ/FRMT</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfin_normal_objfrmt"
-                                                            name="sfin_normal_objfrmt" placeholder="FIN Normal OBJ/FRMT"
-                                                            value="{{ old('sfin_normal_objfrmt') }}" />
-                                                        @error('sfin_normal_objfrmt')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sfin_fail_objfrmt">FIN Fail OBJ/FRMT</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfin_fail_objfrmt"
-                                                            name="sfin_fail_objfrmt" placeholder="FIN Fail OBJ/FRMT"
-                                                            value="{{ old('sfin_fail_objfrmt') }}" />
-                                                        @error('sfin_fail_objfrmt')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <div class="col-12 col-lg-2 ">
+                                            <div class="col-12 col-lg-2 " style="max-height: 800px; overflow-y: auto;">
                                                 <div class="form-group ">
                                                     <label for="scb_open_addrtu">CB Open AddRtu</label>
                                                     <div class="input-icon ">
@@ -2139,28 +2016,6 @@ return is_array($val) ? $val : explode(',', $val);
                                                             name="sfit_fail_addrtu" placeholder="FIT Fail AddRtu"
                                                             value="{{ old('sfit_fail_addrtu') }}" />
                                                         @error('sfit_fail_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sfin_normal_addrtu">FIN Normal AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfin_normal_addrtu"
-                                                            name="sfin_normal_addrtu" placeholder="FIN Normal AddRtu"
-                                                            value="{{ old('sfin_normal_addrtu') }}" />
-                                                        @error('sfin_normal_addrtu')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sfin_fail_addrtu">FIN Fail AddRtu</label>
-                                                    <div class="input-icon">
-                                                        <input type="text" class="form-control" id="sfin_fail_addrtu"
-                                                            name="sfin_fail_addrtu" placeholder="FIN Fail AddRtu"
-                                                            value="{{ old('sfin_fail_addrtu') }}" />
-                                                        @error('sfin_fail_addrtu')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -2865,7 +2720,8 @@ return is_array($val) ? $val : explode(',', $val);
                                                     {{-- Tambahkan atribut readonly di sini --}}
 
                                                     @error($f['key'].'_addms') <div class="invalid-feedback">
-                                                        {{ $message }}</div> @enderror
+                                                        {{ $message }}
+                                                    </div> @enderror
 
                                                     {{-- Input Add RTU --}}
                                                     <input type="text"
@@ -2874,7 +2730,8 @@ return is_array($val) ? $val : explode(',', $val);
                                                         name="{{ $f['key'] }}_addrtu"
                                                         value="{{ old($f['key'].'_addrtu', $keypoint->{$f['key'].'_addrtu'} ?? '') }}">
                                                     @error($f['key'].'_addrtu') <div class="invalid-feedback">
-                                                        {{ $message }}</div> @enderror
+                                                        {{ $message }}
+                                                    </div> @enderror
 
                                                     {{-- Input Obj Format --}}
                                                     <input type="text"
@@ -2882,7 +2739,8 @@ return is_array($val) ? $val : explode(',', $val);
                                                         placeholder="OBJECT FORMAT" name="{{ $f['key'] }}_addobjfrmt"
                                                         value="{{ old($f['key'].'_addobjfrmt', $keypoint->{$f['key'].'_addobjfrmt'} ?? '') }}">
                                                     @error($f['key'].'_addobjfrmt') <div class="invalid-feedback">
-                                                        {{ $message }}</div> @enderror
+                                                        {{ $message }}
+                                                    </div> @enderror
                                                 </div>
                                                 @endforeach
                                             </div>
