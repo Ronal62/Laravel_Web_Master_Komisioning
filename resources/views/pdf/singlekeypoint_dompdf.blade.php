@@ -34,7 +34,6 @@
         vertical-align: middle;
     }
 
-    /* Borders */
     .border {
         border: 0.5pt solid black;
     }
@@ -166,46 +165,64 @@
 
 <body>
     {{-- ===== HEADER ===== --}}
-    <table class="border" style="margin-bottom: 3px;">
+    {{-- ===== HEADER ===== --}}
+    <table class="border" style="margin-bottom: 10px;">
         <tr>
             {{-- Logo & Company --}}
             <td width="48%" class="border-r" style="padding: 0;">
                 <table>
                     <tr>
-                        <td width="18%" class="text-center align-middle" style="padding: 3px;">
-                            <img src="{{ public_path('assets/img/logo.png') }}" class="header-logo" alt="PLN">
+                        <td width="22%" class="text-center align-middle" style="padding: 5px;">
+                            @php
+                            $logoPath = public_path('assets/img/pln.png');
+                            $logoData = '';
+                            if (file_exists($logoPath)) {
+                            $logoData = base64_encode(file_get_contents($logoPath));
+                            }
+                            @endphp
+
+                            @if($logoData)
+                            <img src="data:image/png;base64,{{ $logoData }}" style="height: 55px; width: auto;"
+                                alt="PLN">
+                            @else
+                            <span style="font-size: 10px; color: red;">Logo Not Found</span>
+                            @endif
                         </td>
-                        <td width="82%" class="border-l" style="padding: 3px; line-height: 1.2;">
-                            <b style="font-size: 9px;">PT PLN (PERSERO)</b><br>
-                            <b style="font-size: 9px;">DISTRIBUSI JAWA TIMUR</b><br>
-                            <span style="font-size: 7px;">JL. EMBONG TRENGGULI NO. 19 - 21</span><br>
-                            <span style="font-size: 7px;">SURABAYA | TLP: (031) 53406531</span>
+                        <td width="78%" class="border-l"
+                            style="padding: 6px 8px; line-height: 1.4; font-family: 'Times New Roman', Times, serif;">
+                            <b style="font-size: 13px;">PT PLN (PERSERO)</b><br>
+                            <b style="font-size: 13px;">DISTRIBUSI JAWA TIMUR</b><br>
+                            <span style="font-size: 10px;">JL. EMBONG TRENGGULI NO. 19 - 21</span><br>
+                            <span style="font-size: 10px;">SURABAYA | TLP: (031) 53406531</span>
                         </td>
                     </tr>
                 </table>
             </td>
 
             {{-- Form Standard --}}
-            <td width="17%" class="align-middle text-center border-r">
-                <b style="font-size: 9px;">FORM<br>STANDART</b>
+            <td width="17%" class="align-middle text-center border-r" style="padding: 8px;">
+                <b style="font-size: 14px;">FORM<br>STANDART</b>
             </td>
 
             {{-- Document Info --}}
             <td width="35%" style="padding: 0;">
                 <table>
                     <tr>
-                        <td class="bg-gray font-bold text-center border-b border-r" width="45%" style="font-size: 7px;">
+                        <td class="bg-gray font-bold text-center border-b border-r" width="45%"
+                            style="font-size: 10px; padding: 4px;">
                             NO. DOKUMEN</td>
-                        <td class="border-b" style="padding-left: 3px; font-size: 7px;">HAL : 1 - 3</td>
+                        <td class="border-b" style="padding: 4px 6px; font-size: 10px;">HAL : 1 - 3</td>
                     </tr>
                     <tr>
-                        <td rowspan="2" class="font-bold text-center border-r" style="font-size: 11px;">FS.SCA.01.17
+                        <td rowspan="2" class="font-bold text-center border-r" style="font-size: 15px; padding: 6px;">
+                            FS.SCA.01.17
                         </td>
-                        <td class="border-b" style="padding-left: 3px; font-size: 7px;">TGL :
-                            {{ $row->tgl_komisioning ?? date('d-m-Y') }}</td>
+                        <td class="border-b" style="padding: 4px 6px; font-size: 10px;">TGL :
+                            {{ $row->tgl_komisioning ?? date('d-m-Y') }}
+                        </td>
                     </tr>
                     <tr>
-                        <td style="padding-left: 3px; font-size: 7px;">REV : 0</td>
+                        <td style="padding: 4px 6px; font-size: 10px;">REV : 0</td>
                     </tr>
                 </table>
             </td>
