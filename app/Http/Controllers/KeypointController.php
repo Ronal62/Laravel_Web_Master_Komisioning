@@ -184,6 +184,7 @@ class KeypointController extends Controller
 
     public function exportSinglePdf($id)
     {
+
         // 1. Get Main Data with all necessary joins
         $keypoint = DB::table('tb_formkp')
             ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
@@ -644,229 +645,92 @@ class KeypointController extends Controller
         return $controls;
     }
 
-    /**
-     * Parse Metering Data dari database
-     */
     private function parseMeteringData($keypoint)
     {
-        return [
-            [
-                'name' => 'HZ',
-                'ms' => $keypoint->hz_addms ?? '',
-                'rtu' => $keypoint->hz_addrtu ?? '',
-                'obj' => $keypoint->hz_addobjfrmt ?? '',
-                'field' => $keypoint->hz_rtu ?? '',
-                'msVal' => $keypoint->hz_ms ?? '',
-                'scale' => $keypoint->hz_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_hz ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'I AVG',
-                'ms' => $keypoint->iavg_addms ?? '',
-                'rtu' => $keypoint->iavg_addrtu ?? '',
-                'obj' => $keypoint->iavg_addobjfrmt ?? '',
-                'field' => $keypoint->iavg_rtu ?? '',
-                'msVal' => $keypoint->iavg_ms ?? '',
-                'scale' => $keypoint->iavg_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_iavg ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'IR',
-                'ms' => $keypoint->ir_addms ?? '',
-                'rtu' => $keypoint->ir_addrtu ?? '',
-                'obj' => $keypoint->ir_addobjfrmt ?? '',
-                'field' => $keypoint->ir_rtu ?? '',
-                'msVal' => $keypoint->ir_ms ?? '',
-                'scale' => $keypoint->ir_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_ir ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'IS',
-                'ms' => $keypoint->is_addms ?? '',
-                'rtu' => $keypoint->is_addrtu ?? '',
-                'obj' => $keypoint->is_addobjfrmt ?? '',
-                'field' => $keypoint->is_rtu ?? '',
-                'msVal' => $keypoint->is_ms ?? '',
-                'scale' => $keypoint->is_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_is ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'IT',
-                'ms' => $keypoint->it_addms ?? '',
-                'rtu' => $keypoint->it_addrtu ?? '',
-                'obj' => $keypoint->it_addobjfrmt ?? '',
-                'field' => $keypoint->it_rtu ?? '',
-                'msVal' => $keypoint->it_ms ?? '',
-                'scale' => $keypoint->it_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_it ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'IN',
-                'ms' => $keypoint->in_addms ?? '',
-                'rtu' => $keypoint->in_addrtu ?? '',
-                'obj' => $keypoint->in_addobjfrmt ?? '',
-                'field' => $keypoint->in_rtu ?? '',
-                'msVal' => $keypoint->in_ms ?? '',
-                'scale' => $keypoint->in_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_in ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'IFR',
-                'ms' => $keypoint->ifr_addms ?? '',
-                'rtu' => $keypoint->ifr_addrtu ?? '',
-                'obj' => $keypoint->ifr_addobjfrmt ?? '',
-                'field' => $keypoint->ifr_rtu ?? '',
-                'msVal' => $keypoint->ifr_ms ?? '',
-                'scale' => $keypoint->ifr_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_ifr ?? ''),
-                'isPseudo' => true
-            ],
-            [
-                'name' => 'IFS',
-                'ms' => $keypoint->ifs_addms ?? '',
-                'rtu' => $keypoint->ifs_addrtu ?? '',
-                'obj' => $keypoint->ifs_addobjfrmt ?? '',
-                'field' => $keypoint->ifs_rtu ?? '',
-                'msVal' => $keypoint->ifs_ms ?? '',
-                'scale' => $keypoint->ifs_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_ifs ?? ''),
-                'isPseudo' => true
-            ],
-            [
-                'name' => 'IFT',
-                'ms' => $keypoint->ift_addms ?? '',
-                'rtu' => $keypoint->ift_addrtu ?? '',
-                'obj' => $keypoint->ift_addobjfrmt ?? '',
-                'field' => $keypoint->ift_rtu ?? '',
-                'msVal' => $keypoint->ift_ms ?? '',
-                'scale' => $keypoint->ift_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_ift ?? ''),
-                'isPseudo' => true
-            ],
-            [
-                'name' => 'IFN',
-                'ms' => $keypoint->ifn_addms ?? '',
-                'rtu' => $keypoint->ifn_addrtu ?? '',
-                'obj' => $keypoint->ifn_addobjfrmt ?? '',
-                'field' => $keypoint->ifn_rtu ?? '',
-                'msVal' => $keypoint->ifn_ms ?? '',
-                'scale' => $keypoint->ifn_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_ifn ?? ''),
-                'isPseudo' => true
-            ],
-            [
-                'name' => 'PF',
-                'ms' => $keypoint->pf_addms ?? '',
-                'rtu' => $keypoint->pf_addrtu ?? '',
-                'obj' => $keypoint->pf_addobjfrmt ?? '',
-                'field' => $keypoint->pf_rtu ?? '',
-                'msVal' => $keypoint->pf_ms ?? '',
-                'scale' => $keypoint->pf_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_pf ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'V AVG',
-                'ms' => $keypoint->vavg_addms ?? '',
-                'rtu' => $keypoint->vavg_addrtu ?? '',
-                'obj' => $keypoint->vavg_addobjfrmt ?? '',
-                'field' => $keypoint->vavg_rtu ?? '',
-                'msVal' => $keypoint->vavg_ms ?? '',
-                'scale' => $keypoint->vavg_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_vavg ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'V-R_IN',
-                'ms' => $keypoint->vrin_addms ?? '',
-                'rtu' => $keypoint->vrin_addrtu ?? '',
-                'obj' => $keypoint->vrin_addobjfrmt ?? '',
-                'field' => $keypoint->vrin_rtu ?? '',
-                'msVal' => $keypoint->vrin_ms ?? '',
-                'scale' => $keypoint->vrin_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_vrin ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'V-S_IN',
-                'ms' => $keypoint->vsin_addms ?? '',
-                'rtu' => $keypoint->vsin_addrtu ?? '',
-                'obj' => $keypoint->vsin_addobjfrmt ?? '',
-                'field' => $keypoint->vsin_rtu ?? '',
-                'msVal' => $keypoint->vsin_ms ?? '',
-                'scale' => $keypoint->vsin_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_vsin ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'V-T_IN',
-                'ms' => $keypoint->vtin_addms ?? '',
-                'rtu' => $keypoint->vtin_addrtu ?? '',
-                'obj' => $keypoint->vtin_addobjfrmt ?? '',
-                'field' => $keypoint->vtin_rtu ?? '',
-                'msVal' => $keypoint->vtin_ms ?? '',
-                'scale' => $keypoint->vtin_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_vtin ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'V-R_OUT',
-                'ms' => $keypoint->vrout_addms ?? '',
-                'rtu' => $keypoint->vrout_addrtu ?? '',
-                'obj' => $keypoint->vrout_addobjfrmt ?? '',
-                'field' => $keypoint->vrout_rtu ?? '',
-                'msVal' => $keypoint->vrout_ms ?? '',
-                'scale' => $keypoint->vrout_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_vrout ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'V-S_OUT',
-                'ms' => $keypoint->vsout_addms ?? '',
-                'rtu' => $keypoint->vsout_addrtu ?? '',
-                'obj' => $keypoint->vsout_addobjfrmt ?? '',
-                'field' => $keypoint->vsout_rtu ?? '',
-                'msVal' => $keypoint->vsout_ms ?? '',
-                'scale' => $keypoint->vsout_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_vsout ?? ''),
-                'isPseudo' => false
-            ],
-            [
-                'name' => 'V-T_OUT',
-                'ms' => $keypoint->vtout_addms ?? '',
-                'rtu' => $keypoint->vtout_addrtu ?? '',
-                'obj' => $keypoint->vtout_addobjfrmt ?? '',
-                'field' => $keypoint->vtout_rtu ?? '',
-                'msVal' => $keypoint->vtout_ms ?? '',
-                'scale' => $keypoint->vtout_scale ?? '',
-                'test' => $this->getMeteringTestResult($keypoint->t_vtout ?? ''),
-                'isPseudo' => false
-            ],
+        $fields = [
+            ['name' => 'HZ', 'prefix' => 'hz', 'isPseudo' => false],
+            ['name' => 'I AVG', 'prefix' => 'iavg', 'isPseudo' => false],
+            ['name' => 'IR', 'prefix' => 'ir', 'isPseudo' => false],
+            ['name' => 'IS', 'prefix' => 'is', 'isPseudo' => false],
+            ['name' => 'IT', 'prefix' => 'it', 'isPseudo' => false],
+            ['name' => 'IN', 'prefix' => 'in', 'isPseudo' => false],
+            ['name' => 'IFR', 'prefix' => 'ifr', 'isPseudo' => true],
+            ['name' => 'IFS', 'prefix' => 'ifs', 'isPseudo' => true],
+            ['name' => 'IFT', 'prefix' => 'ift', 'isPseudo' => true],
+            ['name' => 'IFN', 'prefix' => 'ifn', 'isPseudo' => true],
+            ['name' => 'PF', 'prefix' => 'pf', 'isPseudo' => false],
+            ['name' => 'V AVG', 'prefix' => 'vavg', 'isPseudo' => false],
+            ['name' => 'V-R_IN', 'prefix' => 'vrin', 'isPseudo' => false],
+            ['name' => 'V-S_IN', 'prefix' => 'vsin', 'isPseudo' => false],
+            ['name' => 'V-T_IN', 'prefix' => 'vtin', 'isPseudo' => false],
+            ['name' => 'V-R_OUT', 'prefix' => 'vrout', 'isPseudo' => false],
+            ['name' => 'V-S_OUT', 'prefix' => 'vsout', 'isPseudo' => false],
+            ['name' => 'V-T_OUT', 'prefix' => 'vtout', 'isPseudo' => false],
         ];
+
+        return collect($fields)->map(function ($field) use ($keypoint) {
+            $prefix = $field['prefix'];
+            return [
+                'name' => $field['name'],
+                'ms' => $keypoint->{"{$prefix}_addms"} ?? '',
+                'rtu' => $keypoint->{"{$prefix}_addrtu"} ?? '',
+                'obj' => $keypoint->{"{$prefix}_addobjfrmt"} ?? '',
+                'field' => $keypoint->{"{$prefix}_rtu"} ?? '',
+                'msVal' => $keypoint->{"{$prefix}_ms"} ?? '',
+                'scale' => $keypoint->{"{$prefix}_scale"} ?? '',
+                'checks' => $this->getMeteringCheckValue($keypoint->{"t_{$prefix}"} ?? ''),
+                'isPseudo' => $field['isPseudo'],
+            ];
+        })->toArray();
     }
 
     /**
-     * Get metering test result (1=OK, 2=NOK, 5=N/A)
+     * Get metering check values (1=OK, 2=NOK, 5=SLD)
+     * Can return multiple values like [1, 5] for OK + SLD
      */
-    private function getMeteringTestResult($value)
+    private function getMeteringCheckValue($value)
     {
-        // Extract number from string like 't_ir1' -> 1
-        preg_match('/(\d+)$/', $value, $matches);
-        $num = $matches[1] ?? 0;
+        $checks = [];
 
-        $results = [
-            1 => 'OK',
-            2 => 'NOK',
-            5 => 'N/A'
-        ];
+        if (empty($value) || $value === null) {
+            return $checks;
+        }
 
-        return $results[(int)$num] ?? '';
+        $value = (string) $value;
+
+        // Format 1: Comma-separated like "1,5" or "t_hz_1,t_hz_5"
+        if (strpos($value, ',') !== false) {
+            $items = array_map('trim', explode(',', $value));
+            foreach ($items as $item) {
+                // Extract number - try different patterns
+                if (is_numeric($item)) {
+                    $checks[] = (int) $item;
+                } elseif (preg_match('/_(\d+)$/', $item, $matches)) {
+                    $checks[] = (int) $matches[1];
+                } elseif (preg_match('/(\d+)$/', $item, $matches)) {
+                    $checks[] = (int) $matches[1];
+                }
+            }
+        }
+        // Format 2: JSON array like "[1,5]"
+        elseif (str_starts_with($value, '[')) {
+            $decoded = json_decode($value, true);
+            if (is_array($decoded)) {
+                $checks = array_map('intval', $decoded);
+            }
+        }
+        // Format 3: Single value
+        else {
+            if (is_numeric($value)) {
+                $checks[] = (int) $value;
+            } elseif (preg_match('/_(\d+)$/', $value, $matches)) {
+                $checks[] = (int) $matches[1];
+            } elseif (preg_match('/(\d+)$/', $value, $matches)) {
+                $checks[] = (int) $matches[1];
+            }
+        }
+
+        return array_unique($checks);
     }
 
     /**

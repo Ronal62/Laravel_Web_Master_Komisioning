@@ -593,28 +593,66 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($meteringData as $index => $meter)
                         @php
-                        $meters = ['HZ', 'I AVG', 'IR', 'IS', 'IT', 'IN', 'IFR', 'IFS', 'IFT', 'IFN', 'PF', 'V AVG',
-                        'V-R_IN', 'V-S_IN', 'V-T_IN', 'V-R_OUT', 'V-S_OUT', 'V-T_OUT'];
-                        $pseudos = ['IFR', 'IFS', 'IFT', 'IFN'];
+                        $checks = $meter['checks'] ?? [];
+                        $hasOk = in_array(1, $checks);
+                        $hasNok = in_array(2, $checks);
+                        $hasSld = in_array(5, $checks);
                         @endphp
-                        @foreach($meters as $index => $meter)
                         <tr>
-                            @if(in_array($meter, $pseudos))
+                            {{-- ADD-MS Column --}}
+                            @if($meter['isPseudo'] ?? false)
                             <td class="bg-gray" style="height: 12px; font-size: 6px; padding: 2px;">Pseudo</td>
                             @else
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $meter['ms'] ?? '' }}</td>
                             @endif
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td class="font-bold" style="height: 12px; font-size: 8px; padding: 2px;">{{ $meter }}</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            @if($index == 0)
-                            <td rowspan="18" class="text-left align-top" style="padding: 4px; font-size: 7px;">
+
+                            {{-- ADD-RTU Column --}}
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $meter['rtu'] ?? '' }}</td>
+
+                            {{-- OBJ Column --}}
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $meter['obj'] ?? '' }}</td>
+
+                            {{-- METER Name Column --}}
+                            <td class="font-bold" style="height: 12px; font-size: 8px; padding: 2px;">
+                                {{ $meter['name'] ?? '' }}
+                            </td>
+
+                            {{-- FIELD Column --}}
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $meter['field'] ?? '' }}</td>
+
+                            {{-- MS Value Column --}}
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $meter['msVal'] ?? '' }}</td>
+
+                            {{-- SCALE Column --}}
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $meter['scale'] ?? '' }}</td>
+
+                            {{-- OK/NOK Column - Independent from SLD --}}
+                            <td style="height: 12px; padding: 2px; text-align: center;">
+                                @if($hasOk)
+                                <span style="font-size: 8px; color: #16a34a; font-weight: bold;">OK</span>
+                                @elseif($hasNok)
+                                <span style="font-size: 8px; color: #dc2626; font-weight: bold;">NOK</span>
+                                @else
+                                <span style="font-size: 8px; color: #9ca3af;">-</span>
+                                @endif
+                            </td>
+
+                            {{-- SLD Column - Independent from OK/NOK --}}
+                            <td style="height: 12px; padding: 2px; text-align: center;">
+                                @if($hasSld)
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
+                                @else
+                                <span style="font-size: 8px; color: #9ca3af;">-</span>
+                                @endif
+                            </td>
+
+                            {{-- Ket Column --}}
+                            @if($index === 0)
+                            <td rowspan="{{ count($meteringData) }}" class="text-left align-top"
+                                style="padding: 4px; font-size: 7px; vertical-align: top;">
                                 {{ $row->ketftm ?? '' }}
                             </td>
                             @endif
