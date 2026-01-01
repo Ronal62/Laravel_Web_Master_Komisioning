@@ -184,27 +184,767 @@ class KeypointController extends Controller
 
     public function exportSinglePdf($id)
     {
-        // 1. Get Data
+        // 1. Get Main Data with all necessary joins
         $keypoint = DB::table('tb_formkp')
             ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
             ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
-            ->select('tb_formkp.*', 'tb_merklbs.nama_merklbs', 'tb_modem.nama_modem')
+            ->leftJoin('tb_medkom', 'tb_formkp.id_medkom', '=', 'tb_medkom.id_medkom')
+            ->leftJoin('tb_komkp', 'tb_formkp.id_komkp', '=', 'tb_komkp.id_komkp')
+            ->select(
+                'tb_formkp.*',
+                'tb_merklbs.nama_merklbs',
+                'tb_modem.nama_modem',
+                'tb_medkom.nama_medkom',
+                'tb_komkp.jenis_komkp',
+                // Aliases untuk view
+                'tb_formkp.nama_lbs as nama_keypoint',
+                'tb_formkp.rtu_addrs as alamat_rtu',
+                'tb_formkp.ip_kp as ip_rtu',
+                'tb_formkp.nama_peny as penyulang',
+                'tb_formkp.catatankp as keterangan',
+                'tb_formkp.id_gi as gardu_induk',
+                'tb_formkp.id_sec as sectoral'
+            )
             ->where('tb_formkp.id_formkp', $id)
             ->first();
 
-        if (!$keypoint) abort(404);
+        if (!$keypoint) {
+            abort(404, 'Data Keypoint tidak ditemukan');
+        }
 
+        // 2. Format tanggal
         $keypoint->tgl_komisioning = Carbon::parse($keypoint->tgl_komisioning)->format('d-m-Y');
 
-        // 2. Load View
-        // We use a SPECIFIC view file optimized for DomPDF (no Tailwind)
-        $pdf = Pdf::loadView('pdf.singlekeypoint_dompdf', ['row' => $keypoint]);
+        // 3. Get Pelaksana MS (PIC Master)
+        $pelMsIds = json_decode($keypoint->id_pelms, true) ?? [];
+        $pelaksanaMs = collect();
+        if (!empty($pelMsIds)) {
+            $pelaksanaMs = DB::table('tb_picmaster')
+                ->whereIn('id_picmaster', $pelMsIds)
+                ->get();
+        }
 
-        // 3. Settings
+        // 4. Get Pelaksana RTU (Field Engineer)
+        $pelRtuIds = json_decode($keypoint->id_pelrtu, true) ?? [];
+        $pelaksanaRtu = collect();
+        if (!empty($pelRtuIds)) {
+            $pelaksanaRtu = DB::table('tb_pelaksana_rtu')
+                ->whereIn('id_pelrtu', $pelRtuIds)
+                ->get();
+        }
+
+        // 5. Parse Status Data
+        $statusData = $this->parseStatusData($keypoint);
+
+        // 6. Parse Control Data
+        $controlData = $this->parseControlData($keypoint);
+
+        // 7. Parse Metering Data
+        $meteringData = $this->parseMeteringData($keypoint);
+
+        // 8. Parse Hardware & System Data
+        $hardwareData = $this->parseHardwareData($keypoint);
+        $systemData = $this->parseSystemData($keypoint);
+        $recloserData = $this->parseRecloserData($keypoint);
+
+        // 9. Load View dengan semua data
+        $pdf = Pdf::loadView('pdf.singlekeypoint_dompdf', [
+            'row' => $keypoint,
+            'pelaksanaMs' => $pelaksanaMs,
+            'pelaksanaRtu' => $pelaksanaRtu,
+            'statusData' => $statusData,
+            'controlData' => $controlData,
+            'meteringData' => $meteringData,
+            'hardwareData' => $hardwareData,
+            'systemData' => $systemData,
+            'recloserData' => $recloserData,
+        ]);
+
+        // 10. Settings
         $pdf->setPaper('a4', 'landscape');
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'defaultFont' => 'Arial',
+            'dpi' => 150,
+        ]);
 
-        // 4. Download
-        return $pdf->download('Keypoint_' . $id . '.pdf');
+        // 11. Generate filename
+        $filename = 'Keypoint_' . preg_replace('/[^A-Za-z0-9\-]/', '_', $keypoint->nama_lbs) . '_' . $id . '.pdf';
+
+        // 12. Download atau Stream
+        return $pdf->download($filename);
+        // Atau gunakan stream untuk preview: return $pdf->stream($filename);
+    }
+
+    /**
+     * Parse Status Data dari database
+     */
+    private function parseStatusData($keypoint)
+    {
+        $statuses = [];
+
+        // CB Status
+        $statuses[] = [
+            'name' => 'CB',
+            'values' => ['Open', 'Close'],
+            'data' => $this->parseCheckboxValue($keypoint->s_cb ?? ''),
+            'addresses' => [
+                'open' => [
+                    'ms' => $keypoint->scb_open_addms ?? '',
+                    'rtu' => $keypoint->scb_open_addrtu ?? '',
+                    'obj' => $keypoint->scb_open_objfrmt ?? ''
+                ],
+                'close' => [
+                    'ms' => $keypoint->scb_close_addms ?? '',
+                    'rtu' => $keypoint->scb_close_addrtu ?? '',
+                    'obj' => $keypoint->scb_close_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // CB2 Status
+        $statuses[] = [
+            'name' => 'CB 2',
+            'values' => ['Open', 'Close'],
+            'data' => $this->parseCheckboxValue($keypoint->s_cb2 ?? ''),
+            'addresses' => [
+                'open' => [
+                    'ms' => $keypoint->scb2_open_addms ?? '',
+                    'rtu' => $keypoint->scb2_open_addrtu ?? '',
+                    'obj' => $keypoint->scb2_open_objfrmt ?? ''
+                ],
+                'close' => [
+                    'ms' => $keypoint->scb2_close_addms ?? '',
+                    'rtu' => $keypoint->scb2_close_addrtu ?? '',
+                    'obj' => $keypoint->scb2_close_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // L/R Status
+        $statuses[] = [
+            'name' => 'L/R',
+            'values' => ['Local', 'Remote'],
+            'data' => $this->parseCheckboxValue($keypoint->s_lr ?? ''),
+            'addresses' => [
+                'local' => [
+                    'ms' => $keypoint->slr_local_addms ?? '',
+                    'rtu' => $keypoint->slr_local_addrtu ?? '',
+                    'obj' => $keypoint->slr_local_objfrmt ?? ''
+                ],
+                'remote' => [
+                    'ms' => $keypoint->slr_remote_addms ?? '',
+                    'rtu' => $keypoint->slr_remote_addrtu ?? '',
+                    'obj' => $keypoint->slr_remote_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // DOOR Status
+        $statuses[] = [
+            'name' => 'DOOR',
+            'values' => ['Open', 'Close'],
+            'data' => $this->parseCheckboxValue($keypoint->s_door ?? ''),
+            'addresses' => [
+                'open' => [
+                    'ms' => $keypoint->sdoor_open_addms ?? '',
+                    'rtu' => $keypoint->sdoor_open_addrtu ?? '',
+                    'obj' => $keypoint->sdoor_open_objfrmt ?? ''
+                ],
+                'close' => [
+                    'ms' => $keypoint->sdoor_close_addms ?? '',
+                    'rtu' => $keypoint->sdoor_close_addrtu ?? '',
+                    'obj' => $keypoint->sdoor_close_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // ACF Status
+        $statuses[] = [
+            'name' => 'ACF',
+            'values' => ['Normal', 'Failed'],
+            'data' => $this->parseCheckboxValue($keypoint->s_acf ?? ''),
+            'addresses' => [
+                'normal' => [
+                    'ms' => $keypoint->sacf_normal_addms ?? '',
+                    'rtu' => $keypoint->sacf_normal_addrtu ?? '',
+                    'obj' => $keypoint->sacf_normal_objfrmt ?? ''
+                ],
+                'fail' => [
+                    'ms' => $keypoint->sacf_fail_addms ?? '',
+                    'rtu' => $keypoint->sacf_fail_addrtu ?? '',
+                    'obj' => $keypoint->sacf_fail_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // DCF Status
+        $statuses[] = [
+            'name' => 'DCF',
+            'values' => ['Normal', 'Failed'],
+            'data' => $this->parseCheckboxValue($keypoint->s_dcf ?? ''),
+            'addresses' => [
+                'normal' => [
+                    'ms' => $keypoint->sdcf_normal_addms ?? '',
+                    'rtu' => $keypoint->sdcf_normal_addrtu ?? '',
+                    'obj' => $keypoint->sdcf_normal_objfrmt ?? ''
+                ],
+                'fail' => [
+                    'ms' => $keypoint->sdcf_fail_addms ?? '',
+                    'rtu' => $keypoint->sdcf_fail_addrtu ?? '',
+                    'obj' => $keypoint->sdcf_fail_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // DCD Status
+        $statuses[] = [
+            'name' => 'DCD',
+            'values' => ['Normal', 'Failed'],
+            'data' => $this->parseCheckboxValue($keypoint->s_dcd ?? ''),
+            'addresses' => [
+                'normal' => [
+                    'ms' => $keypoint->sdcd_normal_addms ?? '',
+                    'rtu' => $keypoint->sdcd_normal_addrtu ?? '',
+                    'obj' => $keypoint->sdcd_normal_objfrmt ?? ''
+                ],
+                'fail' => [
+                    'ms' => $keypoint->sdcd_fail_addms ?? '',
+                    'rtu' => $keypoint->sdcd_fail_addrtu ?? '',
+                    'obj' => $keypoint->sdcd_fail_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // HLT Status
+        $statuses[] = [
+            'name' => 'HLT',
+            'values' => ['Active', 'Inactive'],
+            'data' => $this->parseCheckboxValue($keypoint->s_hlt ?? ''),
+            'addresses' => [
+                'on' => [
+                    'ms' => $keypoint->shlt_on_addms ?? '',
+                    'rtu' => $keypoint->shlt_on_addrtu ?? '',
+                    'obj' => $keypoint->shlt_on_objfrmt ?? ''
+                ],
+                'off' => [
+                    'ms' => $keypoint->shlt_off_addms ?? '',
+                    'rtu' => $keypoint->shlt_off_addrtu ?? '',
+                    'obj' => $keypoint->shlt_off_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // SF6 Status
+        $statuses[] = [
+            'name' => 'SF6',
+            'values' => ['Normal', 'Low'],
+            'data' => $this->parseCheckboxValue($keypoint->s_sf6 ?? ''),
+            'addresses' => [
+                'normal' => [
+                    'ms' => $keypoint->ssf6_normal_addms ?? '',
+                    'rtu' => $keypoint->ssf6_normal_addrtu ?? '',
+                    'obj' => $keypoint->ssf6_normal_objfrmt ?? ''
+                ],
+                'fail' => [
+                    'ms' => $keypoint->ssf6_fail_addms ?? '',
+                    'rtu' => $keypoint->ssf6_fail_addrtu ?? '',
+                    'obj' => $keypoint->ssf6_fail_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // FIR Status
+        $statuses[] = [
+            'name' => 'FIR',
+            'values' => ['Normal', 'Failed'],
+            'data' => $this->parseCheckboxValue($keypoint->s_fir ?? ''),
+            'addresses' => [
+                'normal' => [
+                    'ms' => $keypoint->sfir_normal_addms ?? '',
+                    'rtu' => $keypoint->sfir_normal_addrtu ?? '',
+                    'obj' => $keypoint->sfir_normal_objfrmt ?? ''
+                ],
+                'fail' => [
+                    'ms' => $keypoint->sfir_fail_addms ?? '',
+                    'rtu' => $keypoint->sfir_fail_addrtu ?? '',
+                    'obj' => $keypoint->sfir_fail_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // FIS Status
+        $statuses[] = [
+            'name' => 'FIS',
+            'values' => ['Normal', 'Failed'],
+            'data' => $this->parseCheckboxValue($keypoint->s_fis ?? ''),
+            'addresses' => [
+                'normal' => [
+                    'ms' => $keypoint->sfis_normal_addms ?? '',
+                    'rtu' => $keypoint->sfis_normal_addrtu ?? '',
+                    'obj' => $keypoint->sfis_normal_objfrmt ?? ''
+                ],
+                'fail' => [
+                    'ms' => $keypoint->sfis_fail_addms ?? '',
+                    'rtu' => $keypoint->sfis_fail_addrtu ?? '',
+                    'obj' => $keypoint->sfis_fail_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // FIT Status
+        $statuses[] = [
+            'name' => 'FIT',
+            'values' => ['Normal', 'Failed'],
+            'data' => $this->parseCheckboxValue($keypoint->s_fit ?? ''),
+            'addresses' => [
+                'normal' => [
+                    'ms' => $keypoint->sfit_normal_addms ?? '',
+                    'rtu' => $keypoint->sfit_normal_addrtu ?? '',
+                    'obj' => $keypoint->sfit_normal_objfrmt ?? ''
+                ],
+                'fail' => [
+                    'ms' => $keypoint->sfit_fail_addms ?? '',
+                    'rtu' => $keypoint->sfit_fail_addrtu ?? '',
+                    'obj' => $keypoint->sfit_fail_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        return $statuses;
+    }
+
+    /**
+     * Parse Control Data dari database
+     */
+    private function parseControlData($keypoint)
+    {
+        $controls = [];
+
+        // CB Control
+        $controls[] = [
+            'name' => 'CB',
+            'values' => ['Open', 'Close'],
+            'data' => $this->parseCheckboxValue($keypoint->c_cb ?? ''),
+            'addresses' => [
+                'open' => [
+                    'ms' => $keypoint->ccb_open_addms ?? '',
+                    'rtu' => $keypoint->ccb_open_addrtu ?? '',
+                    'obj' => $keypoint->ccb_open_objfrmt ?? ''
+                ],
+                'close' => [
+                    'ms' => $keypoint->ccb_close_addms ?? '',
+                    'rtu' => $keypoint->ccb_close_addrtu ?? '',
+                    'obj' => $keypoint->ccb_close_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // CB2 Control
+        $controls[] = [
+            'name' => 'CB 2',
+            'values' => ['Open', 'Close'],
+            'data' => $this->parseCheckboxValue($keypoint->c_cb2 ?? ''),
+            'addresses' => [
+                'open' => [
+                    'ms' => $keypoint->ccb2_open_addms ?? '',
+                    'rtu' => $keypoint->ccb2_open_addrtu ?? '',
+                    'obj' => $keypoint->ccb2_open_objfrmt ?? ''
+                ],
+                'close' => [
+                    'ms' => $keypoint->ccb2_close_addms ?? '',
+                    'rtu' => $keypoint->ccb2_close_addrtu ?? '',
+                    'obj' => $keypoint->ccb2_close_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // HLT Control
+        $controls[] = [
+            'name' => 'HLT',
+            'values' => ['On', 'Off'],
+            'data' => $this->parseCheckboxValue($keypoint->c_hlt ?? ''),
+            'addresses' => [
+                'on' => [
+                    'ms' => $keypoint->chlt_on_addms ?? '',
+                    'rtu' => $keypoint->chlt_on_addrtu ?? '',
+                    'obj' => $keypoint->chlt_on_objfrmt ?? ''
+                ],
+                'off' => [
+                    'ms' => $keypoint->chlt_off_addms ?? '',
+                    'rtu' => $keypoint->chlt_off_addrtu ?? '',
+                    'obj' => $keypoint->chlt_off_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        // Reset Control
+        $controls[] = [
+            'name' => 'RR',
+            'values' => ['Reset'],
+            'data' => $this->parseCheckboxValue($keypoint->c_rst ?? ''),
+            'addresses' => [
+                'reset' => [
+                    'ms' => $keypoint->crst_addms ?? '',
+                    'rtu' => $keypoint->crst_addrtu ?? '',
+                    'obj' => $keypoint->crst_objfrmt ?? ''
+                ]
+            ]
+        ];
+
+        return $controls;
+    }
+
+    /**
+     * Parse Metering Data dari database
+     */
+    private function parseMeteringData($keypoint)
+    {
+        return [
+            [
+                'name' => 'HZ',
+                'rtu' => $keypoint->hz_rtu ?? '',
+                'ms' => $keypoint->hz_ms ?? '',
+                'scale' => $keypoint->hz_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->hz_addrtu ?? '',
+                    'ms' => $keypoint->hz_addms ?? '',
+                    'obj' => $keypoint->hz_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_hz ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'I AVG',
+                'rtu' => $keypoint->iavg_rtu ?? '',
+                'ms' => $keypoint->iavg_ms ?? '',
+                'scale' => $keypoint->iavg_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->iavg_addrtu ?? '',
+                    'ms' => $keypoint->iavg_addms ?? '',
+                    'obj' => $keypoint->iavg_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_iavg ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'IR',
+                'rtu' => $keypoint->ir_rtu ?? '',
+                'ms' => $keypoint->ir_ms ?? '',
+                'scale' => $keypoint->ir_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->ir_addrtu ?? '',
+                    'ms' => $keypoint->ir_addms ?? '',
+                    'obj' => $keypoint->ir_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_ir ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'IS',
+                'rtu' => $keypoint->is_rtu ?? '',
+                'ms' => $keypoint->is_ms ?? '',
+                'scale' => $keypoint->is_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->is_addrtu ?? '',
+                    'ms' => $keypoint->is_addms ?? '',
+                    'obj' => $keypoint->is_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_is ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'IT',
+                'rtu' => $keypoint->it_rtu ?? '',
+                'ms' => $keypoint->it_ms ?? '',
+                'scale' => $keypoint->it_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->it_addrtu ?? '',
+                    'ms' => $keypoint->it_addms ?? '',
+                    'obj' => $keypoint->it_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_it ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'IN',
+                'rtu' => $keypoint->in_rtu ?? '',
+                'ms' => $keypoint->in_ms ?? '',
+                'scale' => $keypoint->in_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->in_addrtu ?? '',
+                    'ms' => $keypoint->in_addms ?? '',
+                    'obj' => $keypoint->in_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_in ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'IFR',
+                'rtu' => $keypoint->ifr_rtu ?? '',
+                'ms' => $keypoint->ifr_ms ?? '',
+                'scale' => $keypoint->ifr_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->ifr_addrtu ?? '',
+                    'ms' => $keypoint->ifr_addms ?? '',
+                    'obj' => $keypoint->ifr_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_ifr ?? '',
+                'isPseudo' => true
+            ],
+            [
+                'name' => 'IFS',
+                'rtu' => $keypoint->ifs_rtu ?? '',
+                'ms' => $keypoint->ifs_ms ?? '',
+                'scale' => $keypoint->ifs_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->ifs_addrtu ?? '',
+                    'ms' => $keypoint->ifs_addms ?? '',
+                    'obj' => $keypoint->ifs_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_ifs ?? '',
+                'isPseudo' => true
+            ],
+            [
+                'name' => 'IFT',
+                'rtu' => $keypoint->ift_rtu ?? '',
+                'ms' => $keypoint->ift_ms ?? '',
+                'scale' => $keypoint->ift_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->ift_addrtu ?? '',
+                    'ms' => $keypoint->ift_addms ?? '',
+                    'obj' => $keypoint->ift_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_ift ?? '',
+                'isPseudo' => true
+            ],
+            [
+                'name' => 'IFN',
+                'rtu' => $keypoint->ifn_rtu ?? '',
+                'ms' => $keypoint->ifn_ms ?? '',
+                'scale' => $keypoint->ifn_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->ifn_addrtu ?? '',
+                    'ms' => $keypoint->ifn_addms ?? '',
+                    'obj' => $keypoint->ifn_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_ifn ?? '',
+                'isPseudo' => true
+            ],
+            [
+                'name' => 'PF',
+                'rtu' => $keypoint->pf_rtu ?? '',
+                'ms' => $keypoint->pf_ms ?? '',
+                'scale' => $keypoint->pf_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->pf_addrtu ?? '',
+                    'ms' => $keypoint->pf_addms ?? '',
+                    'obj' => $keypoint->pf_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_pf ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'V AVG',
+                'rtu' => $keypoint->vavg_rtu ?? '',
+                'ms' => $keypoint->vavg_ms ?? '',
+                'scale' => $keypoint->vavg_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->vavg_addrtu ?? '',
+                    'ms' => $keypoint->vavg_addms ?? '',
+                    'obj' => $keypoint->vavg_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_vavg ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'V-R_IN',
+                'rtu' => $keypoint->vrin_rtu ?? '',
+                'ms' => $keypoint->vrin_ms ?? '',
+                'scale' => $keypoint->vrin_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->vrin_addrtu ?? '',
+                    'ms' => $keypoint->vrin_addms ?? '',
+                    'obj' => $keypoint->vrin_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_vrin ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'V-S_IN',
+                'rtu' => $keypoint->vsin_rtu ?? '',
+                'ms' => $keypoint->vsin_ms ?? '',
+                'scale' => $keypoint->vsin_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->vsin_addrtu ?? '',
+                    'ms' => $keypoint->vsin_addms ?? '',
+                    'obj' => $keypoint->vsin_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_vsin ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'V-T_IN',
+                'rtu' => $keypoint->vtin_rtu ?? '',
+                'ms' => $keypoint->vtin_ms ?? '',
+                'scale' => $keypoint->vtin_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->vtin_addrtu ?? '',
+                    'ms' => $keypoint->vtin_addms ?? '',
+                    'obj' => $keypoint->vtin_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_vtin ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'V-R_OUT',
+                'rtu' => $keypoint->vrout_rtu ?? '',
+                'ms' => $keypoint->vrout_ms ?? '',
+                'scale' => $keypoint->vrout_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->vrout_addrtu ?? '',
+                    'ms' => $keypoint->vrout_addms ?? '',
+                    'obj' => $keypoint->vrout_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_vrout ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'V-S_OUT',
+                'rtu' => $keypoint->vsout_rtu ?? '',
+                'ms' => $keypoint->vsout_ms ?? '',
+                'scale' => $keypoint->vsout_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->vsout_addrtu ?? '',
+                    'ms' => $keypoint->vsout_addms ?? '',
+                    'obj' => $keypoint->vsout_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_vsout ?? '',
+                'isPseudo' => false
+            ],
+            [
+                'name' => 'V-T_OUT',
+                'rtu' => $keypoint->vtout_rtu ?? '',
+                'ms' => $keypoint->vtout_ms ?? '',
+                'scale' => $keypoint->vtout_scale ?? '',
+                'address' => [
+                    'rtu' => $keypoint->vtout_addrtu ?? '',
+                    'ms' => $keypoint->vtout_addms ?? '',
+                    'obj' => $keypoint->vtout_addobjfrmt ?? ''
+                ],
+                'test' => $keypoint->t_vtout ?? '',
+                'isPseudo' => false
+            ],
+        ];
+    }
+
+    /**
+     * Parse Hardware Data
+     */
+    private function parseHardwareData($keypoint)
+    {
+        return [
+            [
+                'name' => 'Batere',
+                'status' => $this->getTestResult($keypoint->hard_batere ?? ''),
+                'value' => $keypoint->hard_batere_input ?? ''
+            ],
+            [
+                'name' => 'PS 220',
+                'status' => $this->getTestResult($keypoint->hard_ps220 ?? ''),
+                'value' => $keypoint->hard_ps220_input ?? ''
+            ],
+            [
+                'name' => 'Charger',
+                'status' => $this->getTestResult($keypoint->hard_charger ?? ''),
+                'value' => $keypoint->hard_charger_input ?? ''
+            ],
+            [
+                'name' => 'Limit Switch',
+                'status' => $this->getTestResult($keypoint->hard_limitswith ?? ''),
+                'value' => $keypoint->hard_limitswith_input ?? ''
+            ],
+        ];
+    }
+
+    /**
+     * Parse System Data
+     */
+    private function parseSystemData($keypoint)
+    {
+        return [
+            [
+                'name' => 'COMF',
+                'status' => $this->getTestResult($keypoint->sys_comf ?? ''),
+                'value' => $keypoint->sys_comf_input ?? ''
+            ],
+            [
+                'name' => 'LRUF',
+                'status' => $this->getTestResult($keypoint->sys_lruf ?? ''),
+                'value' => $keypoint->sys_lruf_input ?? ''
+            ],
+            [
+                'name' => 'SIGN S',
+                'status' => $this->getTestResult($keypoint->sys_signs ?? ''),
+                'value' => $keypoint->sys_signs_input ?? ''
+            ],
+            [
+                'name' => 'Limit Switch',
+                'status' => $this->getTestResult($keypoint->sys_limitswith ?? ''),
+                'value' => $keypoint->sys_limitswith_input ?? ''
+            ],
+        ];
+    }
+
+    /**
+     * Parse Recloser Data
+     */
+    private function parseRecloserData($keypoint)
+    {
+        return [
+            [
+                'name' => 'AR',
+                'on' => $this->getTestResult($keypoint->re_ar_on ?? ''),
+                'off' => $this->getTestResult($keypoint->re_ar_off ?? '')
+            ],
+            [
+                'name' => 'CTRL AR',
+                'on' => $this->getTestResult($keypoint->re_ctrl_ar_on ?? ''),
+                'off' => $this->getTestResult($keypoint->re_ctrl_ar_off ?? '')
+            ],
+        ];
+    }
+
+    /**
+     * Parse checkbox value string menjadi array
+     */
+    private function parseCheckboxValue($value)
+    {
+        if (empty($value)) {
+            return [];
+        }
+        return array_map('trim', explode(',', $value));
+    }
+
+    /**
+     * Convert test result code to readable format
+     */
+    private function getTestResult($code)
+    {
+        $results = [
+            '1' => 'OK',
+            '2' => 'NOK',
+            '3' => 'N/A',
+            '4' => 'SKIP',
+            '5' => 'PENDING'
+        ];
+
+        // Extract number from string like 'hard_batere1' -> '1'
+        preg_match('/(\d+)$/', $code, $matches);
+        $num = $matches[1] ?? '';
+
+        return $results[$num] ?? $code;
     }
 
     // New methods for filtered exports (PDF and Excel)

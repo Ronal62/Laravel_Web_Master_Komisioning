@@ -6,7 +6,7 @@
     <title>Form Keypoint - {{ $row->nama_keypoint ?? 'Detail' }}</title>
     <style>
     @page {
-        margin: 3mm;
+        margin: 5mm;
         size: A4 landscape;
     }
 
@@ -16,10 +16,19 @@
         box-sizing: border-box;
     }
 
+    html,
     body {
+        width: 100%;
+        height: 100%;
         font-family: Arial, sans-serif;
         font-size: 7px;
         line-height: 1.1;
+    }
+
+    .page-container {
+        width: 100%;
+        height: 100%;
+        display: table;
     }
 
     table {
@@ -77,7 +86,7 @@
 
     /* Background */
     .bg-gray {
-        background-color: #e5e7eb;
+        background-color: #d1d5db;
     }
 
     .bg-gray-light {
@@ -97,82 +106,106 @@
         vertical-align: top;
     }
 
-    /* Layout */
+    /* Layout - Full Width */
+    .main-table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
     .col-left {
-        width: 57%;
-        padding-right: 3px;
+        width: 58%;
+        padding-right: 2px;
         vertical-align: top;
     }
 
     .col-right {
-        width: 43%;
-        padding-left: 3px;
+        width: 42%;
+        padding-left: 2px;
         vertical-align: top;
     }
 
     /* Data Table */
+    .data-table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
     .data-table th {
-        background-color: #e5e7eb;
+        background-color: #d1d5db;
         border: 0.5pt solid black;
-        font-size: 6px;
-        padding: 1px;
+        font-size: 6.5px;
+        padding: 2px 1px;
         font-weight: bold;
     }
 
     .data-table td {
         border: 0.5pt solid black;
-        font-size: 6px;
-        padding: 0px 1px;
+        font-size: 6.5px;
+        padding: 1px 2px;
         text-align: center;
-        height: 10px;
+        height: 11px;
     }
 
     .data-table .text-left {
         text-align: left;
-        padding-left: 2px;
-    }
-
-    /* Header */
-    .header-table td {
-        padding: 2px;
-    }
-
-    .header-logo {
-        width: 40px;
-        height: auto;
+        padding-left: 3px;
     }
 
     /* Compact row */
     .compact-row td {
-        height: 9px;
+        height: 10px;
     }
 
     /* Signature */
     .sig-cell {
-        height: 35px;
+        height: 40px;
         vertical-align: bottom;
         text-align: center;
-        padding-bottom: 2px;
+        padding-bottom: 3px;
     }
 
     .sig-line {
         border-bottom: 0.5pt solid black;
-        width: 75%;
-        margin: 0 auto 1px auto;
+        width: 80%;
+        margin: 0 auto 2px auto;
+    }
+
+    /* Header specific */
+    .header-table {
+        width: 100%;
+        margin-bottom: 6px;
+    }
+
+    /* Device info */
+    .device-info {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .device-info td {
+        font-size: 7.5px;
+        padding: 2px 4px;
+    }
+
+    .device-info .label {
+        width: 40%;
+    }
+
+    .device-info .value {
+        width: 60%;
     }
     </style>
 </head>
 
 <body>
     {{-- ===== HEADER ===== --}}
-    {{-- ===== HEADER ===== --}}
-    <table class="border" style="margin-bottom: 10px;">
+    <table class="header-table border" style="margin-bottom: 8px;">
         <tr>
             {{-- Logo & Company --}}
             <td width="48%" class="border-r" style="padding: 0;">
                 <table>
                     <tr>
-                        <td width="22%" class="text-center align-middle" style="padding: 5px;">
+                        <td width="18%" class="text-center align-middle" style="padding: 8px;">
                             @php
                             $logoPath = public_path('assets/img/pln.png');
                             $logoData = '';
@@ -182,26 +215,26 @@
                             @endphp
 
                             @if($logoData)
-                            <img src="data:image/png;base64,{{ $logoData }}" style="height: 55px; width: auto;"
+                            <img src="data:image/png;base64,{{ $logoData }}" style="height: 70px; width: auto;"
                                 alt="PLN">
                             @else
-                            <span style="font-size: 10px; color: red;">Logo Not Found</span>
+                            <span style="font-size: 12px; color: red;">Logo</span>
                             @endif
                         </td>
-                        <td width="78%" class="border-l"
-                            style="padding: 6px 8px; line-height: 1.4; font-family: 'Times New Roman', Times, serif;">
-                            <b style="font-size: 13px;">PT PLN (PERSERO)</b><br>
-                            <b style="font-size: 13px;">DISTRIBUSI JAWA TIMUR</b><br>
-                            <span style="font-size: 10px;">JL. EMBONG TRENGGULI NO. 19 - 21</span><br>
-                            <span style="font-size: 10px;">SURABAYA | TLP: (031) 53406531</span>
+                        <td width="82%" class="border-l"
+                            style="padding: 10px 12px; line-height: 1.4; font-family: 'Times New Roman', Times, serif;">
+                            <b style="font-size: 16px;">PT PLN (PERSERO)</b><br>
+                            <b style="font-size: 16px;">DISTRIBUSI JAWA TIMUR</b><br>
+                            <span style="font-size: 12px;">JL. EMBONG TRENGGULI NO. 19 - 21</span><br>
+                            <span style="font-size: 12px;">SURABAYA | TLP: (031) 53406531</span>
                         </td>
                     </tr>
                 </table>
             </td>
 
             {{-- Form Standard --}}
-            <td width="17%" class="align-middle text-center border-r" style="padding: 8px;">
-                <b style="font-size: 14px;">FORM<br>STANDART</b>
+            <td width="17%" class="align-middle text-center border-r" style="padding: 12px;">
+                <b style="font-size: 18px;">FORM<br>STANDART</b>
             </td>
 
             {{-- Document Info --}}
@@ -209,20 +242,21 @@
                 <table>
                     <tr>
                         <td class="bg-gray font-bold text-center border-b border-r" width="45%"
-                            style="font-size: 10px; padding: 4px;">
-                            NO. DOKUMEN</td>
-                        <td class="border-b" style="padding: 4px 6px; font-size: 10px;">HAL : 1 - 3</td>
+                            style="font-size: 12px; padding: 6px;">
+                            NO. DOKUMEN
+                        </td>
+                        <td class="border-b" style="padding: 6px 8px; font-size: 12px;">HAL : 1 - 3</td>
                     </tr>
                     <tr>
-                        <td rowspan="2" class="font-bold text-center border-r" style="font-size: 15px; padding: 6px;">
+                        <td rowspan="2" class="font-bold text-center border-r" style="font-size: 20px; padding: 10px;">
                             FS.SCA.01.17
                         </td>
-                        <td class="border-b" style="padding: 4px 6px; font-size: 10px;">TGL :
-                            {{ $row->tgl_komisioning ?? date('d-m-Y') }}
+                        <td class="border-b" style="padding: 6px 8px; font-size: 12px;">
+                            TGL : {{ $row->tgl_komisioning ?? date('d-m-Y') }}
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding: 4px 6px; font-size: 10px;">REV : 0</td>
+                        <td style="padding: 6px 8px; font-size: 12px;">REV : 0</td>
                     </tr>
                 </table>
             </td>
@@ -230,87 +264,93 @@
     </table>
 
     {{-- ===== TITLE ===== --}}
-    <div class="text-center" style="margin-bottom: 4px;">
-        <u style="font-weight: bold; font-size: 10px; letter-spacing: 0.5px;">TES POINT TO POINT LBS</u><br>
-        <span style="font-weight: bold; font-size: 8px;">FORM KOMISIONING KEYPOINT</span>
+    <div class="text-center" style="margin-bottom: 8px;">
+        <u style="font-weight: bold; font-size: 14px; letter-spacing: 1px;">TES POINT TO POINT LBS</u><br>
+        <span style="font-weight: bold; font-size: 11px;">FORM KOMISIONING KEYPOINT</span>
     </div>
 
     {{-- ===== DEVICE INFO ===== --}}
-    <table class="border" style="margin-bottom: 4px;">
+    <table class="device-info border" style="margin-bottom: 6px;">
         <tr>
-            <td width="33%" class="border-r" style="padding: 3px;">
-                <table>
+            <td width="33%" class="border-r" style="padding: 6px;">
+                <table style="width: 100%;">
                     <tr>
-                        <td width="38%" style="font-size: 7px;">Nama LBS / REC.</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->nama_keypoint ?? '-' }}
-                        </td>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">Nama LBS / REC.</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->nama_keypoint ?? '-' }}</td>
                     </tr>
                     <tr>
-                        <td style="font-size: 7px;">Merk LBS / REC.</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->nama_merklbs ?? '-' }}
-                        </td>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">Merk LBS / REC.</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->nama_merklbs ?? '-' }}</td>
                     </tr>
                     <tr>
-                        <td style="font-size: 7px;">Protocol / Address</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->alamat_rtu ?? '-' }}</td>
-                    </tr>
-                </table>
-            </td>
-            <td width="33%" class="border-r" style="padding: 3px;">
-                <table>
-                    <tr>
-                        <td width="35%" style="font-size: 7px;">Modem</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->nama_modem ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: 7px;">IP / No. Kartu</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->ip_rtu ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: 7px;">Koordinat</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->koordinat ?? '-' }}</td>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">Protocol / Address</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->alamat_rtu ?? '-' }}</td>
                     </tr>
                 </table>
             </td>
-            <td width="34%" style="padding: 3px;">
-                <table>
+            <td width="33%" class="border-r" style="padding: 6px;">
+                <table style="width: 100%;">
                     <tr>
-                        <td width="38%" style="font-size: 7px;">Gardu Induk / Sect</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->id_gi ?? '-' }}</td>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">Modem</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->nama_modem ?? '-' }}</td>
                     </tr>
                     <tr>
-                        <td style="font-size: 7px;">Penyulang</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->penyulang ?? '-' }}</td>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">IP / No. Kartu</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->ip_rtu ?? '-' }}</td>
                     </tr>
                     <tr>
-                        <td style="font-size: 7px;">Tanggal</td>
-                        <td class="border-dotted font-bold" style="font-size: 7px;">: {{ $row->tgl_komisioning ?? '-' }}
-                        </td>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">Koordinat</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->koordinat ?? '-' }}</td>
+                    </tr>
+                </table>
+            </td>
+            <td width="34%" style="padding: 6px;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">Gardu Induk / Sect</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->gardu_induk ?? '-' }} / {{ $row->sectoral ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">Penyulang</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->penyulang ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label" style="font-size: 10px; padding: 2px 0;">Tanggal</td>
+                        <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
+                            {{ $row->tgl_komisioning ?? '-' }}</td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
-
     {{-- ===== MAIN CONTENT ===== --}}
-    <table>
+    <table class="main-table">
         <tr>
-            {{-- LEFT COLUMN --}}
+            {{-- ========== LEFT COLUMN ========== --}}
             <td class="col-left">
+
                 {{-- STATUS TABLE --}}
-                <table class="data-table" style="margin-bottom: 3px;">
+                <table class="data-table" style="margin-bottom: 4px;">
                     <thead>
                         <tr>
-                            <th width="7%">ADD-MS</th>
-                            <th width="7%">ADD-RTU</th>
-                            <th width="7%">OBJ</th>
-                            <th width="8%">STATUS</th>
-                            <th width="8%">VALUE</th>
-                            <th width="4%">OK</th>
-                            <th width="4%">NOK</th>
-                            <th width="4%">LOG</th>
-                            <th width="4%">SLD</th>
-                            <th width="12%">Ket</th>
+                            <th width="11%" style="font-size: 7.5px; padding: 3px;">ADD-MS</th>
+                            <th width="11%" style="font-size: 7.5px; padding: 3px;">ADD-RTU</th>
+                            <th width="8%" style="font-size: 7.5px; padding: 3px;">OBJ</th>
+                            <th width="10%" style="font-size: 7.5px; padding: 3px;">STATUS</th>
+                            <th width="10%" style="font-size: 7.5px; padding: 3px;">VALUE</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">OK</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">NOK</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">LOG</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">SLD</th>
+                            <th width="26%" style="font-size: 7.5px; padding: 3px;">Ket</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -331,46 +371,50 @@
                         ];
                         @endphp
                         @foreach($statuses as $index => $item)
-                        <tr class="compact-row">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td rowspan="2">{{ $item[0] }}</td>
-                            <td>{{ $item[1] }}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            @if($index == 0)<td rowspan="24"></td>@endif
+                        <tr>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td rowspan="2" class="font-bold" style="font-size: 8px; padding: 2px;">{{ $item[0] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item[1] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            @if($index == 0)
+                            <td rowspan="24" class="text-left align-top" style="padding: 4px; font-size: 7px;">
+                                {{ $row->ketfts ?? '' }}
+                            </td>
+                            @endif
                         </tr>
-                        <tr class="compact-row">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{{ $item[2] }}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item[2] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
                 {{-- CONTROL TABLE --}}
-                <table class="data-table" style="margin-bottom: 3px;">
+                <table class="data-table" style="margin-bottom: 4px;">
                     <thead>
                         <tr>
-                            <th width="7%">ADD-MS</th>
-                            <th width="7%">ADD-RTU</th>
-                            <th width="7%">OBJ</th>
-                            <th width="8%">CTRL</th>
-                            <th width="8%">VALUE</th>
-                            <th width="4%">OK</th>
-                            <th width="4%">NOK</th>
-                            <th width="4%">LOG</th>
-                            <th width="4%">SLD</th>
-                            <th width="12%">Ket</th>
+                            <th width="11%" style="font-size: 7.5px; padding: 3px;">ADD-MS</th>
+                            <th width="11%" style="font-size: 7.5px; padding: 3px;">ADD-RTU</th>
+                            <th width="8%" style="font-size: 7.5px; padding: 3px;">OBJ</th>
+                            <th width="10%" style="font-size: 7.5px; padding: 3px;">CTRL</th>
+                            <th width="10%" style="font-size: 7.5px; padding: 3px;">VALUE</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">OK</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">NOK</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">LOG</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">SLD</th>
+                            <th width="26%" style="font-size: 7.5px; padding: 3px;">Ket</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -382,39 +426,43 @@
                         ];
                         @endphp
                         @foreach($controls as $index => $item)
-                        <tr class="compact-row">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td rowspan="2">{{ $item[0] }}</td>
-                            <td>{{ $item[1] }}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            @if($index == 0)<td rowspan="7"></td>@endif
+                        <tr>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td rowspan="2" class="font-bold" style="font-size: 8px; padding: 2px;">{{ $item[0] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item[1] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            @if($index == 0)
+                            <td rowspan="7" class="text-left align-top" style="padding: 4px; font-size: 7px;">
+                                {{ $row->ketftc ?? '' }}
+                            </td>
+                            @endif
                         </tr>
-                        <tr class="compact-row">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{{ $item[2] }}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item[2] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
                         </tr>
                         @endforeach
-                        <tr class="compact-row">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>RR</td>
-                            <td>Reset</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td class="font-bold" style="font-size: 8px; padding: 2px;">RR</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">Reset</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -423,16 +471,16 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th width="7%">ADD-MS</th>
-                            <th width="7%">ADD-RTU</th>
-                            <th width="7%">OBJ</th>
-                            <th width="9%">METER</th>
-                            <th width="6%">FIELD</th>
-                            <th width="6%">MS</th>
-                            <th width="5%">SCALE</th>
-                            <th width="5%">OK/NOK</th>
-                            <th width="4%">SLD</th>
-                            <th width="12%">Ket</th>
+                            <th width="11%" style="font-size: 7.5px; padding: 3px;">ADD-MS</th>
+                            <th width="11%" style="font-size: 7.5px; padding: 3px;">ADD-RTU</th>
+                            <th width="8%" style="font-size: 7.5px; padding: 3px;">OBJ</th>
+                            <th width="10%" style="font-size: 7.5px; padding: 3px;">METER</th>
+                            <th width="9%" style="font-size: 7.5px; padding: 3px;">FIELD</th>
+                            <th width="9%" style="font-size: 7.5px; padding: 3px;">MS</th>
+                            <th width="8%" style="font-size: 7.5px; padding: 3px;">SCALE</th>
+                            <th width="8%" style="font-size: 7.5px; padding: 3px;">OK/NOK</th>
+                            <th width="6%" style="font-size: 7.5px; padding: 3px;">SLD</th>
+                            <th width="20%" style="font-size: 7.5px; padding: 3px;">Ket</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -442,146 +490,294 @@
                         $pseudos = ['IFR', 'IFS', 'IFT', 'IFN'];
                         @endphp
                         @foreach($meters as $index => $meter)
-                        <tr class="compact-row">
+                        <tr>
                             @if(in_array($meter, $pseudos))
-                            <td class="bg-gray" style="font-size: 5px;">Pseudo</td>
+                            <td class="bg-gray" style="height: 12px; font-size: 6px; padding: 2px;">Pseudo</td>
                             @else
-                            <td></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
                             @endif
-                            <td></td>
-                            <td></td>
-                            <td>{{ $meter }}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            @if($index == 0)<td rowspan="18"></td>@endif
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td class="font-bold" style="height: 12px; font-size: 8px; padding: 2px;">{{ $meter }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            @if($index == 0)
+                            <td rowspan="18" class="text-left align-top" style="padding: 4px; font-size: 7px;">
+                                {{ $row->ketftm ?? '' }}
+                            </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </td>
 
-            {{-- RIGHT COLUMN --}}
+            {{-- ========== RIGHT COLUMN ========== --}}
             <td class="col-right">
+
                 {{-- HARDWARE TABLE --}}
-                <table class="data-table" style="margin-bottom: 3px;">
+                <table class="data-table" style="margin-bottom: 4px;">
                     <thead>
                         <tr>
-                            <th width="40%" class="text-left" style="padding-left: 3px;">Hardware</th>
-                            <th width="15%">OK/NOK</th>
-                            <th width="15%">Value</th>
-                            <th width="30%">Ket</th>
+                            <th width="32%" class="text-left" style="padding: 4px 6px; font-size: 8px;">Hardware</th>
+                            <th width="18%" style="padding: 4px; font-size: 8px;">OK/NOK</th>
+                            <th width="18%" style="padding: 4px; font-size: 8px;">Value</th>
+                            <th width="32%" style="padding: 4px; font-size: 8px;">Ket</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(['Batere', 'PS 220', 'Charger', 'Limit Switch'] as $i => $hw)
-                        <tr class="compact-row">
-                            <td class="text-left">{{ $hw }}</td>
-                            <td></td>
-                            <td></td>
-                            @if($i == 0)<td rowspan="4"></td>@endif
+                        @php
+                        $hardwareItems = [
+                        ['name' => 'Batere', 'status' => $hardwareData[0]['status'] ?? '', 'value' =>
+                        $hardwareData[0]['value'] ?? ''],
+                        ['name' => 'PS 220', 'status' => $hardwareData[1]['status'] ?? '', 'value' =>
+                        $hardwareData[1]['value'] ?? ''],
+                        ['name' => 'Charger', 'status' => $hardwareData[2]['status'] ?? '', 'value' =>
+                        $hardwareData[2]['value'] ?? ''],
+                        ['name' => 'Limit Switch', 'status' => $hardwareData[3]['status'] ?? '', 'value' =>
+                        $hardwareData[3]['value'] ?? ''],
+                        ];
+                        @endphp
+                        @foreach($hardwareItems as $i => $hw)
+                        <tr>
+                            <td class="text-left" style="height: 14px; font-size: 7.5px; padding: 3px 6px;">
+                                {{ $hw['name'] }}
+                            </td>
+                            <td style="height: 14px; font-size: 7.5px; padding: 3px;">{{ $hw['status'] }}</td>
+                            <td style="height: 14px; font-size: 7.5px; padding: 3px;">{{ $hw['value'] }}</td>
+                            @if($i == 0)
+                            <td rowspan="4" class="text-left align-top" style="padding: 4px; font-size: 7px;">
+                                {{ $row->kethard ?? '' }}
+                            </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
                 {{-- SYSTEM TABLE --}}
-                <table class="data-table" style="margin-bottom: 3px;">
+                <table class="data-table" style="margin-bottom: 4px;">
                     <thead>
                         <tr>
-                            <th width="40%" class="text-left" style="padding-left: 3px;">System</th>
-                            <th width="15%">OK/NOK</th>
-                            <th width="15%">Value</th>
-                            <th width="30%">Ket</th>
+                            <th width="32%" class="text-left" style="padding: 4px 6px; font-size: 8px;">System</th>
+                            <th width="18%" style="padding: 4px; font-size: 8px;">OK/NOK</th>
+                            <th width="18%" style="padding: 4px; font-size: 8px;">Value</th>
+                            <th width="32%" style="padding: 4px; font-size: 8px;">Ket</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(['COMF', 'LRUF', 'SIGN S', 'Limit Switch'] as $i => $sys)
-                        <tr class="compact-row">
-                            <td class="text-left">{{ $sys }}</td>
-                            <td></td>
-                            <td></td>
-                            @if($i == 0)<td rowspan="4"></td>@endif
+                        @php
+                        $systemItems = [
+                        ['name' => 'COMF', 'status' => $systemData[0]['status'] ?? '', 'value' =>
+                        $systemData[0]['value'] ?? ''],
+                        ['name' => 'LRUF', 'status' => $systemData[1]['status'] ?? '', 'value' =>
+                        $systemData[1]['value'] ?? ''],
+                        ['name' => 'SIGN S', 'status' => $systemData[2]['status'] ?? '', 'value' =>
+                        $systemData[2]['value'] ?? ''],
+                        ['name' => 'Limit Switch', 'status' => $systemData[3]['status'] ?? '', 'value' =>
+                        $systemData[3]['value'] ?? ''],
+                        ];
+                        @endphp
+                        @foreach($systemItems as $i => $sys)
+                        <tr>
+                            <td class="text-left" style="height: 14px; font-size: 7.5px; padding: 3px 6px;">
+                                {{ $sys['name'] }}
+                            </td>
+                            <td style="height: 14px; font-size: 7.5px; padding: 3px;">{{ $sys['status'] }}</td>
+                            <td style="height: 14px; font-size: 7.5px; padding: 3px;">{{ $sys['value'] }}</td>
+                            @if($i == 0)
+                            <td rowspan="4" class="text-left align-top" style="padding: 4px; font-size: 7px;">
+                                {{ $row->ketsys ?? '' }}
+                            </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
                 {{-- RECLOSER TABLE --}}
-                <table class="data-table" style="margin-bottom: 3px;">
+                <table class="data-table" style="margin-bottom: 4px;">
                     <thead>
                         <tr>
-                            <th width="28%" class="text-left" style="padding-left: 3px;">RECLOSER</th>
-                            <th width="22%">Value</th>
-                            <th width="15%">OK/NOK</th>
-                            <th width="35%">Ket</th>
+                            <th width="25%" class="text-left" style="padding: 4px 6px; font-size: 8px;">RECLOSER</th>
+                            <th width="25%" style="padding: 4px; font-size: 8px;">Value</th>
+                            <th width="18%" style="padding: 4px; font-size: 8px;">OK/NOK</th>
+                            <th width="32%" style="padding: 4px; font-size: 8px;">Ket</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(['AR', 'CTRL AR'] as $i => $rec)
+                        @php
+                        $recloserItems = [
+                        ['name' => 'AR', 'on' => $recloserData[0]['on'] ?? '', 'off' => $recloserData[0]['off'] ?? ''],
+                        ['name' => 'CTRL AR', 'on' => $recloserData[1]['on'] ?? '', 'off' => $recloserData[1]['off'] ??
+                        ''],
+                        ];
+                        @endphp
+                        @foreach($recloserItems as $i => $rec)
                         <tr>
-                            <td class="text-left">{{ $rec }}</td>
-                            <td style="padding: 0; font-size: 5px;">
-                                <div class="border-b text-center">On</div>
-                                <div class="text-center">Off</div>
+                            <td class="text-left font-bold" style="font-size: 8px; padding: 3px 6px;">{{ $rec['name'] }}
                             </td>
-                            <td></td>
-                            @if($i == 0)<td rowspan="2"></td>@endif
+                            <td style="padding: 0;">
+                                <div class="border-b text-center" style="padding: 3px; font-size: 7px;">On:
+                                    {{ $rec['on'] }}
+                                </div>
+                                <div class="text-center" style="padding: 3px; font-size: 7px;">Off: {{ $rec['off'] }}
+                                </div>
+                            </td>
+                            <td style="font-size: 7.5px; padding: 3px;"></td>
+                            @if($i == 0)
+                            <td rowspan="2" class="text-left align-top" style="padding: 4px; font-size: 7px;">
+                                {{ $row->ketre ?? '' }}
+                            </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
                 {{-- CATATAN --}}
-                <table class="border" style="margin-bottom: 3px;">
+                <table class="border" style="margin-bottom: 4px; width: 100%;">
                     <tr>
-                        <td class="bg-gray font-bold border-b text-left" style="padding: 2px; font-size: 7px;">CATATAN
-                        </td>
+                        <td class="bg-gray font-bold border-b text-left" style="padding: 4px 6px; font-size: 9px;">
+                            CATATAN</td>
                     </tr>
                     <tr>
-                        <td class="align-top" style="height: 70px; padding: 3px; font-size: 7px;">
-                            {{ $row->keterangan ?? '' }}
+                        <td class="align-top" style="height: 75px; padding: 6px; font-size: 8px; line-height: 1.3;">
+                            {{ $row->catatankp ?? '' }}
                         </td>
                     </tr>
                 </table>
 
                 {{-- PELAKSANA --}}
-                <table class="border">
+                <table class="border" style="width: 100%;">
                     <tr>
-                        <td class="bg-gray font-bold border-b text-left" style="padding: 2px; font-size: 7px;">PELAKSANA
-                            :</td>
+                        <td class="bg-gray font-bold border-b text-left" style="padding: 4px 6px; font-size: 9px;">
+                            PELAKSANA :</td>
                     </tr>
                     <tr>
                         <td style="padding: 0;">
-                            <table>
+                            <table style="width: 100%;">
                                 <tr>
-                                    <td width="33%" class="sig-cell border-r border-b">
-                                        <div class="sig-line"></div>
-                                        <div style="font-size: 6px; font-weight: bold;">Field Eng. 01</div>
+                                    {{-- Field Engineer --}}
+                                    <td width="33%" class="border-r border-b"
+                                        style="height: 50px; vertical-align: bottom; text-align: center; padding-bottom: 4px;">
+                                        @if(isset($pelaksanaRtu[0]))
+                                        @php
+                                        $ttdPath = public_path('storage/' . $pelaksanaRtu[0]->foto_ttd);
+                                        $ttdData = '';
+                                        if (file_exists($ttdPath)) {
+                                        $ttdData = base64_encode(file_get_contents($ttdPath));
+                                        }
+                                        @endphp
+                                        @if($ttdData)
+                                        <img src="data:image/png;base64,{{ $ttdData }}"
+                                            style="height: 30px; width: auto; margin-bottom: 2px;">
+                                        @endif
+                                        <div style="font-size: 7px; font-weight: bold;">
+                                            {{ $pelaksanaRtu[0]->nama_pelrtu ?? 'Field Eng. 01' }}
+                                        </div>
+                                        @else
+                                        <div
+                                            style="border-bottom: 0.5pt solid black; width: 80%; margin: 0 auto 3px auto;">
+                                        </div>
+                                        <div style="font-size: 7px; font-weight: bold;">Field Eng. 01</div>
+                                        @endif
                                     </td>
-                                    <td width="33%" class="sig-cell border-r border-b">
-                                        <div class="sig-line"></div>
-                                        <div style="font-size: 6px; font-weight: bold;">MS Eng. 01</div>
+                                    {{-- MS Engineer --}}
+                                    <td width="33%" class="border-r border-b"
+                                        style="height: 50px; vertical-align: bottom; text-align: center; padding-bottom: 4px;">
+                                        @if(isset($pelaksanaMs[0]))
+                                        @php
+                                        $ttdPath = public_path('storage/' . $pelaksanaMs[0]->foto_ttd);
+                                        $ttdData = '';
+                                        if (file_exists($ttdPath)) {
+                                        $ttdData = base64_encode(file_get_contents($ttdPath));
+                                        }
+                                        @endphp
+                                        @if($ttdData)
+                                        <img src="data:image/png;base64,{{ $ttdData }}"
+                                            style="height: 30px; width: auto; margin-bottom: 2px;">
+                                        @endif
+                                        <div style="font-size: 7px; font-weight: bold;">
+                                            {{ $pelaksanaMs[0]->nama_picmaster ?? 'MS Eng. 01' }}
+                                        </div>
+                                        @else
+                                        <div
+                                            style="border-bottom: 0.5pt solid black; width: 80%; margin: 0 auto 3px auto;">
+                                        </div>
+                                        <div style="font-size: 7px; font-weight: bold;">MS Eng. 01</div>
+                                        @endif
                                     </td>
-                                    <td width="34%" class="sig-cell border-b">
-                                        <div class="sig-line"></div>
-                                        <div style="font-size: 6px; font-weight: bold;">Dispatcher 01</div>
+                                    {{-- Dispatcher --}}
+                                    <td width="34%" class="border-b"
+                                        style="height: 50px; vertical-align: bottom; text-align: center; padding-bottom: 4px;">
+                                        <div
+                                            style="border-bottom: 0.5pt solid black; width: 80%; margin: 0 auto 3px auto;">
+                                        </div>
+                                        <div style="font-size: 7px; font-weight: bold;">Dispatcher 01</div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="sig-cell border-r">
-                                        <div class="sig-line"></div>
-                                        <div style="font-size: 6px; font-weight: bold;">Field Eng. 02</div>
+                                    {{-- Field Engineer 2 --}}
+                                    <td class="border-r"
+                                        style="height: 50px; vertical-align: bottom; text-align: center; padding-bottom: 4px;">
+                                        @if(isset($pelaksanaRtu[1]))
+                                        @php
+                                        $ttdPath = public_path('storage/' . $pelaksanaRtu[1]->foto_ttd);
+                                        $ttdData = '';
+                                        if (file_exists($ttdPath)) {
+                                        $ttdData = base64_encode(file_get_contents($ttdPath));
+                                        }
+                                        @endphp
+                                        @if($ttdData)
+                                        <img src="data:image/png;base64,{{ $ttdData }}"
+                                            style="height: 30px; width: auto; margin-bottom: 2px;">
+                                        @endif
+                                        <div style="font-size: 7px; font-weight: bold;">
+                                            {{ $pelaksanaRtu[1]->nama_pelrtu ?? 'Field Eng. 02' }}
+                                        </div>
+                                        @else
+                                        <div
+                                            style="border-bottom: 0.5pt solid black; width: 80%; margin: 0 auto 3px auto;">
+                                        </div>
+                                        <div style="font-size: 7px; font-weight: bold;">Field Eng. 02</div>
+                                        @endif
                                     </td>
-                                    <td class="sig-cell border-r">
-                                        <div class="sig-line"></div>
-                                        <div style="font-size: 6px; font-weight: bold;">MS Eng. 02</div>
+                                    {{-- MS Engineer 2 --}}
+                                    <td class="border-r"
+                                        style="height: 50px; vertical-align: bottom; text-align: center; padding-bottom: 4px;">
+                                        @if(isset($pelaksanaMs[1]))
+                                        @php
+                                        $ttdPath = public_path('storage/' . $pelaksanaMs[1]->foto_ttd);
+                                        $ttdData = '';
+                                        if (file_exists($ttdPath)) {
+                                        $ttdData = base64_encode(file_get_contents($ttdPath));
+                                        }
+                                        @endphp
+                                        @if($ttdData)
+                                        <img src="data:image/png;base64,{{ $ttdData }}"
+                                            style="height: 30px; width: auto; margin-bottom: 2px;">
+                                        @endif
+                                        <div style="font-size: 7px; font-weight: bold;">
+                                            {{ $pelaksanaMs[1]->nama_picmaster ?? 'MS Eng. 02' }}
+                                        </div>
+                                        @else
+                                        <div
+                                            style="border-bottom: 0.5pt solid black; width: 80%; margin: 0 auto 3px auto;">
+                                        </div>
+                                        <div style="font-size: 7px; font-weight: bold;">MS Eng. 02</div>
+                                        @endif
                                     </td>
-                                    <td class="sig-cell">
-                                        <div class="sig-line"></div>
-                                        <div style="font-size: 6px; font-weight: bold;">Dispatcher 02</div>
+                                    {{-- Dispatcher 2 --}}
+                                    <td
+                                        style="height: 50px; vertical-align: bottom; text-align: center; padding-bottom: 4px;">
+                                        <div
+                                            style="border-bottom: 0.5pt solid black; width: 80%; margin: 0 auto 3px auto;">
+                                        </div>
+                                        <div style="font-size: 7px; font-weight: bold;">Dispatcher 02</div>
                                     </td>
                                 </tr>
                             </table>
@@ -593,7 +789,7 @@
     </table>
 
     {{-- ===== FOOTER ===== --}}
-    <div class="border text-center italic" style="font-size: 6px; padding: 2px; margin-top: 3px;">
+    <div class="border text-center italic" style="font-size: 6px; padding: 3px; margin-top: 4px;">
         Apabila dokumen ini didownload / dicetak maka akan menjadi "DOKUMEN TIDAK TERKENDALI"
     </div>
 
