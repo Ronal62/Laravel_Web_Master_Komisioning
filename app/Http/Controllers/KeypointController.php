@@ -274,323 +274,369 @@ class KeypointController extends Controller
 
         // 12. Download atau Stream
         return $pdf->download($filename);
-        // Atau gunakan stream untuk preview: return $pdf->stream($filename);
     }
 
     /**
-     * Parse Status Data dari database
+     * Parse checkbox value string menjadi array
+     */
+    private function parseCheckboxValue($value)
+    {
+        if (empty($value)) {
+            return [];
+        }
+        return array_map('trim', explode(',', $value));
+    }
+
+    /**
+     * Get check value (1=OK, 2=NOK, 3=LOG, 4=SLD) dari status array
+     */
+    private function getCheckValue($statusArray, $prefix)
+    {
+        foreach ($statusArray as $item) {
+            if (strpos($item, $prefix) === 0) {
+                // Extract number dari akhir string (e.g., 'open_1' -> 1)
+                preg_match('/_(\d+)$/', $item, $matches);
+                if (isset($matches[1])) {
+                    return (int)$matches[1];
+                }
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Parse Status Data dari database - UPDATED
      */
     private function parseStatusData($keypoint)
     {
         $statuses = [];
 
+        // Parse semua status values
+        $s_cb = $this->parseCheckboxValue($keypoint->s_cb ?? '');
+        $s_cb2 = $this->parseCheckboxValue($keypoint->s_cb2 ?? '');
+        $s_lr = $this->parseCheckboxValue($keypoint->s_lr ?? '');
+        $s_door = $this->parseCheckboxValue($keypoint->s_door ?? '');
+        $s_acf = $this->parseCheckboxValue($keypoint->s_acf ?? '');
+        $s_dcf = $this->parseCheckboxValue($keypoint->s_dcf ?? '');
+        $s_dcd = $this->parseCheckboxValue($keypoint->s_dcd ?? '');
+        $s_hlt = $this->parseCheckboxValue($keypoint->s_hlt ?? '');
+        $s_sf6 = $this->parseCheckboxValue($keypoint->s_sf6 ?? '');
+        $s_fir = $this->parseCheckboxValue($keypoint->s_fir ?? '');
+        $s_fis = $this->parseCheckboxValue($keypoint->s_fis ?? '');
+        $s_fit = $this->parseCheckboxValue($keypoint->s_fit ?? '');
+
         // CB Status
         $statuses[] = [
             'name' => 'CB',
-            'values' => ['Open', 'Close'],
-            'data' => $this->parseCheckboxValue($keypoint->s_cb ?? ''),
-            'addresses' => [
-                'open' => [
-                    'ms' => $keypoint->scb_open_addms ?? '',
-                    'rtu' => $keypoint->scb_open_addrtu ?? '',
-                    'obj' => $keypoint->scb_open_objfrmt ?? ''
-                ],
-                'close' => [
-                    'ms' => $keypoint->scb_close_addms ?? '',
-                    'rtu' => $keypoint->scb_close_addrtu ?? '',
-                    'obj' => $keypoint->scb_close_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Open',
+                'ms' => $keypoint->scb_open_addms ?? '',
+                'rtu' => $keypoint->scb_open_addrtu ?? '',
+                'obj' => $keypoint->scb_open_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_cb, 'open'),
+            ],
+            'row2' => [
+                'label' => 'Close',
+                'ms' => $keypoint->scb_close_addms ?? '',
+                'rtu' => $keypoint->scb_close_addrtu ?? '',
+                'obj' => $keypoint->scb_close_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_cb, 'close'),
+            ],
         ];
 
         // CB2 Status
         $statuses[] = [
             'name' => 'CB 2',
-            'values' => ['Open', 'Close'],
-            'data' => $this->parseCheckboxValue($keypoint->s_cb2 ?? ''),
-            'addresses' => [
-                'open' => [
-                    'ms' => $keypoint->scb2_open_addms ?? '',
-                    'rtu' => $keypoint->scb2_open_addrtu ?? '',
-                    'obj' => $keypoint->scb2_open_objfrmt ?? ''
-                ],
-                'close' => [
-                    'ms' => $keypoint->scb2_close_addms ?? '',
-                    'rtu' => $keypoint->scb2_close_addrtu ?? '',
-                    'obj' => $keypoint->scb2_close_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Open',
+                'ms' => $keypoint->scb2_open_addms ?? '',
+                'rtu' => $keypoint->scb2_open_addrtu ?? '',
+                'obj' => $keypoint->scb2_open_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_cb2, 'open'),
+            ],
+            'row2' => [
+                'label' => 'Close',
+                'ms' => $keypoint->scb2_close_addms ?? '',
+                'rtu' => $keypoint->scb2_close_addrtu ?? '',
+                'obj' => $keypoint->scb2_close_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_cb2, 'close'),
+            ],
         ];
 
         // L/R Status
         $statuses[] = [
             'name' => 'L/R',
-            'values' => ['Local', 'Remote'],
-            'data' => $this->parseCheckboxValue($keypoint->s_lr ?? ''),
-            'addresses' => [
-                'local' => [
-                    'ms' => $keypoint->slr_local_addms ?? '',
-                    'rtu' => $keypoint->slr_local_addrtu ?? '',
-                    'obj' => $keypoint->slr_local_objfrmt ?? ''
-                ],
-                'remote' => [
-                    'ms' => $keypoint->slr_remote_addms ?? '',
-                    'rtu' => $keypoint->slr_remote_addrtu ?? '',
-                    'obj' => $keypoint->slr_remote_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Local',
+                'ms' => $keypoint->slr_local_addms ?? '',
+                'rtu' => $keypoint->slr_local_addrtu ?? '',
+                'obj' => $keypoint->slr_local_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_lr, 'local'),
+            ],
+            'row2' => [
+                'label' => 'Remote',
+                'ms' => $keypoint->slr_remote_addms ?? '',
+                'rtu' => $keypoint->slr_remote_addrtu ?? '',
+                'obj' => $keypoint->slr_remote_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_lr, 'remote'),
+            ],
         ];
 
         // DOOR Status
         $statuses[] = [
             'name' => 'DOOR',
-            'values' => ['Open', 'Close'],
-            'data' => $this->parseCheckboxValue($keypoint->s_door ?? ''),
-            'addresses' => [
-                'open' => [
-                    'ms' => $keypoint->sdoor_open_addms ?? '',
-                    'rtu' => $keypoint->sdoor_open_addrtu ?? '',
-                    'obj' => $keypoint->sdoor_open_objfrmt ?? ''
-                ],
-                'close' => [
-                    'ms' => $keypoint->sdoor_close_addms ?? '',
-                    'rtu' => $keypoint->sdoor_close_addrtu ?? '',
-                    'obj' => $keypoint->sdoor_close_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Open',
+                'ms' => $keypoint->sdoor_open_addms ?? '',
+                'rtu' => $keypoint->sdoor_open_addrtu ?? '',
+                'obj' => $keypoint->sdoor_open_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_door, 'dropen'),
+            ],
+            'row2' => [
+                'label' => 'Close',
+                'ms' => $keypoint->sdoor_close_addms ?? '',
+                'rtu' => $keypoint->sdoor_close_addrtu ?? '',
+                'obj' => $keypoint->sdoor_close_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_door, 'drclose'),
+            ],
         ];
 
         // ACF Status
         $statuses[] = [
             'name' => 'ACF',
-            'values' => ['Normal', 'Failed'],
-            'data' => $this->parseCheckboxValue($keypoint->s_acf ?? ''),
-            'addresses' => [
-                'normal' => [
-                    'ms' => $keypoint->sacf_normal_addms ?? '',
-                    'rtu' => $keypoint->sacf_normal_addrtu ?? '',
-                    'obj' => $keypoint->sacf_normal_objfrmt ?? ''
-                ],
-                'fail' => [
-                    'ms' => $keypoint->sacf_fail_addms ?? '',
-                    'rtu' => $keypoint->sacf_fail_addrtu ?? '',
-                    'obj' => $keypoint->sacf_fail_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Normal',
+                'ms' => $keypoint->sacf_normal_addms ?? '',
+                'rtu' => $keypoint->sacf_normal_addrtu ?? '',
+                'obj' => $keypoint->sacf_normal_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_acf, 'acnrml'),
+            ],
+            'row2' => [
+                'label' => 'Failed',
+                'ms' => $keypoint->sacf_fail_addms ?? '',
+                'rtu' => $keypoint->sacf_fail_addrtu ?? '',
+                'obj' => $keypoint->sacf_fail_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_acf, 'acfail'),
+            ],
         ];
 
         // DCF Status
         $statuses[] = [
             'name' => 'DCF',
-            'values' => ['Normal', 'Failed'],
-            'data' => $this->parseCheckboxValue($keypoint->s_dcf ?? ''),
-            'addresses' => [
-                'normal' => [
-                    'ms' => $keypoint->sdcf_normal_addms ?? '',
-                    'rtu' => $keypoint->sdcf_normal_addrtu ?? '',
-                    'obj' => $keypoint->sdcf_normal_objfrmt ?? ''
-                ],
-                'fail' => [
-                    'ms' => $keypoint->sdcf_fail_addms ?? '',
-                    'rtu' => $keypoint->sdcf_fail_addrtu ?? '',
-                    'obj' => $keypoint->sdcf_fail_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Normal',
+                'ms' => $keypoint->sdcf_normal_addms ?? '',
+                'rtu' => $keypoint->sdcf_normal_addrtu ?? '',
+                'obj' => $keypoint->sdcf_normal_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_dcf, 'dcfnrml'),
+            ],
+            'row2' => [
+                'label' => 'Failed',
+                'ms' => $keypoint->sdcf_fail_addms ?? '',
+                'rtu' => $keypoint->sdcf_fail_addrtu ?? '',
+                'obj' => $keypoint->sdcf_fail_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_dcf, 'dcffail'),
+            ],
         ];
 
         // DCD Status
         $statuses[] = [
             'name' => 'DCD',
-            'values' => ['Normal', 'Failed'],
-            'data' => $this->parseCheckboxValue($keypoint->s_dcd ?? ''),
-            'addresses' => [
-                'normal' => [
-                    'ms' => $keypoint->sdcd_normal_addms ?? '',
-                    'rtu' => $keypoint->sdcd_normal_addrtu ?? '',
-                    'obj' => $keypoint->sdcd_normal_objfrmt ?? ''
-                ],
-                'fail' => [
-                    'ms' => $keypoint->sdcd_fail_addms ?? '',
-                    'rtu' => $keypoint->sdcd_fail_addrtu ?? '',
-                    'obj' => $keypoint->sdcd_fail_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Normal',
+                'ms' => $keypoint->sdcd_normal_addms ?? '',
+                'rtu' => $keypoint->sdcd_normal_addrtu ?? '',
+                'obj' => $keypoint->sdcd_normal_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_dcd, 'dcnrml'),
+            ],
+            'row2' => [
+                'label' => 'Failed',
+                'ms' => $keypoint->sdcd_fail_addms ?? '',
+                'rtu' => $keypoint->sdcd_fail_addrtu ?? '',
+                'obj' => $keypoint->sdcd_fail_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_dcd, 'dcfail'),
+            ],
         ];
 
         // HLT Status
         $statuses[] = [
             'name' => 'HLT',
-            'values' => ['Active', 'Inactive'],
-            'data' => $this->parseCheckboxValue($keypoint->s_hlt ?? ''),
-            'addresses' => [
-                'on' => [
-                    'ms' => $keypoint->shlt_on_addms ?? '',
-                    'rtu' => $keypoint->shlt_on_addrtu ?? '',
-                    'obj' => $keypoint->shlt_on_objfrmt ?? ''
-                ],
-                'off' => [
-                    'ms' => $keypoint->shlt_off_addms ?? '',
-                    'rtu' => $keypoint->shlt_off_addrtu ?? '',
-                    'obj' => $keypoint->shlt_off_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Active',
+                'ms' => $keypoint->shlt_on_addms ?? '',
+                'rtu' => $keypoint->shlt_on_addrtu ?? '',
+                'obj' => $keypoint->shlt_on_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_hlt, 'hlton'),
+            ],
+            'row2' => [
+                'label' => 'Inactive',
+                'ms' => $keypoint->shlt_off_addms ?? '',
+                'rtu' => $keypoint->shlt_off_addrtu ?? '',
+                'obj' => $keypoint->shlt_off_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_hlt, 'hltoff'),
+            ],
         ];
 
         // SF6 Status
         $statuses[] = [
             'name' => 'SF6',
-            'values' => ['Normal', 'Low'],
-            'data' => $this->parseCheckboxValue($keypoint->s_sf6 ?? ''),
-            'addresses' => [
-                'normal' => [
-                    'ms' => $keypoint->ssf6_normal_addms ?? '',
-                    'rtu' => $keypoint->ssf6_normal_addrtu ?? '',
-                    'obj' => $keypoint->ssf6_normal_objfrmt ?? ''
-                ],
-                'fail' => [
-                    'ms' => $keypoint->ssf6_fail_addms ?? '',
-                    'rtu' => $keypoint->ssf6_fail_addrtu ?? '',
-                    'obj' => $keypoint->ssf6_fail_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Normal',
+                'ms' => $keypoint->ssf6_normal_addms ?? '',
+                'rtu' => $keypoint->ssf6_normal_addrtu ?? '',
+                'obj' => $keypoint->ssf6_normal_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_sf6, 'sf6nrml'),
+            ],
+            'row2' => [
+                'label' => 'Low',
+                'ms' => $keypoint->ssf6_fail_addms ?? '',
+                'rtu' => $keypoint->ssf6_fail_addrtu ?? '',
+                'obj' => $keypoint->ssf6_fail_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_sf6, 'sf6fail'),
+            ],
         ];
 
         // FIR Status
         $statuses[] = [
             'name' => 'FIR',
-            'values' => ['Normal', 'Failed'],
-            'data' => $this->parseCheckboxValue($keypoint->s_fir ?? ''),
-            'addresses' => [
-                'normal' => [
-                    'ms' => $keypoint->sfir_normal_addms ?? '',
-                    'rtu' => $keypoint->sfir_normal_addrtu ?? '',
-                    'obj' => $keypoint->sfir_normal_objfrmt ?? ''
-                ],
-                'fail' => [
-                    'ms' => $keypoint->sfir_fail_addms ?? '',
-                    'rtu' => $keypoint->sfir_fail_addrtu ?? '',
-                    'obj' => $keypoint->sfir_fail_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Normal',
+                'ms' => $keypoint->sfir_normal_addms ?? '',
+                'rtu' => $keypoint->sfir_normal_addrtu ?? '',
+                'obj' => $keypoint->sfir_normal_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_fir, 'firnrml'),
+            ],
+            'row2' => [
+                'label' => 'Failed',
+                'ms' => $keypoint->sfir_fail_addms ?? '',
+                'rtu' => $keypoint->sfir_fail_addrtu ?? '',
+                'obj' => $keypoint->sfir_fail_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_fir, 'firfail'),
+            ],
         ];
 
         // FIS Status
         $statuses[] = [
             'name' => 'FIS',
-            'values' => ['Normal', 'Failed'],
-            'data' => $this->parseCheckboxValue($keypoint->s_fis ?? ''),
-            'addresses' => [
-                'normal' => [
-                    'ms' => $keypoint->sfis_normal_addms ?? '',
-                    'rtu' => $keypoint->sfis_normal_addrtu ?? '',
-                    'obj' => $keypoint->sfis_normal_objfrmt ?? ''
-                ],
-                'fail' => [
-                    'ms' => $keypoint->sfis_fail_addms ?? '',
-                    'rtu' => $keypoint->sfis_fail_addrtu ?? '',
-                    'obj' => $keypoint->sfis_fail_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Normal',
+                'ms' => $keypoint->sfis_normal_addms ?? '',
+                'rtu' => $keypoint->sfis_normal_addrtu ?? '',
+                'obj' => $keypoint->sfis_normal_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_fis, 'fisnrml'),
+            ],
+            'row2' => [
+                'label' => 'Failed',
+                'ms' => $keypoint->sfis_fail_addms ?? '',
+                'rtu' => $keypoint->sfis_fail_addrtu ?? '',
+                'obj' => $keypoint->sfis_fail_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_fis, 'fisfail'),
+            ],
         ];
 
         // FIT Status
         $statuses[] = [
             'name' => 'FIT',
-            'values' => ['Normal', 'Failed'],
-            'data' => $this->parseCheckboxValue($keypoint->s_fit ?? ''),
-            'addresses' => [
-                'normal' => [
-                    'ms' => $keypoint->sfit_normal_addms ?? '',
-                    'rtu' => $keypoint->sfit_normal_addrtu ?? '',
-                    'obj' => $keypoint->sfit_normal_objfrmt ?? ''
-                ],
-                'fail' => [
-                    'ms' => $keypoint->sfit_fail_addms ?? '',
-                    'rtu' => $keypoint->sfit_fail_addrtu ?? '',
-                    'obj' => $keypoint->sfit_fail_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Normal',
+                'ms' => $keypoint->sfit_normal_addms ?? '',
+                'rtu' => $keypoint->sfit_normal_addrtu ?? '',
+                'obj' => $keypoint->sfit_normal_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_fit, 'fitnrml'),
+            ],
+            'row2' => [
+                'label' => 'Failed',
+                'ms' => $keypoint->sfit_fail_addms ?? '',
+                'rtu' => $keypoint->sfit_fail_addrtu ?? '',
+                'obj' => $keypoint->sfit_fail_objfrmt ?? '',
+                'check' => $this->getCheckValue($s_fit, 'fitfail'),
+            ],
         ];
 
         return $statuses;
     }
 
     /**
-     * Parse Control Data dari database
+     * Parse Control Data dari database - UPDATED
      */
     private function parseControlData($keypoint)
     {
         $controls = [];
 
+        // Parse control values
+        $c_cb = $this->parseCheckboxValue($keypoint->c_cb ?? '');
+        $c_cb2 = $this->parseCheckboxValue($keypoint->c_cb2 ?? '');
+        $c_hlt = $this->parseCheckboxValue($keypoint->c_hlt ?? '');
+        $c_rst = $this->parseCheckboxValue($keypoint->c_rst ?? '');
+
         // CB Control
         $controls[] = [
             'name' => 'CB',
-            'values' => ['Open', 'Close'],
-            'data' => $this->parseCheckboxValue($keypoint->c_cb ?? ''),
-            'addresses' => [
-                'open' => [
-                    'ms' => $keypoint->ccb_open_addms ?? '',
-                    'rtu' => $keypoint->ccb_open_addrtu ?? '',
-                    'obj' => $keypoint->ccb_open_objfrmt ?? ''
-                ],
-                'close' => [
-                    'ms' => $keypoint->ccb_close_addms ?? '',
-                    'rtu' => $keypoint->ccb_close_addrtu ?? '',
-                    'obj' => $keypoint->ccb_close_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Open',
+                'ms' => $keypoint->ccb_open_addms ?? '',
+                'rtu' => $keypoint->ccb_open_addrtu ?? '',
+                'obj' => $keypoint->ccb_open_objfrmt ?? '',
+                'check' => $this->getCheckValue($c_cb, 'cbctrl_op'),
+            ],
+            'row2' => [
+                'label' => 'Close',
+                'ms' => $keypoint->ccb_close_addms ?? '',
+                'rtu' => $keypoint->ccb_close_addrtu ?? '',
+                'obj' => $keypoint->ccb_close_objfrmt ?? '',
+                'check' => $this->getCheckValue($c_cb, 'cbctrl_cl'),
+            ],
         ];
 
         // CB2 Control
         $controls[] = [
             'name' => 'CB 2',
-            'values' => ['Open', 'Close'],
-            'data' => $this->parseCheckboxValue($keypoint->c_cb2 ?? ''),
-            'addresses' => [
-                'open' => [
-                    'ms' => $keypoint->ccb2_open_addms ?? '',
-                    'rtu' => $keypoint->ccb2_open_addrtu ?? '',
-                    'obj' => $keypoint->ccb2_open_objfrmt ?? ''
-                ],
-                'close' => [
-                    'ms' => $keypoint->ccb2_close_addms ?? '',
-                    'rtu' => $keypoint->ccb2_close_addrtu ?? '',
-                    'obj' => $keypoint->ccb2_close_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'Open',
+                'ms' => $keypoint->ccb2_open_addms ?? '',
+                'rtu' => $keypoint->ccb2_open_addrtu ?? '',
+                'obj' => $keypoint->ccb2_open_objfrmt ?? '',
+                'check' => $this->getCheckValue($c_cb2, 'cbctrl2_op'),
+            ],
+            'row2' => [
+                'label' => 'Close',
+                'ms' => $keypoint->ccb2_close_addms ?? '',
+                'rtu' => $keypoint->ccb2_close_addrtu ?? '',
+                'obj' => $keypoint->ccb2_close_objfrmt ?? '',
+                'check' => $this->getCheckValue($c_cb2, 'cbctrl2_cl'),
+            ],
         ];
 
         // HLT Control
         $controls[] = [
             'name' => 'HLT',
-            'values' => ['On', 'Off'],
-            'data' => $this->parseCheckboxValue($keypoint->c_hlt ?? ''),
-            'addresses' => [
-                'on' => [
-                    'ms' => $keypoint->chlt_on_addms ?? '',
-                    'rtu' => $keypoint->chlt_on_addrtu ?? '',
-                    'obj' => $keypoint->chlt_on_objfrmt ?? ''
-                ],
-                'off' => [
-                    'ms' => $keypoint->chlt_off_addms ?? '',
-                    'rtu' => $keypoint->chlt_off_addrtu ?? '',
-                    'obj' => $keypoint->chlt_off_objfrmt ?? ''
-                ]
-            ]
+            'row1' => [
+                'label' => 'On',
+                'ms' => $keypoint->chlt_on_addms ?? '',
+                'rtu' => $keypoint->chlt_on_addrtu ?? '',
+                'obj' => $keypoint->chlt_on_objfrmt ?? '',
+                'check' => $this->getCheckValue($c_hlt, 'hltctrl_on'),
+            ],
+            'row2' => [
+                'label' => 'Off',
+                'ms' => $keypoint->chlt_off_addms ?? '',
+                'rtu' => $keypoint->chlt_off_addrtu ?? '',
+                'obj' => $keypoint->chlt_off_objfrmt ?? '',
+                'check' => $this->getCheckValue($c_hlt, 'hltctrl_off'),
+            ],
         ];
 
-        // Reset Control
+        // Reset Control (single row)
         $controls[] = [
             'name' => 'RR',
-            'values' => ['Reset'],
-            'data' => $this->parseCheckboxValue($keypoint->c_rst ?? ''),
-            'addresses' => [
-                'reset' => [
-                    'ms' => $keypoint->crst_addms ?? '',
-                    'rtu' => $keypoint->crst_addrtu ?? '',
-                    'obj' => $keypoint->crst_objfrmt ?? ''
-                ]
-            ]
+            'single' => true,
+            'row1' => [
+                'label' => 'Reset',
+                'ms' => $keypoint->crst_addms ?? '',
+                'rtu' => $keypoint->crst_addrtu ?? '',
+                'obj' => $keypoint->crst_objfrmt ?? '',
+                'check' => $this->getCheckValue($c_rst, 'rrctrl_on'),
+            ],
         ];
 
         return $controls;
@@ -604,239 +650,221 @@ class KeypointController extends Controller
         return [
             [
                 'name' => 'HZ',
-                'rtu' => $keypoint->hz_rtu ?? '',
-                'ms' => $keypoint->hz_ms ?? '',
+                'ms' => $keypoint->hz_addms ?? '',
+                'rtu' => $keypoint->hz_addrtu ?? '',
+                'obj' => $keypoint->hz_addobjfrmt ?? '',
+                'field' => $keypoint->hz_rtu ?? '',
+                'msVal' => $keypoint->hz_ms ?? '',
                 'scale' => $keypoint->hz_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->hz_addrtu ?? '',
-                    'ms' => $keypoint->hz_addms ?? '',
-                    'obj' => $keypoint->hz_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_hz ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_hz ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'I AVG',
-                'rtu' => $keypoint->iavg_rtu ?? '',
-                'ms' => $keypoint->iavg_ms ?? '',
+                'ms' => $keypoint->iavg_addms ?? '',
+                'rtu' => $keypoint->iavg_addrtu ?? '',
+                'obj' => $keypoint->iavg_addobjfrmt ?? '',
+                'field' => $keypoint->iavg_rtu ?? '',
+                'msVal' => $keypoint->iavg_ms ?? '',
                 'scale' => $keypoint->iavg_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->iavg_addrtu ?? '',
-                    'ms' => $keypoint->iavg_addms ?? '',
-                    'obj' => $keypoint->iavg_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_iavg ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_iavg ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'IR',
-                'rtu' => $keypoint->ir_rtu ?? '',
-                'ms' => $keypoint->ir_ms ?? '',
+                'ms' => $keypoint->ir_addms ?? '',
+                'rtu' => $keypoint->ir_addrtu ?? '',
+                'obj' => $keypoint->ir_addobjfrmt ?? '',
+                'field' => $keypoint->ir_rtu ?? '',
+                'msVal' => $keypoint->ir_ms ?? '',
                 'scale' => $keypoint->ir_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->ir_addrtu ?? '',
-                    'ms' => $keypoint->ir_addms ?? '',
-                    'obj' => $keypoint->ir_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_ir ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_ir ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'IS',
-                'rtu' => $keypoint->is_rtu ?? '',
-                'ms' => $keypoint->is_ms ?? '',
+                'ms' => $keypoint->is_addms ?? '',
+                'rtu' => $keypoint->is_addrtu ?? '',
+                'obj' => $keypoint->is_addobjfrmt ?? '',
+                'field' => $keypoint->is_rtu ?? '',
+                'msVal' => $keypoint->is_ms ?? '',
                 'scale' => $keypoint->is_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->is_addrtu ?? '',
-                    'ms' => $keypoint->is_addms ?? '',
-                    'obj' => $keypoint->is_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_is ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_is ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'IT',
-                'rtu' => $keypoint->it_rtu ?? '',
-                'ms' => $keypoint->it_ms ?? '',
+                'ms' => $keypoint->it_addms ?? '',
+                'rtu' => $keypoint->it_addrtu ?? '',
+                'obj' => $keypoint->it_addobjfrmt ?? '',
+                'field' => $keypoint->it_rtu ?? '',
+                'msVal' => $keypoint->it_ms ?? '',
                 'scale' => $keypoint->it_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->it_addrtu ?? '',
-                    'ms' => $keypoint->it_addms ?? '',
-                    'obj' => $keypoint->it_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_it ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_it ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'IN',
-                'rtu' => $keypoint->in_rtu ?? '',
-                'ms' => $keypoint->in_ms ?? '',
+                'ms' => $keypoint->in_addms ?? '',
+                'rtu' => $keypoint->in_addrtu ?? '',
+                'obj' => $keypoint->in_addobjfrmt ?? '',
+                'field' => $keypoint->in_rtu ?? '',
+                'msVal' => $keypoint->in_ms ?? '',
                 'scale' => $keypoint->in_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->in_addrtu ?? '',
-                    'ms' => $keypoint->in_addms ?? '',
-                    'obj' => $keypoint->in_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_in ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_in ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'IFR',
-                'rtu' => $keypoint->ifr_rtu ?? '',
-                'ms' => $keypoint->ifr_ms ?? '',
+                'ms' => $keypoint->ifr_addms ?? '',
+                'rtu' => $keypoint->ifr_addrtu ?? '',
+                'obj' => $keypoint->ifr_addobjfrmt ?? '',
+                'field' => $keypoint->ifr_rtu ?? '',
+                'msVal' => $keypoint->ifr_ms ?? '',
                 'scale' => $keypoint->ifr_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->ifr_addrtu ?? '',
-                    'ms' => $keypoint->ifr_addms ?? '',
-                    'obj' => $keypoint->ifr_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_ifr ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_ifr ?? ''),
                 'isPseudo' => true
             ],
             [
                 'name' => 'IFS',
-                'rtu' => $keypoint->ifs_rtu ?? '',
-                'ms' => $keypoint->ifs_ms ?? '',
+                'ms' => $keypoint->ifs_addms ?? '',
+                'rtu' => $keypoint->ifs_addrtu ?? '',
+                'obj' => $keypoint->ifs_addobjfrmt ?? '',
+                'field' => $keypoint->ifs_rtu ?? '',
+                'msVal' => $keypoint->ifs_ms ?? '',
                 'scale' => $keypoint->ifs_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->ifs_addrtu ?? '',
-                    'ms' => $keypoint->ifs_addms ?? '',
-                    'obj' => $keypoint->ifs_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_ifs ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_ifs ?? ''),
                 'isPseudo' => true
             ],
             [
                 'name' => 'IFT',
-                'rtu' => $keypoint->ift_rtu ?? '',
-                'ms' => $keypoint->ift_ms ?? '',
+                'ms' => $keypoint->ift_addms ?? '',
+                'rtu' => $keypoint->ift_addrtu ?? '',
+                'obj' => $keypoint->ift_addobjfrmt ?? '',
+                'field' => $keypoint->ift_rtu ?? '',
+                'msVal' => $keypoint->ift_ms ?? '',
                 'scale' => $keypoint->ift_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->ift_addrtu ?? '',
-                    'ms' => $keypoint->ift_addms ?? '',
-                    'obj' => $keypoint->ift_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_ift ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_ift ?? ''),
                 'isPseudo' => true
             ],
             [
                 'name' => 'IFN',
-                'rtu' => $keypoint->ifn_rtu ?? '',
-                'ms' => $keypoint->ifn_ms ?? '',
+                'ms' => $keypoint->ifn_addms ?? '',
+                'rtu' => $keypoint->ifn_addrtu ?? '',
+                'obj' => $keypoint->ifn_addobjfrmt ?? '',
+                'field' => $keypoint->ifn_rtu ?? '',
+                'msVal' => $keypoint->ifn_ms ?? '',
                 'scale' => $keypoint->ifn_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->ifn_addrtu ?? '',
-                    'ms' => $keypoint->ifn_addms ?? '',
-                    'obj' => $keypoint->ifn_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_ifn ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_ifn ?? ''),
                 'isPseudo' => true
             ],
             [
                 'name' => 'PF',
-                'rtu' => $keypoint->pf_rtu ?? '',
-                'ms' => $keypoint->pf_ms ?? '',
+                'ms' => $keypoint->pf_addms ?? '',
+                'rtu' => $keypoint->pf_addrtu ?? '',
+                'obj' => $keypoint->pf_addobjfrmt ?? '',
+                'field' => $keypoint->pf_rtu ?? '',
+                'msVal' => $keypoint->pf_ms ?? '',
                 'scale' => $keypoint->pf_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->pf_addrtu ?? '',
-                    'ms' => $keypoint->pf_addms ?? '',
-                    'obj' => $keypoint->pf_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_pf ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_pf ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'V AVG',
-                'rtu' => $keypoint->vavg_rtu ?? '',
-                'ms' => $keypoint->vavg_ms ?? '',
+                'ms' => $keypoint->vavg_addms ?? '',
+                'rtu' => $keypoint->vavg_addrtu ?? '',
+                'obj' => $keypoint->vavg_addobjfrmt ?? '',
+                'field' => $keypoint->vavg_rtu ?? '',
+                'msVal' => $keypoint->vavg_ms ?? '',
                 'scale' => $keypoint->vavg_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->vavg_addrtu ?? '',
-                    'ms' => $keypoint->vavg_addms ?? '',
-                    'obj' => $keypoint->vavg_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_vavg ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_vavg ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'V-R_IN',
-                'rtu' => $keypoint->vrin_rtu ?? '',
-                'ms' => $keypoint->vrin_ms ?? '',
+                'ms' => $keypoint->vrin_addms ?? '',
+                'rtu' => $keypoint->vrin_addrtu ?? '',
+                'obj' => $keypoint->vrin_addobjfrmt ?? '',
+                'field' => $keypoint->vrin_rtu ?? '',
+                'msVal' => $keypoint->vrin_ms ?? '',
                 'scale' => $keypoint->vrin_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->vrin_addrtu ?? '',
-                    'ms' => $keypoint->vrin_addms ?? '',
-                    'obj' => $keypoint->vrin_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_vrin ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_vrin ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'V-S_IN',
-                'rtu' => $keypoint->vsin_rtu ?? '',
-                'ms' => $keypoint->vsin_ms ?? '',
+                'ms' => $keypoint->vsin_addms ?? '',
+                'rtu' => $keypoint->vsin_addrtu ?? '',
+                'obj' => $keypoint->vsin_addobjfrmt ?? '',
+                'field' => $keypoint->vsin_rtu ?? '',
+                'msVal' => $keypoint->vsin_ms ?? '',
                 'scale' => $keypoint->vsin_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->vsin_addrtu ?? '',
-                    'ms' => $keypoint->vsin_addms ?? '',
-                    'obj' => $keypoint->vsin_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_vsin ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_vsin ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'V-T_IN',
-                'rtu' => $keypoint->vtin_rtu ?? '',
-                'ms' => $keypoint->vtin_ms ?? '',
+                'ms' => $keypoint->vtin_addms ?? '',
+                'rtu' => $keypoint->vtin_addrtu ?? '',
+                'obj' => $keypoint->vtin_addobjfrmt ?? '',
+                'field' => $keypoint->vtin_rtu ?? '',
+                'msVal' => $keypoint->vtin_ms ?? '',
                 'scale' => $keypoint->vtin_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->vtin_addrtu ?? '',
-                    'ms' => $keypoint->vtin_addms ?? '',
-                    'obj' => $keypoint->vtin_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_vtin ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_vtin ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'V-R_OUT',
-                'rtu' => $keypoint->vrout_rtu ?? '',
-                'ms' => $keypoint->vrout_ms ?? '',
+                'ms' => $keypoint->vrout_addms ?? '',
+                'rtu' => $keypoint->vrout_addrtu ?? '',
+                'obj' => $keypoint->vrout_addobjfrmt ?? '',
+                'field' => $keypoint->vrout_rtu ?? '',
+                'msVal' => $keypoint->vrout_ms ?? '',
                 'scale' => $keypoint->vrout_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->vrout_addrtu ?? '',
-                    'ms' => $keypoint->vrout_addms ?? '',
-                    'obj' => $keypoint->vrout_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_vrout ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_vrout ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'V-S_OUT',
-                'rtu' => $keypoint->vsout_rtu ?? '',
-                'ms' => $keypoint->vsout_ms ?? '',
+                'ms' => $keypoint->vsout_addms ?? '',
+                'rtu' => $keypoint->vsout_addrtu ?? '',
+                'obj' => $keypoint->vsout_addobjfrmt ?? '',
+                'field' => $keypoint->vsout_rtu ?? '',
+                'msVal' => $keypoint->vsout_ms ?? '',
                 'scale' => $keypoint->vsout_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->vsout_addrtu ?? '',
-                    'ms' => $keypoint->vsout_addms ?? '',
-                    'obj' => $keypoint->vsout_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_vsout ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_vsout ?? ''),
                 'isPseudo' => false
             ],
             [
                 'name' => 'V-T_OUT',
-                'rtu' => $keypoint->vtout_rtu ?? '',
-                'ms' => $keypoint->vtout_ms ?? '',
+                'ms' => $keypoint->vtout_addms ?? '',
+                'rtu' => $keypoint->vtout_addrtu ?? '',
+                'obj' => $keypoint->vtout_addobjfrmt ?? '',
+                'field' => $keypoint->vtout_rtu ?? '',
+                'msVal' => $keypoint->vtout_ms ?? '',
                 'scale' => $keypoint->vtout_scale ?? '',
-                'address' => [
-                    'rtu' => $keypoint->vtout_addrtu ?? '',
-                    'ms' => $keypoint->vtout_addms ?? '',
-                    'obj' => $keypoint->vtout_addobjfrmt ?? ''
-                ],
-                'test' => $keypoint->t_vtout ?? '',
+                'test' => $this->getMeteringTestResult($keypoint->t_vtout ?? ''),
                 'isPseudo' => false
             ],
         ];
+    }
+
+    /**
+     * Get metering test result (1=OK, 2=NOK, 5=N/A)
+     */
+    private function getMeteringTestResult($value)
+    {
+        // Extract number from string like 't_ir1' -> 1
+        preg_match('/(\d+)$/', $value, $matches);
+        $num = $matches[1] ?? 0;
+
+        $results = [
+            1 => 'OK',
+            2 => 'NOK',
+            5 => 'N/A'
+        ];
+
+        return $results[(int)$num] ?? '';
     }
 
     /**
@@ -852,8 +880,8 @@ class KeypointController extends Controller
             ],
             [
                 'name' => 'PS 220',
-                'status' => $this->getTestResult($keypoint->hard_ps ?? ''),
-                'value' => $keypoint->hard_ps_input ?? ''
+                'status' => $this->getTestResult($keypoint->hard_ps220 ?? ''),
+                'value' => $keypoint->hard_ps220_input ?? ''
             ],
             [
                 'name' => 'Charger',
@@ -917,17 +945,6 @@ class KeypointController extends Controller
     }
 
     /**
-     * Parse checkbox value string menjadi array
-     */
-    private function parseCheckboxValue($value)
-    {
-        if (empty($value)) {
-            return [];
-        }
-        return array_map('trim', explode(',', $value));
-    }
-
-    /**
      * Convert test result code to readable format
      */
     private function getTestResult($code)
@@ -935,16 +952,14 @@ class KeypointController extends Controller
         $results = [
             '1' => 'OK',
             '2' => 'NOK',
-            '3' => 'N/A',
-            '4' => 'SKIP',
-            '5' => 'TIDAK ADA'
+            '5' => 'N/A',
         ];
 
-        // Extract number from string like 'hard_batere1' -> '1'
+        // Extract number from string
         preg_match('/(\d+)$/', $code, $matches);
         $num = $matches[1] ?? '';
 
-        return $results[$num] ?? $code;
+        return $results[$num] ?? '';
     }
 
     // New methods for filtered exports (PDF and Excel)
@@ -1814,7 +1829,7 @@ class KeypointController extends Controller
             'c_cb2',
             'c_hlt',
             'c_rst',
-// --- TELEMETERING CHECKBOXES ---
+            // --- TELEMETERING CHECKBOXES ---
             't_ir',
             't_is',
             't_it',
