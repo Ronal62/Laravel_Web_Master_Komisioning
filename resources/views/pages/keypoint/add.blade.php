@@ -2655,7 +2655,7 @@ return is_array($val) ? $val : explode(',', $val);
                                                             <input type="checkbox" name="{{ $dbKey }}[]"
                                                                 value="{{ $dbKey }}5" class="selectgroup-input"
                                                                 {{ in_array($dbKey.'5', $checkedValues) ? 'checked' : '' }} />
-                                                            <span class="selectgroup-button">Tidak Ada</span>
+                                                            <span class="selectgroup-button">SLD</span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -2795,21 +2795,21 @@ return is_array($val) ? $val : explode(',', $val);
                                                     <label class="form-label t-bold">PS 220</label>
                                                     <div class="selectgroup w-100 flex-wrap">
                                                         <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="hard_ps220[]"
-                                                                value="hard_ps2201" class="selectgroup-input"
-                                                                {{ in_array('hard_ps2201', $getOld('hard_ps220')) ? 'checked' : '' }} />
+                                                            <input type="checkbox" name="hard_ps[]" value="hard_ps1"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('hard_ps1', $getOld('hard_ps')) ? 'checked' : '' }} />
                                                             <span class="selectgroup-button">OK</span>
                                                         </label>
                                                         <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="hard_ps220[]"
-                                                                value="hard_ps2202" class="selectgroup-input"
-                                                                {{ in_array('hard_ps2202', $getOld('hard_ps220')) ? 'checked' : '' }} />
+                                                            <input type="checkbox" name="hard_ps[]" value="hard_ps2"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('hard_ps2', $getOld('hard_ps')) ? 'checked' : '' }} />
                                                             <span class="selectgroup-button">NOK</span>
                                                         </label>
                                                         <label class="selectgroup-item mb-2 mb-sm-0">
-                                                            <input type="checkbox" name="hard_ps220[]"
-                                                                value="hard_ps2205" class="selectgroup-input"
-                                                                {{ in_array('hard_ps2205', $getOld('hard_ps220')) ? 'checked' : '' }} />
+                                                            <input type="checkbox" name="hard_ps[]" value="hard_ps5"
+                                                                class="selectgroup-input"
+                                                                {{ in_array('hard_ps5', $getOld('hard_ps')) ? 'checked' : '' }} />
                                                             <span class="selectgroup-button">Tidak ada</span>
                                                         </label>
                                                     </div>
@@ -2874,12 +2874,12 @@ return is_array($val) ? $val : explode(',', $val);
                                                     </div>@enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="hard_ps220_input">PS 220</label>
+                                                    <label for="hard_ps_input">PS 220</label>
                                                     <input
-                                                        class="form-control @error('hard_ps220_input') is-invalid @enderror"
-                                                        id="hard_ps220_input" placeholder="30 db"
-                                                        name="hard_ps220_input" value="{{ old('hard_ps220_input') }}">
-                                                    @error('hard_ps220_input')<div class="invalid-feedback">
+                                                        class="form-control @error('hard_ps_input') is-invalid @enderror"
+                                                        id="hard_ps_input" placeholder="30 db" name="hard_ps_input"
+                                                        value="{{ old('hard_ps_input') }}">
+                                                    @error('hard_ps_input')<div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>@enderror
                                                 </div>

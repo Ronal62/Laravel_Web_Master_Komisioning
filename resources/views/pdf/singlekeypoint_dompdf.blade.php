@@ -277,17 +277,20 @@
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Nama LBS / REC.</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->nama_keypoint ?? '-' }}</td>
+                            {{ $row->nama_keypoint ?? '-' }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Merk LBS / REC.</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->nama_merklbs ?? '-' }}</td>
+                            {{ $row->nama_merklbs ?? '-' }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Protocol / Address</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->alamat_rtu ?? '-' }}</td>
+                            {{ $row->alamat_rtu ?? '-' }}
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -296,17 +299,20 @@
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Modem</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->nama_modem ?? '-' }}</td>
+                            {{ $row->nama_modem ?? '-' }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">IP / No. Kartu</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->ip_rtu ?? '-' }}</td>
+                            {{ $row->ip_rtu ?? '-' }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Koordinat</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->koordinat ?? '-' }}</td>
+                            {{ $row->koordinat ?? '-' }}
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -315,17 +321,20 @@
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Gardu Induk / Sect</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->gardu_induk ?? '-' }} / {{ $row->sectoral ?? '-' }}</td>
+                            {{ $row->gardu_induk ?? '-' }} / {{ $row->sectoral ?? '-' }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Penyulang</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->penyulang ?? '-' }}</td>
+                            {{ $row->penyulang ?? '-' }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Tanggal</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->tgl_komisioning ?? '-' }}</td>
+                            {{ $row->tgl_komisioning ?? '-' }}
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -355,47 +364,225 @@
                     </thead>
                     <tbody>
                         @php
+                        // Parse status values dari database
+                        $parseStatus = function($statusString) {
+                        if (empty($statusString)) return [];
+                        return array_map('trim', explode(',', $statusString));
+                        };
+
+                        // Check apakah value ada dan return suffix number (1=OK, 2=NOK, 3=LOG, 4=SLD)
+                        $getCheckValue = function($statusArray, $prefix) {
+                        foreach ($statusArray as $item) {
+                        if (strpos($item, $prefix) === 0) {
+                        // Extract number dari akhir string (e.g., 'open_1' -> 1)
+                        preg_match('/_(\d+)$/', $item, $matches);
+                        if (isset($matches[1])) {
+                        return (int)$matches[1];
+                        }
+                        }
+                        }
+                        return 0;
+                        };
+
+                        // Parse semua status dari database
+                        $s_cb = $parseStatus($row->s_cb ?? '');
+                        $s_cb2 = $parseStatus($row->s_cb2 ?? '');
+                        $s_lr = $parseStatus($row->s_lr ?? '');
+                        $s_door = $parseStatus($row->s_door ?? '');
+                        $s_acf = $parseStatus($row->s_acf ?? '');
+                        $s_dcf = $parseStatus($row->s_dcf ?? '');
+                        $s_dcd = $parseStatus($row->s_dcd ?? '');
+                        $s_hlt = $parseStatus($row->s_hlt ?? '');
+                        $s_sf6 = $parseStatus($row->s_sf6 ?? '');
+                        $s_fir = $parseStatus($row->s_fir ?? '');
+                        $s_fis = $parseStatus($row->s_fis ?? '');
+                        $s_fit = $parseStatus($row->s_fit ?? '');
+
+                        // Define status items dengan mapping ke database fields
                         $statuses = [
-                        ['CB', 'Open', 'Close'],
-                        ['CB 2', 'Open', 'Close'],
-                        ['L/R', 'Local', 'Remote'],
-                        ['DOOR', 'Open', 'Close'],
-                        ['ACF', 'Normal', 'Failed'],
-                        ['DCF', 'Normal', 'Failed'],
-                        ['DCD', 'Normal', 'Failed'],
-                        ['HLT', 'Active', 'Inactive'],
-                        ['SF6', 'Normal', 'Low'],
-                        ['FIR', 'Normal', 'Failed'],
-                        ['FIS', 'Normal', 'Failed'],
-                        ['FIT', 'Normal', 'Failed'],
+                        [
+                        'name' => 'CB',
+                        'row1' => ['label' => 'Open', 'prefix' => 'open', 'status' => $s_cb],
+                        'row2' => ['label' => 'Close', 'prefix' => 'close', 'status' => $s_cb],
+                        'addr' => [
+                        'row1' => ['ms' => $row->scb_open_addms ?? '', 'rtu' => $row->scb_open_addrtu ?? '', 'obj' =>
+                        $row->scb_open_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->scb_close_addms ?? '', 'rtu' => $row->scb_close_addrtu ?? '', 'obj' =>
+                        $row->scb_close_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'CB 2',
+                        'row1' => ['label' => 'Open', 'prefix' => 'open', 'status' => $s_cb2],
+                        'row2' => ['label' => 'Close', 'prefix' => 'close', 'status' => $s_cb2],
+                        'addr' => [
+                        'row1' => ['ms' => $row->scb2_open_addms ?? '', 'rtu' => $row->scb2_open_addrtu ?? '', 'obj' =>
+                        $row->scb2_open_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->scb2_close_addms ?? '', 'rtu' => $row->scb2_close_addrtu ?? '', 'obj'
+                        => $row->scb2_close_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'L/R',
+                        'row1' => ['label' => 'Local', 'prefix' => 'local', 'status' => $s_lr],
+                        'row2' => ['label' => 'Remote', 'prefix' => 'remote', 'status' => $s_lr],
+                        'addr' => [
+                        'row1' => ['ms' => $row->slr_local_addms ?? '', 'rtu' => $row->slr_local_addrtu ?? '', 'obj' =>
+                        $row->slr_local_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->slr_remote_addms ?? '', 'rtu' => $row->slr_remote_addrtu ?? '', 'obj'
+                        => $row->slr_remote_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'DOOR',
+                        'row1' => ['label' => 'Open', 'prefix' => 'dropen', 'status' => $s_door],
+                        'row2' => ['label' => 'Close', 'prefix' => 'drclose', 'status' => $s_door],
+                        'addr' => [
+                        'row1' => ['ms' => $row->sdoor_open_addms ?? '', 'rtu' => $row->sdoor_open_addrtu ?? '', 'obj'
+                        => $row->sdoor_open_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->sdoor_close_addms ?? '', 'rtu' => $row->sdoor_close_addrtu ?? '', 'obj'
+                        => $row->sdoor_close_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'ACF',
+                        'row1' => ['label' => 'Normal', 'prefix' => 'acnrml', 'status' => $s_acf],
+                        'row2' => ['label' => 'Failed', 'prefix' => 'acfail', 'status' => $s_acf],
+                        'addr' => [
+                        'row1' => ['ms' => $row->sacf_normal_addms ?? '', 'rtu' => $row->sacf_normal_addrtu ?? '', 'obj'
+                        => $row->sacf_normal_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->sacf_fail_addms ?? '', 'rtu' => $row->sacf_fail_addrtu ?? '', 'obj' =>
+                        $row->sacf_fail_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'DCF',
+                        'row1' => ['label' => 'Normal', 'prefix' => 'dcfnrml', 'status' => $s_dcf],
+                        'row2' => ['label' => 'Failed', 'prefix' => 'dcffail', 'status' => $s_dcf],
+                        'addr' => [
+                        'row1' => ['ms' => $row->sdcf_normal_addms ?? '', 'rtu' => $row->sdcf_normal_addrtu ?? '', 'obj'
+                        => $row->sdcf_normal_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->sdcf_fail_addms ?? '', 'rtu' => $row->sdcf_fail_addrtu ?? '', 'obj' =>
+                        $row->sdcf_fail_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'DCD',
+                        'row1' => ['label' => 'Normal', 'prefix' => 'dcnrml', 'status' => $s_dcd],
+                        'row2' => ['label' => 'Failed', 'prefix' => 'dcfail', 'status' => $s_dcd],
+                        'addr' => [
+                        'row1' => ['ms' => $row->sdcd_normal_addms ?? '', 'rtu' => $row->sdcd_normal_addrtu ?? '', 'obj'
+                        => $row->sdcd_normal_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->sdcd_fail_addms ?? '', 'rtu' => $row->sdcd_fail_addrtu ?? '', 'obj' =>
+                        $row->sdcd_fail_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'HLT',
+                        'row1' => ['label' => 'Active', 'prefix' => 'hlton', 'status' => $s_hlt],
+                        'row2' => ['label' => 'Inactive', 'prefix' => 'hltoff', 'status' => $s_hlt],
+                        'addr' => [
+                        'row1' => ['ms' => $row->shlt_on_addms ?? '', 'rtu' => $row->shlt_on_addrtu ?? '', 'obj' =>
+                        $row->shlt_on_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->shlt_off_addms ?? '', 'rtu' => $row->shlt_off_addrtu ?? '', 'obj' =>
+                        $row->shlt_off_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'SF6',
+                        'row1' => ['label' => 'Normal', 'prefix' => 'sf6nrml', 'status' => $s_sf6],
+                        'row2' => ['label' => 'Low', 'prefix' => 'sf6fail', 'status' => $s_sf6],
+                        'addr' => [
+                        'row1' => ['ms' => $row->ssf6_normal_addms ?? '', 'rtu' => $row->ssf6_normal_addrtu ?? '', 'obj'
+                        => $row->ssf6_normal_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->ssf6_fail_addms ?? '', 'rtu' => $row->ssf6_fail_addrtu ?? '', 'obj' =>
+                        $row->ssf6_fail_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'FIR',
+                        'row1' => ['label' => 'Normal', 'prefix' => 'firnrml', 'status' => $s_fir],
+                        'row2' => ['label' => 'Failed', 'prefix' => 'firfail', 'status' => $s_fir],
+                        'addr' => [
+                        'row1' => ['ms' => $row->sfir_normal_addms ?? '', 'rtu' => $row->sfir_normal_addrtu ?? '', 'obj'
+                        => $row->sfir_normal_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->sfir_fail_addms ?? '', 'rtu' => $row->sfir_fail_addrtu ?? '', 'obj' =>
+                        $row->sfir_fail_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'FIS',
+                        'row1' => ['label' => 'Normal', 'prefix' => 'fisnrml', 'status' => $s_fis],
+                        'row2' => ['label' => 'Failed', 'prefix' => 'fisfail', 'status' => $s_fis],
+                        'addr' => [
+                        'row1' => ['ms' => $row->sfis_normal_addms ?? '', 'rtu' => $row->sfis_normal_addrtu ?? '', 'obj'
+                        => $row->sfis_normal_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->sfis_fail_addms ?? '', 'rtu' => $row->sfis_fail_addrtu ?? '', 'obj' =>
+                        $row->sfis_fail_objfrmt ?? '']
+                        ]
+                        ],
+                        [
+                        'name' => 'FIT',
+                        'row1' => ['label' => 'Normal', 'prefix' => 'fitnrml', 'status' => $s_fit],
+                        'row2' => ['label' => 'Failed', 'prefix' => 'fitfail', 'status' => $s_fit],
+                        'addr' => [
+                        'row1' => ['ms' => $row->sfit_normal_addms ?? '', 'rtu' => $row->sfit_normal_addrtu ?? '', 'obj'
+                        => $row->sfit_normal_objfrmt ?? ''],
+                        'row2' => ['ms' => $row->sfit_fail_addms ?? '', 'rtu' => $row->sfit_fail_addrtu ?? '', 'obj' =>
+                        $row->sfit_fail_objfrmt ?? '']
+                        ]
+                        ],
                         ];
                         @endphp
+
                         @foreach($statuses as $index => $item)
+                        @php
+                        // Get check values untuk row 1 dan row 2
+                        $check1 = $getCheckValue($item['row1']['status'], $item['row1']['prefix']);
+                        $check2 = $getCheckValue($item['row2']['status'], $item['row2']['prefix']);
+                        @endphp
+                        {{-- Row 1 --}}
                         <tr>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td rowspan="2" class="font-bold" style="font-size: 8px; padding: 2px;">{{ $item[0] }}</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item[1] }}</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 6px; padding: 2px;">{{ $item['addr']['row1']['ms'] }}
+                            </td>
+                            <td style="height: 12px; font-size: 6px; padding: 2px;">{{ $item['addr']['row1']['rtu'] }}
+                            </td>
+                            <td style="height: 12px; font-size: 6px; padding: 2px;">{{ $item['addr']['row1']['obj'] }}
+                            </td>
+                            <td rowspan="2" class="font-bold" style="font-size: 8px; padding: 2px;">{{ $item['name'] }}
+                            </td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['label'] }}</td>
+                            <td style="height: 12px; font-size: 9px; padding: 2px; color: green;">
+                                {{ $check1 == 1 ? '✓' : '' }}</td>
+                            <td style="height: 12px; font-size: 9px; padding: 2px; color: red;">
+                                {{ $check1 == 2 ? '✓' : '' }}</td>
+                            <td style="height: 12px; font-size: 9px; padding: 2px; color: blue;">
+                                {{ $check1 == 3 ? '✓' : '' }}</td>
+                            <td style="height: 12px; font-size: 9px; padding: 2px; color: orange;">
+                                {{ $check1 == 4 ? '✓' : '' }}</td>
                             @if($index == 0)
                             <td rowspan="24" class="text-left align-top" style="padding: 4px; font-size: 7px;">
                                 {{ $row->ketfts ?? '' }}
                             </td>
                             @endif
                         </tr>
+                        {{-- Row 2 --}}
                         <tr>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item[2] }}</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 6px; padding: 2px;">{{ $item['addr']['row2']['ms'] }}
+                            </td>
+                            <td style="height: 12px; font-size: 6px; padding: 2px;">{{ $item['addr']['row2']['rtu'] }}
+                            </td>
+                            <td style="height: 12px; font-size: 6px; padding: 2px;">{{ $item['addr']['row2']['obj'] }}
+                            </td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row2']['label'] }}</td>
+                            <td style="height: 12px; font-size: 9px; padding: 2px; color: green;">
+                                {{ $check2 == 1 ? '✓' : '' }}</td>
+                            <td style="height: 12px; font-size: 9px; padding: 2px; color: red;">
+                                {{ $check2 == 2 ? '✓' : '' }}</td>
+                            <td style="height: 12px; font-size: 9px; padding: 2px; color: blue;">
+                                {{ $check2 == 3 ? '✓' : '' }}</td>
+                            <td style="height: 12px; font-size: 9px; padding: 2px; color: orange;">
+                                {{ $check2 == 4 ? '✓' : '' }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -621,13 +808,18 @@
                             <td class="text-left font-bold" style="font-size: 8px; padding: 3px 6px;">{{ $rec['name'] }}
                             </td>
                             <td style="padding: 0;">
-                                <div class="border-b text-center" style="padding: 3px; font-size: 7px;">On:
-                                    {{ $rec['on'] }}
+                                <div class="border-b text-center" style="padding: 3px; font-size: 7px;">On
                                 </div>
-                                <div class="text-center" style="padding: 3px; font-size: 7px;">Off: {{ $rec['off'] }}
+                                <div class="text-center" style="padding: 3px; font-size: 7px;">Off
                                 </div>
                             </td>
-                            <td style="font-size: 7.5px; padding: 3px;"></td>
+                            <td style="padding: 0;">
+                                <div class="border-b text-center" style="padding: 3px; font-size: 7px;">
+                                    {{ $rec['on'] }}
+                                </div>
+                                <div class="text-center" style="padding: 3px; font-size: 7px;">{{ $rec['off'] }}
+                                </div>
+                            </td>
                             @if($i == 0)
                             <td rowspan="2" class="text-left align-top" style="padding: 4px; font-size: 7px;">
                                 {{ $row->ketre ?? '' }}

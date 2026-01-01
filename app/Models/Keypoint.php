@@ -250,11 +250,11 @@ class Keypoint extends Model
 
         // HARD Group
         'hard_batere',
-        'hard_ps220',
+        'hard_ps',
         'hard_charger',
         'hard_limitswith',
         'hard_batere_input',
-        'hard_ps220_input',
+        'hard_ps_input',
         'hard_charger_input',
         'hard_limitswith_input',
         'kethard',
