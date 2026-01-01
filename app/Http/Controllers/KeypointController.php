@@ -6,11 +6,10 @@ use App\Models\Keypoint;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use TCPDF; // Assuming TCPDF is installed via composer or available
-use Illuminate\Support\Facades\Response; // For potential CSV/excel fallback
+
 
 class KeypointController extends Controller
 {
@@ -160,7 +159,7 @@ class KeypointController extends Controller
             <a href="' . route('keypoint.edit', $row->id_formkp) . '" class="btn btn-icon btn-round btn-warning">
                 <i class="fa fa-pen"></i>
             </a>
-            <a href="' . route('keypoint.exportpdf', $row->id_formkp) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
+            <a href="' . route('keypoint.exportsinglepdf', $row->id_formkp) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
                 <i class="fas fa-file-pdf"></i>
             </a>
             <form action="' . route('keypoint.destroy', $row->id_formkp) . '" method="POST" style="display:inline;">
@@ -180,6 +179,32 @@ class KeypointController extends Controller
             'recordsFiltered' => $totalFiltered,
             'data' => $data,
         ]);
+    }
+
+
+    public function exportSinglePdf($id)
+    {
+        // 1. Get Data
+        $keypoint = DB::table('tb_formkp')
+            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
+            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
+            ->select('tb_formkp.*', 'tb_merklbs.nama_merklbs', 'tb_modem.nama_modem')
+            ->where('tb_formkp.id_formkp', $id)
+            ->first();
+
+        if (!$keypoint) abort(404);
+
+        $keypoint->tgl_komisioning = Carbon::parse($keypoint->tgl_komisioning)->format('d-m-Y');
+
+        // 2. Load View
+        // We use a SPECIFIC view file optimized for DomPDF (no Tailwind)
+        $pdf = Pdf::loadView('pdf.singlekeypoint_dompdf', ['row' => $keypoint]);
+
+        // 3. Settings
+        $pdf->setPaper('a4', 'landscape');
+
+        // 4. Download
+        return $pdf->download('Keypoint_' . $id . '.pdf');
     }
 
     // New methods for filtered exports (PDF and Excel)

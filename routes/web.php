@@ -65,6 +65,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/keypoint/export/pdf', [KeypointController::class, 'exportPdfFiltered'])->name('keypoint.exportpdfall');
     Route::get('/keypoint/export/excel', [KeypointController::class, 'exportExcelFiltered'])->name('keypoint.exportexcelall');
     Route::get('/keypoint/{id}/exportpdf', [ExportPdfController::class, 'exportsinglepdfkeypoint'])->name('keypoint.exportpdf');
+    Route::get('/keypoint/export-single/{id}', [KeypointController::class, 'exportSinglePdf'])
+        ->name('keypoint.exportsinglepdf');
+
+
+
     Route::get('/get-penyulang/{gardu_induk}', [KeypointController::class, 'getKeypoint'])->name('get.penyulang');
     Route::get('/keypoint/{gardu_induk}/{penyulang}', [KeypointController::class, 'getNamaKeypoint'])->name('get.nama_keypoint');
     Route::get('/penyulang/{gardu_induk}', [KeypointController::class, 'getKeypoint'])->name('get.penyulang');
