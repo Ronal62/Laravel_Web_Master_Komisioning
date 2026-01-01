@@ -292,26 +292,28 @@ class KeypointController extends Controller
      */
     private function getCheckValue($statusArray, $prefix)
     {
+        $checks = [];
+
         foreach ($statusArray as $item) {
             if (strpos($item, $prefix) === 0) {
-                // Extract number dari akhir string (e.g., 'open_1' -> 1)
                 preg_match('/_(\d+)$/', $item, $matches);
                 if (isset($matches[1])) {
-                    return (int)$matches[1];
+                    $checks[] = (int)$matches[1];
                 }
             }
         }
-        return 0;
+
+        return $checks;
     }
 
+
     /**
-     * Parse Status Data dari database - UPDATED
+     * Parse Status Data dari database
      */
     private function parseStatusData($keypoint)
     {
         $statuses = [];
 
-        // Parse semua status values
         $s_cb = $this->parseCheckboxValue($keypoint->s_cb ?? '');
         $s_cb2 = $this->parseCheckboxValue($keypoint->s_cb2 ?? '');
         $s_lr = $this->parseCheckboxValue($keypoint->s_lr ?? '');
@@ -333,14 +335,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->scb_open_addms ?? '',
                 'rtu' => $keypoint->scb_open_addrtu ?? '',
                 'obj' => $keypoint->scb_open_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_cb, 'open'),
+                'checks' => $this->getCheckValue($s_cb, 'open'),
             ],
             'row2' => [
                 'label' => 'Close',
                 'ms' => $keypoint->scb_close_addms ?? '',
                 'rtu' => $keypoint->scb_close_addrtu ?? '',
                 'obj' => $keypoint->scb_close_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_cb, 'close'),
+                'checks' => $this->getCheckValue($s_cb, 'close'),
             ],
         ];
 
@@ -352,14 +354,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->scb2_open_addms ?? '',
                 'rtu' => $keypoint->scb2_open_addrtu ?? '',
                 'obj' => $keypoint->scb2_open_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_cb2, 'open'),
+                'checks' => $this->getCheckValue($s_cb2, 'open'),
             ],
             'row2' => [
                 'label' => 'Close',
                 'ms' => $keypoint->scb2_close_addms ?? '',
                 'rtu' => $keypoint->scb2_close_addrtu ?? '',
                 'obj' => $keypoint->scb2_close_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_cb2, 'close'),
+                'checks' => $this->getCheckValue($s_cb2, 'close'),
             ],
         ];
 
@@ -371,14 +373,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->slr_local_addms ?? '',
                 'rtu' => $keypoint->slr_local_addrtu ?? '',
                 'obj' => $keypoint->slr_local_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_lr, 'local'),
+                'checks' => $this->getCheckValue($s_lr, 'local'),
             ],
             'row2' => [
                 'label' => 'Remote',
                 'ms' => $keypoint->slr_remote_addms ?? '',
                 'rtu' => $keypoint->slr_remote_addrtu ?? '',
                 'obj' => $keypoint->slr_remote_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_lr, 'remote'),
+                'checks' => $this->getCheckValue($s_lr, 'remote'),
             ],
         ];
 
@@ -390,14 +392,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->sdoor_open_addms ?? '',
                 'rtu' => $keypoint->sdoor_open_addrtu ?? '',
                 'obj' => $keypoint->sdoor_open_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_door, 'dropen'),
+                'checks' => $this->getCheckValue($s_door, 'dropen'),
             ],
             'row2' => [
                 'label' => 'Close',
                 'ms' => $keypoint->sdoor_close_addms ?? '',
                 'rtu' => $keypoint->sdoor_close_addrtu ?? '',
                 'obj' => $keypoint->sdoor_close_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_door, 'drclose'),
+                'checks' => $this->getCheckValue($s_door, 'drclose'),
             ],
         ];
 
@@ -409,14 +411,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->sacf_normal_addms ?? '',
                 'rtu' => $keypoint->sacf_normal_addrtu ?? '',
                 'obj' => $keypoint->sacf_normal_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_acf, 'acnrml'),
+                'checks' => $this->getCheckValue($s_acf, 'acnrml'),
             ],
             'row2' => [
                 'label' => 'Failed',
                 'ms' => $keypoint->sacf_fail_addms ?? '',
                 'rtu' => $keypoint->sacf_fail_addrtu ?? '',
                 'obj' => $keypoint->sacf_fail_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_acf, 'acfail'),
+                'checks' => $this->getCheckValue($s_acf, 'acfail'),
             ],
         ];
 
@@ -428,14 +430,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->sdcf_normal_addms ?? '',
                 'rtu' => $keypoint->sdcf_normal_addrtu ?? '',
                 'obj' => $keypoint->sdcf_normal_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_dcf, 'dcfnrml'),
+                'checks' => $this->getCheckValue($s_dcf, 'dcfnrml'),
             ],
             'row2' => [
                 'label' => 'Failed',
                 'ms' => $keypoint->sdcf_fail_addms ?? '',
                 'rtu' => $keypoint->sdcf_fail_addrtu ?? '',
                 'obj' => $keypoint->sdcf_fail_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_dcf, 'dcffail'),
+                'checks' => $this->getCheckValue($s_dcf, 'dcffail'),
             ],
         ];
 
@@ -447,14 +449,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->sdcd_normal_addms ?? '',
                 'rtu' => $keypoint->sdcd_normal_addrtu ?? '',
                 'obj' => $keypoint->sdcd_normal_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_dcd, 'dcnrml'),
+                'checks' => $this->getCheckValue($s_dcd, 'dcnrml'),
             ],
             'row2' => [
                 'label' => 'Failed',
                 'ms' => $keypoint->sdcd_fail_addms ?? '',
                 'rtu' => $keypoint->sdcd_fail_addrtu ?? '',
                 'obj' => $keypoint->sdcd_fail_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_dcd, 'dcfail'),
+                'checks' => $this->getCheckValue($s_dcd, 'dcfail'),
             ],
         ];
 
@@ -466,14 +468,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->shlt_on_addms ?? '',
                 'rtu' => $keypoint->shlt_on_addrtu ?? '',
                 'obj' => $keypoint->shlt_on_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_hlt, 'hlton'),
+                'checks' => $this->getCheckValue($s_hlt, 'hlton'),
             ],
             'row2' => [
                 'label' => 'Inactive',
                 'ms' => $keypoint->shlt_off_addms ?? '',
                 'rtu' => $keypoint->shlt_off_addrtu ?? '',
                 'obj' => $keypoint->shlt_off_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_hlt, 'hltoff'),
+                'checks' => $this->getCheckValue($s_hlt, 'hltoff'),
             ],
         ];
 
@@ -485,14 +487,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->ssf6_normal_addms ?? '',
                 'rtu' => $keypoint->ssf6_normal_addrtu ?? '',
                 'obj' => $keypoint->ssf6_normal_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_sf6, 'sf6nrml'),
+                'checks' => $this->getCheckValue($s_sf6, 'sf6nrml'),
             ],
             'row2' => [
                 'label' => 'Low',
                 'ms' => $keypoint->ssf6_fail_addms ?? '',
                 'rtu' => $keypoint->ssf6_fail_addrtu ?? '',
                 'obj' => $keypoint->ssf6_fail_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_sf6, 'sf6fail'),
+                'checks' => $this->getCheckValue($s_sf6, 'sf6fail'),
             ],
         ];
 
@@ -504,14 +506,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->sfir_normal_addms ?? '',
                 'rtu' => $keypoint->sfir_normal_addrtu ?? '',
                 'obj' => $keypoint->sfir_normal_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_fir, 'firnrml'),
+                'checks' => $this->getCheckValue($s_fir, 'firnrml'),
             ],
             'row2' => [
                 'label' => 'Failed',
                 'ms' => $keypoint->sfir_fail_addms ?? '',
                 'rtu' => $keypoint->sfir_fail_addrtu ?? '',
                 'obj' => $keypoint->sfir_fail_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_fir, 'firfail'),
+                'checks' => $this->getCheckValue($s_fir, 'firfail'),
             ],
         ];
 
@@ -523,14 +525,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->sfis_normal_addms ?? '',
                 'rtu' => $keypoint->sfis_normal_addrtu ?? '',
                 'obj' => $keypoint->sfis_normal_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_fis, 'fisnrml'),
+                'checks' => $this->getCheckValue($s_fis, 'fisnrml'),
             ],
             'row2' => [
                 'label' => 'Failed',
                 'ms' => $keypoint->sfis_fail_addms ?? '',
                 'rtu' => $keypoint->sfis_fail_addrtu ?? '',
                 'obj' => $keypoint->sfis_fail_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_fis, 'fisfail'),
+                'checks' => $this->getCheckValue($s_fis, 'fisfail'),
             ],
         ];
 
@@ -542,28 +544,28 @@ class KeypointController extends Controller
                 'ms' => $keypoint->sfit_normal_addms ?? '',
                 'rtu' => $keypoint->sfit_normal_addrtu ?? '',
                 'obj' => $keypoint->sfit_normal_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_fit, 'fitnrml'),
+                'checks' => $this->getCheckValue($s_fit, 'fitnrml'),
             ],
             'row2' => [
                 'label' => 'Failed',
                 'ms' => $keypoint->sfit_fail_addms ?? '',
                 'rtu' => $keypoint->sfit_fail_addrtu ?? '',
                 'obj' => $keypoint->sfit_fail_objfrmt ?? '',
-                'check' => $this->getCheckValue($s_fit, 'fitfail'),
+                'checks' => $this->getCheckValue($s_fit, 'fitfail'),
             ],
         ];
 
         return $statuses;
     }
 
+
     /**
-     * Parse Control Data dari database - UPDATED
+     * Parse Control Data dari database
      */
     private function parseControlData($keypoint)
     {
         $controls = [];
 
-        // Parse control values
         $c_cb = $this->parseCheckboxValue($keypoint->c_cb ?? '');
         $c_cb2 = $this->parseCheckboxValue($keypoint->c_cb2 ?? '');
         $c_hlt = $this->parseCheckboxValue($keypoint->c_hlt ?? '');
@@ -577,14 +579,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->ccb_open_addms ?? '',
                 'rtu' => $keypoint->ccb_open_addrtu ?? '',
                 'obj' => $keypoint->ccb_open_objfrmt ?? '',
-                'check' => $this->getCheckValue($c_cb, 'cbctrl_op'),
+                'checks' => $this->getCheckValue($c_cb, 'cbctrl_op'),
             ],
             'row2' => [
                 'label' => 'Close',
                 'ms' => $keypoint->ccb_close_addms ?? '',
                 'rtu' => $keypoint->ccb_close_addrtu ?? '',
                 'obj' => $keypoint->ccb_close_objfrmt ?? '',
-                'check' => $this->getCheckValue($c_cb, 'cbctrl_cl'),
+                'checks' => $this->getCheckValue($c_cb, 'cbctrl_cl'),
             ],
         ];
 
@@ -596,14 +598,14 @@ class KeypointController extends Controller
                 'ms' => $keypoint->ccb2_open_addms ?? '',
                 'rtu' => $keypoint->ccb2_open_addrtu ?? '',
                 'obj' => $keypoint->ccb2_open_objfrmt ?? '',
-                'check' => $this->getCheckValue($c_cb2, 'cbctrl2_op'),
+                'checks' => $this->getCheckValue($c_cb2, 'cbctrl2_op'),
             ],
             'row2' => [
                 'label' => 'Close',
                 'ms' => $keypoint->ccb2_close_addms ?? '',
                 'rtu' => $keypoint->ccb2_close_addrtu ?? '',
                 'obj' => $keypoint->ccb2_close_objfrmt ?? '',
-                'check' => $this->getCheckValue($c_cb2, 'cbctrl2_cl'),
+                'checks' => $this->getCheckValue($c_cb2, 'cbctrl2_cl'),
             ],
         ];
 
@@ -615,18 +617,18 @@ class KeypointController extends Controller
                 'ms' => $keypoint->chlt_on_addms ?? '',
                 'rtu' => $keypoint->chlt_on_addrtu ?? '',
                 'obj' => $keypoint->chlt_on_objfrmt ?? '',
-                'check' => $this->getCheckValue($c_hlt, 'hltctrl_on'),
+                'checks' => $this->getCheckValue($c_hlt, 'hltctrl_on'),
             ],
             'row2' => [
                 'label' => 'Off',
                 'ms' => $keypoint->chlt_off_addms ?? '',
                 'rtu' => $keypoint->chlt_off_addrtu ?? '',
                 'obj' => $keypoint->chlt_off_objfrmt ?? '',
-                'check' => $this->getCheckValue($c_hlt, 'hltctrl_off'),
+                'checks' => $this->getCheckValue($c_hlt, 'hltctrl_off'),
             ],
         ];
 
-        // Reset Control (single row)
+        // Reset Control
         $controls[] = [
             'name' => 'RR',
             'single' => true,
@@ -635,7 +637,7 @@ class KeypointController extends Controller
                 'ms' => $keypoint->crst_addms ?? '',
                 'rtu' => $keypoint->crst_addrtu ?? '',
                 'obj' => $keypoint->crst_objfrmt ?? '',
-                'check' => $this->getCheckValue($c_rst, 'rrctrl_on'),
+                'checks' => $this->getCheckValue($c_rst, 'rrctrl_on'),
             ],
         ];
 
@@ -880,8 +882,8 @@ class KeypointController extends Controller
             ],
             [
                 'name' => 'PS 220',
-                'status' => $this->getTestResult($keypoint->hard_ps220 ?? ''),
-                'value' => $keypoint->hard_ps220_input ?? ''
+                'status' => $this->getTestResult($keypoint->hard_ps ?? ''),
+                'value' => $keypoint->hard_ps_input ?? ''
             ],
             [
                 'name' => 'Charger',

@@ -378,25 +378,25 @@
                             </td>
                             <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['label'] }}</td>
                             <td style="height: 12px; padding: 2px;">
-                                @if($item['row1']['check'] == 1)
+                                @if(in_array(1, $item['row1']['checks'] ?? []))
                                 <span
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #16a34a; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
                             <td style="height: 12px; padding: 2px;">
-                                @if($item['row1']['check'] == 2)
+                                @if(in_array(2, $item['row1']['checks'] ?? []))
                                 <span
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #dc2626; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
                             <td style="height: 12px; padding: 2px;">
-                                @if($item['row1']['check'] == 3)
+                                @if(in_array(3, $item['row1']['checks'] ?? []))
                                 <span
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #2563eb; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
                             <td style="height: 12px; padding: 2px;">
-                                @if($item['row1']['check'] == 4)
+                                @if(in_array(4, $item['row1']['checks'] ?? []))
                                 <span
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
                                 @endif
@@ -414,25 +414,25 @@
                             <td style="height: 12px; font-size: 6px; padding: 2px;">{{ $item['row2']['obj'] }}</td>
                             <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row2']['label'] }}</td>
                             <td style="height: 12px; padding: 2px;">
-                                @if($item['row2']['check'] == 1)
+                                @if(in_array(1, $item['row2']['checks'] ?? []))
                                 <span
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #16a34a; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
                             <td style="height: 12px; padding: 2px;">
-                                @if($item['row2']['check'] == 2)
+                                @if(in_array(2, $item['row2']['checks'] ?? []))
                                 <span
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #dc2626; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
                             <td style="height: 12px; padding: 2px;">
-                                @if($item['row2']['check'] == 3)
+                                @if(in_array(3, $item['row2']['checks'] ?? []))
                                 <span
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #2563eb; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
                             <td style="height: 12px; padding: 2px;">
-                                @if($item['row2']['check'] == 4)
+                                @if(in_array(4, $item['row2']['checks'] ?? []))
                                 <span
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
                                 @endif
@@ -459,52 +459,120 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                        $controls = [
-                        ['CB', 'Open', 'Close'],
-                        ['CB 2', 'Open', 'Close'],
-                        ['HLT', 'On', 'Off'],
-                        ];
-                        @endphp
-                        @foreach($controls as $index => $item)
+                        @foreach($controlData as $index => $item)
+                        @if(isset($item['single']) && $item['single'])
+                        {{-- Single Row (RR/Reset) --}}
                         <tr>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td rowspan="2" class="font-bold" style="font-size: 8px; padding: 2px;">{{ $item[0] }}</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item[1] }}</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['ms'] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['rtu'] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['obj'] }}</td>
+                            <td class="font-bold" style="font-size: 8px; padding: 2px;">{{ $item['name'] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['label'] }}</td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(1, $item['row1']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #16a34a; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(2, $item['row1']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #dc2626; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(3, $item['row1']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #2563eb; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(4, $item['row1']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
                             @if($index == 0)
                             <td rowspan="7" class="text-left align-top" style="padding: 4px; font-size: 7px;">
                                 {{ $row->ketftc ?? '' }}
                             </td>
                             @endif
                         </tr>
+                        @else
+                        {{-- Row 1 --}}
                         <tr>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item[2] }}</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['ms'] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['rtu'] }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['obj'] }}</td>
+                            <td rowspan="2" class="font-bold" style="font-size: 8px; padding: 2px;">{{ $item['name'] }}
+                            </td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row1']['label'] }}</td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(1, $item['row1']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #16a34a; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(2, $item['row1']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #dc2626; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(3, $item['row1']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #2563eb; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(4, $item['row1']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            @if($index == 0)
+                            <td rowspan="7" class="text-left align-top" style="padding: 4px; font-size: 7px;">
+                                {{ $row->ketftc ?? '' }}
+                            </td>
+                            @endif
                         </tr>
+                        {{-- Row 2 --}}
+                        <tr>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row2']['ms'] ?? '' }}</td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row2']['rtu'] ?? '' }}
+                            </td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row2']['obj'] ?? '' }}
+                            </td>
+                            <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $item['row2']['label'] ?? '' }}
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(1, $item['row2']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #16a34a; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(2, $item['row2']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #dc2626; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(3, $item['row2']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #2563eb; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                            <td style="height: 12px; padding: 2px;">
+                                @if(in_array(4, $item['row2']['checks'] ?? []))
+                                <span
+                                    style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endif
                         @endforeach
-                        <tr>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td class="font-bold" style="font-size: 8px; padding: 2px;">RR</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;">Reset</td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                            <td style="height: 12px; font-size: 7px; padding: 2px;"></td>
-                        </tr>
                     </tbody>
                 </table>
 
