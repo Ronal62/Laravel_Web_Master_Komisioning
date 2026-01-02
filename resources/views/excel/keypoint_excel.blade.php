@@ -1,41 +1,15 @@
+{{-- resources/views/excel/keypoint_excel.blade.php --}}
 <!DOCTYPE html>
-<html lang="id">
+<html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-    /* CSS Class ini hanya backup, yang utama adalah inline style di elemen */
-    .borders {
-        border: 1px solid #000000;
-    }
-
-    .bg-gray {
-        background-color: #d1d5db;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .text-bold {
-        font-weight: bold;
-    }
-
-    .valign-middle {
-        vertical-align: middle;
-    }
-
-    .valign-top {
-        vertical-align: top;
-    }
-    </style>
+    <meta charset="utf-8">
 </head>
 
 <body>
     @foreach($keypoints as $index => $data)
     @php
     $row = $data['row'];
-    // Data helpers
     $pelaksanaMs = $data['pelaksanaMs'];
     $pelaksanaRtu = $data['pelaksanaRtu'];
     $statusData = $data['statusData'];
@@ -43,336 +17,358 @@
     $meteringData = $data['meteringData'];
     $hardwareData = $data['hardwareData'];
     $systemData = $data['systemData'];
-    $recloserData = $data['recloserData'];
+    $recloserData = $data['recloserData'] ?? [];
+
+    // Calculate starting row for this page
+    $pageStartRow = $index * 60 + 1; // Adjust based on your needs
     @endphp
 
-    {{-- WRAPPER TABLE UTAMA PER HALAMAN --}}
+    {{-- ===== HEADER SECTION ===== --}}
     <table>
-        {{-- ===== HEADER SECTION ===== --}}
+        {{-- Row 1 --}}
         <tr>
-            {{-- Logo & Identitas (Kolom A-C kira-kira) --}}
-            <td colspan="4" rowspan="3" class="borders text-center valign-middle"
-                style="border: 1px solid #000000; vertical-align: middle; text-align: center;">
-                <strong>PT PLN (PERSERO)<br>DISTRIBUSI JAWA TIMUR</strong><br>
-                JL. EMBONG TRENGGULI NO. 19 - 21<br>
+            <td colspan="3" rowspan="3"
+                style="border: 1px solid #000000; text-align: center; vertical-align: middle; font-weight: bold;">
+                PT PLN (PERSERO)
+                DISTRIBUSI JAWA TIMUR
+                JL. EMBONG TRENGGULI NO. 19 - 21
                 SURABAYA | TLP: (031) 53406531
             </td>
-            {{-- Form Standart (Kolom D-F) --}}
-            <td colspan="4" rowspan="3" class="borders text-center valign-middle"
-                style="border: 1px solid #000000; vertical-align: middle; text-align: center;">
-                <strong>FORM<br>STANDART</strong>
+            <td colspan="3" rowspan="3"
+                style="border: 1px solid #000000; text-align: center; vertical-align: middle; font-weight: bold; font-size: 14px;">
+                FORM STANDART
             </td>
-            {{-- Doc Info (Kolom G-J) --}}
-            <td colspan="2" class="borders bg-gray text-bold"
-                style="border: 1px solid #000000; background-color: #cccccc;">NO. DOKUMEN</td>
-            <td colspan="3" class="borders" style="border: 1px solid #000000;">HAL : {{ $index + 1 }}</td>
+            <td colspan="2" style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold;">NO. DOKUMEN
+            </td>
+            <td colspan="2" style="border: 1px solid #000000;">HAL : {{ $index + 1 }}</td>
         </tr>
+        {{-- Row 2 --}}
         <tr>
-            <td colspan="2" rowspan="2" class="borders text-center text-bold"
-                style="border: 1px solid #000000; text-align: center; font-size: 14px;">FS.SCA.01.17</td>
-            <td colspan="3" class="borders" style="border: 1px solid #000000;">TGL :
-                {{ $row->tgl_komisioning_formatted }}</td>
+            <td colspan="2" rowspan="2"
+                style="border: 1px solid #000000; text-align: center; font-weight: bold; font-size: 14px;">FS.SCA.01.17
+            </td>
+            <td colspan="2" style="border: 1px solid #000000;">TGL : {{ $row->tgl_komisioning_formatted }}</td>
         </tr>
+        {{-- Row 3 --}}
         <tr>
-            <td colspan="3" class="borders" style="border: 1px solid #000000;">REV : 0</td>
+            <td colspan="2" style="border: 1px solid #000000;">REV : 0</td>
         </tr>
 
-        {{-- Spacer Row --}}
+        {{-- Spacer --}}
         <tr>
-            <td colspan="13"></td>
+            <td colspan="10"></td>
         </tr>
 
         {{-- ===== TITLE ===== --}}
         <tr>
-            <td colspan="13" class="text-center" style="text-align: center;">
-                <u style="font-weight: bold; font-size: 14px;">TES POINT TO POINT LBS</u><br>
-                <strong>FORM KOMISIONING KEYPOINT</strong>
+            <td colspan="10"
+                style="text-align: center; font-weight: bold; font-size: 14px; text-decoration: underline;">
+                TES POINT TO POINT LBS
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: center; font-weight: bold;">
+                FORM KOMISIONING KEYPOINT
             </td>
         </tr>
 
-        {{-- Spacer Row --}}
+        {{-- Spacer --}}
         <tr>
-            <td colspan="13"></td>
+            <td colspan="10"></td>
         </tr>
 
-        {{-- ===== DEVICE INFO (Menggunakan Grid Excel, bukan nested table) ===== --}}
+        {{-- ===== DEVICE INFO ===== --}}
         <tr>
-            <td colspan="2" style="border: 1px solid #000000;">Nama LBS / REC.</td>
-            <td colspan="2" style="border: 1px solid #000000;">: <strong>{{ $row->nama_keypoint }}</strong></td>
-
-            <td colspan="2" style="border: 1px solid #000000;">Modem</td>
-            <td colspan="2" style="border: 1px solid #000000;">: <strong>{{ $row->nama_modem }}</strong></td>
-
-            <td colspan="2" style="border: 1px solid #000000;">Gardu Induk</td>
-            <td colspan="3" style="border: 1px solid #000000;">: <strong>{{ $row->gardu_induk }}</strong></td>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">Nama LBS / REC.</td>
+            <td colspan="2" style="border: 1px solid #000000; font-weight: bold;">{{ $row->nama_keypoint }}</td>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">Modem</td>
+            <td colspan="2" style="border: 1px solid #000000; font-weight: bold;">{{ $row->nama_modem }}</td>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">Gardu Induk</td>
+            <td colspan="3" style="border: 1px solid #000000; font-weight: bold;">{{ $row->gardu_induk }}</td>
         </tr>
         <tr>
-            <td colspan="2" style="border: 1px solid #000000;">Merk</td>
-            <td colspan="2" style="border: 1px solid #000000;">: <strong>{{ $row->nama_merklbs }}</strong></td>
-
-            <td colspan="2" style="border: 1px solid #000000;">IP / No. Kartu</td>
-            <td colspan="2" style="border: 1px solid #000000;">: <strong>{{ $row->ip_rtu }}</strong></td>
-
-            <td colspan="2" style="border: 1px solid #000000;">Penyulang</td>
-            <td colspan="3" style="border: 1px solid #000000;">: <strong>{{ $row->penyulang }}</strong></td>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">Merk</td>
+            <td colspan="2" style="border: 1px solid #000000; font-weight: bold;">{{ $row->nama_merklbs }}</td>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">IP / No. Kartu</td>
+            <td colspan="2" style="border: 1px solid #000000; font-weight: bold;">{{ $row->ip_rtu }}</td>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">Penyulang</td>
+            <td colspan="3" style="border: 1px solid #000000; font-weight: bold;">{{ $row->penyulang }}</td>
         </tr>
         <tr>
-            <td colspan="2" style="border: 1px solid #000000;">Protocol</td>
-            <td colspan="2" style="border: 1px solid #000000;">: <strong>{{ $row->alamat_rtu }}</strong></td>
-
-            <td colspan="2" style="border: 1px solid #000000;">Koordinat</td>
-            <td colspan="2" style="border: 1px solid #000000;">: <strong>-</strong></td>
-
-            <td colspan="2" style="border: 1px solid #000000;">Tanggal</td>
-            <td colspan="3" style="border: 1px solid #000000;">: <strong>{{ $row->tgl_komisioning_formatted }}</strong>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">Protocol</td>
+            <td colspan="2" style="border: 1px solid #000000; font-weight: bold;">{{ $row->alamat_rtu }}</td>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">Koordinat</td>
+            <td colspan="2" style="border: 1px solid #000000; font-weight: bold;">-</td>
+            <td style="border: 1px solid #000000; background-color: #E5E5E5;">Tanggal</td>
+            <td colspan="3" style="border: 1px solid #000000; font-weight: bold;">{{ $row->tgl_komisioning_formatted }}
             </td>
         </tr>
 
-        {{-- Spacer Row --}}
+        {{-- Spacer --}}
         <tr>
-            <td colspan="13"></td>
+            <td colspan="10"></td>
         </tr>
 
-        {{-- ===== MAIN DATA CONTENT ===== --}}
-        {{--
-           Strategi: Kita buat Layout Kiri dan Kanan Terpisah dengan Cell Kosong di tengah sebagai pemisah
-           Excel sangat sulit merender 2 tabel berdampingan dalam 1 row jika tinggi barisnya beda.
-           Kita akan menggunakan table wrapper.
-        --}}
-
+        {{-- ===== STATUS TABLE HEADER ===== --}}
         <tr>
-            {{-- KOLOM KIRI (STATUS, CONTROL, METERING) --}}
-            <td colspan="7" valign="top">
-                {{-- TABEL STATUS --}}
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">ADD-MS</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">ADD-RTU</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">STATUS</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">VALUE</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">OK</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">NOK</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">KET</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($statusData as $item)
-                        @foreach(['row1', 'row2'] as $r)
-                        @if(isset($item[$r]))
-                        <tr>
-                            <td style="border: 1px solid #000;">{{ $item[$r]['ms'] }}</td>
-                            <td style="border: 1px solid #000;">{{ $item[$r]['rtu'] }}</td>
-                            <td style="border: 1px solid #000;">{{ $item['name'] }}</td>
-                            <td style="border: 1px solid #000;">{{ $item[$r]['label'] }}</td>
-                            <td style="border: 1px solid #000; text-align: center;">
-                                {{ in_array(1, $item[$r]['checks']) ? 'v' : '' }}</td>
-                            <td style="border: 1px solid #000; text-align: center;">
-                                {{ in_array(2, $item[$r]['checks']) ? 'v' : '' }}</td>
-                            <td style="border: 1px solid #000;"></td>
-                        </tr>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                ADD-MS</td>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                ADD-RTU</td>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                STATUS</td>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                VALUE</td>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">OK
+            </td>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">NOK
+            </td>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">KET
+            </td>
+            {{-- Right side - Hardware Header --}}
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                HARDWARE</td>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                OK/NOK</td>
+            <td style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                VALUE</td>
+        </tr>
+
+        {{-- ===== STATUS DATA ROWS ===== --}}
+        @php
+        $statusRows = [];
+        foreach($statusData as $item) {
+        foreach(['row1', 'row2'] as $r) {
+        if(isset($item[$r])) {
+        $statusRows[] = [
+        'ms' => $item[$r]['ms'],
+        'rtu' => $item[$r]['rtu'],
+        'name' => $item['name'],
+        'label' => $item[$r]['label'],
+        'ok' => in_array(1, $item[$r]['checks']) ? '✓' : '',
+        'nok' => in_array(2, $item[$r]['checks']) ? '✓' : '',
+        ];
+        }
+        }
+        }
+
+        $hwItems = [
+        ['name' => 'Batere', 'idx' => 0],
+        ['name' => 'PS 220', 'idx' => 1],
+        ['name' => 'Charger', 'idx' => 2],
+        ['name' => 'Limit Switch', 'idx' => 3],
+        ];
+
+        $maxRows = max(count($statusRows), count($hwItems));
+        @endphp
+
+        @for($i = 0; $i < $maxRows; $i++) <tr>
+            {{-- Status columns --}}
+            <td style="border: 1px solid #000000; text-align: center;">{{ $statusRows[$i]['ms'] ?? '' }}</td>
+            <td style="border: 1px solid #000000; text-align: center;">{{ $statusRows[$i]['rtu'] ?? '' }}</td>
+            <td style="border: 1px solid #000000;">{{ $statusRows[$i]['name'] ?? '' }}</td>
+            <td style="border: 1px solid #000000;">{{ $statusRows[$i]['label'] ?? '' }}</td>
+            <td style="border: 1px solid #000000; text-align: center;">{{ $statusRows[$i]['ok'] ?? '' }}</td>
+            <td style="border: 1px solid #000000; text-align: center;">{{ $statusRows[$i]['nok'] ?? '' }}</td>
+            <td style="border: 1px solid #000000;"></td>
+            {{-- Hardware columns --}}
+            <td style="border: 1px solid #000000;">{{ $hwItems[$i]['name'] ?? '' }}</td>
+            <td style="border: 1px solid #000000; text-align: center;">
+                {{ $hardwareData[$hwItems[$i]['idx'] ?? 0]['status'] ?? '' }}</td>
+            <td style="border: 1px solid #000000; text-align: center;">
+                {{ $hardwareData[$hwItems[$i]['idx'] ?? 0]['value'] ?? '' }}</td>
+            </tr>
+            @endfor
+
+            {{-- Spacer --}}
+            <tr>
+                <td colspan="10"></td>
+            </tr>
+
+            {{-- ===== CONTROL TABLE HEADER ===== --}}
+            <tr>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    ADD-MS</td>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    ADD-RTU</td>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    CONTROL</td>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    VALUE</td>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    OK</td>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    NOK</td>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    KET</td>
+                {{-- Right side - System Header --}}
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    SYSTEM</td>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    OK/NOK</td>
+                <td
+                    style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                    VALUE</td>
+            </tr>
+
+            {{-- ===== CONTROL DATA ROWS ===== --}}
+            @php
+            $controlRows = [];
+            foreach($controlData as $item) {
+            if(isset($item['row1'])) {
+            $controlRows[] = [
+            'ms' => $item['row1']['ms'] ?? '',
+            'rtu' => $item['row1']['rtu'] ?? '',
+            'name' => $item['name'],
+            'label' => $item['row1']['label'] ?? '',
+            'ok' => in_array(1, $item['row1']['checks'] ?? []) ? '✓' : '',
+            'nok' => in_array(2, $item['row1']['checks'] ?? []) ? '✓' : '',
+            ];
+            }
+            if(!($item['single'] ?? false) && isset($item['row2'])) {
+            $controlRows[] = [
+            'ms' => $item['row2']['ms'] ?? '',
+            'rtu' => $item['row2']['rtu'] ?? '',
+            'name' => $item['name'],
+            'label' => $item['row2']['label'] ?? '',
+            'ok' => in_array(1, $item['row2']['checks'] ?? []) ? '✓' : '',
+            'nok' => in_array(2, $item['row2']['checks'] ?? []) ? '✓' : '',
+            ];
+            }
+            }
+
+            $sysItems = [
+            ['name' => 'COMF', 'idx' => 0],
+            ['name' => 'LRUF', 'idx' => 1],
+            ['name' => 'SIGN S', 'idx' => 2],
+            ['name' => 'Limit Switch', 'idx' => 3],
+            ];
+
+            $maxControlRows = max(count($controlRows), count($sysItems));
+            @endphp
+
+            @for($i = 0; $i < $maxControlRows; $i++) <tr>
+                {{-- Control columns --}}
+                <td style="border: 1px solid #000000; text-align: center;">{{ $controlRows[$i]['ms'] ?? '' }}</td>
+                <td style="border: 1px solid #000000; text-align: center;">{{ $controlRows[$i]['rtu'] ?? '' }}</td>
+                <td style="border: 1px solid #000000;">{{ $controlRows[$i]['name'] ?? '' }}</td>
+                <td style="border: 1px solid #000000;">{{ $controlRows[$i]['label'] ?? '' }}</td>
+                <td style="border: 1px solid #000000; text-align: center;">{{ $controlRows[$i]['ok'] ?? '' }}</td>
+                <td style="border: 1px solid #000000; text-align: center;">{{ $controlRows[$i]['nok'] ?? '' }}</td>
+                <td style="border: 1px solid #000000;"></td>
+                {{-- System columns --}}
+                <td style="border: 1px solid #000000;">{{ $sysItems[$i]['name'] ?? '' }}</td>
+                <td style="border: 1px solid #000000; text-align: center;">
+                    {{ $systemData[$sysItems[$i]['idx'] ?? 0]['status'] ?? '' }}</td>
+                <td style="border: 1px solid #000000; text-align: center;">
+                    {{ $systemData[$sysItems[$i]['idx'] ?? 0]['value'] ?? '' }}</td>
+                </tr>
+                @endfor
+
+                {{-- Spacer --}}
+                <tr>
+                    <td colspan="10"></td>
+                </tr>
+
+                {{-- ===== METERING TABLE HEADER ===== --}}
+                <tr>
+                    <td
+                        style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                        ADD-MS</td>
+                    <td
+                        style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                        ADD-RTU</td>
+                    <td
+                        style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                        METER</td>
+                    <td
+                        style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                        FIELD</td>
+                    <td
+                        style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                        MS</td>
+                    <td
+                        style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                        OK/NOK</td>
+                    <td colspan="4"
+                        style="border: 1px solid #000000; background-color: #CCCCCC; font-weight: bold; text-align: center;">
+                        PELAKSANA</td>
+                </tr>
+
+                {{-- ===== METERING DATA ROWS ===== --}}
+                @php
+                $pelaksanaRows = [
+                ['fe' => $pelaksanaRtu[0]->nama_pelrtu ?? 'Field Eng. 01', 'ms' => $pelaksanaMs[0]->nama_picmaster ??
+                'MS Eng. 01', 'disp' => 'Dispatcher 01'],
+                ['fe' => $pelaksanaRtu[1]->nama_pelrtu ?? 'Field Eng. 02', 'ms' => $pelaksanaMs[1]->nama_picmaster ??
+                'MS Eng. 02', 'disp' => 'Dispatcher 02'],
+                ];
+                $maxMeterRows = max(count($meteringData), count($pelaksanaRows) + 2);
+                @endphp
+
+                @for($i = 0; $i < $maxMeterRows; $i++) <tr>
+                    {{-- Metering columns --}}
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $meteringData[$i]['ms'] ?? '' }}</td>
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $meteringData[$i]['rtu'] ?? '' }}</td>
+                    <td style="border: 1px solid #000000;">{{ $meteringData[$i]['name'] ?? '' }}</td>
+                    <td style="border: 1px solid #000000;">{{ $meteringData[$i]['field'] ?? '' }}</td>
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $meteringData[$i]['msVal'] ?? '' }}
+                    </td>
+                    <td style="border: 1px solid #000000; text-align: center;">
+                        @if(in_array(1, $meteringData[$i]['checks'] ?? []))OK
+                        @elseif(in_array(2, $meteringData[$i]['checks'] ?? []))NOK
                         @endif
-                        @endforeach
-                        @endforeach
-                    </tbody>
-                </table>
-                <br>
-                {{-- TABEL CONTROL --}}
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">ADD-MS</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">ADD-RTU</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">CTRL</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">VALUE</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">OK</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">NOK</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">KET</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($controlData as $item)
-                        {{-- Loop manual untuk row1/row2 agar border aman --}}
-                        <tr>
-                            <td style="border: 1px solid #000;">{{ $item['row1']['ms'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;">{{ $item['row1']['rtu'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;">{{ $item['name'] }}</td>
-                            <td style="border: 1px solid #000;">{{ $item['row1']['label'] ?? '' }}</td>
-                            <td style="border: 1px solid #000; text-align: center;">
-                                {{ in_array(1, $item['row1']['checks'] ?? []) ? 'v' : '' }}</td>
-                            <td style="border: 1px solid #000; text-align: center;">
-                                {{ in_array(2, $item['row1']['checks'] ?? []) ? 'v' : '' }}</td>
-                            <td style="border: 1px solid #000;"></td>
-                        </tr>
-                        @if(!($item['single'] ?? false))
-                        <tr>
-                            <td style="border: 1px solid #000;">{{ $item['row2']['ms'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;">{{ $item['row2']['rtu'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;">{{ $item['name'] }}</td>
-                            <td style="border: 1px solid #000;">{{ $item['row2']['label'] ?? '' }}</td>
-                            <td style="border: 1px solid #000; text-align: center;">
-                                {{ in_array(1, $item['row2']['checks'] ?? []) ? 'v' : '' }}</td>
-                            <td style="border: 1px solid #000; text-align: center;">
-                                {{ in_array(2, $item['row2']['checks'] ?? []) ? 'v' : '' }}</td>
-                            <td style="border: 1px solid #000;"></td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
-                <br>
-                {{-- TABEL METERING --}}
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">ADD-MS</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">ADD-RTU</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">METER</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">FIELD</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">MS</th>
-                            <th style="border: 1px solid #000; background-color: #cccccc;">OK/NOK</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($meteringData as $meter)
-                        <tr>
-                            <td style="border: 1px solid #000;">
-                                {{ $meter['ms'] ?? ($meter['isPseudo'] ? 'Pseudo' : '') }}</td>
-                            <td style="border: 1px solid #000;">{{ $meter['rtu'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;">{{ $meter['name'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;">{{ $meter['field'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;">{{ $meter['msVal'] ?? '' }}</td>
-                            <td style="border: 1px solid #000; text-align: center;">
-                                @if(in_array(1, $meter['checks'] ?? [])) OK
-                                @elseif(in_array(2, $meter['checks'] ?? [])) NOK
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </td>
+                    </td>
 
-            {{-- SPACER COLUMN --}}
-            <td style="width: 20px;"></td>
+                    {{-- Pelaksana columns --}}
+                    @if($i == 0)
+                    <td
+                        style="border: 1px solid #000000; text-align: center; font-weight: bold; background-color: #E5E5E5;">
+                        Field Engineer</td>
+                    <td
+                        style="border: 1px solid #000000; text-align: center; font-weight: bold; background-color: #E5E5E5;">
+                        Master Station</td>
+                    <td
+                        style="border: 1px solid #000000; text-align: center; font-weight: bold; background-color: #E5E5E5;">
+                        Dispatcher</td>
+                    <td style="border: 1px solid #000000;"></td>
+                    @elseif($i == 1)
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $pelaksanaRows[0]['fe'] }}</td>
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $pelaksanaRows[0]['ms'] }}</td>
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $pelaksanaRows[0]['disp'] }}</td>
+                    <td style="border: 1px solid #000000;"></td>
+                    @elseif($i == 2)
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $pelaksanaRows[1]['fe'] }}</td>
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $pelaksanaRows[1]['ms'] }}</td>
+                    <td style="border: 1px solid #000000; text-align: center;">{{ $pelaksanaRows[1]['disp'] }}</td>
+                    <td style="border: 1px solid #000000;"></td>
+                    @else
+                    <td style="border: 1px solid #000000;"></td>
+                    <td style="border: 1px solid #000000;"></td>
+                    <td style="border: 1px solid #000000;"></td>
+                    <td style="border: 1px solid #000000;"></td>
+                    @endif
+                    </tr>
+                    @endfor
 
-            {{-- KOLOM KANAN (HARDWARE, SYSTEM, RECLOSER, PELAKSANA) --}}
-            <td colspan="5" valign="top">
-                {{-- HARDWARE --}}
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th colspan="4" style="border: 1px solid #000; background-color: #cccccc; text-align:left;">
-                                Hardware</th>
-                        </tr>
-                        <tr>
-                            <th style="border: 1px solid #000;">Item</th>
-                            <th style="border: 1px solid #000;">OK/NOK</th>
-                            <th style="border: 1px solid #000;">Value</th>
-                            <th style="border: 1px solid #000;">Ket</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach([
-                        ['name' => 'Batere', 'idx' => 0],
-                        ['name' => 'PS 220', 'idx' => 1],
-                        ['name' => 'Charger', 'idx' => 2],
-                        ['name' => 'Limit Switch', 'idx' => 3],
-                        ] as $hw)
-                        <tr>
-                            <td style="border: 1px solid #000;">{{ $hw['name'] }}</td>
-                            <td style="border: 1px solid #000; text-align:center;">
-                                {{ $hardwareData[$hw['idx']]['status'] ?? '' }}</td>
-                            <td style="border: 1px solid #000; text-align:center;">
-                                {{ $hardwareData[$hw['idx']]['value'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;"></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <br>
-
-                {{-- SYSTEM --}}
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th colspan="4" style="border: 1px solid #000; background-color: #cccccc; text-align:left;">
-                                System</th>
-                        </tr>
-                        <tr>
-                            <th style="border: 1px solid #000;">Item</th>
-                            <th style="border: 1px solid #000;">OK/NOK</th>
-                            <th style="border: 1px solid #000;">Value</th>
-                            <th style="border: 1px solid #000;">Ket</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach([
-                        ['name' => 'COMF', 'idx' => 0],
-                        ['name' => 'LRUF', 'idx' => 1],
-                        ['name' => 'SIGN S', 'idx' => 2],
-                        ['name' => 'Limit Switch', 'idx' => 3],
-                        ] as $sys)
-                        <tr>
-                            <td style="border: 1px solid #000;">{{ $sys['name'] }}</td>
-                            <td style="border: 1px solid #000; text-align:center;">
-                                {{ $systemData[$sys['idx']]['status'] ?? '' }}</td>
-                            <td style="border: 1px solid #000; text-align:center;">
-                                {{ $systemData[$sys['idx']]['value'] ?? '' }}</td>
-                            <td style="border: 1px solid #000;"></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <br>
-
-                {{-- PELAKSANA --}}
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th colspan="3" style="border: 1px solid #000; background-color: #cccccc; text-align:left;">
-                                PELAKSANA :</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="height: 60px;">
-                            <td
-                                style="border: 1px solid #000; height: 60px; vertical-align: bottom; text-align: center;">
-                                <u>{{ $pelaksanaRtu[0]->nama_pelrtu ?? 'Field Eng. 01' }}</u><br>Field Engineer
-                            </td>
-                            <td
-                                style="border: 1px solid #000; height: 60px; vertical-align: bottom; text-align: center;">
-                                <u>{{ $pelaksanaMs[0]->nama_picmaster ?? 'MS Eng. 01' }}</u><br>Master Station
-                            </td>
-                            <td
-                                style="border: 1px solid #000; height: 60px; vertical-align: bottom; text-align: center;">
-                                <u>Dispatcher 01</u><br>Dispatcher
-                            </td>
-                        </tr>
-                        <tr style="height: 60px;">
-                            <td
-                                style="border: 1px solid #000; height: 60px; vertical-align: bottom; text-align: center;">
-                                <u>{{ $pelaksanaRtu[1]->nama_pelrtu ?? 'Field Eng. 02' }}</u><br>Field Engineer
-                            </td>
-                            <td
-                                style="border: 1px solid #000; height: 60px; vertical-align: bottom; text-align: center;">
-                                <u>{{ $pelaksanaMs[1]->nama_picmaster ?? 'MS Eng. 02' }}</u><br>Master Station
-                            </td>
-                            <td
-                                style="border: 1px solid #000; height: 60px; vertical-align: bottom; text-align: center;">
-                                <u>Dispatcher 02</u><br>Dispatcher
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
+                    {{-- Page break spacer --}}
+                    @if(!$loop->last)
+                    <tr>
+                        <td colspan="10" style="height: 50px;"></td>
+                    </tr>
+                    @endif
     </table>
 
-    {{-- Jarak antar Record --}}
-    <br><br>
     @endforeach
-
 </body>
 
 </html>
