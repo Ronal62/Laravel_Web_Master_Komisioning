@@ -51,9 +51,17 @@
                                 <button type="button" id="btn-reset" class="btn btn-secondary me-2">
                                     <i class="fas fa-undo"></i> Reset
                                 </button>
-                                <button type="button" id="btn-export-pdf" class="btn btn-danger"
+
+                                {{-- Tombol PDF --}}
+                                <button type="button" id="btn-export-pdf" class="btn btn-danger me-2"
                                     onclick="exportByDatePdf()">
-                                    <i class="fas fa-file-pdf"></i> Export PDF
+                                    <i class="fas fa-file-pdf"></i> PDF
+                                </button>
+
+                                {{-- Tombol Excel Baru --}}
+                                <button type="button" id="btn-export-excel" class="btn btn-success"
+                                    onclick="exportByDateExcel()">
+                                    <i class="fas fa-file-excel"></i> Excel
                                 </button>
                             </div>
                         </div>
@@ -105,6 +113,40 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <script>
+function exportByDateExcel() {
+    var fromDate = $('#dari-tanggal').val();
+    var toDate = $('#sampai-tanggal').val();
+
+    // Validation
+    if (!fromDate || !toDate) {
+        showAlert('warning', 'Silakan pilih rentang tanggal terlebih dahulu!');
+        return;
+    }
+
+    if (new Date(fromDate) > new Date(toDate)) {
+        showAlert('warning', 'Tanggal awal tidak boleh lebih besar dari tanggal akhir!');
+        return;
+    }
+
+    // Show loading UI
+    var originalBtnContent = $('#btn-export-excel').html();
+    $('#btn-export-excel').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Exporting...');
+
+    // Open export URL in new window/tab to trigger download
+    var exportUrl = '{{ route("keypoint.exportexcel") }}?from_date=' + fromDate + '&to_date=' + toDate;
+
+    // Redirect logic
+    window.location.href = exportUrl;
+
+    // Reset button after delay (give time for request to initiate)
+    setTimeout(function() {
+        $('#btn-export-excel').prop('disabled', false).html(originalBtnContent);
+    }, 3000);
+}
+
+
+
+
 function exportByDatePdf() {
     var fromDate = $('#dari-tanggal').val();
     var toDate = $('#sampai-tanggal').val();

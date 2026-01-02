@@ -67,9 +67,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/keypoint/export-by-date', [KeypointController::class, 'exportByDatePdf'])->name('keypoint.exportbydate');
 
-    Route::get('/keypoint/export-excel', [KeypointController::class, 'exportByDateExcel'])->name('keypoint.exportexcel');
-    Route::get('/keypoint/export-excel-detailed', [KeypointController::class, 'exportByDateExcelDetailed'])->name('keypoint.exportexceldetailed');
-
+    Route::get('keypoint/export-excel', [KeypointController::class, 'exportByDateExcel'])->name('keypoint.exportexcel');
 
 
 

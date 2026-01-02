@@ -8,10 +8,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use App\Exports\KeypointByDateExport;
-use App\Exports\KeypointDetailedExport;
+use App\Exports\KeypointExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Exception;
 
 
 use Illuminate\Support\Facades\Log;
@@ -946,60 +944,89 @@ class KeypointController extends Controller
     }
 
 
-    /**
-     * Export keypoints to Excel (Simple)
-     */
     public function exportByDateExcel(Request $request)
     {
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
 
-        // Validate dates
+        // 1. Validasi
         if (empty($fromDate) || empty($toDate)) {
             return back()->with('error', 'Silakan pilih rentang tanggal terlebih dahulu.');
         }
 
-        // Check if data exists
-        $count = DB::table('tb_formkp')
-            ->whereDate('tgl_komisioning', '>=', $fromDate)
-            ->whereDate('tgl_komisioning', '<=', $toDate)
-            ->count();
+        // 2. Query Data (Logic SAMA PERSIS dengan PDF)
+        $keypoints = DB::table('tb_formkp')
+            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
+            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
+            ->leftJoin('tb_medkom', 'tb_formkp.id_medkom', '=', 'tb_medkom.id_medkom')
+            ->leftJoin('tb_komkp', 'tb_formkp.id_komkp', '=', 'tb_komkp.id_komkp')
+            ->select(
+                'tb_formkp.*',
+                'tb_merklbs.nama_merklbs',
+                'tb_modem.nama_modem',
+                'tb_medkom.nama_medkom',
+                'tb_komkp.jenis_komkp',
+                'tb_formkp.nama_lbs as nama_keypoint',
+                'tb_formkp.rtu_addrs as alamat_rtu',
+                'tb_formkp.ip_kp as ip_rtu',
+                'tb_formkp.nama_peny as penyulang',
+                'tb_formkp.catatankp as keterangan',
+                'tb_formkp.id_gi as gardu_induk',
+                'tb_formkp.id_sec as sectoral'
+            )
+            ->whereDate('tb_formkp.tgl_komisioning', '>=', $fromDate)
+            ->whereDate('tb_formkp.tgl_komisioning', '<=', $toDate)
+            ->orderBy('tb_formkp.tgl_komisioning', 'asc')
+            ->get();
 
-        if ($count == 0) {
+        if ($keypoints->isEmpty()) {
             return back()->with('error', 'Tidak ada data keypoint pada rentang tanggal tersebut.');
         }
 
+        // 3. Process Logic (SAMA PERSIS dengan PDF)
+        $processedKeypoints = [];
+        foreach ($keypoints as $keypoint) {
+            // Format tanggal
+            $keypoint->tgl_komisioning_formatted = Carbon::parse($keypoint->tgl_komisioning)->format('d-m-Y');
+
+            // Get Pelaksana MS
+            $pelMsIds = json_decode($keypoint->id_pelms, true) ?? [];
+            $pelaksanaMs = collect();
+            if (!empty($pelMsIds)) {
+                $pelaksanaMs = DB::table('tb_picmaster')
+                    ->whereIn('id_picmaster', $pelMsIds)
+                    ->get();
+            }
+
+            // Get Pelaksana RTU
+            $pelRtuIds = json_decode($keypoint->id_pelrtu, true) ?? [];
+            $pelaksanaRtu = collect();
+            if (!empty($pelRtuIds)) {
+                $pelaksanaRtu = DB::table('tb_pelaksana_rtu')
+                    ->whereIn('id_pelrtu', $pelRtuIds)
+                    ->get();
+            }
+
+            $processedKeypoints[] = [
+                'row' => $keypoint,
+                'pelaksanaMs' => $pelaksanaMs,
+                'pelaksanaRtu' => $pelaksanaRtu,
+                'statusData' => $this->parseStatusData($keypoint),
+                'controlData' => $this->parseControlData($keypoint),
+                'meteringData' => $this->parseMeteringData($keypoint),
+                'hardwareData' => $this->parseHardwareData($keypoint),
+                'systemData' => $this->parseSystemData($keypoint),
+                'recloserData' => $this->parseRecloserData($keypoint),
+            ];
+        }
+
+        // 4. Download Excel
         $filename = 'Keypoints_' . $fromDate . '_to_' . $toDate . '.xlsx';
 
-        return Excel::download(new KeypointByDateExport($fromDate, $toDate), $filename);
-    }
-
-    /**
-     * Export keypoints to Excel (Detailed with multiple sheets)
-     */
-    public function exportByDateExcelDetailed(Request $request)
-    {
-        $fromDate = $request->from_date;
-        $toDate = $request->to_date;
-
-        // Validate dates
-        if (empty($fromDate) || empty($toDate)) {
-            return back()->with('error', 'Silakan pilih rentang tanggal terlebih dahulu.');
-        }
-
-        // Check if data exists
-        $count = DB::table('tb_formkp')
-            ->whereDate('tgl_komisioning', '>=', $fromDate)
-            ->whereDate('tgl_komisioning', '<=', $toDate)
-            ->count();
-
-        if ($count == 0) {
-            return back()->with('error', 'Tidak ada data keypoint pada rentang tanggal tersebut.');
-        }
-
-        $filename = 'Keypoints_Detailed_' . $fromDate . '_to_' . $toDate . '.xlsx';
-
-        return Excel::download(new KeypointDetailedExport($fromDate, $toDate), $filename);
+        return Excel::download(
+            new KeypointExport($processedKeypoints, Carbon::parse($fromDate)->format('d-m-Y'), Carbon::parse($toDate)->format('d-m-Y')),
+            $filename
+        );
     }
 
 
