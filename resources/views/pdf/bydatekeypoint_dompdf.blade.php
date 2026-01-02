@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Form Keypoint - {{ $row->nama_keypoint ?? 'Detail' }}</title>
+    <title>Form Keypoint - {{ $fromDate }} s/d {{ $toDate }}</title>
     <style>
     @page {
         margin: 5mm;
@@ -28,7 +28,6 @@
     .checkmark {
         font-family: DejaVu Sans, sans-serif;
     }
-
 
     .page-container {
         width: 100%;
@@ -199,10 +198,32 @@
     .device-info .value {
         width: 60%;
     }
+
+    /* Page Break */
+    .page-break {
+        page-break-after: always;
+    }
+
+    .page-break-before {
+        page-break-before: always;
+    }
     </style>
 </head>
 
 <body>
+    @foreach($keypoints as $index => $data)
+    @php
+    $row = $data['row'];
+    $pelaksanaMs = $data['pelaksanaMs'];
+    $pelaksanaRtu = $data['pelaksanaRtu'];
+    $statusData = $data['statusData'];
+    $controlData = $data['controlData'];
+    $meteringData = $data['meteringData'];
+    $hardwareData = $data['hardwareData'];
+    $systemData = $data['systemData'];
+    $recloserData = $data['recloserData'];
+    @endphp
+
     {{-- ===== HEADER ===== --}}
     <table class="header-table border" style="margin-bottom: 8px;">
         <tr>
@@ -250,14 +271,15 @@
                             style="font-size: 12px; padding: 6px;">
                             NO. DOKUMEN
                         </td>
-                        <td class="border-b" style="padding: 6px 8px; font-size: 12px;">HAL : 1 - 3</td>
+                        <td class="border-b" style="padding: 6px 8px; font-size: 12px;">HAL : {{ $index + 1 }} /
+                            {{ $totalRecords }}</td>
                     </tr>
                     <tr>
                         <td rowspan="2" class="font-bold text-center border-r" style="font-size: 20px; padding: 10px;">
                             FS.SCA.01.17
                         </td>
                         <td class="border-b" style="padding: 6px 8px; font-size: 12px;">
-                            TGL : {{ $row->tgl_komisioning ?? date('d-m-Y') }}
+                            TGL : {{ $row->tgl_komisioning_formatted ?? date('d-m-Y') }}
                         </td>
                     </tr>
                     <tr>
@@ -338,13 +360,14 @@
                     <tr>
                         <td class="label" style="font-size: 10px; padding: 2px 0;">Tanggal</td>
                         <td class="value border-dotted font-bold" style="font-size: 10px; padding: 2px 0;">:
-                            {{ $row->tgl_komisioning ?? '-' }}
+                            {{ $row->tgl_komisioning_formatted ?? '-' }}
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
+
     {{-- ===== MAIN CONTENT ===== --}}
     <table class="main-table">
         <tr>
@@ -368,7 +391,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($statusData as $index => $item)
+                        @foreach($statusData as $statusIndex => $item)
                         {{-- Row 1 --}}
                         <tr>
                             <td style="height: 12px; font-size: 6px; padding: 2px;">{{ $item['row1']['ms'] }}</td>
@@ -401,7 +424,7 @@
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
-                            @if($index == 0)
+                            @if($statusIndex == 0)
                             <td rowspan="24" class="text-left align-top" style="padding: 4px; font-size: 7px;">
                                 {{ $row->ketfts ?? '' }}
                             </td>
@@ -459,7 +482,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($controlData as $index => $item)
+                        @foreach($controlData as $ctrlIndex => $item)
                         @if(isset($item['single']) && $item['single'])
                         {{-- Single Row (RR/Reset) --}}
                         <tr>
@@ -492,7 +515,7 @@
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
-                            @if($index == 0)
+                            @if($ctrlIndex == 0)
                             <td rowspan="7" class="text-left align-top" style="padding: 4px; font-size: 7px;">
                                 {{ $row->ketftc ?? '' }}
                             </td>
@@ -531,7 +554,7 @@
                                     style="font-family: DejaVu Sans; font-size: 10px; color: #ea580c; font-weight: bold;">&#10004;</span>
                                 @endif
                             </td>
-                            @if($index == 0)
+                            @if($ctrlIndex == 0)
                             <td rowspan="7" class="text-left align-top" style="padding: 4px; font-size: 7px;">
                                 {{ $row->ketftc ?? '' }}
                             </td>
@@ -593,7 +616,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($meteringData as $index => $meter)
+                        @foreach($meteringData as $meterIndex => $meter)
                         @php
                         $checks = $meter['checks'] ?? [];
                         $hasOk = in_array(1, $checks);
@@ -628,7 +651,7 @@
                             {{-- SCALE Column --}}
                             <td style="height: 12px; font-size: 7px; padding: 2px;">{{ $meter['scale'] ?? '' }}</td>
 
-                            {{-- OK/NOK Column - Independent from SLD --}}
+                            {{-- OK/NOK Column --}}
                             <td style="height: 12px; padding: 2px; text-align: center;">
                                 @if($hasOk)
                                 <span style="font-size: 8px; color: #16a34a; font-weight: bold;">OK</span>
@@ -639,7 +662,7 @@
                                 @endif
                             </td>
 
-                            {{-- SLD Column - Independent from OK/NOK --}}
+                            {{-- SLD Column --}}
                             <td style="height: 12px; padding: 2px; text-align: center;">
                                 @if($hasSld)
                                 <span
@@ -650,7 +673,7 @@
                             </td>
 
                             {{-- Ket Column --}}
-                            @if($index === 0)
+                            @if($meterIndex === 0)
                             <td rowspan="{{ count($meteringData) }}" class="text-left align-top"
                                 style="padding: 4px; font-size: 7px; vertical-align: top;">
                                 {{ $row->ketftm ?? '' }}
@@ -768,17 +791,14 @@
                             <td class="text-left font-bold" style="font-size: 8px; padding: 3px 6px;">{{ $rec['name'] }}
                             </td>
                             <td style="padding: 0;">
-                                <div class="border-b text-center" style="padding: 3px; font-size: 7px;">On
-                                </div>
-                                <div class="text-center" style="padding: 3px; font-size: 7px;">Off
-                                </div>
+                                <div class="border-b text-center" style="padding: 3px; font-size: 7px;">On</div>
+                                <div class="text-center" style="padding: 3px; font-size: 7px;">Off</div>
                             </td>
                             <td style="padding: 0;">
                                 <div class="border-b text-center" style="padding: 3px; font-size: 7px;">
                                     {{ $rec['on'] }}
                                 </div>
-                                <div class="text-center" style="padding: 3px; font-size: 7px;">{{ $rec['off'] }}
-                                </div>
+                                <div class="text-center" style="padding: 3px; font-size: 7px;">{{ $rec['off'] }}</div>
                             </td>
                             @if($i == 0)
                             <td rowspan="2" class="text-left align-top" style="padding: 4px; font-size: 7px;">
@@ -950,6 +970,12 @@
         Apabila dokumen ini didownload / dicetak maka akan menjadi "DOKUMEN TIDAK TERKENDALI"
     </div>
 
+    {{-- Page break between records (except for the last one) --}}
+    @if($index < count($keypoints) - 1) <div class="page-break">
+        </div>
+        @endif
+
+        @endforeach
 </body>
 
 </html>

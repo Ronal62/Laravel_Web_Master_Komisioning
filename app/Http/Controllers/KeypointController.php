@@ -8,6 +8,13 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use App\Exports\KeypointByDateExport;
+use App\Exports\KeypointDetailedExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Exception;
+
+
+use Illuminate\Support\Facades\Log;
 use TCPDF; // Assuming TCPDF is installed via composer or available
 
 
@@ -39,6 +46,12 @@ class KeypointController extends Controller
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
 
+        // DEBUG - Tambahkan ini untuk testing
+        Log::info('=== FILTER TANGGAL ===', [
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
+        ]);
+
         // Map DataTables column indices to database fields
         $columnMap = [
             0 => 'tb_formkp.tgl_komisioning',
@@ -66,12 +79,16 @@ class KeypointController extends Controller
                 'tb_formkp.id_pelrtu'
             );
 
-        // Apply date range filter
-        if ($fromDate && $toDate) {
-            $query->whereBetween('tb_formkp.tgl_komisioning', [$fromDate, $toDate]);
-        } elseif ($fromDate) {
+        // ✅ PERBAIKAN: Apply date range filter (untuk semua tipe kolom)
+        if (!empty($fromDate) && !empty($toDate)) {
+            // Gunakan whereDate untuk handle datetime
+            $query->whereDate('tb_formkp.tgl_komisioning', '>=', $fromDate)
+                ->whereDate('tb_formkp.tgl_komisioning', '<=', $toDate);
+
+            Log::info('Filter applied: ' . $fromDate . ' to ' . $toDate);
+        } elseif (!empty($fromDate)) {
             $query->whereDate('tb_formkp.tgl_komisioning', '>=', $fromDate);
-        } elseif ($toDate) {
+        } elseif (!empty($toDate)) {
             $query->whereDate('tb_formkp.tgl_komisioning', '<=', $toDate);
         }
 
@@ -828,97 +845,164 @@ class KeypointController extends Controller
         return $results[$num] ?? '';
     }
 
-    // New methods for filtered exports (PDF and Excel)
-    // Assume you have a view 'pdf.allkeypoints' with a table loop similar to index
-    public function exportPdfFiltered(Request $request)
+
+    public function exportByDatePdf(Request $request)
     {
-        $fromDate = $request->query('from');
-        $toDate = $request->query('to');
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
 
-        // Reuse the same query logic as in data() but without pagination/search columns (only dates for export as per UI)
-        $query = DB::table('tb_formkp')
-            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
-            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
-            ->select(
-                'tb_formkp.tgl_komisioning',
-                'tb_formkp.nama_lbs as nama_keypoint',
-                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) as gi_penyulang"),
-                DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
-                'tb_formkp.catatankp as keterangan',
-                'tb_formkp.nama_user as master'
-            );
-
-        if ($fromDate && $toDate) {
-            $query->whereBetween('tb_formkp.tgl_komisioning', [$fromDate, $toDate]);
-        } // Add more filters if needed later
-
-        $keypoints = $query->get();
-
-        // Format dates
-        $keypoints = $keypoints->map(function ($row) {
-            $row->tgl_komisioning = Carbon::parse($row->tgl_komisioning)->format('l, d-m-Y');
-            return $row;
-        });
-
-        $data = ['keypoints' => $keypoints];
-        $html = view('pdf.allkeypoints', $data)->render(); // Create this view with <table> loop
-
-        $filename = "Data_Keypoint_" . now()->format('d-m-Y') . ".pdf";
-        $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetMargins(10, 5, 10);
-        $pdf->SetFont('helvetica', '', 9);
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
-        $pdf->AddPage('L');
-        $pdf->writeHTML($html, true, false, true, false, '');
-
-        return response()->streamDownload(function () use ($pdf, $filename) {
-            $pdf->Output($filename, 'I');
-        }, $filename, ['Content-Type' => 'application/pdf']);
-    }
-
-    // For Excel: Fallback to CSV if no library; recommend installing maatwebsite/excel
-    public function exportExcelFiltered(Request $request)
-    {
-        $fromDate = $request->query('from');
-        $toDate = $request->query('to');
-
-        // Similar query as PDF
-        $query = DB::table('tb_formkp')
-            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
-            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
-            ->select(
-                DB::raw("DATE_FORMAT(tb_formkp.tgl_komisioning, '%d-%m-%Y') as tgl_komisioning"),
-                'tb_formkp.nama_lbs as nama_keypoint',
-                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.penyulang) as gi_penyulang"),
-                DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, 'N/A'), ' - ', COALESCE(tb_modem.nama_modem, 'N/A')) as merk_modem_rtu"),
-                'tb_formkp.catatankp as keterangan',
-                'tb_formkp.nama_user as master'
-            );
-
-        if ($fromDate && $toDate) {
-            $query->whereBetween('tb_formkp.tgl_komisioning', [$fromDate, $toDate]);
+        // Validate dates
+        if (empty($fromDate) || empty($toDate)) {
+            return back()->with('error', 'Silakan pilih rentang tanggal terlebih dahulu.');
         }
 
-        $keypoints = $query->get()->toArray();
+        // Query keypoints based on date range
+        $keypoints = DB::table('tb_formkp')
+            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
+            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
+            ->leftJoin('tb_medkom', 'tb_formkp.id_medkom', '=', 'tb_medkom.id_medkom')
+            ->leftJoin('tb_komkp', 'tb_formkp.id_komkp', '=', 'tb_komkp.id_komkp')
+            ->select(
+                'tb_formkp.*',
+                'tb_merklbs.nama_merklbs',
+                'tb_modem.nama_modem',
+                'tb_medkom.nama_medkom',
+                'tb_komkp.jenis_komkp',
+                'tb_formkp.nama_lbs as nama_keypoint',
+                'tb_formkp.rtu_addrs as alamat_rtu',
+                'tb_formkp.ip_kp as ip_rtu',
+                'tb_formkp.nama_peny as penyulang',
+                'tb_formkp.catatankp as keterangan',
+                'tb_formkp.id_gi as gardu_induk',
+                'tb_formkp.id_sec as sectoral'
+            )
+            ->whereDate('tb_formkp.tgl_komisioning', '>=', $fromDate)
+            ->whereDate('tb_formkp.tgl_komisioning', '<=', $toDate)
+            ->orderBy('tb_formkp.tgl_komisioning', 'asc')
+            ->get();
 
-        $filename = "Data_Keypoint_" . now()->format('d-m-Y') . ".csv";
-        $handle = fopen('php://output', 'w');
-        fputcsv($handle, ['Tgl Komisioning', 'Nama Keypoint', 'GI & Penyulang', 'Merk Modem & RTU', 'Keterangan', 'Master']); // Headers
-
-        foreach ($keypoints as $row) {
-            fputcsv($handle, (array)$row);
+        if ($keypoints->isEmpty()) {
+            return back()->with('error', 'Tidak ada data keypoint pada rentang tanggal tersebut.');
         }
 
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename={$filename}",
-        ];
+        // Process each keypoint
+        $processedKeypoints = [];
+        foreach ($keypoints as $keypoint) {
+            // Format tanggal
+            $keypoint->tgl_komisioning_formatted = Carbon::parse($keypoint->tgl_komisioning)->format('d-m-Y');
 
-        return response()->streamDownload(function () use ($handle) {
-            fclose($handle);
-        }, $filename, $headers);
+            // Get Pelaksana MS (PIC Master)
+            $pelMsIds = json_decode($keypoint->id_pelms, true) ?? [];
+            $pelaksanaMs = collect();
+            if (!empty($pelMsIds)) {
+                $pelaksanaMs = DB::table('tb_picmaster')
+                    ->whereIn('id_picmaster', $pelMsIds)
+                    ->get();
+            }
+
+            // Get Pelaksana RTU (Field Engineer)
+            $pelRtuIds = json_decode($keypoint->id_pelrtu, true) ?? [];
+            $pelaksanaRtu = collect();
+            if (!empty($pelRtuIds)) {
+                $pelaksanaRtu = DB::table('tb_pelaksana_rtu')
+                    ->whereIn('id_pelrtu', $pelRtuIds)
+                    ->get();
+            }
+
+            $processedKeypoints[] = [
+                'row' => $keypoint,
+                'pelaksanaMs' => $pelaksanaMs,
+                'pelaksanaRtu' => $pelaksanaRtu,
+                'statusData' => $this->parseStatusData($keypoint),
+                'controlData' => $this->parseControlData($keypoint),
+                'meteringData' => $this->parseMeteringData($keypoint),
+                'hardwareData' => $this->parseHardwareData($keypoint),
+                'systemData' => $this->parseSystemData($keypoint),
+                'recloserData' => $this->parseRecloserData($keypoint),
+            ];
+        }
+
+        // Load View with all data
+        $pdf = Pdf::loadView('pdf.bydatekeypoint_dompdf', [
+            'keypoints' => $processedKeypoints,
+            'fromDate' => Carbon::parse($fromDate)->format('d-m-Y'),
+            'toDate' => Carbon::parse($toDate)->format('d-m-Y'),
+            'totalRecords' => count($processedKeypoints),
+        ]);
+
+        // Settings
+        $pdf->setPaper('a4', 'landscape');
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'defaultFont' => 'Arial',
+            'dpi' => 150,
+        ]);
+
+        // Generate filename
+        $filename = 'Keypoints_' . $fromDate . '_to_' . $toDate . '.pdf';
+
+        return $pdf->download($filename);
     }
+
+
+    /**
+     * Export keypoints to Excel (Simple)
+     */
+    public function exportByDateExcel(Request $request)
+    {
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+
+        // Validate dates
+        if (empty($fromDate) || empty($toDate)) {
+            return back()->with('error', 'Silakan pilih rentang tanggal terlebih dahulu.');
+        }
+
+        // Check if data exists
+        $count = DB::table('tb_formkp')
+            ->whereDate('tgl_komisioning', '>=', $fromDate)
+            ->whereDate('tgl_komisioning', '<=', $toDate)
+            ->count();
+
+        if ($count == 0) {
+            return back()->with('error', 'Tidak ada data keypoint pada rentang tanggal tersebut.');
+        }
+
+        $filename = 'Keypoints_' . $fromDate . '_to_' . $toDate . '.xlsx';
+
+        return Excel::download(new KeypointByDateExport($fromDate, $toDate), $filename);
+    }
+
+    /**
+     * Export keypoints to Excel (Detailed with multiple sheets)
+     */
+    public function exportByDateExcelDetailed(Request $request)
+    {
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+
+        // Validate dates
+        if (empty($fromDate) || empty($toDate)) {
+            return back()->with('error', 'Silakan pilih rentang tanggal terlebih dahulu.');
+        }
+
+        // Check if data exists
+        $count = DB::table('tb_formkp')
+            ->whereDate('tgl_komisioning', '>=', $fromDate)
+            ->whereDate('tgl_komisioning', '<=', $toDate)
+            ->count();
+
+        if ($count == 0) {
+            return back()->with('error', 'Tidak ada data keypoint pada rentang tanggal tersebut.');
+        }
+
+        $filename = 'Keypoints_Detailed_' . $fromDate . '_to_' . $toDate . '.xlsx';
+
+        return Excel::download(new KeypointDetailedExport($fromDate, $toDate), $filename);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

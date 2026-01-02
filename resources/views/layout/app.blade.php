@@ -9,6 +9,11 @@
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
 
+    <!--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
+
     <style>
     .custom-form-container .custom-form-group {
         margin: 15px 0;

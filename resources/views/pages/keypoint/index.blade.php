@@ -44,16 +44,22 @@
                                 <label for="sampai-tanggal" class="form-label">Sampai Tanggal:</label>
                                 <input type="date" id="sampai-tanggal" class="form-control" />
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Export Data To :</label>
-                                <button class="btn btn-danger" onclick="exportTo('pdf')">
-                                    <span class="btn-label"><i class="fas fa-file-pdf"></i></span> PDF
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button type="button" id="btn-filter" class="btn btn-primary me-2">
+                                    <i class="fas fa-filter"></i> Filter
                                 </button>
-                                <button class="btn btn-success" onclick="exportTo('excel')">
-                                    <span class="btn-label"><i class="fas fa-file-excel"></i></span> Excel
+                                <button type="button" id="btn-reset" class="btn btn-secondary me-2">
+                                    <i class="fas fa-undo"></i> Reset
+                                </button>
+                                <button type="button" id="btn-export-pdf" class="btn btn-danger"
+                                    onclick="exportByDatePdf()">
+                                    <i class="fas fa-file-pdf"></i> Export PDF
                                 </button>
                             </div>
                         </div>
+
+                        <!-- Alert Container -->
+                        <div id="alert-container"></div>
                         <table id="keypoint-table" class="display table table-striped table-hover" style="width:100%">
                             <thead>
                                 <tr>
@@ -99,11 +105,46 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <script>
-function exportTo(type) {
-    var from = $('#dari-tanggal').val();
-    var to = $('#sampai-tanggal').val();
-    var url = '/keypoint/export/' + type + '?from=' + from + '&to=' + to;
-    window.open(url, '_blank');
+function exportByDatePdf() {
+    var fromDate = $('#dari-tanggal').val();
+    var toDate = $('#sampai-tanggal').val();
+
+    // Validation
+    if (!fromDate || !toDate) {
+        showAlert('warning', 'Silakan pilih rentang tanggal terlebih dahulu!');
+        return;
+    }
+
+    if (new Date(fromDate) > new Date(toDate)) {
+        showAlert('warning', 'Tanggal awal tidak boleh lebih besar dari tanggal akhir!');
+        return;
+    }
+
+    // Show loading
+    $('#btn-export-pdf').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Exporting...');
+
+    // Open export URL in new window
+    var exportUrl = '{{ route("keypoint.exportbydate") }}?from_date=' + fromDate + '&to_date=' + toDate;
+    window.location.href = exportUrl;
+
+    // Reset button after delay
+    setTimeout(function() {
+        $('#btn-export-pdf').prop('disabled', false).html('<i class="fas fa-file-pdf"></i> Export PDF');
+    }, 3000);
+}
+
+function showAlert(type, message) {
+    var alertClass = 'alert-' + type;
+    var alertHtml = '<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' +
+        message +
+        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+        '</div>';
+    $('#alert-container').html(alertHtml);
+
+    // Auto dismiss after 5 seconds
+    setTimeout(function() {
+        $('#alert-container .alert').fadeOut();
+    }, 5000);
 }
 
 $(document).ready(function() {
@@ -159,11 +200,7 @@ $(document).ready(function() {
                 data: 'action',
                 name: 'action',
                 orderable: false,
-                searchable: false,
-                render: function(data, type, row) {
-                    // Return the action HTML with proper escaping
-                    return data;
-                }
+                searchable: false
             }
         ],
         pageLength: 25,
@@ -175,6 +212,18 @@ $(document).ready(function() {
             processing: "Loading data...",
             emptyTable: "No data available"
         }
+    });
+
+    // Filter button click
+    $('#btn-filter').click(function() {
+        table.draw();
+    });
+
+    // Reset button click
+    $('#btn-reset').click(function() {
+        $('#dari-tanggal').val('');
+        $('#sampai-tanggal').val('');
+        table.draw();
     });
 
     // Per-column filtering
