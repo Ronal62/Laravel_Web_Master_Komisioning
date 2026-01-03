@@ -4,16 +4,18 @@ namespace App\Exports;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithTitle;
-use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
-class KeypointExport implements FromView, WithTitle, WithEvents
+class KeypointExport implements FromView, WithTitle, WithEvents, WithColumnWidths, WithDefaultStyles
 {
     protected $data;
     protected $fromDate;
@@ -42,33 +44,117 @@ class KeypointExport implements FromView, WithTitle, WithEvents
     }
 
     /**
-     * Register events untuk styling manual setelah sheet dibuat
+     * Define column widths
+     */
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 12,  // ADD-MS
+            'B' => 12,  // ADD-RTU
+            'C' => 18,  // STATUS/CONTROL/METER
+            'D' => 15,  // VALUE
+            'E' => 8,   // OK
+            'F' => 8,   // NOK
+            'G' => 12,  // KET
+            'H' => 18,  // HARDWARE/SYSTEM
+            'I' => 10,  // OK/NOK
+            'J' => 12,  // VALUE
+        ];
+    }
+
+    /**
+     * Default styles for the entire sheet
+     */
+    public function defaultStyles(\PhpOffice\PhpSpreadsheet\Style\Style $defaultStyle)
+    {
+        return [
+            'font' => [
+                'name' => 'Arial',
+                'size' => 10,
+            ],
+            'alignment' => [
+                'vertical' => Alignment::VERTICAL_CENTER,
+            ],
+        ];
+    }
+
+    /**
+     * Register events untuk styling setelah sheet dibuat
      */
     public function registerEvents(): array
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
-
-                // 1. Set Default Font ke Arial (Mirip gambar)
-                $sheet->getParent()->getDefaultStyle()->getFont()->setName('Arial');
-                $sheet->getParent()->getDefaultStyle()->getFont()->setSize(10);
-
-                // 2. Set Vertical Alignment Center untuk semua cell
-                $sheet->getDefaultRowDimension()->setRowHeight(-1); // Auto height
-                $sheet->getParent()->getDefaultStyle()->getAlignment()->setVertical(Alignment::VERTICAL_TOP);
-
-                // 3. Loop untuk mencari area tabel dan memberi Border
-                // Karena kita menggunakan View, kita tidak tahu pasti baris mana berakhir,
-                // tapi kita bisa menargetkan range luas atau menargetkan cell yang punya value.
-
                 $highestRow = $sheet->getHighestRow();
                 $highestColumn = $sheet->getHighestColumn();
-                $range = 'A1:' . $highestColumn . $highestRow;
 
-                // Set Wrap Text untuk seluruh dokumen agar text panjang turun ke bawah
-                $sheet->getStyle($range)->getAlignment()->setWrapText(true);
+                // Page Setup - Portrait, A4
+                $sheet->getPageSetup()
+                    ->setOrientation(PageSetup::ORIENTATION_PORTRAIT)
+                    ->setPaperSize(PageSetup::PAPERSIZE_A4)
+                    ->setFitToWidth(1)
+                    ->setFitToHeight(0);
+
+                // Set print margins
+                $sheet->getPageMargins()
+                    ->setTop(0.5)
+                    ->setRight(0.3)
+                    ->setLeft(0.3)
+                    ->setBottom(0.5);
+
+                // Wrap text untuk semua cell
+                $sheet->getStyle('A1:' . $highestColumn . $highestRow)
+                    ->getAlignment()
+                    ->setWrapText(true);
+
+                // Style khusus untuk header rows (setiap halaman)
+                $this->applyHeaderStyles($sheet, $highestRow);
+
+                // Freeze pane on first row (optional)
+                // $sheet->freezePane('A4');
             },
         ];
+    }
+
+    /**
+     * Apply styling untuk header di setiap page
+     */
+    private function applyHeaderStyles(Worksheet $sheet, int $highestRow)
+    {
+        // Iterate through cells dan apply styling berdasarkan content/position
+        $rowsPerPage = 50; // Perkiraan rows per page
+
+        for ($row = 1; $row <= $highestRow; $row++) {
+            // Cek jika ini adalah header row (biasanya ada background color)
+            $cellA = $sheet->getCell('A' . $row)->getValue();
+
+            // Header table detection
+            if (in_array($cellA, ['ADD-MS', 'NO. DOKUMEN'])) {
+                // Apply header style
+                $sheet->getStyle('A' . $row . ':J' . $row)->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                    ],
+                    'fill' => [
+                        'fillType' => Fill::FILL_SOLID,
+                        'color' => ['rgb' => 'CCCCCC'],
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                        'vertical' => Alignment::VERTICAL_CENTER,
+                    ],
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => Border::BORDER_THIN,
+                            'color' => ['rgb' => '000000'],
+                        ],
+                    ],
+                ]);
+            }
+
+            // Set row height untuk data rows
+            $sheet->getRowDimension($row)->setRowHeight(-1); // Auto
+        }
     }
 }

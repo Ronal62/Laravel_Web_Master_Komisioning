@@ -1776,170 +1776,111 @@
                                     <div class="tab-pane fade" id="v-pills-formtelemetering-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelemetering-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Arus Phase R</label>
-                                                    <input class="form-control @error('ir_rtu') is-invalid @enderror"
-                                                        placeholder="IR RTU" name="ir_rtu" value="{{ old('ir_rtu') }}">
-                                                    @error('ir_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ir_ms') is-invalid @enderror"
-                                                        placeholder="IR Master" name="ir_ms" value="{{ old('ir_ms') }}">
-                                                    @error('ir_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('ir_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="ir_scale"
-                                                        value="{{ old('ir_scale') }}">
-                                                    @error('ir_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
+                                            @php
+                                            $fields = [
+                                            ['key' => 'ir', 'label' => 'Arus Phase R', 'db' => 'ir'],
+                                            ['key' => 'is', 'label' => 'Arus Phase S', 'db' => 'is'],
+                                            ['key' => 'it', 'label' => 'Arus Phase T', 'db' => 'it'],
+                                            ['key' => 'fir', 'label' => 'Arus Gangguan Phase R', 'db' => 'fir'],
+                                            ['key' => 'fis', 'label' => 'Arus Gangguan Phase S', 'db' => 'fis'],
+                                            ['key' => 'fit', 'label' => 'Arus Gangguan Phase T', 'db' => 'fit'],
+                                            ['key' => 'fin', 'label' => 'Arus Gangguan Phase N', 'db' => 'fin'],
+                                            // UPDATE: v diganti menjadi kv0
+                                            ['key' => 'kv0', 'label' => 'Tegangan (Voltage)', 'db' => 'kv0'],
+                                            ];
+                                            @endphp
+
+
+
+                                            <div class="col-md-6" style="max-height: 800px; overflow-y: auto;">
+                                                @foreach($fields as $f)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label class="form-label t-bold">{{ $f['label'] }}</label>
+                                                    <div class="selectgroup w-100 flex-wrap mb-1">
+                                                        @php
+                                                        $dbKey = $f['db'];
+                                                        $val = $keypoint->{$dbKey} ?? '';
+                                                        $checkedValues = old($dbKey, $val ? explode(',', $val) :
+                                                        []);
+                                                        @endphp
+
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $dbKey }}[]"
+                                                                value="{{ $dbKey }}1" class="selectgroup-input"
+                                                                {{ in_array($dbKey.'1', $checkedValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $dbKey }}[]"
+                                                                value="{{ $dbKey }}2" class="selectgroup-input"
+                                                                {{ in_array($dbKey.'2', $checkedValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $dbKey }}[]"
+                                                                value="{{ $dbKey }}5" class="selectgroup-input"
+                                                                {{ in_array($dbKey.'5', $checkedValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase S</label>
-                                                    <input class="form-control @error('is_rtu') is-invalid @enderror"
-                                                        placeholder="IS RTU" name="is_rtu" value="{{ old('is_rtu') }}">
-                                                    @error('is_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('is_ms') is-invalid @enderror"
-                                                        placeholder="IS Master" name="is_ms" value="{{ old('is_ms') }}">
-                                                    @error('is_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('is_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="is_scale"
-                                                        value="{{ old('is_scale') }}">
-                                                    @error('is_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase T</label>
-                                                    <input class="form-control @error('it_rtu') is-invalid @enderror"
-                                                        placeholder="IT RTU" name="it_rtu" value="{{ old('it_rtu') }}">
-                                                    @error('it_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('it_ms') is-invalid @enderror"
-                                                        placeholder="IT Master" name="it_ms" value="{{ old('it_ms') }}">
-                                                    @error('it_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('it_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="it_scale"
-                                                        value="{{ old('it_scale') }}">
-                                                    @error('it_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                                @endforeach
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase R</label>
-                                                    <input class="form-control @error('fir_rtu') is-invalid @enderror"
-                                                        placeholder="FIR RTU" name="fir_rtu"
-                                                        value="{{ old('fir_rtu') }}">
-                                                    @error('fir_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fir_ms') is-invalid @enderror"
-                                                        placeholder="FIR Master" name="fir_ms"
-                                                        value="{{ old('fir_ms') }}">
-                                                    @error('fir_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fir_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="fir_scale"
-                                                        value="{{ old('fir_scale') }}">
-                                                    @error('fir_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
+
+                                            <div class="col-md-3" style="max-height: 800px; overflow-y: auto;">
+                                                @foreach($fields as $f)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label class="t-bold text-primary">{{ $f['label'] }}</label>
+                                                    <input type="text"
+                                                        class="form-control mb-1 @error($f['key'].'_rtu') is-invalid @enderror"
+                                                        placeholder="{{ strtoupper($f['key']) }} RTU"
+                                                        name="{{ $f['key'] }}_rtu"
+                                                        value="{{ old($f['key'].'_rtu', $keypoint->{$f['key'].'_rtu'} ?? '') }}">
+                                                    @error($f['key'].'_rtu') <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div> @enderror
+
+                                                    <input type="text"
+                                                        class="form-control mb-1 @error($f['key'].'_ms') is-invalid @enderror"
+                                                        placeholder="{{ strtoupper($f['key']) }} MASTER"
+                                                        name="{{ $f['key'] }}_ms"
+                                                        value="{{ old($f['key'].'_ms', $keypoint->{$f['key'].'_ms'} ?? '') }}">
+                                                    @error($f['key'].'_ms') <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div> @enderror
+
+                                                    <input type="text"
+                                                        class="form-control @error($f['key'].'_scale') is-invalid @enderror"
+                                                        placeholder="SCALE" name="{{ $f['key'] }}_scale"
+                                                        value="{{ old($f['key'].'_scale', $keypoint->{$f['key'].'_scale'} ?? '') }}">
+                                                    @error($f['key'].'_scale') <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div> @enderror
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase S</label>
-                                                    <input class="form-control @error('fis_rtu') is-invalid @enderror"
-                                                        placeholder="FIS RTU" name="fis_rtu"
-                                                        value="{{ old('fis_rtu') }}">
-                                                    @error('fis_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fis_ms') is-invalid @enderror"
-                                                        placeholder="FIS Master" name="fis_ms"
-                                                        value="{{ old('fis_ms') }}">
-                                                    @error('fis_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fis_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="fis_scale"
-                                                        value="{{ old('fis_scale') }}">
-                                                    @error('fis_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase T</label>
-                                                    <input class="form-control @error('fit_rtu') is-invalid @enderror"
-                                                        placeholder="FIT RTU" name="fit_rtu"
-                                                        value="{{ old('fit_rtu') }}">
-                                                    @error('fit_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fit_ms') is-invalid @enderror"
-                                                        placeholder="FIT Master" name="fit_ms"
-                                                        value="{{ old('fit_ms') }}">
-                                                    @error('fit_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fit_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="fit_scale"
-                                                        value="{{ old('fit_scale') }}">
-                                                    @error('fit_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                                @endforeach
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase N</label>
-                                                    <input class="form-control @error('fin_rtu') is-invalid @enderror"
-                                                        placeholder="FIN RTU" name="fin_rtu"
-                                                        value="{{ old('fin_rtu') }}">
-                                                    @error('fin_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fin_ms') is-invalid @enderror"
-                                                        placeholder="FIN Master" name="fin_ms"
-                                                        value="{{ old('fin_ms') }}">
-                                                    @error('fin_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fin_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="fin_scale"
-                                                        value="{{ old('fin_scale') }}">
-                                                    @error('fin_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
+
+                                            <div class="col-md-3" style="max-height: 800px; overflow-y: auto;">
+                                                @foreach($fields as $f)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label class="t-bold text-success">{{ $f['label'] }}</label>
+                                                    <input type="text"
+                                                        class="form-control mb-1 @error($f['key'].'_address') is-invalid @enderror"
+                                                        placeholder="ADDRESS" name="{{ $f['key'] }}_address"
+                                                        value="{{ old($f['key'].'_address', $keypoint->{$f['key'].'_address'} ?? '') }}">
+                                                    @error($f['key'].'_address') <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div> @enderror
+
+                                                    <input type="text"
+                                                        class="form-control @error($f['key'].'_objfrmt') is-invalid @enderror"
+                                                        placeholder="OBJECT FORMAT" name="{{ $f['key'] }}_objfrmt"
+                                                        value="{{ old($f['key'].'_objfrmt', $keypoint->{$f['key'].'_objfrmt'} ?? '') }}">
+                                                    @error($f['key'].'_objfrmt') <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div> @enderror
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Tegangan</label>
-                                                    <input class="form-control @error('v_rtu') is-invalid @enderror"
-                                                        placeholder="V RTU" name="v_rtu" value="{{ old('v_rtu') }}">
-                                                    @error('v_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('v_ms') is-invalid @enderror"
-                                                        placeholder="V Master" name="v_ms" value="{{ old('v_ms') }}">
-                                                    @error('v_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('v_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="v_scale" value="{{ old('v_scale') }}">
-                                                    @error('v_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                                @endforeach
                                             </div>
                                             <div class="form-group">
                                                 <label for="ketftm">Keterangan Form Telemetering</label>
