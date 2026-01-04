@@ -241,11 +241,12 @@
 
 <script>
 // Store filter values
+// Store filter values
 const dashboardFilters = {
     date: '{{ $selectedDate }}',
     month: '{{ $selectedMonth }}',
-    monthStart: '{{ $monthStart->format("Y-m-d") }}',
-    monthEnd: '{{ $monthEnd->format("Y-m-d") }}'
+    monthStart: '{{ $monthStart }}',
+    monthEnd: '{{ $monthEnd }}'
 };
 
 // Navigate to detail page with filters

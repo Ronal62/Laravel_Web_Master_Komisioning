@@ -159,13 +159,13 @@ class AdminController extends Controller
         $latestKp = DB::table('tb_formkp')->max('tgl_komisioning');
         $latestPeny = DB::table('tb_formpeny')->max('tgl_kom');
         $latestDateStr = $latestKp && $latestPeny ? max($latestKp, $latestPeny) : ($latestKp ?: ($latestPeny ?: null));
-
         $defaultDate = $latestDateStr ? Carbon::parse($latestDateStr) : Carbon::now();
 
         // Get selected date or default to latest or today
         $selectedDate = $request->get('date');
         $selectedDate = $selectedDate ?: $defaultDate->format('Y-m-d');
 
+        // Get selected month or default
         $selectedMonth = $request->get('month');
         $selectedMonth = $selectedMonth ?: $defaultDate->format('Y-m');
 
@@ -182,28 +182,26 @@ class AdminController extends Controller
 
         try {
             $monthDate = Carbon::parse($selectedMonth . '-01');
-            $monthStart = $monthDate->startOfMonth();
-            $monthEnd = $monthDate->endOfMonth();
+            $monthStart = $monthDate->startOfMonth()->format('Y-m-d'); // Format as string without time
+            $monthEnd = $monthDate->endOfMonth()->format('Y-m-d');     // Format as string without time
             $displayMonth = $monthDate->format('F Y');
         } catch (\Exception $e) {
             Log::error('Invalid month format', ['month' => $selectedMonth, 'error' => $e->getMessage()]);
             $monthDate = $defaultDate->startOfMonth();
-            $monthStart = $monthDate->startOfMonth();
-            $monthEnd = $monthDate->endOfMonth();
+            $monthStart = $monthDate->startOfMonth()->format('Y-m-d');
+            $monthEnd = $monthDate->endOfMonth()->format('Y-m-d');
             $displayMonth = $monthDate->format('F Y');
             $selectedMonth = $monthDate->format('Y-m');
         }
 
         // ========== KEYPOINT STATISTICS (tb_formkp) ==========
         $keypointTotal = DB::table('tb_formkp')->count();
-
         $keypointDaily = DB::table('tb_formkp')
             ->whereDate('tgl_komisioning', $date->format('Y-m-d'))
             ->count();
-
         $keypointMonthly = DB::table('tb_formkp')
             ->where('tgl_komisioning', '>=', $monthStart)
-            ->where('tgl_komisioning', '<=', $monthEnd->endOfDay())
+            ->where('tgl_komisioning', '<=', $monthEnd)
             ->count();
 
         // Keypoint by Gardu Induk
@@ -212,10 +210,9 @@ class AdminController extends Controller
             ->whereNotNull('id_gi')
             ->where('id_gi', '!=', '')
             ->count();
-
         $keypointGarduIndukMonthly = DB::table('tb_formkp')
             ->where('tgl_komisioning', '>=', $monthStart)
-            ->where('tgl_komisioning', '<=', $monthEnd->endOfDay())
+            ->where('tgl_komisioning', '<=', $monthEnd)
             ->whereNotNull('id_gi')
             ->where('id_gi', '!=', '')
             ->count();
@@ -226,24 +223,21 @@ class AdminController extends Controller
             ->whereNotNull('id_sec')
             ->where('id_sec', '!=', '')
             ->count();
-
         $keypointSectoralMonthly = DB::table('tb_formkp')
             ->where('tgl_komisioning', '>=', $monthStart)
-            ->where('tgl_komisioning', '<=', $monthEnd->endOfDay())
+            ->where('tgl_komisioning', '<=', $monthEnd)
             ->whereNotNull('id_sec')
             ->where('id_sec', '!=', '')
             ->count();
 
         // ========== PENYULANG STATISTICS (tb_formpeny) ==========
         $penyulangTotal = DB::table('tb_formpeny')->count();
-
         $penyulangDaily = DB::table('tb_formpeny')
             ->whereDate('tgl_kom', $date->format('Y-m-d'))
             ->count();
-
         $penyulangMonthly = DB::table('tb_formpeny')
             ->where('tgl_kom', '>=', $monthStart)
-            ->where('tgl_kom', '<=', $monthEnd->endOfDay())
+            ->where('tgl_kom', '<=', $monthEnd)
             ->count();
 
         // Penyulang by Gardu Induk
@@ -252,10 +246,9 @@ class AdminController extends Controller
             ->whereNotNull('id_gi')
             ->where('id_gi', '!=', '')
             ->count();
-
         $penyulangGarduIndukMonthly = DB::table('tb_formpeny')
             ->where('tgl_kom', '>=', $monthStart)
-            ->where('tgl_kom', '<=', $monthEnd->endOfDay())
+            ->where('tgl_kom', '<=', $monthEnd)
             ->whereNotNull('id_gi')
             ->where('id_gi', '!=', '')
             ->count();
@@ -266,10 +259,9 @@ class AdminController extends Controller
             ->whereNotNull('id_rtugi')
             ->where('id_rtugi', '>', 0)
             ->count();
-
         $penyulangRtuGiMonthly = DB::table('tb_formpeny')
             ->where('tgl_kom', '>=', $monthStart)
-            ->where('tgl_kom', '<=', $monthEnd->endOfDay())
+            ->where('tgl_kom', '<=', $monthEnd)
             ->whereNotNull('id_rtugi')
             ->where('id_rtugi', '>', 0)
             ->count();
