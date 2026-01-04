@@ -10,6 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use App\Exports\KeypointExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
 
 
 use Illuminate\Support\Facades\Log;
@@ -44,10 +45,14 @@ class KeypointController extends Controller
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
 
+        // ✅ NEW: Category filter from dashboard
+        $category = $request->category;
+
         // DEBUG - Tambahkan ini untuk testing
         Log::info('=== FILTER TANGGAL ===', [
             'from_date' => $fromDate,
             'to_date' => $toDate,
+            'category' => $category, // Add category to log
         ]);
 
         // Map DataTables column indices to database fields
@@ -88,6 +93,22 @@ class KeypointController extends Controller
             $query->whereDate('tb_formkp.tgl_komisioning', '>=', $fromDate);
         } elseif (!empty($toDate)) {
             $query->whereDate('tb_formkp.tgl_komisioning', '<=', $toDate);
+        }
+
+        // ✅ NEW: Category filter from dashboard
+        if (!empty($category)) {
+            switch ($category) {
+                case 'gardu_induk':
+                    $query->whereNotNull('tb_formkp.id_gi')
+                        ->where('tb_formkp.id_gi', '!=', '');
+                    Log::info('Category filter applied: gardu_induk');
+                    break;
+                case 'sectoral':
+                    $query->whereNotNull('tb_formkp.id_sec')
+                        ->where('tb_formkp.id_sec', '!=', '');
+                    Log::info('Category filter applied: sectoral');
+                    break;
+            }
         }
 
         // Global search
@@ -165,26 +186,26 @@ class KeypointController extends Controller
             }
             $row->pelaksana_rtu = $pelaksanaRtu;
 
-            $row->merk_modem_rtu = $row->id_merkrtu . ' - ' . $row->id_modem; // Simple concat if no joins
+            $row->merk_modem_rtu = $row->id_merkrtu . ' - ' . $row->id_modem;
 
             $row->action = '
-            <a href="' . route('keypoint.clone', $row->id_formkp) . '" class="btn btn-icon btn-round btn-primary">
-                <i class="far fa-clone"></i>
-            </a>
-            <a href="' . route('keypoint.edit', $row->id_formkp) . '" class="btn btn-icon btn-round btn-warning">
-                <i class="fa fa-pen"></i>
-            </a>
-            <a href="' . route('keypoint.exportsinglepdf', $row->id_formkp) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
-                <i class="fas fa-file-pdf"></i>
-            </a>
-            <form action="' . route('keypoint.destroy', $row->id_formkp) . '" method="POST" style="display:inline;">
-                ' . csrf_field() . '
-                ' . method_field('DELETE') . '
-                <button type="submit" class="btn btn-icon btn-round btn-secondary" onclick="return confirm(\'Are you sure you want to delete this keypoint?\')">
-                    <i class="fa fa-trash"></i>
-                </button>
-            </form>
-            ';
+        <a href="' . route('keypoint.clone', $row->id_formkp) . '" class="btn btn-icon btn-round btn-primary">
+            <i class="far fa-clone"></i>
+        </a>
+        <a href="' . route('keypoint.edit', $row->id_formkp) . '" class="btn btn-icon btn-round btn-warning">
+            <i class="fa fa-pen"></i>
+        </a>
+        <a href="' . route('keypoint.exportsinglepdf', $row->id_formkp) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
+            <i class="fas fa-file-pdf"></i>
+        </a>
+        <form action="' . route('keypoint.destroy', $row->id_formkp) . '" method="POST" style="display:inline;">
+            ' . csrf_field() . '
+            ' . method_field('DELETE') . '
+            <button type="submit" class="btn btn-icon btn-round btn-secondary" onclick="return confirm(\'Are you sure you want to delete this keypoint?\')">
+                <i class="fa fa-trash"></i>
+            </button>
+        </form>
+        ';
             return $row;
         })->toArray();
 
@@ -194,6 +215,56 @@ class KeypointController extends Controller
             'recordsFiltered' => $totalFiltered,
             'data' => $data,
         ]);
+    }
+
+    public function getData(Request $request)
+    {
+        $query = DB::table('tb_formkp')
+            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
+            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
+            ->select([
+                'tb_formkp.id_formkp',
+                'tb_formkp.tgl_komisioning',
+                'tb_formkp.nama_lbs as nama_keypoint',
+                DB::raw("CONCAT(tb_formkp.id_gi, ' - ', tb_formkp.nama_peny) as gi_penyulang"),
+                DB::raw("CONCAT(COALESCE(tb_merklbs.nama_merklbs, ''), ' / ', COALESCE(tb_modem.nama_modem, '')) as merk_modem_rtu"),
+                'tb_formkp.catatankp as keterangan',
+                'tb_formkp.nama_user as master',
+                'tb_formkp.id_pelrtu as pelaksana_rtu',
+                'tb_formkp.id_gi',
+                'tb_formkp.id_sec'
+            ]);
+
+        // Date filter
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('tb_formkp.tgl_komisioning', [$request->from_date, $request->to_date]);
+        }
+
+        // Category filter
+        if ($request->filled('category')) {
+            switch ($request->category) {
+                case 'gardu_induk':
+                    $query->whereNotNull('tb_formkp.id_gi')
+                        ->where('tb_formkp.id_gi', '!=', '');
+                    break;
+                case 'sectoral':
+                    $query->whereNotNull('tb_formkp.id_sec')
+                        ->where('tb_formkp.id_sec', '!=', '');
+                    break;
+            }
+        }
+
+        return DataTables::of($query)
+            ->addColumn('action', function ($row) {
+                $btn = '<div class="btn-group">';
+                $btn .= '<a href="' . route('keypoint.show', $row->id_formkp) . '" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>';
+                $btn .= '<a href="' . route('keypoint.edit', $row->id_formkp) . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>';
+                $btn .= '<button class="btn btn-sm btn-danger" onclick="deleteData(' . $row->id_formkp . ')"><i class="fas fa-trash"></i></button>';
+                $btn .= '</div>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
 
@@ -794,7 +865,7 @@ class KeypointController extends Controller
                 'value' => $keypoint->sys_lruf_input ?? ''
             ],
             [
-                'name' => 'SIGN S', 
+                'name' => 'SIGN S',
                 'status' => $this->getTestResult($keypoint->sys_signs ?? ''),
                 'value' => $keypoint->sys_signs_input ?? ''
             ],
@@ -3457,4 +3528,10 @@ class KeypointController extends Controller
 
         return redirect()->route('keypoint.index')->with('success', 'Keypoint deleted successfully!');
     }
+
+
+
+
+
+
 }

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -151,8 +153,148 @@ class AdminController extends Controller
         return redirect()->route('login')->with('success', '✅ Logout berhasil!');
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        return view('pages.dashboard.index');
+        // Find the latest date from both tables to set intelligent defaults
+        $latestKp = DB::table('tb_formkp')->max('tgl_komisioning');
+        $latestPeny = DB::table('tb_formpeny')->max('tgl_kom');
+        $latestDateStr = $latestKp && $latestPeny ? max($latestKp, $latestPeny) : ($latestKp ?: ($latestPeny ?: null));
+
+        $defaultDate = $latestDateStr ? Carbon::parse($latestDateStr) : Carbon::now();
+
+        // Get selected date or default to latest or today
+        $selectedDate = $request->get('date');
+        $selectedDate = $selectedDate ?: $defaultDate->format('Y-m-d');
+
+        $selectedMonth = $request->get('month');
+        $selectedMonth = $selectedMonth ?: $defaultDate->format('Y-m');
+
+        // Parse with error handling
+        try {
+            $date = Carbon::parse($selectedDate);
+            $displayDate = $date->format('d F Y');
+        } catch (\Exception $e) {
+            Log::error('Invalid date format', ['date' => $selectedDate, 'error' => $e->getMessage()]);
+            $date = $defaultDate;
+            $displayDate = $date->format('d F Y');
+            $selectedDate = $date->format('Y-m-d');
+        }
+
+        try {
+            $monthDate = Carbon::parse($selectedMonth . '-01');
+            $monthStart = $monthDate->startOfMonth();
+            $monthEnd = $monthDate->endOfMonth();
+            $displayMonth = $monthDate->format('F Y');
+        } catch (\Exception $e) {
+            Log::error('Invalid month format', ['month' => $selectedMonth, 'error' => $e->getMessage()]);
+            $monthDate = $defaultDate->startOfMonth();
+            $monthStart = $monthDate->startOfMonth();
+            $monthEnd = $monthDate->endOfMonth();
+            $displayMonth = $monthDate->format('F Y');
+            $selectedMonth = $monthDate->format('Y-m');
+        }
+
+        // ========== KEYPOINT STATISTICS (tb_formkp) ==========
+        $keypointTotal = DB::table('tb_formkp')->count();
+
+        $keypointDaily = DB::table('tb_formkp')
+            ->whereDate('tgl_komisioning', $date->format('Y-m-d'))
+            ->count();
+
+        $keypointMonthly = DB::table('tb_formkp')
+            ->where('tgl_komisioning', '>=', $monthStart)
+            ->where('tgl_komisioning', '<=', $monthEnd->endOfDay())
+            ->count();
+
+        // Keypoint by Gardu Induk
+        $keypointGarduIndukDaily = DB::table('tb_formkp')
+            ->whereDate('tgl_komisioning', $date->format('Y-m-d'))
+            ->whereNotNull('id_gi')
+            ->where('id_gi', '!=', '')
+            ->count();
+
+        $keypointGarduIndukMonthly = DB::table('tb_formkp')
+            ->where('tgl_komisioning', '>=', $monthStart)
+            ->where('tgl_komisioning', '<=', $monthEnd->endOfDay())
+            ->whereNotNull('id_gi')
+            ->where('id_gi', '!=', '')
+            ->count();
+
+        // Keypoint by Sectoral
+        $keypointSectoralDaily = DB::table('tb_formkp')
+            ->whereDate('tgl_komisioning', $date->format('Y-m-d'))
+            ->whereNotNull('id_sec')
+            ->where('id_sec', '!=', '')
+            ->count();
+
+        $keypointSectoralMonthly = DB::table('tb_formkp')
+            ->where('tgl_komisioning', '>=', $monthStart)
+            ->where('tgl_komisioning', '<=', $monthEnd->endOfDay())
+            ->whereNotNull('id_sec')
+            ->where('id_sec', '!=', '')
+            ->count();
+
+        // ========== PENYULANG STATISTICS (tb_formpeny) ==========
+        $penyulangTotal = DB::table('tb_formpeny')->count();
+
+        $penyulangDaily = DB::table('tb_formpeny')
+            ->whereDate('tgl_kom', $date->format('Y-m-d'))
+            ->count();
+
+        $penyulangMonthly = DB::table('tb_formpeny')
+            ->where('tgl_kom', '>=', $monthStart)
+            ->where('tgl_kom', '<=', $monthEnd->endOfDay())
+            ->count();
+
+        // Penyulang by Gardu Induk
+        $penyulangGarduIndukDaily = DB::table('tb_formpeny')
+            ->whereDate('tgl_kom', $date->format('Y-m-d'))
+            ->whereNotNull('id_gi')
+            ->where('id_gi', '!=', '')
+            ->count();
+
+        $penyulangGarduIndukMonthly = DB::table('tb_formpeny')
+            ->where('tgl_kom', '>=', $monthStart)
+            ->where('tgl_kom', '<=', $monthEnd->endOfDay())
+            ->whereNotNull('id_gi')
+            ->where('id_gi', '!=', '')
+            ->count();
+
+        // Penyulang by RTU GI
+        $penyulangRtuGiDaily = DB::table('tb_formpeny')
+            ->whereDate('tgl_kom', $date->format('Y-m-d'))
+            ->whereNotNull('id_rtugi')
+            ->where('id_rtugi', '>', 0)
+            ->count();
+
+        $penyulangRtuGiMonthly = DB::table('tb_formpeny')
+            ->where('tgl_kom', '>=', $monthStart)
+            ->where('tgl_kom', '<=', $monthEnd->endOfDay())
+            ->whereNotNull('id_rtugi')
+            ->where('id_rtugi', '>', 0)
+            ->count();
+
+        return view('pages.dashboard.index', compact(
+            'selectedDate',
+            'selectedMonth',
+            'displayMonth',
+            'displayDate',
+            'keypointTotal',
+            'keypointDaily',
+            'keypointMonthly',
+            'keypointGarduIndukDaily',
+            'keypointGarduIndukMonthly',
+            'keypointSectoralDaily',
+            'keypointSectoralMonthly',
+            'penyulangTotal',
+            'penyulangDaily',
+            'penyulangMonthly',
+            'penyulangGarduIndukDaily',
+            'penyulangGarduIndukMonthly',
+            'penyulangRtuGiDaily',
+            'penyulangRtuGiMonthly',
+            'monthStart',
+            'monthEnd'
+        ));
     }
 }

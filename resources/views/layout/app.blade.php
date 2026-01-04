@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Web Master Komisioning')</title>
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
@@ -139,14 +140,13 @@
         },
     });
     </script>
-
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
-
-    @yield('styles')
+    {{-- CHANGED: @yield to @stack --}}
+    @stack('styles')
 </head>
 
 <body>
@@ -175,9 +175,6 @@
     </div>
 
     <!-- Core JS Files -->
-
-    <script src="{{ asset('assets/js/checkbox.js') }}"></script>
-    <script src="{{ asset('assets/js/pagination.js') }}"></script>
     <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
@@ -194,7 +191,7 @@
     <!-- Chart Circle -->
     <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
 
-    <!-- Datatables -->
+    <!-- Datatables (Already loaded here!) -->
     <script src="{{ asset('assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
     <!-- Bootstrap Notify -->
@@ -213,11 +210,13 @@
     <!-- Kaiadmin DEMO methods -->
     <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
     <script src="{{ asset('assets/js/demo.js') }}"></script>
+
+    <script src="{{ asset('assets/js/checkbox.js') }}"></script>
+    <script src="{{ asset('assets/js/pagination.js') }}"></script>
     <script src="{{ asset('js/selectgroup_handler.js') }}"></script>
 
-    <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}" />
-
-    @yield('scripts')
+    {{-- CHANGED: @yield to @stack --}}
+    @stack('scripts')
 </body>
 
 </html>
