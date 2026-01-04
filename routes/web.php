@@ -69,6 +69,12 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('keypoint/export-excel', [KeypointController::class, 'exportByDateExcel'])->name('keypoint.exportexcel');
 
+    // Single Export Excel for Keypoint
+    Route::get('/keypoint/export-excel/{id}', [KeypointController::class, 'exportSingleExcel'])
+        ->name('keypoint.export.single.excel');
+
+    Route::get('/keypoint/export-single-excel/{id}', [KeypointController::class, 'exportSingleExcel'])
+        ->name('keypoint.exportsingleexcel');
 
 
     Route::get('/keypoint/export-single/{id}', [KeypointController::class, 'exportSinglePdf'])

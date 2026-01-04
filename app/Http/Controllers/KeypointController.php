@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use App\Exports\KeypointExport;
+use App\Exports\KeypointSingleExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -198,6 +199,11 @@ class KeypointController extends Controller
         <a href="' . route('keypoint.exportsinglepdf', $row->id_formkp) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
             <i class="fas fa-file-pdf"></i>
         </a>
+
+        <a href="' . route('keypoint.exportsingleexcel', $row->id_formkp) . '" target="_blank" class="btn btn-icon btn-round btn-success">
+            <i class="fas fa-file-excel"></i>
+        </a>
+
         <form action="' . route('keypoint.destroy', $row->id_formkp) . '" method="POST" style="display:inline;">
             ' . csrf_field() . '
             ' . method_field('DELETE') . '
@@ -824,7 +830,7 @@ class KeypointController extends Controller
      */
     private function parseHardwareData($keypoint)
     {
-        return [
+            return [
             [
                 'name' => 'Batere',
                 'status' => $this->getTestResult($keypoint->hard_batere ?? ''),
@@ -913,6 +919,83 @@ class KeypointController extends Controller
 
         return $results[$num] ?? '';
     }
+
+
+    public function exportSingleExcel($id)
+    {
+        // 1. Query single keypoint
+        $keypoint = DB::table('tb_formkp')
+            ->leftJoin('tb_merklbs', 'tb_formkp.id_merkrtu', '=', 'tb_merklbs.id_merkrtu')
+            ->leftJoin('tb_modem', 'tb_formkp.id_modem', '=', 'tb_modem.id_modem')
+            ->leftJoin('tb_medkom', 'tb_formkp.id_medkom', '=', 'tb_medkom.id_medkom')
+            ->leftJoin('tb_komkp', 'tb_formkp.id_komkp', '=', 'tb_komkp.id_komkp')
+            ->select(
+                'tb_formkp.*',
+                'tb_merklbs.nama_merklbs',
+                'tb_modem.nama_modem',
+                'tb_medkom.nama_medkom',
+                'tb_komkp.jenis_komkp',
+                'tb_formkp.nama_lbs as nama_keypoint',
+                'tb_formkp.rtu_addrs as alamat_rtu',
+                'tb_formkp.ip_kp as ip_rtu',
+                'tb_formkp.nama_peny as penyulang',
+                'tb_formkp.catatankp as keterangan',
+                'tb_formkp.id_gi as gardu_induk',
+                'tb_formkp.id_sec as sectoral'
+            )
+            ->where('tb_formkp.id_formkp', $id)
+            ->first();
+
+        // 2. Validate
+        if (!$keypoint) {
+            return back()->with('error', 'Data keypoint tidak ditemukan.');
+        }
+
+        // 3. Format tanggal
+        $keypoint->tgl_komisioning_formatted = Carbon::parse($keypoint->tgl_komisioning)->format('d-m-Y');
+
+        // 4. Get Pelaksana MS (PIC Master)
+        $pelMsIds = json_decode($keypoint->id_pelms, true) ?? [];
+        $pelaksanaMs = collect();
+        if (!empty($pelMsIds)) {
+            $pelaksanaMs = DB::table('tb_picmaster')
+                ->whereIn('id_picmaster', $pelMsIds)
+                ->get();
+        }
+
+        // 5. Get Pelaksana RTU (Field Engineer)
+        $pelRtuIds = json_decode($keypoint->id_pelrtu, true) ?? [];
+        $pelaksanaRtu = collect();
+        if (!empty($pelRtuIds)) {
+            $pelaksanaRtu = DB::table('tb_pelaksana_rtu')
+                ->whereIn('id_pelrtu', $pelRtuIds)
+                ->get();
+        }
+
+        // 6. Process data (SAME logic as exportByDateExcel)
+        $processedKeypoint = [
+            'row' => $keypoint,
+            'pelaksanaMs' => $pelaksanaMs,
+            'pelaksanaRtu' => $pelaksanaRtu,
+            'statusData' => $this->parseStatusData($keypoint),
+            'controlData' => $this->parseControlData($keypoint),
+            'meteringData' => $this->parseMeteringData($keypoint),
+            'hardwareData' => $this->parseHardwareData($keypoint),
+            'systemData' => $this->parseSystemData($keypoint),
+            'recloserData' => $this->parseRecloserData($keypoint),
+        ];
+
+        // 7. Generate filename
+        $safeName = preg_replace('/[^A-Za-z0-9\-]/', '_', $keypoint->nama_keypoint);
+        $filename = 'Keypoint_' . $safeName . '_' . Carbon::parse($keypoint->tgl_komisioning)->format('Y-m-d') . '.xlsx';
+
+        // 8. Download Excel
+        return Excel::download(
+            new KeypointSingleExport($processedKeypoint),
+            $filename
+        );
+    }
+
 
 
     public function exportByDatePdf(Request $request)
