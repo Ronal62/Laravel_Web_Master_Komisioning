@@ -12,17 +12,23 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class KeypointSingleExport implements FromView, WithStyles, WithColumnWidths, WithEvents
 {
-    protected $keypoint;
+    protected $data;
 
-    public function __construct($keypoint)
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Set the keypoint data
+ *
+ * @param \App\Models\Keypoint $keypoint
+ */
+/*******  086446c8-edc4-40b3-a779-ad888940bdb8  *******/    public function __construct($data)
     {
-        $this->keypoint = $keypoint;
+        $this->data = $data;
     }
 
     public function view(): View
     {
         return view('excel.keypoint_single_excel', [
-            'data' => $this->keypoint,
+            'data' => $this->data,
         ]);
     }
 
@@ -45,7 +51,6 @@ class KeypointSingleExport implements FromView, WithStyles, WithColumnWidths, Wi
     public function styles(Worksheet $sheet)
     {
         $sheet->getParent()->getDefaultStyle()->getFont()->setName('Arial')->setSize(10);
-
         return [];
     }
 
