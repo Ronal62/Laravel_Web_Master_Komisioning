@@ -316,7 +316,19 @@ class PenyulanganController extends Controller
             'c_cb',
             'c_aru',
             'c_rst',
-            'c_tc'
+            'c_tc',
+            't_ir',
+            't_is',
+            't_it',
+            't_ifr',
+            't_ifs',
+            't_ift',
+            't_ifn',
+            't_ifr_psuedo',
+            't_ifs_psuedo',
+            't_ift_psuedo',
+            't_ifn_psuedo',
+            't_kv0'
         ];
 
         $validCheckboxValues = [
@@ -445,6 +457,45 @@ class PenyulanganController extends Controller
             'ctcl_3',
             'ctcl_4',
             'ctcl_5',
+            't_kv01',
+            't_kv02',
+            't_kv05',
+            't_kv01',
+            't_kv02',
+            't_kv05',
+            't_ir1',
+            't_ir2',
+            't_ir5',
+            't_is1',
+            't_is2',
+            't_is5',
+            't_it1',
+            't_it2',
+            't_it5',
+            't_ifr1',
+            't_ifr2',
+            't_ifr5',
+            't_ifs1',
+            't_ifs2',
+            't_ifs5',
+            't_ift1',
+            't_ift2',
+            't_ift5',
+            't_ifn1',
+            't_ifn2',
+            't_ifn5',
+            't_ifr_psuedo1',
+            't_ifr_psuedo2',
+            't_ifr_psuedo5',
+            't_ifs_psuedo1',
+            't_ifs_psuedo2',
+            't_ifs_psuedo5',
+            't_ift_psuedo1',
+            't_ift_psuedo2',
+            't_ift_psuedo5',
+            't_ifn_psuedo1',
+            't_ifn_psuedo2',
+            't_ifn_psuedo5',
             'normal',
             'ok',
             'nok',
@@ -465,48 +516,99 @@ class PenyulanganController extends Controller
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
+
+            // === GROUP: RTU ===
             'ir_rtu' => 'nullable|string|max:10',
             'is_rtu' => 'nullable|string|max:10',
             'it_rtu' => 'nullable|string|max:10',
+
+            'ifr_rtu' => 'nullable|string|max:50',
+            'ifs_rtu' => 'nullable|string|max:50',
+            'ift_rtu' => 'nullable|string|max:50',
+            'ifn_rtu' => 'nullable|string|max:50',
+
+            // Psuedo RTU
+            'ifr_psuedo_rtu' => 'nullable|string|max:255',
+            'ifs_psuedo_rtu' => 'nullable|string|max:255',
+            'ift_psuedo_rtu' => 'nullable|string|max:255',
+            'ifn_psuedo_rtu' => 'nullable|string|max:255',
+
+            'kv0_rtu' => 'nullable|string|max:50',
+
+
+            // === GROUP: MS ===
             'ir_ms' => 'nullable|string|max:10',
             'is_ms' => 'nullable|string|max:10',
             'it_ms' => 'nullable|string|max:10',
+
+            'ifr_ms' => 'nullable|string|max:50',
+            'ifs_ms' => 'nullable|string|max:50',
+            'ift_ms' => 'nullable|string|max:50',
+            'ifn_ms' => 'nullable|string|max:50',
+
+            // Psuedo MS
+            'ifr_psuedo_ms' => 'nullable|string|max:255',
+            'ifs_psuedo_ms' => 'nullable|string|max:255',
+            'ift_psuedo_ms' => 'nullable|string|max:255',
+            'ifn_psuedo_ms' => 'nullable|string|max:255',
+
+            'kv0_ms' => 'nullable|string|max:50',
+
+
+            // === GROUP: SCALE ===
             'ir_scale' => 'nullable|string|max:10',
             'is_scale' => 'nullable|string|max:10',
             'it_scale' => 'nullable|string|max:10',
-            'fir_rtu' => 'nullable|string|max:50',
-            'fis_rtu' => 'nullable|string|max:50',
-            'fit_rtu' => 'nullable|string|max:50',
-            'fin_rtu' => 'nullable|string|max:50',
-            'fir_ms' => 'nullable|string|max:50',
-            'fis_ms' => 'nullable|string|max:50',
-            'fit_ms' => 'nullable|string|max:50',
-            'fin_ms' => 'nullable|string|max:50',
-            'fir_scale' => 'nullable|string|max:50',
-            'fis_scale' => 'nullable|string|max:50',
-            'fit_scale' => 'nullable|string|max:50',
-            'fin_scale' => 'nullable|string|max:50',
-            'kv0_rtu' => 'nullable|string|max:50',
-            'kv0_ms' => 'nullable|string|max:50',
+
+            'ifr_scale' => 'nullable|string|max:50',
+            'ifs_scale' => 'nullable|string|max:50',
+            'ift_scale' => 'nullable|string|max:50',
+            'ifn_scale' => 'nullable|string|max:50',
+
+            // Psuedo Scale
+            'ifr_psuedo_scale' => 'nullable|string|max:255',
+            'ifs_psuedo_scale' => 'nullable|string|max:255',
+            'ift_psuedo_scale' => 'nullable|string|max:255',
+            'ifn_psuedo_scale' => 'nullable|string|max:255',
+
             'kv0_scale' => 'nullable|string|max:50',
-            // GROUP: ADDRESS
+
+
+            // === GROUP: ADDRESS ===
             'ir_address'  => 'nullable|string|max:255',
             'is_address'  => 'nullable|string|max:255',
             'it_address'  => 'nullable|string|max:255',
-            'fir_address' => 'nullable|string|max:255',
-            'fis_address' => 'nullable|string|max:255',
-            'fit_address' => 'nullable|string|max:255',
-            'fin_address' => 'nullable|string|max:255',
+
+            'ifr_address' => 'nullable|string|max:255',
+            'ifs_address' => 'nullable|string|max:255',
+            'ift_address' => 'nullable|string|max:255',
+            'ifn_address' => 'nullable|string|max:255',
+
+            // Psuedo Address
+            'ifr_psuedo_address' => 'nullable|string|max:255',
+            'ifs_psuedo_address' => 'nullable|string|max:255',
+            'ift_psuedo_address' => 'nullable|string|max:255',
+            'ifn_psuedo_address' => 'nullable|string|max:255',
+
             'kv0_address' => 'nullable|string|max:255',
 
-            // GROUP: OBJECT FORMAT
+
+            // === GROUP: OBJECT FORMAT ===
             'ir_objfrmt'  => 'nullable|string|max:255',
             'is_objfrmt'  => 'nullable|string|max:255',
             'it_objfrmt'  => 'nullable|string|max:255',
-            'fir_objfrmt' => 'nullable|string|max:255',
-            'fis_objfrmt' => 'nullable|string|max:255',
-            'fit_objfrmt' => 'nullable|string|max:255',
-            'fin_objfrmt' => 'nullable|string|max:255',
+
+            'ifr_objfrmt' => 'nullable|string|max:255',
+            'ifs_objfrmt' => 'nullable|string|max:255',
+            'ift_objfrmt' => 'nullable|string|max:255',
+            'ifn_objfrmt' => 'nullable|string|max:255',
+
+            // Psuedo Objfrmt
+            'ifr_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ifs_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ift_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ifn_psuedo_objfrmt' => 'nullable|string|max:255',
+
             'kv0_objfrmt' => 'nullable|string|max:255',
 
             'scb_open_address' => 'nullable|string|max:100',
@@ -727,7 +829,20 @@ class PenyulanganController extends Controller
             'c_cb',
             'c_aru',
             'c_rst',
-            'c_tc'
+            'c_tc',
+            't_ir',
+            't_is',
+            't_it',
+            't_ifr',
+            't_ifs',
+            't_ift',
+            't_ifn',
+            't_ifr_psuedo',
+            't_ifs_psuedo',
+            't_ift_psuedo',
+            't_ifn_psuedo',
+            't_kv0'
+
         ];
 
         $validCheckboxValues = [
@@ -856,6 +971,42 @@ class PenyulanganController extends Controller
             'ctcl_3',
             'ctcl_4',
             'ctcl_5',
+            't_kv01',
+            't_kv02',
+            't_kv05',
+            't_ir1',
+            't_ir2',
+            't_ir5',
+            't_is1',
+            't_is2',
+            't_is5',
+            't_it1',
+            't_it2',
+            't_it5',
+            't_ifr1',
+            't_ifr2',
+            't_ifr5',
+            't_ifs1',
+            't_ifs2',
+            't_ifs5',
+            't_ift1',
+            't_ift2',
+            't_ift5',
+            't_ifn1',
+            't_ifn2',
+            't_ifn5',
+            't_ifr_psuedo1',
+            't_ifr_psuedo2',
+            't_ifr_psuedo5',
+            't_ifs_psuedo1',
+            't_ifs_psuedo2',
+            't_ifs_psuedo5',
+            't_ift_psuedo1',
+            't_ift_psuedo2',
+            't_ift_psuedo5',
+            't_ifn_psuedo1',
+            't_ifn_psuedo2',
+            't_ifn_psuedo5',
             'normal',
             'ok',
             'nok',
@@ -877,30 +1028,100 @@ class PenyulanganController extends Controller
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
+
+            // === GROUP: RTU ===
             'ir_rtu' => 'nullable|string|max:10',
             'is_rtu' => 'nullable|string|max:10',
             'it_rtu' => 'nullable|string|max:10',
+
+            'ifr_rtu' => 'nullable|string|max:50',
+            'ifs_rtu' => 'nullable|string|max:50',
+            'ift_rtu' => 'nullable|string|max:50',
+            'ifn_rtu' => 'nullable|string|max:50',
+
+            // Psuedo RTU
+            'ifr_psuedo_rtu' => 'nullable|string|max:255',
+            'ifs_psuedo_rtu' => 'nullable|string|max:255',
+            'ift_psuedo_rtu' => 'nullable|string|max:255',
+            'ifn_psuedo_rtu' => 'nullable|string|max:255',
+
+            'kv0_rtu' => 'nullable|string|max:50',
+
+
+            // === GROUP: MS ===
             'ir_ms' => 'nullable|string|max:10',
             'is_ms' => 'nullable|string|max:10',
             'it_ms' => 'nullable|string|max:10',
+
+            'ifr_ms' => 'nullable|string|max:50',
+            'ifs_ms' => 'nullable|string|max:50',
+            'ift_ms' => 'nullable|string|max:50',
+            'ifn_ms' => 'nullable|string|max:50',
+
+            // Psuedo MS
+            'ifr_psuedo_ms' => 'nullable|string|max:255',
+            'ifs_psuedo_ms' => 'nullable|string|max:255',
+            'ift_psuedo_ms' => 'nullable|string|max:255',
+            'ifn_psuedo_ms' => 'nullable|string|max:255',
+
+            'kv0_ms' => 'nullable|string|max:50',
+
+
+            // === GROUP: SCALE ===
             'ir_scale' => 'nullable|string|max:10',
             'is_scale' => 'nullable|string|max:10',
             'it_scale' => 'nullable|string|max:10',
-            'fir_rtu' => 'nullable|string|max:50',
-            'fis_rtu' => 'nullable|string|max:50',
-            'fit_rtu' => 'nullable|string|max:50',
-            'fin_rtu' => 'nullable|string|max:50',
-            'fir_ms' => 'nullable|string|max:50',
-            'fis_ms' => 'nullable|string|max:50',
-            'fit_ms' => 'nullable|string|max:50',
-            'fin_ms' => 'nullable|string|max:50',
-            'fir_scale' => 'nullable|string|max:50',
-            'fis_scale' => 'nullable|string|max:50',
-            'fit_scale' => 'nullable|string|max:50',
-            'fin_scale' => 'nullable|string|max:50',
-            'v_rtu' => 'nullable|string|max:50',
-            'v_ms' => 'nullable|string|max:50',
-            'v_scale' => 'nullable|string|max:50',
+
+            'ifr_scale' => 'nullable|string|max:50',
+            'ifs_scale' => 'nullable|string|max:50',
+            'ift_scale' => 'nullable|string|max:50',
+            'ifn_scale' => 'nullable|string|max:50',
+
+            // Psuedo Scale
+            'ifr_psuedo_scale' => 'nullable|string|max:255',
+            'ifs_psuedo_scale' => 'nullable|string|max:255',
+            'ift_psuedo_scale' => 'nullable|string|max:255',
+            'ifn_psuedo_scale' => 'nullable|string|max:255',
+
+            'kv0_scale' => 'nullable|string|max:50',
+
+
+            // === GROUP: ADDRESS ===
+            'ir_address'  => 'nullable|string|max:255',
+            'is_address'  => 'nullable|string|max:255',
+            'it_address'  => 'nullable|string|max:255',
+
+            'ifr_address' => 'nullable|string|max:255',
+            'ifs_address' => 'nullable|string|max:255',
+            'ift_address' => 'nullable|string|max:255',
+            'ifn_address' => 'nullable|string|max:255',
+
+            // Psuedo Address
+            'ifr_psuedo_address' => 'nullable|string|max:255',
+            'ifs_psuedo_address' => 'nullable|string|max:255',
+            'ift_psuedo_address' => 'nullable|string|max:255',
+            'ifn_psuedo_address' => 'nullable|string|max:255',
+
+            'kv0_address' => 'nullable|string|max:255',
+
+
+            // === GROUP: OBJECT FORMAT ===
+            'ir_objfrmt'  => 'nullable|string|max:255',
+            'is_objfrmt'  => 'nullable|string|max:255',
+            'it_objfrmt'  => 'nullable|string|max:255',
+
+            'ifr_objfrmt' => 'nullable|string|max:255',
+            'ifs_objfrmt' => 'nullable|string|max:255',
+            'ift_objfrmt' => 'nullable|string|max:255',
+            'ifn_objfrmt' => 'nullable|string|max:255',
+
+            // Psuedo Objfrmt
+            'ifr_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ifs_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ift_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ifn_psuedo_objfrmt' => 'nullable|string|max:255',
+
+            'kv0_objfrmt' => 'nullable|string|max:255',
             // ... (Addresses) ...
             'scb_open_address' => 'nullable|string|max:100',
             'scb_close_address' => 'nullable|string|max:100',
@@ -1023,6 +1244,28 @@ class PenyulanganController extends Controller
                 : '';
         }
 
+        // Process Telemetering Checkbox Fields
+        $telemeteringFields = [
+            'ir',
+            'is',
+            'it',
+            'fir',
+            'fis',
+            'fit',
+            'fin',
+            'kv0'
+        ];
+
+        foreach ($telemeteringFields as $field) {
+            $request->validate([
+                $field => 'nullable|array',
+                $field . '.*' => 'in:1,2,5',
+            ]);
+            $validated[$field] = $request->has($field) && is_array($request->input($field)) && !empty($request->input($field))
+                ? implode(',', array_filter($request->input($field)))
+                : '';
+        }
+
         $validated['id_pelms'] = json_encode($idPelmsArray);
         $validated['id_pelrtu'] = json_encode($idPelrtuArray);
 
@@ -1030,7 +1273,6 @@ class PenyulanganController extends Controller
 
         return redirect()->route('penyulangan.index')->with('success', 'Penyulangan updated successfully!');
     }
-
 
     public function clone($id)
     {
@@ -1103,7 +1345,19 @@ class PenyulanganController extends Controller
             'c_cb',
             'c_aru',
             'c_rst',
-            'c_tc'
+            'c_tc',
+            't_ir',
+            't_is',
+            't_it',
+            't_ifr',
+            't_ifs',
+            't_ift',
+            't_ifn',
+            't_ifr_psuedo',
+            't_ifs_psuedo',
+            't_ift_psuedo',
+            't_ifn_psuedo',
+            't_kv0'
         ];
 
         // List value valid untuk checkbox (disingkat agar tidak terlalu panjang di sini, gunakan list lengkap Anda)
@@ -1233,6 +1487,45 @@ class PenyulanganController extends Controller
             'ctcl_3',
             'ctcl_4',
             'ctcl_5',
+
+            't_kv01',
+            't_kv02',
+            't_kv05',
+            't_ir1',
+            't_ir2',
+            't_ir5',
+            't_is1',
+            't_is2',
+            't_is5',
+            't_it1',
+            't_it2',
+            't_it5',
+            't_ifr1',
+            't_ifr2',
+            't_ifr5',
+            't_ifs1',
+            't_ifs2',
+            't_ifs5',
+            't_ift1',
+            't_ift2',
+            't_ift5',
+            't_ifn1',
+            't_ifn2',
+            't_ifn5',
+            't_ifr_psuedo1',
+            't_ifr_psuedo2',
+            't_ifr_psuedo5',
+            't_ifs_psuedo1',
+            't_ifs_psuedo2',
+            't_ifs_psuedo5',
+            't_ift_psuedo1',
+            't_ift_psuedo2',
+            't_ift_psuedo5',
+            't_ifn_psuedo1',
+            't_ifn_psuedo2',
+            't_ifn_psuedo5',
+
+
             'normal',
             'ok',
             'nok',
@@ -1253,30 +1546,103 @@ class PenyulanganController extends Controller
             'id_rtugi' => 'required|integer|exists:tb_merkrtugi,id_rtugi',
             'rtu_addrs' => 'required|string|max:255',
             'id_medkom' => 'required|integer|exists:tb_medkom,id_medkom',
+
+            // === GROUP: RTU ===
             'ir_rtu' => 'nullable|string|max:10',
             'is_rtu' => 'nullable|string|max:10',
             'it_rtu' => 'nullable|string|max:10',
+
+            'ifr_rtu' => 'nullable|string|max:50',
+            'ifs_rtu' => 'nullable|string|max:50',
+            'ift_rtu' => 'nullable|string|max:50',
+            'ifn_rtu' => 'nullable|string|max:50',
+
+            // Psuedo RTU
+            'ifr_psuedo_rtu' => 'nullable|string|max:255',
+            'ifs_psuedo_rtu' => 'nullable|string|max:255',
+            'ift_psuedo_rtu' => 'nullable|string|max:255',
+            'ifn_psuedo_rtu' => 'nullable|string|max:255',
+
+            'kv0_rtu' => 'nullable|string|max:50',
+
+
+            // === GROUP: MS ===
             'ir_ms' => 'nullable|string|max:10',
             'is_ms' => 'nullable|string|max:10',
             'it_ms' => 'nullable|string|max:10',
+
+            'ifr_ms' => 'nullable|string|max:50',
+            'ifs_ms' => 'nullable|string|max:50',
+            'ift_ms' => 'nullable|string|max:50',
+            'ifn_ms' => 'nullable|string|max:50',
+
+            // Psuedo MS
+            'ifr_psuedo_ms' => 'nullable|string|max:255',
+            'ifs_psuedo_ms' => 'nullable|string|max:255',
+            'ift_psuedo_ms' => 'nullable|string|max:255',
+            'ifn_psuedo_ms' => 'nullable|string|max:255',
+
+            'kv0_ms' => 'nullable|string|max:50',
+
+
+            // === GROUP: SCALE ===
             'ir_scale' => 'nullable|string|max:10',
             'is_scale' => 'nullable|string|max:10',
             'it_scale' => 'nullable|string|max:10',
-            'fir_rtu' => 'nullable|string|max:50',
-            'fis_rtu' => 'nullable|string|max:50',
-            'fit_rtu' => 'nullable|string|max:50',
-            'fin_rtu' => 'nullable|string|max:50',
-            'fir_ms' => 'nullable|string|max:50',
-            'fis_ms' => 'nullable|string|max:50',
-            'fit_ms' => 'nullable|string|max:50',
-            'fin_ms' => 'nullable|string|max:50',
-            'fir_scale' => 'nullable|string|max:50',
-            'fis_scale' => 'nullable|string|max:50',
-            'fit_scale' => 'nullable|string|max:50',
-            'fin_scale' => 'nullable|string|max:50',
-            'v_rtu' => 'nullable|string|max:50',
-            'v_ms' => 'nullable|string|max:50',
-            'v_scale' => 'nullable|string|max:50',
+
+            'ifr_scale' => 'nullable|string|max:50',
+            'ifs_scale' => 'nullable|string|max:50',
+            'ift_scale' => 'nullable|string|max:50',
+            'ifn_scale' => 'nullable|string|max:50',
+
+            // Psuedo Scale
+            'ifr_psuedo_scale' => 'nullable|string|max:255',
+            'ifs_psuedo_scale' => 'nullable|string|max:255',
+            'ift_psuedo_scale' => 'nullable|string|max:255',
+            'ifn_psuedo_scale' => 'nullable|string|max:255',
+
+            'kv0_scale' => 'nullable|string|max:50',
+
+
+            // === GROUP: ADDRESS ===
+            'ir_address'  => 'nullable|string|max:255',
+            'is_address'  => 'nullable|string|max:255',
+            'it_address'  => 'nullable|string|max:255',
+
+            'ifr_address' => 'nullable|string|max:255',
+            'ifs_address' => 'nullable|string|max:255',
+            'ift_address' => 'nullable|string|max:255',
+            'ifn_address' => 'nullable|string|max:255',
+
+            // Psuedo Address
+            'ifr_psuedo_address' => 'nullable|string|max:255',
+            'ifs_psuedo_address' => 'nullable|string|max:255',
+            'ift_psuedo_address' => 'nullable|string|max:255',
+            'ifn_psuedo_address' => 'nullable|string|max:255',
+
+            'kv0_address' => 'nullable|string|max:255',
+
+
+            // === GROUP: OBJECT FORMAT ===
+            'ir_objfrmt'  => 'nullable|string|max:255',
+            'is_objfrmt'  => 'nullable|string|max:255',
+            'it_objfrmt'  => 'nullable|string|max:255',
+
+            'ifr_objfrmt' => 'nullable|string|max:255',
+            'ifs_objfrmt' => 'nullable|string|max:255',
+            'ift_objfrmt' => 'nullable|string|max:255',
+            'ifn_objfrmt' => 'nullable|string|max:255',
+
+            // Psuedo Objfrmt
+            'ifr_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ifs_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ift_psuedo_objfrmt' => 'nullable|string|max:255',
+            'ifn_psuedo_objfrmt' => 'nullable|string|max:255',
+
+            'kv0_objfrmt' => 'nullable|string|max:255',
+
+
+
             'scb_open_address' => 'nullable|string|max:100',
             'scb_close_address' => 'nullable|string|max:100',
             'slocal_address' => 'nullable|string|max:100',

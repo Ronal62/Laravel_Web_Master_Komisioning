@@ -31,6 +31,8 @@ class Penyulangan extends Model
         'c_aru',
         'c_rst',
         'c_tc',
+
+
         'ir_rtu',
         'is_rtu',
         'it_rtu',
@@ -40,37 +42,88 @@ class Penyulangan extends Model
         'ir_scale',
         'is_scale',
         'it_scale',
-        'fir_rtu',
-        'fis_rtu',
-        'fit_rtu',
-        'fin_rtu',
-        'fir_ms',
-        'fis_ms',
-        'fit_ms',
-        'fin_ms',
-        'fir_scale',
-        'fis_scale',
-        'fit_scale',
-        'fin_scale',
+
+        // RTU
+        'ifr_rtu',
+        'ifs_rtu',
+        'ift_rtu',
+        'ifn_rtu',
+        'ifr_psuedo_rtu',
+        'ifs_psuedo_rtu',
+        'ift_psuedo_rtu',
+        'ifn_psuedo_rtu',
+
+        // MS
+        'ifr_ms',
+        'ifs_ms',
+        'ift_ms',
+        'ifn_ms',
+        'ifr_psuedo_ms',
+        'ifs_psuedo_ms',
+        'ift_psuedo_ms',
+        'ifn_psuedo_ms',
+
+        // Scale
+        'ifr_scale',
+        'ifs_scale',
+        'ift_scale',
+        'ifn_scale',
+        'ifr_psuedo_scale',
+        'ifs_psuedo_scale',
+        'ift_psuedo_scale',
+        'ifn_psuedo_scale',
+
         'kv0_rtu',
         'kv0_ms',
         'kv0_scale',
+
         'ir_address',
         'is_address',
         'it_address',
         'ir_objfrmt',
         'is_objfrmt',
         'it_objfrmt',
-        'fir_address',
-        'fis_address',
-        'fit_address',
-        'fin_address',
-        'fir_objfrmt',
-        'fis_objfrmt',
-        'fit_objfrmt',
-        'fin_objfrmt',
+
+        // Address
+        'ifr_address',
+        'ifs_address',
+        'ift_address',
+        'ifn_address',
+        'ifr_psuedo_address',
+        'ifs_psuedo_address',
+        'ift_psuedo_address',
+        'ifn_psuedo_address',
+
+        // Objfrmt
+        'ifr_objfrmt',
+        'ifs_objfrmt',
+        'ift_objfrmt',
+        'ifn_objfrmt',
+        'ifr_psuedo_objfrmt',
+        'ifs_psuedo_objfrmt',
+        'ift_psuedo_objfrmt',
+        'ifn_psuedo_objfrmt',
+
         'kv0_address',
         'kv0_objfrmt',
+
+        // Title Fields
+        't_ir',
+        't_is',
+        't_it',
+        't_ifr',
+        't_ifs',
+        't_ift',
+        't_ifn',
+        't_ifr_psuedo',
+        't_ifs_psuedo',
+        't_ift_psuedo',
+        't_ifn_psuedo',
+
+        // Title KV0 (Updated to match DB)
+        't_kv0',
+
+
         'id_komkp',
         'nama_user',
         'id_pelms',

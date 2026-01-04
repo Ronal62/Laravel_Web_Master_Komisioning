@@ -1849,190 +1849,179 @@
                                     <div class="tab-pane fade" id="v-pills-formtelemetering-nobd" role="tabpanel"
                                         aria-labelledby="v-pills-formtelemetering-tab-nobd">
                                         <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Arus Phase R</label>
-                                                    <input class="form-control @error('ir_rtu') is-invalid @enderror"
-                                                        placeholder="IR RTU" name="ir_rtu"
-                                                        value="{{ old('ir_rtu', $penyulang->ir_rtu) }}">
-                                                    @error('ir_rtu')
+
+                                            {{-- 1. DEFINISI HELPER DATA --}}
+                                            @php
+                                            $fields = [
+                                            ['key' => 'ir', 'label' => 'Arus Phase R', 'db' => 't_ir',
+                                            'readonly_address' => false],
+                                            ['key' => 'is', 'label' => 'Arus Phase S', 'db' => 't_is',
+                                            'readonly_address' => false],
+                                            ['key' => 'it', 'label' => 'Arus Phase T', 'db' => 't_it',
+                                            'readonly_address' => false],
+                                            ['key' => 'ifr', 'label' => 'Arus Gangguan Phase R', 'db' => 't_ifr',
+                                            'readonly_address' => false],
+                                            ['key' => 'ifs', 'label' => 'Arus Gangguan Phase S', 'db' => 't_ifs',
+                                            'readonly_address' => false],
+                                            ['key' => 'ift', 'label' => 'Arus Gangguan Phase T', 'db' => 't_ift',
+                                            'readonly_address' => false],
+                                            ['key' => 'ifn', 'label' => 'Arus Gangguan Phase N', 'db' => 't_ifn',
+                                            'readonly_address' => false],
+                                            ['key' => 'kv0', 'label' => 'Tegangan (Voltage)', 'db' => 't_kv0',
+                                            'readonly_address' => false],
+                                            ];
+
+                                            $pseudoFields = [
+                                            ['key' => 'ifr_psuedo', 'label' => 'Arus Gangguan Phase R (Psuedo)', 'db' =>
+                                            't_ifr_psuedo', 'readonly_address' => true],
+                                            ['key' => 'ifs_psuedo', 'label' => 'Arus Gangguan Phase S (Psuedo)', 'db' =>
+                                            't_ifs_psuedo', 'readonly_address' => true],
+                                            ['key' => 'ift_psuedo', 'label' => 'Arus Gangguan Phase T (Psuedo)', 'db' =>
+                                            't_ift_psuedo', 'readonly_address' => true],
+                                            ['key' => 'ifn_psuedo', 'label' => 'Arus Gangguan Phase N (Psuedo)', 'db' =>
+                                            't_ifn_psuedo', 'readonly_address' => true],
+                                            ];
+
+                                            $allSelectorFields = array_merge($fields, $pseudoFields);
+                                            $allInputFields = array_merge($fields, $pseudoFields);
+                                            @endphp
+
+                                            {{-- 2. KOLOM KIRI: CHECKBOX (Selectgroup) --}}
+                                            <div class="col-md-6" style="max-height: 800px; overflow-y: auto;">
+                                                <h5>Selector</h5>
+                                                @foreach($allSelectorFields as $f)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label class="form-label t-bold">{{ $f['label'] }}</label>
+                                                    <div class="selectgroup w-100 flex-wrap mb-1">
+
+                                                        @php
+                                                        $dbKey = $f['db'];
+                                                        $checkedValues = old($dbKey, isset($penyulang->$dbKey) ?
+                                                        explode(',', $penyulang->$dbKey) : []);
+                                                        @endphp
+
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $dbKey }}[]"
+                                                                value="{{ $dbKey }}1" class="selectgroup-input"
+                                                                {{ in_array($dbKey.'1', $checkedValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">OK</span>
+                                                        </label>
+
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $dbKey }}[]"
+                                                                value="{{ $dbKey }}2" class="selectgroup-input"
+                                                                {{ in_array($dbKey.'2', $checkedValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">NOK</span>
+                                                        </label>
+
+                                                        <label class="selectgroup-item mb-1 mb-sm-0">
+                                                            <input type="checkbox" name="{{ $dbKey }}[]"
+                                                                value="{{ $dbKey }}5" class="selectgroup-input"
+                                                                {{ in_array($dbKey.'5', $checkedValues) ? 'checked' : '' }} />
+                                                            <span class="selectgroup-button">SLD</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+
+                                            {{-- 3. KOLOM TENGAH: RTU, MASTER, SCALE --}}
+                                            <div class="col-md-3" style="max-height: 800px; overflow-y: auto;">
+                                                <h5>RTU, MASTER, SCALE</h5>
+                                                @foreach($allInputFields as $f)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label
+                                                        class="t-bold {{ $f['readonly_address'] ? 'text-warning' : 'text-primary' }}">
+                                                        {{ $f['label'] }}
+                                                        @if($f['readonly_address'])
+                                                        <small class="text-muted">(Pseudo)</small>
+                                                        @endif
+                                                    </label>
+
+                                                    {{-- Input RTU --}}
+                                                    <input type="text"
+                                                        class="form-control mb-1 @error($f['key'].'_rtu') is-invalid @enderror"
+                                                        placeholder="{{ strtoupper($f['key']) }} RTU"
+                                                        name="{{ $f['key'] }}_rtu"
+                                                        value="{{ old($f['key'].'_rtu', $penyulang->{$f['key'].'_rtu'} ?? '') }}">
+                                                    @error($f['key'].'_rtu')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('ir_ms') is-invalid @enderror"
-                                                        placeholder="IR Master" name="ir_ms"
-                                                        value="{{ old('ir_ms', $penyulang->ir_ms) }}">
-                                                    @error('ir_ms')
+
+                                                    {{-- Input Master --}}
+                                                    <input type="text"
+                                                        class="form-control mb-1 @error($f['key'].'_ms') is-invalid @enderror"
+                                                        placeholder="{{ strtoupper($f['key']) }} MASTER"
+                                                        name="{{ $f['key'] }}_ms"
+                                                        value="{{ old($f['key'].'_ms', $penyulang->{$f['key'].'_ms'} ?? '') }}">
+                                                    @error($f['key'].'_ms')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('ir_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="ir_scale"
-                                                        value="{{ old('ir_scale', $penyulang->ir_scale) }}">
-                                                    @error('ir_scale')
+
+                                                    {{-- Input Scale --}}
+                                                    <input type="text"
+                                                        class="form-control @error($f['key'].'_scale') is-invalid @enderror"
+                                                        placeholder="SCALE" name="{{ $f['key'] }}_scale"
+                                                        value="{{ old($f['key'].'_scale', $penyulang->{$f['key'].'_scale'} ?? '') }}">
+                                                    @error($f['key'].'_scale')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Arus Phase S</label>
-                                                    <input class="form-control @error('is_rtu') is-invalid @enderror"
-                                                        placeholder="IS RTU" name="is_rtu"
-                                                        value="{{ old('is_rtu', $penyulang->is_rtu) }}">
-                                                    @error('is_rtu')
+                                                @endforeach
+                                            </div>
+
+                                            {{-- 4. KOLOM KANAN: ADDRESS & OBJFORMAT --}}
+                                            <div class="col-md-3" style="max-height: 800px; overflow-y: auto;">
+                                                <h5>ADDRESS & OBJ FORMAT</h5>
+                                                @foreach($allInputFields as $f)
+                                                <div class="form-group border-bottom pb-2">
+                                                    <label
+                                                        class="t-bold {{ $f['readonly_address'] ? 'text-warning' : 'text-success' }}">
+                                                        {{ $f['label'] }}
+                                                        @if($f['readonly_address'])
+                                                        <small class="text-muted">(Pseudo)</small>
+                                                        @endif
+                                                    </label>
+
+                                                    {{-- Input Address - READONLY untuk Pseudo --}}
+                                                    <input type="text"
+                                                        class="form-control mb-1 @error($f['key'].'_address') is-invalid @enderror {{ $f['readonly_address'] ? 'bg-light' : '' }}"
+                                                        placeholder="{{ strtoupper($f['key']) }} ADDRESS"
+                                                        name="{{ $f['key'] }}_address"
+                                                        value="{{ old($f['key'].'_address', $penyulang->{$f['key'].'_address'} ?? '') }}"
+                                                        {{ $f['readonly_address'] ? 'readonly' : '' }}>
+                                                    @error($f['key'].'_address')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    <input class="form-control @error('is_ms') is-invalid @enderror"
-                                                        placeholder="IS Master" name="is_ms"
-                                                        value="{{ old('is_ms', $penyulang->is_ms) }}">
-                                                    @error('is_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('is_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="is_scale"
-                                                        value="{{ old('is_scale', $penyulang->is_scale) }}">
-                                                    @error('is_scale')
+
+                                                    {{-- Input Obj Format --}}
+                                                    <input type="text"
+                                                        class="form-control @error($f['key'].'_objfrmt') is-invalid @enderror"
+                                                        placeholder="OBJECT FORMAT" name="{{ $f['key'] }}_objfrmt"
+                                                        value="{{ old($f['key'].'_objfrmt', $penyulang->{$f['key'].'_objfrmt'} ?? '') }}">
+                                                    @error($f['key'].'_objfrmt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+                                                @endforeach
+                                            </div>
+
+                                            {{-- 5. KETERANGAN FORM (Footer) --}}
+                                            <div class="col-md-12 mt-3">
                                                 <div class="form-group">
-                                                    <label>Arus Phase T</label>
-                                                    <input class="form-control @error('it_rtu') is-invalid @enderror"
-                                                        placeholder="IT RTU" name="it_rtu"
-                                                        value="{{ old('it_rtu', $penyulang->it_rtu) }}">
-                                                    @error('it_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('it_ms') is-invalid @enderror"
-                                                        placeholder="IT Master" name="it_ms"
-                                                        value="{{ old('it_ms', $penyulang->it_ms) }}">
-                                                    @error('it_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('it_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="it_scale"
-                                                        value="{{ old('it_scale', $penyulang->it_scale) }}">
-                                                    @error('it_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
+                                                    <label for="ketftm">Keterangan Form Telemetering</label>
+                                                    <div class="input-icon">
+                                                        <input type="text"
+                                                            class="form-control @error('ketftm') is-invalid @enderror"
+                                                            id="ketftm" name="ketftm" placeholder="Keterangan Form Data"
+                                                            value="{{ old('ketftm', $penyulang->ketftm ?? '') }}" />
+                                                        @error('ketftm')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase R</label>
-                                                    <input class="form-control @error('fir_rtu') is-invalid @enderror"
-                                                        placeholder="FIR RTU" name="fir_rtu"
-                                                        value="{{ old('fir_rtu', $penyulang->fir_rtu) }}">
-                                                    @error('fir_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fir_ms') is-invalid @enderror"
-                                                        placeholder="FIR Master" name="fir_ms"
-                                                        value="{{ old('fir_ms', $penyulang->fir_ms) }}">
-                                                    @error('fir_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fir_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="fir_scale"
-                                                        value="{{ old('fir_scale', $penyulang->fir_scale) }}">
-                                                    @error('fir_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase S</label>
-                                                    <input class="form-control @error('fis_rtu') is-invalid @enderror"
-                                                        placeholder="FIS RTU" name="fis_rtu"
-                                                        value="{{ old('fis_rtu', $penyulang->fis_rtu) }}">
-                                                    @error('fis_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fis_ms') is-invalid @enderror"
-                                                        placeholder="FIS Master" name="fis_ms"
-                                                        value="{{ old('fis_ms', $penyulang->fis_ms) }}">
-                                                    @error('fis_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fis_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="fis_scale"
-                                                        value="{{ old('fis_scale', $penyulang->fis_scale) }}">
-                                                    @error('fis_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase T</label>
-                                                    <input class="form-control @error('fit_rtu') is-invalid @enderror"
-                                                        placeholder="FIT RTU" name="fit_rtu"
-                                                        value="{{ old('fit_rtu', $penyulang->fit_rtu) }}">
-                                                    @error('fit_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fit_ms') is-invalid @enderror"
-                                                        placeholder="FIT Master" name="fit_ms"
-                                                        value="{{ old('fit_ms', $penyulang->fit_ms) }}">
-                                                    @error('fit_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fit_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="fit_scale"
-                                                        value="{{ old('fit_scale', $penyulang->fit_scale) }}">
-                                                    @error('fit_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Arus Gangguan Phase N</label>
-                                                    <input class="form-control @error('fin_rtu') is-invalid @enderror"
-                                                        placeholder="FIN RTU" name="fin_rtu"
-                                                        value="{{ old('fin_rtu', $penyulang->fin_rtu) }}">
-                                                    @error('fin_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fin_ms') is-invalid @enderror"
-                                                        placeholder="FIN Master" name="fin_ms"
-                                                        value="{{ old('fin_ms', $penyulang->fin_ms) }}">
-                                                    @error('fin_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('fin_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="fin_scale"
-                                                        value="{{ old('fin_scale', $penyulang->fin_scale) }}">
-                                                    @error('fin_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Tegangan</label>
-                                                    <input class="form-control @error('v_rtu') is-invalid @enderror"
-                                                        placeholder="V RTU" name="v_rtu"
-                                                        value="{{ old('v_rtu', $penyulang->v_rtu) }}">
-                                                    @error('v_rtu')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('v_ms') is-invalid @enderror"
-                                                        placeholder="V Master" name="v_ms"
-                                                        value="{{ old('v_ms', $penyulang->v_ms) }}">
-                                                    @error('v_ms')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                    <input class="form-control @error('v_scale') is-invalid @enderror"
-                                                        placeholder="Scale" name="v_scale"
-                                                        value="{{ old('v_scale', $penyulang->v_scale) }}">
-                                                    @error('v_scale')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="ketftm">Keterangan Form Telemetering </label>
-                                                <textarea
-                                                    class="form-control text-uppercase @error('ketftm') is-invalid @enderror"
-                                                    id="ketftm" name="ketftm"
-                                                    style="height: 155px;">{{ old('ketftm', $penyulang->ketftm) }}</textarea>
-                                                @error('ketftm')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
+
                                         </div>
                                     </div>
                                     <!-- PIC Komisioning Tab -->
