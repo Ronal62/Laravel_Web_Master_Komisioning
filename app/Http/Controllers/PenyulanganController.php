@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use TCPDF;
 use Illuminate\Support\Facades\Response;
@@ -133,6 +134,9 @@ class PenyulanganController extends Controller
                 <a href="' . route('penyulangan.edit', $row->id_peny) . '" class="btn btn-icon btn-round btn-warning">
                     <i class="fa fa-pen"></i>
                 </a>
+                <a href="' . route('penyulangan.exportsinglepdf', $row->id_peny) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
 
                 <form action="' . route('penyulangan.destroy', $row->id_peny) . '" method="POST" style="display:inline;">
                     ' . csrf_field() . '
@@ -153,6 +157,446 @@ class PenyulanganController extends Controller
             'data' => $data,
         ]);
     }
+
+    public function exportSinglePdf($id)
+    {
+        // 1. Get Main Data - tanpa JOIN ke tabel yang tidak ada
+        $penyulangan = DB::table('tb_formpeny')
+            ->where('id_peny', $id)
+            ->first();
+
+        if (!$penyulangan) {
+            abort(404, 'Data Penyulangan tidak ditemukan');
+        }
+
+        // 2. Format tanggal
+        $penyulangan->tgl_kom = $penyulangan->tgl_kom ? Carbon::parse($penyulangan->tgl_kom)->format('d-m-Y') : '-';
+
+        // 3. Set default values untuk field yang tidak ada di tabel
+        $penyulangan->nama_rtugi = $penyulangan->id_rtugi ?? '-';
+        $penyulangan->nama_medkom = $penyulangan->id_medkom ?? '-';
+        $penyulangan->jenis_komkp = $penyulangan->id_komkp ?? '-';
+
+        // 4. Get Pelaksana MS (PIC Master)
+        $pelMsIds = json_decode($penyulangan->id_pelms ?? '[]', true) ?? [];
+        $pelaksanaMs = collect();
+        if (!empty($pelMsIds)) {
+            $pelaksanaMs = DB::table('tb_picmaster')
+                ->whereIn('id_picmaster', $pelMsIds)
+                ->get();
+        }
+
+        // 5. Get Pelaksana RTU (Field Engineer)
+        $pelRtuIds = json_decode($penyulangan->id_pelrtu ?? '[]', true) ?? [];
+        $pelaksanaRtu = collect();
+        if (!empty($pelRtuIds)) {
+            $pelaksanaRtu = DB::table('tb_pelaksana_rtu')
+                ->whereIn('id_pelrtu', $pelRtuIds)
+                ->get();
+        }
+
+        // 6. Parse Status Data
+        $statusData = $this->parseStatusDataPeny($penyulangan);
+
+        // 7. Parse Control Data
+        $controlData = $this->parseControlDataPeny($penyulangan);
+
+        // 8. Parse Metering Data
+        $meteringData = $this->parseMeteringDataPeny($penyulangan);
+
+        // 9. Load View dengan semua data
+        $pdf = Pdf::loadView('pdf.singlepenyulangan_dompdf', [
+            'row' => $penyulangan,
+            'pelaksanaMs' => $pelaksanaMs,
+            'pelaksanaRtu' => $pelaksanaRtu,
+            'statusData' => $statusData,
+            'controlData' => $controlData,
+            'meteringData' => $meteringData,
+        ]);
+
+        // 10. Settings
+        $pdf->setPaper('a4', 'landscape');
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'defaultFont' => 'Arial',
+            'dpi' => 150,
+        ]);
+
+        // 11. Generate filename
+        $filename = 'Penyulangan_' . preg_replace('/[^A-Za-z0-9\-]/', '_', $penyulangan->nama_peny ?? 'Export') . '_' . $id . '.pdf';
+
+        // 12. Download
+        return $pdf->download($filename);
+    }
+
+    /**
+     * Parse checkbox value string menjadi array
+     */
+    private function parseCheckboxValue($value)
+    {
+        if (empty($value)) {
+            return [];
+        }
+        return array_map('trim', explode(',', $value));
+    }
+
+    /**
+     * Get check value (1=OK, 2=NOK, 3=LOG, 4=SLD) dari status array
+     */
+    private function getCheckValue($statusArray, $prefix)
+    {
+        $checks = [];
+
+        foreach ($statusArray as $item) {
+            if (strpos($item, $prefix) === 0) {
+                preg_match('/_(\d+)$/', $item, $matches);
+                if (isset($matches[1])) {
+                    $checks[] = (int)$matches[1];
+                }
+            }
+        }
+
+        return $checks;
+    }
+
+    /**
+     * Parse Status Data untuk Penyulangan
+     */
+    private function parseStatusDataPeny($penyulangan)
+    {
+        $statuses = [];
+
+        $s_cb = $this->parseCheckboxValue($penyulangan->s_cb ?? '');
+        $s_lr = $this->parseCheckboxValue($penyulangan->s_lr ?? '');
+        $s_ocr = $this->parseCheckboxValue($penyulangan->s_ocr ?? '');
+        $s_ocri = $this->parseCheckboxValue($penyulangan->s_ocri ?? '');
+        $s_dgr = $this->parseCheckboxValue($penyulangan->s_dgr ?? '');
+        $s_cbtr = $this->parseCheckboxValue($penyulangan->s_cbtr ?? '');
+        $s_ar = $this->parseCheckboxValue($penyulangan->s_ar ?? '');
+        $s_aru = $this->parseCheckboxValue($penyulangan->s_aru ?? '');
+        $s_tc = $this->parseCheckboxValue($penyulangan->s_tc ?? '');
+
+        // CB Status
+        $statuses[] = [
+            'name' => 'CB',
+            'row1' => [
+                'label' => 'Open',
+                'address' => $penyulangan->scb_open_address ?? '',
+                'obj' => $penyulangan->scb_open_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_cb, 'open'),
+            ],
+            'row2' => [
+                'label' => 'Close',
+                'address' => $penyulangan->scb_close_address ?? '',
+                'obj' => $penyulangan->scb_close_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_cb, 'close'),
+            ],
+        ];
+
+        // L/R Status
+        $statuses[] = [
+            'name' => 'L/R',
+            'row1' => [
+                'label' => 'Local',
+                'address' => $penyulangan->slocal_address ?? '',
+                'obj' => $penyulangan->slocal_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_lr, 'local'),
+            ],
+            'row2' => [
+                'label' => 'Remote',
+                'address' => $penyulangan->sremote_address ?? '',
+                'obj' => $penyulangan->sremote_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_lr, 'remote'),
+            ],
+        ];
+
+        // OCR Status
+        $statuses[] = [
+            'name' => 'OCR',
+            'row1' => [
+                'label' => 'Disable',
+                'address' => $penyulangan->socr_dis_address ?? '',
+                'obj' => $penyulangan->socr_dis_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_ocr, 'ocrd'),
+            ],
+            'row2' => [
+                'label' => 'Appear',
+                'address' => $penyulangan->socr_app_address ?? '',
+                'obj' => $penyulangan->socr_app_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_ocr, 'ocra'),
+            ],
+        ];
+
+        // OCRI Status
+        $statuses[] = [
+            'name' => 'OCRI',
+            'row1' => [
+                'label' => 'Disable',
+                'address' => $penyulangan->socri_dis_address ?? '',
+                'obj' => $penyulangan->socri_dis_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_ocri, 'ocrid'),
+            ],
+            'row2' => [
+                'label' => 'Appear',
+                'address' => $penyulangan->socri_app_address ?? '',
+                'obj' => $penyulangan->socri_app_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_ocri, 'ocria'),
+            ],
+        ];
+
+        // DGR Status
+        $statuses[] = [
+            'name' => 'DGR',
+            'row1' => [
+                'label' => 'Disable',
+                'address' => $penyulangan->sdgr_dis_address ?? '',
+                'obj' => $penyulangan->sdgr_dis_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_dgr, 'dgrd'),
+            ],
+            'row2' => [
+                'label' => 'Appear',
+                'address' => $penyulangan->sdgr_app_address ?? '',
+                'obj' => $penyulangan->sdgr_app_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_dgr, 'dgra'),
+            ],
+        ];
+
+        // CBTR Status
+        $statuses[] = [
+            'name' => 'CBTR',
+            'row1' => [
+                'label' => 'Disable',
+                'address' => $penyulangan->scbtr_dis_address ?? '',
+                'obj' => $penyulangan->scbtr_dis_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_cbtr, 'cbtrd'),
+            ],
+            'row2' => [
+                'label' => 'Appear',
+                'address' => $penyulangan->scbtr_app_address ?? '',
+                'obj' => $penyulangan->scbtr_app_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_cbtr, 'cbtra'),
+            ],
+        ];
+
+        // AR Status
+        $statuses[] = [
+            'name' => 'AR',
+            'row1' => [
+                'label' => 'Disable',
+                'address' => $penyulangan->sar_dis_address ?? '',
+                'obj' => $penyulangan->sar_dis_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_ar, 'ard'),
+            ],
+            'row2' => [
+                'label' => 'Appear',
+                'address' => $penyulangan->sar_app_address ?? '',
+                'obj' => $penyulangan->sar_app_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_ar, 'ara'),
+            ],
+        ];
+
+        // ARU Status
+        $statuses[] = [
+            'name' => 'ARU',
+            'row1' => [
+                'label' => 'Disable',
+                'address' => $penyulangan->saru_dis_address ?? '',
+                'obj' => $penyulangan->saru_dis_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_aru, 'arud'),
+            ],
+            'row2' => [
+                'label' => 'Appear',
+                'address' => $penyulangan->saru_app_address ?? '',
+                'obj' => $penyulangan->saru_app_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_aru, 'arua'),
+            ],
+        ];
+
+        // TC Status
+        $statuses[] = [
+            'name' => 'TC',
+            'row1' => [
+                'label' => 'Disable',
+                'address' => $penyulangan->stc_dis_address ?? '',
+                'obj' => $penyulangan->stc_dis_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_tc, 'tcd'),
+            ],
+            'row2' => [
+                'label' => 'Appear',
+                'address' => $penyulangan->stc_app_address ?? '',
+                'obj' => $penyulangan->stc_app_objfrmt ?? '',
+                'checks' => $this->getCheckValue($s_tc, 'tca'),
+            ],
+        ];
+
+        return $statuses;
+    }
+
+    /**
+     * Parse Control Data untuk Penyulangan
+     */
+    private function parseControlDataPeny($penyulangan)
+    {
+        $controls = [];
+
+        $c_cb = $this->parseCheckboxValue($penyulangan->c_cb ?? '');
+        $c_aru = $this->parseCheckboxValue($penyulangan->c_aru ?? '');
+        $c_rst = $this->parseCheckboxValue($penyulangan->c_rst ?? '');
+        $c_tc = $this->parseCheckboxValue($penyulangan->c_tc ?? '');
+
+        // CB Control
+        $controls[] = [
+            'name' => 'CB',
+            'row1' => [
+                'label' => 'Open',
+                'address' => $penyulangan->ccb_open_address ?? '',
+                'obj' => $penyulangan->ccb_open_objfrmt ?? '',
+                'checks' => $this->getCheckValue($c_cb, 'ccb_open'),
+            ],
+            'row2' => [
+                'label' => 'Close',
+                'address' => $penyulangan->ccb_close_address ?? '',
+                'obj' => $penyulangan->ccb_close_objfrmt ?? '',
+                'checks' => $this->getCheckValue($c_cb, 'ccb_close'),
+            ],
+        ];
+
+        // ARU Control
+        $controls[] = [
+            'name' => 'ARU',
+            'row1' => [
+                'label' => 'Use',
+                'address' => $penyulangan->caru_use_address ?? '',
+                'obj' => $penyulangan->caru_use_objfrmt ?? '',
+                'checks' => $this->getCheckValue($c_aru, 'caru'),
+            ],
+            'row2' => [
+                'label' => 'Unuse',
+                'address' => $penyulangan->caru_unuse_address ?? '',
+                'obj' => $penyulangan->caru_unuse_objfrmt ?? '',
+                'checks' => $this->getCheckValue($c_aru, 'carun'),
+            ],
+        ];
+
+        // Reset Control (Single Row)
+        $controls[] = [
+            'name' => 'RESET',
+            'single' => true,
+            'row1' => [
+                'label' => 'Reset',
+                'address' => $penyulangan->creset_on_address ?? '',
+                'obj' => $penyulangan->creset_on_objfrmt ?? '',
+                'checks' => $this->getCheckValue($c_rst, 'rrctrl_on'),
+            ],
+        ];
+
+        // TC Control
+        $controls[] = [
+            'name' => 'TC',
+            'row1' => [
+                'label' => 'Raiser',
+                'address' => $penyulangan->ctc_raiser_address ?? '',
+                'obj' => $penyulangan->ctc_raiser_objfrmt ?? '',
+                'checks' => $this->getCheckValue($c_tc, 'ctcr'),
+            ],
+            'row2' => [
+                'label' => 'Lower',
+                'address' => $penyulangan->ctc_lower_address ?? '',
+                'obj' => $penyulangan->ctc_lower_objfrmt ?? '',
+                'checks' => $this->getCheckValue($c_tc, 'ctcl'),
+            ],
+        ];
+
+        return $controls;
+    }
+
+    /**
+     * Parse Metering Data untuk Penyulangan
+     */
+    private function parseMeteringDataPeny($penyulangan)
+    {
+        $fields = [
+            ['name' => 'IR', 'prefix' => 'ir', 'isPseudo' => false],
+            ['name' => 'IS', 'prefix' => 'is', 'isPseudo' => false],
+            ['name' => 'IT', 'prefix' => 'it', 'isPseudo' => false],
+            ['name' => 'IFR', 'prefix' => 'ifr', 'isPseudo' => false],
+            ['name' => 'IFS', 'prefix' => 'ifs', 'isPseudo' => false],
+            ['name' => 'IFT', 'prefix' => 'ift', 'isPseudo' => false],
+            ['name' => 'IFN', 'prefix' => 'ifn', 'isPseudo' => false],
+            ['name' => 'IFR (Pseudo)', 'prefix' => 'ifr_psuedo', 'isPseudo' => true],
+            ['name' => 'IFS (Pseudo)', 'prefix' => 'ifs_psuedo', 'isPseudo' => true],
+            ['name' => 'IFT (Pseudo)', 'prefix' => 'ift_psuedo', 'isPseudo' => true],
+            ['name' => 'IFN (Pseudo)', 'prefix' => 'ifn_psuedo', 'isPseudo' => true],
+            ['name' => 'KV0', 'prefix' => 'kv0', 'isPseudo' => false],
+        ];
+
+        return collect($fields)->map(function ($field) use ($penyulangan) {
+            $prefix = $field['prefix'];
+            $addressKey = "{$prefix}_address";
+            $objKey = "{$prefix}_objfrmt";
+            $rtuKey = "{$prefix}_rtu";
+            $msKey = "{$prefix}_ms";
+            $scaleKey = "{$prefix}_scale";
+            $checkKey = "t_{$prefix}";
+
+            return [
+                'name' => $field['name'],
+                'address' => $penyulangan->$addressKey ?? '',
+                'obj' => $penyulangan->$objKey ?? '',
+                'rtu' => $penyulangan->$rtuKey ?? '',
+                'ms' => $penyulangan->$msKey ?? '',
+                'scale' => $penyulangan->$scaleKey ?? '',
+                'checks' => $this->getMeteringCheckValuePeny($penyulangan->$checkKey ?? ''),
+                'isPseudo' => $field['isPseudo'],
+            ];
+        })->toArray();
+    }
+
+    /**
+     * Get metering check values (1=OK, 2=NOK, 5=SLD)
+     */
+    private function getMeteringCheckValuePeny($value)
+    {
+        $checks = [];
+
+        if (empty($value) || $value === null) {
+            return $checks;
+        }
+
+        $value = (string) $value;
+
+        if (strpos($value, ',') !== false) {
+            $items = array_map('trim', explode(',', $value));
+            foreach ($items as $item) {
+                if (is_numeric($item)) {
+                    $checks[] = (int) $item;
+                } elseif (preg_match('/_(\d+)$/', $item, $matches)) {
+                    $checks[] = (int) $matches[1];
+                } elseif (preg_match('/(\d+)$/', $item, $matches)) {
+                    $checks[] = (int) $matches[1];
+                }
+            }
+        } elseif (strpos($value, '[') === 0) {
+            $decoded = json_decode($value, true);
+            if (is_array($decoded)) {
+                $checks = array_map('intval', $decoded);
+            }
+        } else {
+            if (is_numeric($value)) {
+                $checks[] = (int) $value;
+            } elseif (preg_match('/_(\d+)$/', $value, $matches)) {
+                $checks[] = (int) $matches[1];
+            } elseif (preg_match('/(\d+)$/', $value, $matches)) {
+                $checks[] = (int) $matches[1];
+            }
+        }
+
+        return array_unique($checks);
+    }
+
+
+
 
 
     public function exportPdfFiltered(Request $request)
