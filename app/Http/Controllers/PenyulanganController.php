@@ -20,7 +20,215 @@ class PenyulanganController extends Controller
         return view('pages.penyulangan.index');
     }
 
-  
+
+    public function data(Request $request)
+    {
+        $draw = $request->draw;
+        $start = $request->start;
+        $length = $request->length;
+        $searchValue = $request->search['value'];
+        $orderColumnIndex = $request->order[0]['column'];
+        $orderDir = $request->order[0]['dir'];
+        $columns = $request->columns;
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+
+        // ✅ NEW: Category filter from dashboard
+        $category = $request->category;
+
+        $pelrtuMap = DB::table('tb_pelaksana_rtu')->pluck('nama_pelrtu', 'id_pelrtu')->toArray();
+
+        $query = DB::table('tb_formpeny')
+            ->select(
+                'tb_formpeny.id_peny',
+                'tb_formpeny.tgl_kom',
+                'tb_formpeny.nama_peny',
+                'tb_formpeny.id_gi',
+                'tb_formpeny.id_rtugi',
+                'tb_formpeny.catatanpeny',
+                'tb_formpeny.nama_user',
+                'tb_formpeny.id_pelrtu'
+            );
+
+        // Date filter
+        if ($fromDate && $toDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '>=', $fromDate)
+                ->whereDate('tb_formpeny.tgl_kom', '<=', $toDate);
+        } elseif ($fromDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '>=', $fromDate);
+        } elseif ($toDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '<=', $toDate);
+        }
+
+        // ✅ NEW: Category filter from dashboard
+        if (!empty($category)) {
+            switch ($category) {
+                case 'gardu_induk':
+                    $query->whereNotNull('tb_formpeny.id_gi')
+                        ->where('tb_formpeny.id_gi', '!=', '');
+                    break;
+                case 'rtu_gi':
+                    $query->whereNotNull('tb_formpeny.id_rtugi')
+                        ->where('tb_formpeny.id_rtugi', '>', 0);
+                    break;
+            }
+        }
+
+        $records = $query->get();
+
+        $records = $records->map(function ($row) use ($pelrtuMap) {
+            $ids = json_decode($row->id_pelrtu, true) ?? [];
+            $names = [];
+            foreach ($ids as $id) {
+                $id = trim($id, '"');
+                if (isset($pelrtuMap[$id])) {
+                    $names[] = $pelrtuMap[$id];
+                }
+            }
+            $row->pic_rtu_names = implode(', ', $names);
+            return $row;
+        });
+
+        if (!empty($searchValue)) {
+            $records = $records->filter(function ($row) use ($searchValue) {
+                return stripos($row->nama_peny, $searchValue) !== false ||
+                    stripos($row->id_gi, $searchValue) !== false ||
+                    stripos($row->id_rtugi, $searchValue) !== false ||
+                    stripos($row->catatanpeny, $searchValue) !== false ||
+                    stripos($row->nama_user, $searchValue) !== false ||
+                    stripos($row->pic_rtu_names, $searchValue) !== false;
+            });
+        }
+
+        foreach ($columns as $index => $col) {
+            $colSearchValue = $col['search']['value'];
+            if (!empty($colSearchValue) && $col['searchable'] == 'true') {
+                $records = $records->filter(function ($row) use ($index, $colSearchValue) {
+                    switch ($index) {
+                        case 0:
+                            return $row->tgl_kom && stripos(Carbon::parse($row->tgl_kom)->format('l, d-m-Y'), $colSearchValue) !== false;
+                        case 1:
+                            return stripos($row->nama_peny, $colSearchValue) !== false;
+                        case 2:
+                            return stripos($row->id_gi, $colSearchValue) !== false;
+                        case 3:
+                            return stripos($row->id_rtugi, $colSearchValue) !== false;
+                        case 4:
+                            return stripos($row->catatanpeny, $colSearchValue) !== false;
+                        case 5:
+                            return stripos($row->nama_user, $colSearchValue) !== false;
+                        case 6:
+                            return stripos($row->pic_rtu_names, $colSearchValue) !== false;
+                    }
+                    return true;
+                });
+            }
+        }
+
+        $orderFieldMap = [
+            0 => 'tgl_kom',
+            1 => 'nama_peny',
+            2 => 'id_gi',
+            3 => 'id_rtugi',
+            4 => 'catatanpeny',
+            5 => 'nama_user',
+            6 => 'pic_rtu_names',
+        ];
+        $orderField = $orderFieldMap[$orderColumnIndex] ?? 'tgl_kom';
+
+        if ($orderDir === 'desc') {
+            $records = $records->sortByDesc($orderField);
+        } else {
+            $records = $records->sortBy($orderField);
+        }
+
+        $totalRecords = DB::table('tb_formpeny')->count();
+        $totalFiltered = $records->count();
+
+        $data = $records->slice($start, $length)->map(function ($row) {
+            $row->tgl_kom = $row->tgl_kom ? Carbon::parse($row->tgl_kom)->format('l, d-m-Y') : '';
+            $row->id_pelrtu = $row->pic_rtu_names;
+            $row->action = '
+            <a href="' . route('penyulangan.clone', $row->id_peny) . '" class="btn btn-icon btn-round btn-primary">
+                <i class="far fa-clone"></i>
+            </a>
+            <a href="' . route('penyulangan.edit', $row->id_peny) . '" class="btn btn-icon btn-round btn-warning">
+                <i class="fa fa-pen"></i>
+            </a>
+            <a href="' . route('penyulangan.exportsinglepdf', $row->id_peny) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+            <a href="' . route('penyulangan.exportsingleexcel', $row->id_peny) . '" class="btn btn-icon btn-round btn-success" title="Export Excel">
+                <i class="fas fa-file-excel"></i>
+            </a>
+
+            <form action="' . route('penyulangan.destroy', $row->id_peny) . '" method="POST" style="display:inline;">
+                ' . csrf_field() . '
+                ' . method_field('DELETE') . '
+                <button type="submit" class="btn btn-icon btn-round btn-secondary" onclick="return confirm(\'Are you sure you want to delete this penyulangan?\')">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </form>
+        ';
+            unset($row->pic_rtu_names);
+            return $row;
+        })->values()->toArray();
+
+        return response()->json([
+            'draw' => (int)$draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalFiltered,
+            'data' => $data,
+        ]);
+    }
+
+
+    public function getData(Request $request)
+    {
+        $query = DB::table('tb_formpeny')
+            ->leftJoin('tb_merkrtugi', 'tb_formpeny.id_rtugi', '=', 'tb_merkrtugi.id_rtugi')
+            ->select([
+                'tb_formpeny.id_peny',
+                'tb_formpeny.tgl_kom',
+                'tb_formpeny.nama_peny',
+                'tb_formpeny.id_gi',
+                DB::raw("COALESCE(tb_merkrtugi.nama_rtugi, '') as id_rtugi"),
+                'tb_formpeny.catatanpeny',
+                'tb_formpeny.nama_user',
+                'tb_formpeny.id_pelrtu'
+            ]);
+
+        // Date filter
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('tb_formpeny.tgl_kom', [$request->from_date, $request->to_date]);
+        }
+
+        // Category filter
+        if ($request->filled('category')) {
+            switch ($request->category) {
+                case 'gardu_induk':
+                    $query->whereNotNull('tb_formpeny.id_gi')
+                        ->where('tb_formpeny.id_gi', '!=', '');
+                    break;
+                case 'rtu_gi':
+                    $query->whereNotNull('tb_formpeny.id_rtugi')
+                        ->where('tb_formpeny.id_rtugi', '>', 0);
+                    break;
+            }
+        }
+
+        return DataTables::of($query)
+            ->addColumn('action', function ($row) {
+                $btn = '<div class="btn-group">';
+                $btn .= '<a href="' . route('penyulangan.show', $row->id_peny) . '" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>';
+                $btn .= '<a href="' . route('penyulangan.edit', $row->id_peny) . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>';
+                $btn .= '<button class="btn btn-sm btn-danger" onclick="deleteData(' . $row->id_peny . ')"><i class="fas fa-trash"></i></button>';
+                $btn .= '</div>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
 
     public function exportSinglePdf($id)
     {
