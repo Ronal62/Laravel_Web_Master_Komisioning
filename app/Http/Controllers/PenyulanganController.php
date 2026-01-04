@@ -732,6 +732,513 @@ class PenyulanganController extends Controller
     }
 
 
+    // Add these methods to PenyulanganController.php
+
+    public function exportByDatePdf(Request $request)
+    {
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+        $category = $request->category;
+
+        $query = DB::table('tb_formpeny')
+            ->select(
+                'tb_formpeny.id_peny',
+                'tb_formpeny.tgl_kom',
+                'tb_formpeny.nama_peny',
+                'tb_formpeny.id_gi',
+                'tb_formpeny.id_rtugi',
+                'tb_formpeny.catatanpeny',
+                'tb_formpeny.nama_user',
+                'tb_formpeny.id_pelrtu',
+                'tb_formpeny.id_pelms',
+                'tb_formpeny.id_medkom',
+                'tb_formpeny.id_komkp',
+                'tb_formpeny.rtu_addrs',
+                'tb_formpeny.lastupdate',
+                'tb_formpeny.ketfts',
+                'tb_formpeny.ketftc',
+                'tb_formpeny.ketftm',
+                'tb_formpeny.ketfd',
+                'tb_formpeny.ketpk',
+                // Include all necessary fields for parsing (status, control, metering, etc.)
+                'tb_formpeny.s_cb',
+                'tb_formpeny.s_lr',
+                'tb_formpeny.s_ocr',
+                'tb_formpeny.s_ocri',
+                'tb_formpeny.s_dgr',
+                'tb_formpeny.s_cbtr',
+                'tb_formpeny.s_ar',
+                'tb_formpeny.s_aru',
+                'tb_formpeny.s_tc',
+                'tb_formpeny.scb_open_address',
+                'tb_formpeny.scb_open_objfrmt',
+                'tb_formpeny.scb_close_address',
+                'tb_formpeny.scb_close_objfrmt',
+                'tb_formpeny.slocal_address',
+                'tb_formpeny.slocal_objfrmt',
+                'tb_formpeny.sremote_address',
+                'tb_formpeny.sremote_objfrmt',
+                'tb_formpeny.socr_dis_address',
+                'tb_formpeny.socr_dis_objfrmt',
+                'tb_formpeny.socr_app_address',
+                'tb_formpeny.socr_app_objfrmt',
+                'tb_formpeny.socri_dis_address',
+                'tb_formpeny.socri_dis_objfrmt',
+                'tb_formpeny.socri_app_address',
+                'tb_formpeny.socri_app_objfrmt',
+                'tb_formpeny.sdgr_dis_address',
+                'tb_formpeny.sdgr_dis_objfrmt',
+                'tb_formpeny.sdgr_app_address',
+                'tb_formpeny.sdgr_app_objfrmt',
+                'tb_formpeny.scbtr_dis_address',
+                'tb_formpeny.scbtr_dis_objfrmt',
+                'tb_formpeny.scbtr_app_address',
+                'tb_formpeny.scbtr_app_objfrmt',
+                'tb_formpeny.sar_dis_address',
+                'tb_formpeny.sar_dis_objfrmt',
+                'tb_formpeny.sar_app_address',
+                'tb_formpeny.sar_app_objfrmt',
+                'tb_formpeny.saru_dis_address',
+                'tb_formpeny.saru_dis_objfrmt',
+                'tb_formpeny.saru_app_address',
+                'tb_formpeny.saru_app_objfrmt',
+                'tb_formpeny.stc_dis_address',
+                'tb_formpeny.stc_dis_objfrmt',
+                'tb_formpeny.stc_app_address',
+                'tb_formpeny.stc_app_objfrmt',
+                'tb_formpeny.c_cb',
+                'tb_formpeny.c_aru',
+                'tb_formpeny.c_rst',
+                'tb_formpeny.c_tc',
+                'tb_formpeny.ccb_open_address',
+                'tb_formpeny.ccb_open_objfrmt',
+                'tb_formpeny.ccb_close_address',
+                'tb_formpeny.ccb_close_objfrmt',
+                'tb_formpeny.caru_use_address',
+                'tb_formpeny.caru_use_objfrmt',
+                'tb_formpeny.caru_unuse_address',
+                'tb_formpeny.caru_unuse_objfrmt',
+                'tb_formpeny.creset_on_address',
+                'tb_formpeny.creset_on_objfrmt',
+                'tb_formpeny.ctc_raiser_address',
+                'tb_formpeny.ctc_raiser_objfrmt',
+                'tb_formpeny.ctc_lower_address',
+                'tb_formpeny.ctc_lower_objfrmt',
+                'tb_formpeny.ir_address',
+                'tb_formpeny.ir_objfrmt',
+                'tb_formpeny.ir_rtu',
+                'tb_formpeny.ir_ms',
+                'tb_formpeny.ir_scale',
+                'tb_formpeny.t_ir',
+                'tb_formpeny.is_address',
+                'tb_formpeny.is_objfrmt',
+                'tb_formpeny.is_rtu',
+                'tb_formpeny.is_ms',
+                'tb_formpeny.is_scale',
+                'tb_formpeny.t_is',
+                'tb_formpeny.it_address',
+                'tb_formpeny.it_objfrmt',
+                'tb_formpeny.it_rtu',
+                'tb_formpeny.it_ms',
+                'tb_formpeny.it_scale',
+                'tb_formpeny.t_it',
+                'tb_formpeny.ifr_address',
+                'tb_formpeny.ifr_objfrmt',
+                'tb_formpeny.ifr_rtu',
+                'tb_formpeny.ifr_ms',
+                'tb_formpeny.ifr_scale',
+                'tb_formpeny.t_ifr',
+                'tb_formpeny.ifs_address',
+                'tb_formpeny.ifs_objfrmt',
+                'tb_formpeny.ifs_rtu',
+                'tb_formpeny.ifs_ms',
+                'tb_formpeny.ifs_scale',
+                'tb_formpeny.t_ifs',
+                'tb_formpeny.ift_address',
+                'tb_formpeny.ift_objfrmt',
+                'tb_formpeny.ift_rtu',
+                'tb_formpeny.ift_ms',
+                'tb_formpeny.ift_scale',
+                'tb_formpeny.t_ift',
+                'tb_formpeny.ifn_address',
+                'tb_formpeny.ifn_objfrmt',
+                'tb_formpeny.ifn_rtu',
+                'tb_formpeny.ifn_ms',
+                'tb_formpeny.ifn_scale',
+                'tb_formpeny.t_ifn',
+                'tb_formpeny.ifr_psuedo_address',
+                'tb_formpeny.ifr_psuedo_objfrmt',
+                'tb_formpeny.ifr_psuedo_rtu',
+                'tb_formpeny.ifr_psuedo_ms',
+                'tb_formpeny.ifr_psuedo_scale',
+                'tb_formpeny.t_ifr_psuedo',
+                'tb_formpeny.ifs_psuedo_address',
+                'tb_formpeny.ifs_psuedo_objfrmt',
+                'tb_formpeny.ifs_psuedo_rtu',
+                'tb_formpeny.ifs_psuedo_ms',
+                'tb_formpeny.ifs_psuedo_scale',
+                'tb_formpeny.t_ifs_psuedo',
+                'tb_formpeny.ift_psuedo_address',
+                'tb_formpeny.ift_psuedo_objfrmt',
+                'tb_formpeny.ift_psuedo_rtu',
+                'tb_formpeny.ift_psuedo_ms',
+                'tb_formpeny.ift_psuedo_scale',
+                'tb_formpeny.t_ift_psuedo',
+                'tb_formpeny.ifn_psuedo_address',
+                'tb_formpeny.ifn_psuedo_objfrmt',
+                'tb_formpeny.ifn_psuedo_rtu',
+                'tb_formpeny.ifn_psuedo_ms',
+                'tb_formpeny.ifn_psuedo_scale',
+                'tb_formpeny.t_ifn_psuedo',
+                'tb_formpeny.kv0_address',
+                'tb_formpeny.kv0_objfrmt',
+                'tb_formpeny.kv0_rtu',
+                'tb_formpeny.kv0_ms',
+                'tb_formpeny.kv0_scale',
+                'tb_formpeny.t_kv0'
+            );
+
+        // Date filter
+        if ($fromDate && $toDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '>=', $fromDate)
+                ->whereDate('tb_formpeny.tgl_kom', '<=', $toDate);
+        } elseif ($fromDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '>=', $fromDate);
+        } elseif ($toDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '<=', $toDate);
+        }
+
+        // Category filter
+        if (!empty($category)) {
+            switch ($category) {
+                case 'gardu_induk':
+                    $query->whereNotNull('tb_formpeny.id_gi')
+                        ->where('tb_formpeny.id_gi', '!=', '');
+                    break;
+                case 'rtu_gi':
+                    $query->whereNotNull('tb_formpeny.id_rtugi')
+                        ->where('tb_formpeny.id_rtugi', '>', 0);
+                    break;
+            }
+        }
+
+        $penyulangans = $query->get();
+
+        if ($penyulangans->isEmpty()) {
+            abort(404, 'No data found for the specified date range');
+        }
+
+        $processedData = $penyulangans->map(function ($peny) {
+            // Format tanggal
+            $peny->tgl_kom = $peny->tgl_kom ? Carbon::parse($peny->tgl_kom)->format('d-m-Y') : '-';
+
+            // Set default values
+            $peny->nama_rtugi = $peny->id_rtugi ?? '-';
+            $peny->nama_medkom = $peny->id_medkom ?? '-';
+            $peny->jenis_komkp = $peny->id_komkp ?? '-';
+
+            // Get Pelaksana MS (PIC Master)
+            $pelMsIds = json_decode($peny->id_pelms ?? '[]', true) ?? [];
+            $pelaksanaMs = collect();
+            if (!empty($pelMsIds)) {
+                $pelaksanaMs = DB::table('tb_picmaster')
+                    ->whereIn('id_picmaster', $pelMsIds)
+                    ->get();
+            }
+
+            // Get Pelaksana RTU (Field Engineer)
+            $pelRtuIds = json_decode($peny->id_pelrtu ?? '[]', true) ?? [];
+            $pelaksanaRtu = collect();
+            if (!empty($pelRtuIds)) {
+                $pelaksanaRtu = DB::table('tb_pelaksana_rtu')
+                    ->whereIn('id_pelrtu', $pelRtuIds)
+                    ->get();
+            }
+
+            // Parse Data
+            $statusData = $this->parseStatusDataPeny($peny);
+            $controlData = $this->parseControlDataPeny($peny);
+            $meteringData = $this->parseMeteringDataPeny($peny);
+
+            return [
+                'row' => $peny,
+                'pelaksanaMs' => $pelaksanaMs,
+                'pelaksanaRtu' => $pelaksanaRtu,
+                'statusData' => $statusData,
+                'controlData' => $controlData,
+                'meteringData' => $meteringData,
+            ];
+        });
+
+        $pdf = Pdf::loadView('pdf.bydatepenyulangan_dompdf', [
+            'data' => $processedData,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+        ]);
+
+        $pdf->setPaper('a4', 'landscape');
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'defaultFont' => 'Arial',
+            'dpi' => 150,
+        ]);
+
+        $filename = 'Penyulangan_ByDate_' . ($fromDate ? $fromDate : 'all') . '_to_' . ($toDate ? $toDate : 'all') . '.pdf';
+
+        return $pdf->download($filename);
+    }
+
+    public function exportByDateExcel(Request $request)
+    {
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+        $category = $request->category;
+
+        $query = DB::table('tb_formpeny')
+            ->select(
+                'tb_formpeny.id_peny',
+                'tb_formpeny.tgl_kom',
+                'tb_formpeny.nama_peny',
+                'tb_formpeny.id_gi',
+                'tb_formpeny.id_rtugi',
+                'tb_formpeny.catatanpeny',
+                'tb_formpeny.nama_user',
+                'tb_formpeny.id_pelrtu',
+                'tb_formpeny.id_pelms',
+                'tb_formpeny.id_medkom',
+                'tb_formpeny.id_komkp',
+                'tb_formpeny.rtu_addrs',
+                'tb_formpeny.lastupdate',
+                'tb_formpeny.ketfts',
+                'tb_formpeny.ketftc',
+                'tb_formpeny.ketftm',
+                'tb_formpeny.ketfd',
+                'tb_formpeny.ketpk',
+                // Include all necessary fields for parsing (status, control, metering, etc.)
+                'tb_formpeny.s_cb',
+                'tb_formpeny.s_lr',
+                'tb_formpeny.s_ocr',
+                'tb_formpeny.s_ocri',
+                'tb_formpeny.s_dgr',
+                'tb_formpeny.s_cbtr',
+                'tb_formpeny.s_ar',
+                'tb_formpeny.s_aru',
+                'tb_formpeny.s_tc',
+                'tb_formpeny.scb_open_address',
+                'tb_formpeny.scb_open_objfrmt',
+                'tb_formpeny.scb_close_address',
+                'tb_formpeny.scb_close_objfrmt',
+                'tb_formpeny.slocal_address',
+                'tb_formpeny.slocal_objfrmt',
+                'tb_formpeny.sremote_address',
+                'tb_formpeny.sremote_objfrmt',
+                'tb_formpeny.socr_dis_address',
+                'tb_formpeny.socr_dis_objfrmt',
+                'tb_formpeny.socr_app_address',
+                'tb_formpeny.socr_app_objfrmt',
+                'tb_formpeny.socri_dis_address',
+                'tb_formpeny.socri_dis_objfrmt',
+                'tb_formpeny.socri_app_address',
+                'tb_formpeny.socri_app_objfrmt',
+                'tb_formpeny.sdgr_dis_address',
+                'tb_formpeny.sdgr_dis_objfrmt',
+                'tb_formpeny.sdgr_app_address',
+                'tb_formpeny.sdgr_app_objfrmt',
+                'tb_formpeny.scbtr_dis_address',
+                'tb_formpeny.scbtr_dis_objfrmt',
+                'tb_formpeny.scbtr_app_address',
+                'tb_formpeny.scbtr_app_objfrmt',
+                'tb_formpeny.sar_dis_address',
+                'tb_formpeny.sar_dis_objfrmt',
+                'tb_formpeny.sar_app_address',
+                'tb_formpeny.sar_app_objfrmt',
+                'tb_formpeny.saru_dis_address',
+                'tb_formpeny.saru_dis_objfrmt',
+                'tb_formpeny.saru_app_address',
+                'tb_formpeny.saru_app_objfrmt',
+                'tb_formpeny.stc_dis_address',
+                'tb_formpeny.stc_dis_objfrmt',
+                'tb_formpeny.stc_app_address',
+                'tb_formpeny.stc_app_objfrmt',
+                'tb_formpeny.c_cb',
+                'tb_formpeny.c_aru',
+                'tb_formpeny.c_rst',
+                'tb_formpeny.c_tc',
+                'tb_formpeny.ccb_open_address',
+                'tb_formpeny.ccb_open_objfrmt',
+                'tb_formpeny.ccb_close_address',
+                'tb_formpeny.ccb_close_objfrmt',
+                'tb_formpeny.caru_use_address',
+                'tb_formpeny.caru_use_objfrmt',
+                'tb_formpeny.caru_unuse_address',
+                'tb_formpeny.caru_unuse_objfrmt',
+                'tb_formpeny.creset_on_address',
+                'tb_formpeny.creset_on_objfrmt',
+                'tb_formpeny.ctc_raiser_address',
+                'tb_formpeny.ctc_raiser_objfrmt',
+                'tb_formpeny.ctc_lower_address',
+                'tb_formpeny.ctc_lower_objfrmt',
+                'tb_formpeny.ir_address',
+                'tb_formpeny.ir_objfrmt',
+                'tb_formpeny.ir_rtu',
+                'tb_formpeny.ir_ms',
+                'tb_formpeny.ir_scale',
+                'tb_formpeny.t_ir',
+                'tb_formpeny.is_address',
+                'tb_formpeny.is_objfrmt',
+                'tb_formpeny.is_rtu',
+                'tb_formpeny.is_ms',
+                'tb_formpeny.is_scale',
+                'tb_formpeny.t_is',
+                'tb_formpeny.it_address',
+                'tb_formpeny.it_objfrmt',
+                'tb_formpeny.it_rtu',
+                'tb_formpeny.it_ms',
+                'tb_formpeny.it_scale',
+                'tb_formpeny.t_it',
+                'tb_formpeny.ifr_address',
+                'tb_formpeny.ifr_objfrmt',
+                'tb_formpeny.ifr_rtu',
+                'tb_formpeny.ifr_ms',
+                'tb_formpeny.ifr_scale',
+                'tb_formpeny.t_ifr',
+                'tb_formpeny.ifs_address',
+                'tb_formpeny.ifs_objfrmt',
+                'tb_formpeny.ifs_rtu',
+                'tb_formpeny.ifs_ms',
+                'tb_formpeny.ifs_scale',
+                'tb_formpeny.t_ifs',
+                'tb_formpeny.ift_address',
+                'tb_formpeny.ift_objfrmt',
+                'tb_formpeny.ift_rtu',
+                'tb_formpeny.ift_ms',
+                'tb_formpeny.ift_scale',
+                'tb_formpeny.t_ift',
+                'tb_formpeny.ifn_address',
+                'tb_formpeny.ifn_objfrmt',
+                'tb_formpeny.ifn_rtu',
+                'tb_formpeny.ifn_ms',
+                'tb_formpeny.ifn_scale',
+                'tb_formpeny.t_ifn',
+                'tb_formpeny.ifr_psuedo_address',
+                'tb_formpeny.ifr_psuedo_objfrmt',
+                'tb_formpeny.ifr_psuedo_rtu',
+                'tb_formpeny.ifr_psuedo_ms',
+                'tb_formpeny.ifr_psuedo_scale',
+                'tb_formpeny.t_ifr_psuedo',
+                'tb_formpeny.ifs_psuedo_address',
+                'tb_formpeny.ifs_psuedo_objfrmt',
+                'tb_formpeny.ifs_psuedo_rtu',
+                'tb_formpeny.ifs_psuedo_ms',
+                'tb_formpeny.ifs_psuedo_scale',
+                'tb_formpeny.t_ifs_psuedo',
+                'tb_formpeny.ift_psuedo_address',
+                'tb_formpeny.ift_psuedo_objfrmt',
+                'tb_formpeny.ift_psuedo_rtu',
+                'tb_formpeny.ift_psuedo_ms',
+                'tb_formpeny.ift_psuedo_scale',
+                'tb_formpeny.t_ift_psuedo',
+                'tb_formpeny.ifn_psuedo_address',
+                'tb_formpeny.ifn_psuedo_objfrmt',
+                'tb_formpeny.ifn_psuedo_rtu',
+                'tb_formpeny.ifn_psuedo_ms',
+                'tb_formpeny.ifn_psuedo_scale',
+                'tb_formpeny.t_ifn_psuedo',
+                'tb_formpeny.kv0_address',
+                'tb_formpeny.kv0_objfrmt',
+                'tb_formpeny.kv0_rtu',
+                'tb_formpeny.kv0_ms',
+                'tb_formpeny.kv0_scale',
+                'tb_formpeny.t_kv0'
+            );
+
+        // Same date and category filters as in exportByDatePdf
+        if ($fromDate && $toDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '>=', $fromDate)
+                ->whereDate('tb_formpeny.tgl_kom', '<=', $toDate);
+        } elseif ($fromDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '>=', $fromDate);
+        } elseif ($toDate) {
+            $query->whereDate('tb_formpeny.tgl_kom', '<=', $toDate);
+        }
+
+        if (!empty($category)) {
+            switch ($category) {
+                case 'gardu_induk':
+                    $query->whereNotNull('tb_formpeny.id_gi')
+                        ->where('tb_formpeny.id_gi', '!=', '');
+                    break;
+                case 'rtu_gi':
+                    $query->whereNotNull('tb_formpeny.id_rtugi')
+                        ->where('tb_formpeny.id_rtugi', '>', 0);
+                    break;
+            }
+        }
+
+        $penyulangans = $query->get();
+
+        if ($penyulangans->isEmpty()) {
+            abort(404, 'No data found for the specified date range');
+        }
+
+        $processedData = $penyulangans->map(function ($peny) {
+            // Format tanggal
+            $peny->tgl_kom = $peny->tgl_kom ? Carbon::parse($peny->tgl_kom)->format('d-m-Y') : '-';
+
+            // Set default values
+            $peny->nama_rtugi = $peny->id_rtugi ?? '-';
+            $peny->nama_medkom = $peny->id_medkom ?? '-';
+            $peny->jenis_komkp = $peny->id_komkp ?? '-';
+
+            // Get Pelaksana MS (PIC Master)
+            $pelMsIds = json_decode($peny->id_pelms ?? '[]', true) ?? [];
+            $pelaksanaMs = collect();
+            if (!empty($pelMsIds)) {
+                $pelaksanaMs = DB::table('tb_picmaster')
+                    ->whereIn('id_picmaster', $pelMsIds)
+                    ->get();
+            }
+
+            // Get Pelaksana RTU (Field Engineer)
+            $pelRtuIds = json_decode($peny->id_pelrtu ?? '[]', true) ?? [];
+            $pelaksanaRtu = collect();
+            if (!empty($pelRtuIds)) {
+                $pelaksanaRtu = DB::table('tb_pelaksana_rtu')
+                    ->whereIn('id_pelrtu', $pelRtuIds)
+                    ->get();
+            }
+
+            // Parse Data
+            $statusData = $this->parseStatusDataPeny($peny);
+            $controlData = $this->parseControlDataPeny($peny);
+            $meteringData = $this->parseMeteringDataPeny($peny);
+
+            return [
+                'row' => $peny,
+                'pelaksanaMs' => $pelaksanaMs,
+                'pelaksanaRtu' => $pelaksanaRtu,
+                'statusData' => $statusData,
+                'controlData' => $controlData,
+                'meteringData' => $meteringData,
+            ];
+        });
+
+        $filename = 'Penyulangan_ByDate_' . ($fromDate ? $fromDate : 'all') . '_to_' . ($toDate ? $toDate : 'all') . '.xls';
+
+        $headers = [
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Cache-Control' => 'max-age=0',
+        ];
+
+        return response()->view('excel.bydatepenyulangan_excel', [
+            'data' => $processedData,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+        ])->withHeaders($headers);
+    }
+
     public function create()
     {
         $rtugi = DB::table('tb_merkrtugi')->get();

@@ -105,6 +105,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/penyulangan/export-single-excel/{id}', [PenyulanganController::class, 'exportSingleExcel'])
         ->name('penyulangan.exportsingleexcel');
+        
     Route::get('/get-kubikels/{gardu_induk}', [PenyulanganController::class, 'getKubikels'])->name('get.kubikels');
 
 
