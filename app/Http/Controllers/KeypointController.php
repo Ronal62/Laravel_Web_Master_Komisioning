@@ -794,7 +794,7 @@ class KeypointController extends Controller
                 'value' => $keypoint->sys_lruf_input ?? ''
             ],
             [
-                'name' => 'SIGN S',
+                'name' => 'SIGN S', 
                 'status' => $this->getTestResult($keypoint->sys_signs ?? ''),
                 'value' => $keypoint->sys_signs_input ?? ''
             ],

@@ -27,13 +27,13 @@
                     </div>
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                            <p class="card-category">On (Day)</p>
+                            <p class="card-category">On (Day) 230</p>
                             <button class="btn btn-primary btn-sm">Detail Harian</button>
                         </div>
                     </div>
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                            <p class="card-category">On (Month)</p>
+                            <p class="card-category">On (Month) 110002</p>
                             <button class="btn btn-primary btn-sm">Detail Bulanan</button>
                         </div>
                     </div>
@@ -52,19 +52,19 @@
                     </div>
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                            <p class="card-category">Keypoint</p>
+                            <p class="card-category">Penyulang</p>
                             <h4 class="card-title">1,294</h4>
                         </div>
                     </div>
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                            <p class="card-category">On (Day)</p>
+                            <p class="card-category">On (Day) 230</p>
                             <button class="btn btn-primary btn-sm">Detail Harian</button>
                         </div>
                     </div>
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
-                            <p class="card-category">On (Month)</p>
+                            <p class="card-category">On (Month) 10002</p>
                             <button class="btn btn-primary btn-sm">Detail Bulanan</button>
                         </div>
                     </div>
@@ -83,8 +83,8 @@
                     <div class="row align-items-center">
                         <div class="col col-stats ms-3 ms-sm-0">
                             <div class="numbers">
-                                <h4 class="card-title">DCC METROPOLIS</h4>
-                                <p class="card-category">On day</p>
+                                <h4 class="card-title">Gardu Induk</h4>
+                                <p class="card-category">On day 122</p>
                                 <button class="btn btn-primary btn-sm">Detail Harian</button>
                             </div>
                         </div>
@@ -98,8 +98,8 @@
                     <div class="row align-items-center">
                         <div class="col col-stats ms-3 ms-sm-0">
                             <div class="numbers">
-                                <h4 class="card-title">DCC BARAT</h4>
-                                <p class="card-category">On month</p>
+                                <h4 class="card-title">Gardu Induk</h4>
+                                <p class="card-category">On month 12039</p>
                                 <button class="btn btn-primary btn-sm">Detail Bulanan</button>
                             </div>
                         </div>
@@ -113,8 +113,23 @@
                     <div class="row align-items-center">
                         <div class="col col-stats ms-3 ms-sm-0">
                             <div class="numbers">
-                                <h4 class="card-title">DCC TIMUR</h4>
-                                <p class="card-category">On month</p>
+                                <h4 class="card-title">Sectoral</h4>
+                                <p class="card-category">On Day 121</p>
+                                <button class="btn btn-primary btn-sm">Detail Harian</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-2">
+            <div class="card card-stats card-round">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col col-stats ms-3 ms-sm-0">
+                            <div class="numbers">
+                                <h4 class="card-title">Sectoral</h4>
+                                <p class="card-category">On Day 121</p>
                                 <button class="btn btn-primary btn-sm">Detail Bulanan</button>
                             </div>
                         </div>
@@ -125,8 +140,9 @@
     </div>
 
     <div>
-        <h6 class="op-7 mb-2">Feeder & Inc</h6>
+        <h6 class="op-7 mb-2">Penyulang</h6>
     </div>
+
     <div class="row">
         <div class="col-xl-2 col-md-2">
             <div class="card card-stats card-round">
@@ -134,8 +150,8 @@
                     <div class="row align-items-center">
                         <div class="col col-stats ms-3 ms-sm-0">
                             <div class="numbers">
-                                <h4 class="card-title">DCC METROPOLIS</h4>
-                                <p class="card-category">On day</p>
+                                <h4 class="card-title">Gardu Induk</h4>
+                                <p class="card-category">On day 122</p>
                                 <button class="btn btn-primary btn-sm">Detail Harian</button>
                             </div>
                         </div>
@@ -149,8 +165,8 @@
                     <div class="row align-items-center">
                         <div class="col col-stats ms-3 ms-sm-0">
                             <div class="numbers">
-                                <h4 class="card-title">DCC BARAT</h4>
-                                <p class="card-category">On month</p>
+                                <h4 class="card-title">Gardu Induk</h4>
+                                <p class="card-category">On month 12039</p>
                                 <button class="btn btn-primary btn-sm">Detail Bulanan</button>
                             </div>
                         </div>
@@ -164,8 +180,23 @@
                     <div class="row align-items-center">
                         <div class="col col-stats ms-3 ms-sm-0">
                             <div class="numbers">
-                                <h4 class="card-title">DCC TIMUR</h4>
-                                <p class="card-category">On month</p>
+                                <h4 class="card-title">Sectoral</h4>
+                                <p class="card-category">On Day 121</p>
+                                <button class="btn btn-primary btn-sm">Detail Harian</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-2">
+            <div class="card card-stats card-round">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col col-stats ms-3 ms-sm-0">
+                            <div class="numbers">
+                                <h4 class="card-title">Sectoral</h4>
+                                <p class="card-category">On Day 121</p>
                                 <button class="btn btn-primary btn-sm">Detail Bulanan</button>
                             </div>
                         </div>
