@@ -97,7 +97,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/penyulangan/export-single/{id}', [PenyulanganController::class, 'exportSinglePdf'])
         ->name('penyulangan.exportsinglepdf');
 
-    Route::get('/penyulangan/export/excel', [PenyulanganController::class, 'exportExcelFiltered'])->name('penyulangan.exportexcelall');
+    Route::get('/penyulangan/export-single-excel/{id}', [PenyulanganController::class, 'exportSingleExcel'])
+        ->name('penyulangan.exportsingleexcel');
+        
     Route::get('/get-kubikels/{gardu_induk}', [PenyulanganController::class, 'getKubikels'])->name('get.kubikels');
 
 

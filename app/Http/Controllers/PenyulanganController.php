@@ -137,6 +137,9 @@ class PenyulanganController extends Controller
                 <a href="' . route('penyulangan.exportsinglepdf', $row->id_peny) . '" target="_blank" class="btn btn-icon btn-round btn-danger">
                     <i class="fas fa-file-pdf"></i>
                 </a>
+                <a href="' . route('penyulangan.exportsingleexcel', $row->id_peny) . '" class="btn btn-icon btn-round btn-success" title="Export Excel">
+                    <i class="fas fa-file-excel"></i>
+                </a>
 
                 <form action="' . route('penyulangan.destroy', $row->id_peny) . '" method="POST" style="display:inline;">
                     ' . csrf_field() . '
@@ -596,129 +599,69 @@ class PenyulanganController extends Controller
     }
 
 
-
-
-
-    public function exportPdfFiltered(Request $request)
+    public function exportSingleExcel($id)
     {
-        $fromDate = $request->query('from');
-        $toDate = $request->query('to');
+        // 1. Get Main Data
+        $penyulangan = DB::table('tb_formpeny')
+            ->where('id_peny', $id)
+            ->first();
 
-        $query = DB::table('tb_formpeny')
-            ->leftJoin('tb_garduinduk', 'tb_formpeny.id_gi', '=', 'tb_garduinduk.id_gi')
-            ->leftJoin('tb_merkrtugi', 'tb_formpeny.id_rtugi', '=', 'tb_merkrtugi.id_rtugi')
-            ->select(
-                'tb_formpeny.tgl_kom',
-                'tb_formpeny.nama_peny',
-                'tb_garduinduk.nama_gi as id_gi',
-                'tb_merkrtugi.merk_rtugi as id_rtugi',
-                'tb_formpeny.catatanpeny',
-                'tb_formpeny.nama_user',
-                'tb_formpeny.id_pelrtu'
-            );
-
-        if ($fromDate && $toDate) {
-            $query->whereBetween('tb_formpeny.tgl_kom', [$fromDate, $toDate]);
+        if (!$penyulangan) {
+            abort(404, 'Data Penyulangan tidak ditemukan');
         }
 
-        $penyulangans = $query->get();
+        // 2. Format tanggal
+        $penyulangan->tgl_kom = $penyulangan->tgl_kom ? Carbon::parse($penyulangan->tgl_kom)->format('d-m-Y') : '-';
 
-        $pelrtuMap = DB::table('tb_pelaksana_rtu')->pluck('nama_pelrtu', 'id_pelrtu')->toArray();
+        // 3. Set default values
+        $penyulangan->nama_rtugi = $penyulangan->id_rtugi ?? '-';
+        $penyulangan->nama_medkom = $penyulangan->id_medkom ?? '-';
+        $penyulangan->jenis_komkp = $penyulangan->id_komkp ?? '-';
 
-        $penyulangans = $penyulangans->map(function ($row) use ($pelrtuMap) {
-            $row->tgl_kom = Carbon::parse($row->tgl_kom)->format('l, d-m-Y');
-
-            $ids = json_decode($row->id_pelrtu, true) ?? [];
-            $names = [];
-            foreach ($ids as $id) {
-                if (isset($pelrtuMap[$id])) {
-                    $names[] = $pelrtuMap[$id];
-                }
-            }
-            $row->id_pelrtu = implode(', ', $names);
-
-            return $row;
-        });
-
-        $data = ['penyulangans' => $penyulangans];
-        $html = view('pdf.allpenyulangans', $data)->render();
-
-        $filename = "Data_Penyulangan_" . now()->format('d-m-Y') . ".pdf";
-        $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetMargins(10, 5, 10);
-        $pdf->SetFont('helvetica', '', 9);
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
-        $pdf->AddPage('L');
-        $pdf->writeHTML($html, true, false, true, false, '');
-
-        return response()->streamDownload(function () use ($pdf, $filename) {
-            $pdf->Output($filename, 'I');
-        }, $filename, ['Content-Type' => 'application/pdf']);
-    }
-
-    public function exportExcelFiltered(Request $request)
-    {
-        $fromDate = $request->query('from');
-        $toDate = $request->query('to');
-
-        $query = DB::table('tb_formpeny')
-            ->leftJoin('tb_garduinduk', 'tb_formpeny.id_gi', '=', 'tb_garduinduk.id_gi')
-            ->leftJoin('tb_merkrtugi', 'tb_formpeny.id_rtugi', '=', 'tb_merkrtugi.id_rtugi')
-            ->select(
-                DB::raw("DATE_FORMAT(tb_formpeny.tgl_kom, '%d-%m-%Y') as tgl_kom"),
-                'tb_formpeny.nama_peny',
-                'tb_garduinduk.nama_gi as id_gi',
-                'tb_merkrtugi.merk_rtugi as id_rtugi',
-                'tb_formpeny.catatanpeny',
-                'tb_formpeny.nama_user',
-                'tb_formpeny.id_pelrtu'
-            );
-
-        if ($fromDate && $toDate) {
-            $query->whereBetween('tb_formpeny.tgl_kom', [$fromDate, $toDate]);
+        // 4. Get Pelaksana MS (PIC Master)
+        $pelMsIds = json_decode($penyulangan->id_pelms ?? '[]', true) ?? [];
+        $pelaksanaMs = collect();
+        if (!empty($pelMsIds)) {
+            $pelaksanaMs = DB::table('tb_picmaster')
+                ->whereIn('id_picmaster', $pelMsIds)
+                ->get();
         }
 
-        $penyulangans = $query->get();
+        // 5. Get Pelaksana RTU (Field Engineer)
+        $pelRtuIds = json_decode($penyulangan->id_pelrtu ?? '[]', true) ?? [];
+        $pelaksanaRtu = collect();
+        if (!empty($pelRtuIds)) {
+            $pelaksanaRtu = DB::table('tb_pelaksana_rtu')
+                ->whereIn('id_pelrtu', $pelRtuIds)
+                ->get();
+        }
 
-        $pelrtuMap = DB::table('tb_pelaksana_rtu')->pluck('nama_pelrtu', 'id_pelrtu')->toArray();
+        // 6. Parse Data
+        $statusData = $this->parseStatusDataPeny($penyulangan);
+        $controlData = $this->parseControlDataPeny($penyulangan);
+        $meteringData = $this->parseMeteringDataPeny($penyulangan);
 
-        $penyulangans = $penyulangans->map(function ($row) use ($pelrtuMap) {
-            $ids = json_decode($row->id_pelrtu, true) ?? [];
-            $names = [];
-            foreach ($ids as $id) {
-                if (isset($pelrtuMap[$id])) {
-                    $names[] = $pelrtuMap[$id];
-                }
-            }
-            $row->id_pelrtu = implode(', ', $names);
-            return $row;
-        })->toArray();
+        // 7. Generate filename
+        $filename = 'Penyulangan_' . preg_replace('/[^A-Za-z0-9\-]/', '_', $penyulangan->nama_peny ?? 'Export') . '_' . $id . '.xls';
 
-        $filename = "Data_Penyulangan_" . now()->format('d-m-Y') . ".csv";
-
+        // 8. Set headers for Excel download
         $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename={$filename}",
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Cache-Control' => 'max-age=0',
         ];
 
-        return response()->streamDownload(function () use ($penyulangans) {
-            $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['Tgl Komisioning', 'Nama Penyulang', 'Gardu Induk', 'Wilayah DCC', 'Keterangan', 'PIC Master', 'PIC RTU']);
-            foreach ($penyulangans as $row) {
-                fputcsv($handle, [
-                    $row->tgl_kom,
-                    $row->nama_peny,
-                    $row->id_gi,
-                    $row->id_rtugi,
-                    $row->catatanpeny,
-                    $row->nama_user,
-                    $row->id_pelrtu
-                ]);
-            }
-            fclose($handle);
-        }, $filename, $headers);
+        // 9. Return view with Excel headers
+        return response()->view('excel.singlepenyulangan_excel', [
+            'row' => $penyulangan,
+            'pelaksanaMs' => $pelaksanaMs,
+            'pelaksanaRtu' => $pelaksanaRtu,
+            'statusData' => $statusData,
+            'controlData' => $controlData,
+            'meteringData' => $meteringData,
+        ])->withHeaders($headers);
     }
+
 
     public function create()
     {
