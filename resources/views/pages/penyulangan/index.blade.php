@@ -158,16 +158,17 @@ $(document).ready(function() {
     }
 
     function exportTo(type) {
-        var from = $('#dari-tanggal').val();
-        var to = $('#sampai-tanggal').val();
+        var fromDate = $('#dari-tanggal').val();
+        var toDate = $('#sampai-tanggal').val();
         var category = $('#filter-category').val();
 
-        if (!from || !to) {
-            showAlert('warning', 'Silakan pilih rentang tanggal terlebih dahulu!');
+        if (!fromDate && !toDate) {
+            showAlert('warning', 'Silakan pilih setidaknya satu tanggal untuk rentang export!');
             return;
         }
 
-        var url = '/penyulangan/export/' + type + '?from=' + from + '&to=' + to;
+        var url = '/penyulangan/export/' + type + '?from_date=' + (fromDate || '') + '&to_date=' + (toDate ||
+            '');
         if (category) {
             url += '&category=' + category;
         }

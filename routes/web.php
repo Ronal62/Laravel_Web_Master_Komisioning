@@ -105,7 +105,15 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/penyulangan/export-single-excel/{id}', [PenyulanganController::class, 'exportSingleExcel'])
         ->name('penyulangan.exportsingleexcel');
-        
+
+    // routes/web.php (Tambahkan routes berikut di dalam file routes/web.php)
+    // Pastikan untuk import controller jika belum: use App\Http\Controllers\PenyulanganController;
+
+    Route::get('/penyulangan/export/pdf', [PenyulanganController::class, 'exportByDatePdf'])->name('penyulangan.export.pdf');
+    Route::get('/penyulangan/export/excel', [PenyulanganController::class, 'exportByDateExcel'])->name('penyulangan.export.excel');
+
+
+
     Route::get('/get-kubikels/{gardu_induk}', [PenyulanganController::class, 'getKubikels'])->name('get.kubikels');
 
 
